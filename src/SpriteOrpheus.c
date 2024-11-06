@@ -33,7 +33,7 @@ struct OrpheusInfo* orpheus_info;
 SPRITE_STATES new_state = 0;
 UINT8 orpheus_power_max = 0;
 UINT8 orpheus_hp_max = 4u;
-INT8 orpheus_hp = 4;
+INT8 orpheus_hp = 3;
 INT8 orpheus_hit_countdown = 0;
 INT8 a_walk_counter_x = 0;
 INT8 a_walk_counter_y = 0;
@@ -62,6 +62,7 @@ void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
 void orpheus_hit() BANKED;
 void orpheus_recharge() BANKED;
+void orpheus_pickup(Sprite* itemsprite) BANKED;
 
 
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_type) BANKED;
@@ -235,6 +236,9 @@ void UPDATE() {
             }
             if(CheckCollision(THIS, iospr)) {
                 switch(iospr->type){
+                    case SpriteItem:
+                        orpheus_pickup(iospr);
+                    break;
                     case SpriteSkeleton:
                         if(orpheus_info->ow_state != HIT){
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
@@ -383,6 +387,25 @@ void orpheus_hit() BANKED{
         orpheus_hit_countdown = 32;
         orpheus_hitted = 1u;
         redraw_hud = 1;
+    }
+}
+
+void orpheus_pickup(Sprite* itemsprite) BANKED{
+    switch(itemsprite->type){
+        case SpriteItem:
+            struct ItemInfo* i_data = (struct ItemInfo*) itemsprite->custom_data;
+            if(i_data->i_configured == 2){
+                switch(i_data->item_type){
+                    case HEART:
+                        if(orpheus_hp < orpheus_hp_max){
+                            orpheus_hp++;
+                            redraw_hud = 1;
+                        }
+                        SpriteManagerRemoveSprite(itemsprite);
+                    break;
+                }
+            }
+        break;
     }
 }
 

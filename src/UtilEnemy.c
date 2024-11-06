@@ -30,9 +30,6 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 
-void START(){
-}
-
 void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED{
     e_data->e_state = new_state;
     e_data->frmskip_wait = e_data->frmskip;
@@ -255,7 +252,4 @@ void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
 
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     e_change_state(s_enemy, DIE, e_sprite_type);
-}
-
-void UPDATE(){
 }

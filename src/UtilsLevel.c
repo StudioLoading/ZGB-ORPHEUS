@@ -42,8 +42,6 @@ void fill_bar_idx(UINT8 i, UINT8 r) BANKED;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 
-void START() {}
-
 void level_common_start() BANKED{
 	//SCROLL LIMITS
         scroll_top_movement_limit = 72u;
@@ -60,8 +58,6 @@ void level_common_start() BANKED{
 		move_camera_down = 0u;
 		move_camera_left = 0u;
 }
-
-void UPDATE() {}
 
 void level_common_update_play() BANKED{
 	// move camera

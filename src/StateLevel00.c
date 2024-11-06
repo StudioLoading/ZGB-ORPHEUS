@@ -43,6 +43,10 @@ void START() {
 	//SPRITES
 		s_orpheus = SpriteManagerAdd(SpriteOrpheus, ((UINT16) 28u << 3) - 4u, ((UINT16) 79u << 3));
 		scroll_target->y = s_orpheus->y;
+		Sprite* s_item_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 27u << 3), ((UINT16) 84u << 3));
+		struct ItemInfo* heart_data = (struct ItemInfo*) s_item_heart->custom_data; 
+		heart_data->item_type = HEART;
+		heart_data->i_configured = 1;
 		//ENEMIES
 		/*
 		Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 28u << 3), ((UINT16) 60u << 3));

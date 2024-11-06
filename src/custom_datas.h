@@ -48,4 +48,12 @@ typedef enum{
 	REPEL
 }SONG;
 
+typedef enum{
+	HEART
+}ITEMTYPE;
+
+struct ItemInfo{
+	ITEMTYPE item_type;
+	UINT8 i_configured;
+};
 #endif
