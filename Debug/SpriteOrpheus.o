@@ -1,0 +1,2630 @@
+;!FILE ../Debug/SpriteOrpheus.asm
+XL3
+H A areas 6F3 global symbols
+M SpriteOrpheus
+O -msm83
+S _update_hud Ref000000
+S _TranslateSprite Ref000000
+S __cpu Ref000000
+S _SetSpriteAnim Ref000000
+S _e_change_state Ref000000
+S b_orhpeus_change_state Def0000FF
+S _THIS Ref000000
+S _sprite_manager_sprites Ref000000
+S _keys Ref000000
+S _move_camera_right Ref000000
+S .__.ABS. Def000000
+S _move_camera_up Ref000000
+S b_orpheus_recharge Def0000FF
+S _move_camera_left Ref000000
+S _CheckCollision Ref000000
+S b_orpheus_hit Def0000FF
+S b_e_change_state Ref000000
+S _OBP1_REG Ref000000
+S ___sdcc_bcall_ehl Ref000000
+S _sprite_manager_updatables Ref000000
+S _move_camera_down Ref000000
+S ___bank_SpriteOrpheus Def0000FF
+S _delta_time Ref000000
+S _previous_keys Ref000000
+S G$__bank_SpriteOrpheus$0_0$0 Def0000FF
+S _song_selection Ref000000
+S b_orpheus_update_position Def0000FF
+A _CODE size 0 flags 0 addr 0
+A _DATA size 2 flags 0 addr 0
+S _orpheus_info Def000000
+S G$orpheus_info$0_0$0 Def000000
+A _INITIALIZED size 11 flags 0 addr 0
+S _countdown Def00000E
+S _orpheus_hp_max Def000002
+S G$countdown$0_0$0 Def00000E
+S G$orpheus_hp_max$0_0$0 Def000002
+S _a_walk_counter_x Def000005
+S _a_walk_counter_y Def000006
+S _hit_frameskip Def000008
+S _orpheus_hitted Def000007
+S G$a_walk_counter_x$0_0$0 Def000005
+S G$hit_frameskip$0_0$0 Def000008
+S G$a_walk_counter_y$0_0$0 Def000006
+S G$orpheus_hitted$0_0$0 Def000007
+S _orpheus_hit_countdown Def000004
+S G$orpheus_hit_countdown$0_0$0 Def000004
+S _countdown_verso Def000010
+S G$countdown_verso$0_0$0 Def000010
+S _orpheus_power_max Def000001
+S G$orpheus_power_max$0_0$0 Def000001
+S _countdown_step Def00000F
+S _orpheus_hp Def000003
+S G$countdown_step$0_0$0 Def00000F
+S G$orpheus_hp$0_0$0 Def000003
+S _new_state Def000000
+S _hit_frameskip_max Def000009
+S G$new_state$0_0$0 Def000000
+S _push_vx Def00000B
+S G$hit_frameskip_max$0_0$0 Def000009
+S _push_vy Def00000C
+S G$push_vx$0_0$0 Def00000B
+S G$push_vy$0_0$0 Def00000C
+S _orpheus_state_before Def00000A
+S _orpheus_wait Def00000D
+S G$orpheus_state_before$0_0$0 Def00000A
+S G$orpheus_wait$0_0$0 Def00000D
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_255 size 962 flags 0 addr 0
+S A$SpriteOrpheus$1997 Def000746
+S A$SpriteOrpheus$1979 Def000732
+S A$SpriteOrpheus$1898 Def0006D2
+S A$SpriteOrpheus$1799 Def00067E
+S A$SpriteOrpheus$910 Def00031D
+S A$SpriteOrpheus$820 Def0002AD
+S A$SpriteOrpheus$802 Def00029D
+S A$SpriteOrpheus$730 Def000247
+S A$SpriteOrpheus$721 Def00023E
+S A$SpriteOrpheus$712 Def000233
+S A$SpriteOrpheus$703 Def000229
+S A$SpriteOrpheus$640 Def0001DB
+S A$SpriteOrpheus$631 Def0001D2
+S A$SpriteOrpheus$550 Def000172
+S A$SpriteOrpheus$523 Def000153
+S A$SpriteOrpheus$460 Def00010E
+S A$SpriteOrpheus$442 Def0000FD
+S A$SpriteOrpheus$433 Def0000EE
+S A$SpriteOrpheus$424 Def0000E8
+S A$SpriteOrpheus$415 Def0000DC
+S A$SpriteOrpheus$406 Def0000D3
+S A$SpriteOrpheus$307 Def000090
+S A$SpriteOrpheus$262 Def000063
+S A$SpriteOrpheus$253 Def00005C
+S A$SpriteOrpheus$244 Def000056
+S A$SpriteOrpheus$226 Def000045
+S A$SpriteOrpheus$217 Def00003C
+S A$SpriteOrpheus$208 Def000036
+S A$SpriteOrpheus$190 Def00002A
+S A$SpriteOrpheus$172 Def00001E
+S A$SpriteOrpheus$154 Def000003
+S C$SpriteOrpheus.c$369$2_0$237 Def000951
+S C$SpriteOrpheus.c$268$3_0$229 Def0006A9
+S C$SpriteOrpheus.c$179$5_0$208 Def0003A4
+S A$SpriteOrpheus$1998 Def000747
+S A$SpriteOrpheus$1899 Def0006D4
+S A$SpriteOrpheus$920 Def000329
+S A$SpriteOrpheus$911 Def00031E
+S A$SpriteOrpheus$830 Def0002BB
+S A$SpriteOrpheus$821 Def0002B0
+S A$SpriteOrpheus$803 Def00029E
+S A$SpriteOrpheus$731 Def000248
+S A$SpriteOrpheus$722 Def000240
+S A$SpriteOrpheus$713 Def000234
+S A$SpriteOrpheus$704 Def00022C
+S A$SpriteOrpheus$641 Def0001DE
+S A$SpriteOrpheus$632 Def0001D3
+S A$SpriteOrpheus$560 Def000180
+S A$SpriteOrpheus$551 Def000174
+S A$SpriteOrpheus$533 Def00015E
+S A$SpriteOrpheus$524 Def000154
+S A$SpriteOrpheus$506 Def00013E
+S A$SpriteOrpheus$470 Def00011C
+S A$SpriteOrpheus$461 Def00010F
+S A$SpriteOrpheus$443 Def0000FE
+S A$SpriteOrpheus$434 Def0000F1
+S A$SpriteOrpheus$416 Def0000DF
+S A$SpriteOrpheus$407 Def0000D4
+S A$SpriteOrpheus$308 Def000093
+S A$SpriteOrpheus$272 Def00006D
+S A$SpriteOrpheus$263 Def000066
+S A$SpriteOrpheus$254 Def00005D
+S A$SpriteOrpheus$245 Def000057
+S A$SpriteOrpheus$227 Def000046
+S A$SpriteOrpheus$218 Def00003D
+S A$SpriteOrpheus$209 Def000037
+S A$SpriteOrpheus$173 Def00001F
+S A$SpriteOrpheus$164 Def000010
+S A$SpriteOrpheus$155 Def000004
+S A$SpriteOrpheus$1999 Def000748
+S A$SpriteOrpheus$921 Def00032A
+S A$SpriteOrpheus$912 Def00031F
+S A$SpriteOrpheus$840 Def0002CD
+S A$SpriteOrpheus$831 Def0002BD
+S A$SpriteOrpheus$822 Def0002B1
+S A$SpriteOrpheus$804 Def0002A0
+S A$SpriteOrpheus$750 Def000261
+S A$SpriteOrpheus$732 Def00024A
+S A$SpriteOrpheus$714 Def000235
+S A$SpriteOrpheus$705 Def00022E
+S A$SpriteOrpheus$660 Def0001F5
+S A$SpriteOrpheus$651 Def0001E6
+S A$SpriteOrpheus$642 Def0001E0
+S A$SpriteOrpheus$633 Def0001D4
+S A$SpriteOrpheus$624 Def0001CA
+S A$SpriteOrpheus$570 Def000188
+S A$SpriteOrpheus$552 Def000176
+S A$SpriteOrpheus$534 Def000160
+S A$SpriteOrpheus$525 Def000155
+S A$SpriteOrpheus$516 Def00014B
+S A$SpriteOrpheus$507 Def000140
+S A$SpriteOrpheus$480 Def00012A
+S A$SpriteOrpheus$462 Def000111
+S A$SpriteOrpheus$453 Def000107
+S A$SpriteOrpheus$435 Def0000F2
+S A$SpriteOrpheus$417 Def0000E2
+S A$SpriteOrpheus$381 Def0000B9
+S A$SpriteOrpheus$282 Def000077
+S A$SpriteOrpheus$273 Def000070
+S A$SpriteOrpheus$255 Def00005E
+S A$SpriteOrpheus$246 Def000058
+S A$SpriteOrpheus$228 Def000047
+S A$SpriteOrpheus$219 Def00003E
+S A$SpriteOrpheus$183 Def000023
+S A$SpriteOrpheus$165 Def000013
+S A$SpriteOrpheus$156 Def000007
+S C$SpriteOrpheus.c$70$1_0$181 Def000048
+S C$SpriteOrpheus.c$62$0_0$181 Def000000
+S A$SpriteOrpheus$940 Def00033B
+S A$SpriteOrpheus$904 Def000316
+S A$SpriteOrpheus$850 Def0002E6
+S A$SpriteOrpheus$832 Def0002C0
+S A$SpriteOrpheus$823 Def0002B2
+S A$SpriteOrpheus$814 Def0002A8
+S A$SpriteOrpheus$805 Def0002A2
+S A$SpriteOrpheus$760 Def00026D
+S A$SpriteOrpheus$751 Def000264
+S A$SpriteOrpheus$742 Def000255
+S A$SpriteOrpheus$733 Def00024B
+S A$SpriteOrpheus$670 Def000202
+S A$SpriteOrpheus$652 Def0001E7
+S A$SpriteOrpheus$634 Def0001D7
+S A$SpriteOrpheus$616 Def0001BF
+S A$SpriteOrpheus$607 Def0001B1
+S A$SpriteOrpheus$580 Def000196
+S A$SpriteOrpheus$571 Def000189
+S A$SpriteOrpheus$553 Def000178
+S A$SpriteOrpheus$544 Def000169
+S A$SpriteOrpheus$535 Def000163
+S A$SpriteOrpheus$526 Def000157
+S A$SpriteOrpheus$517 Def00014E
+S A$SpriteOrpheus$508 Def000141
+S A$SpriteOrpheus$463 Def000114
+S A$SpriteOrpheus$454 Def00010A
+S A$SpriteOrpheus$445 Def000100
+S A$SpriteOrpheus$436 Def0000F3
+S A$SpriteOrpheus$391 Def0000C2
+S A$SpriteOrpheus$292 Def000081
+S A$SpriteOrpheus$283 Def00007A
+S A$SpriteOrpheus$256 Def000060
+S A$SpriteOrpheus$238 Def00004F
+S A$SpriteOrpheus$184 Def000024
+S A$SpriteOrpheus$166 Def000014
+S A$SpriteOrpheus$157 Def00000A
+S C$SpriteOrpheus.c$80$1_0$181 Def000081
+S A$SpriteOrpheus$950 Def000347
+S A$SpriteOrpheus$941 Def00033E
+S A$SpriteOrpheus$905 Def000317
+S A$SpriteOrpheus$851 Def0002E9
+S A$SpriteOrpheus$842 Def0002CE
+S A$SpriteOrpheus$833 Def0002C1
+S A$SpriteOrpheus$824 Def0002B4
+S A$SpriteOrpheus$815 Def0002AB
+S A$SpriteOrpheus$806 Def0002A3
+S A$SpriteOrpheus$761 Def00026E
+S A$SpriteOrpheus$752 Def000266
+S A$SpriteOrpheus$743 Def000256
+S A$SpriteOrpheus$734 Def00024C
+S A$SpriteOrpheus$671 Def000203
+S A$SpriteOrpheus$662 Def0001F8
+S A$SpriteOrpheus$653 Def0001E8
+S A$SpriteOrpheus$635 Def0001D8
+S A$SpriteOrpheus$617 Def0001C2
+S A$SpriteOrpheus$608 Def0001B4
+S A$SpriteOrpheus$590 Def0001A2
+S A$SpriteOrpheus$581 Def000197
+S A$SpriteOrpheus$572 Def00018A
+S A$SpriteOrpheus$554 Def000179
+S A$SpriteOrpheus$545 Def00016C
+S A$SpriteOrpheus$527 Def00015A
+S A$SpriteOrpheus$518 Def00014F
+S A$SpriteOrpheus$509 Def000142
+S A$SpriteOrpheus$491 Def000133
+S A$SpriteOrpheus$464 Def000117
+S A$SpriteOrpheus$446 Def000102
+S A$SpriteOrpheus$437 Def0000F4
+S A$SpriteOrpheus$428 Def0000EB
+S A$SpriteOrpheus$293 Def000084
+S A$SpriteOrpheus$257 Def000062
+S A$SpriteOrpheus$239 Def000051
+S A$SpriteOrpheus$194 Def00002B
+S A$SpriteOrpheus$185 Def000025
+S A$SpriteOrpheus$167 Def000015
+S A$SpriteOrpheus$158 Def00000B
+S C$SpriteOrpheus.c$81$1_0$181 Def000086
+S C$SpriteOrpheus.c$72$1_0$181 Def000059
+S C$SpriteOrpheus.c$63$1_0$181 Def000000
+S A$SpriteOrpheus$960 Def00034C
+S A$SpriteOrpheus$942 Def00033F
+S A$SpriteOrpheus$933 Def000332
+S A$SpriteOrpheus$852 Def0002EC
+S A$SpriteOrpheus$843 Def0002D1
+S A$SpriteOrpheus$834 Def0002C4
+S A$SpriteOrpheus$825 Def0002B7
+S A$SpriteOrpheus$780 Def000287
+S A$SpriteOrpheus$762 Def000270
+S A$SpriteOrpheus$744 Def000258
+S A$SpriteOrpheus$735 Def00024E
+S A$SpriteOrpheus$717 Def000237
+S A$SpriteOrpheus$690 Def00021E
+S A$SpriteOrpheus$672 Def000205
+S A$SpriteOrpheus$663 Def0001FA
+S A$SpriteOrpheus$654 Def0001E9
+S A$SpriteOrpheus$636 Def0001DA
+S A$SpriteOrpheus$618 Def0001C3
+S A$SpriteOrpheus$609 Def0001B5
+S A$SpriteOrpheus$591 Def0001A5
+S A$SpriteOrpheus$573 Def00018C
+S A$SpriteOrpheus$564 Def000182
+S A$SpriteOrpheus$546 Def00016D
+S A$SpriteOrpheus$528 Def00015D
+S A$SpriteOrpheus$474 Def00011E
+S A$SpriteOrpheus$447 Def000104
+S A$SpriteOrpheus$438 Def0000F5
+S A$SpriteOrpheus$267 Def000068
+S A$SpriteOrpheus$195 Def00002C
+S A$SpriteOrpheus$186 Def000026
+S A$SpriteOrpheus$177 Def000020
+S A$SpriteOrpheus$168 Def000017
+S A$SpriteOrpheus$159 Def00000C
+S C$SpriteOrpheus.c$82$1_0$181 Def00008B
+S C$SpriteOrpheus.c$71$2_0$182 Def00004F
+S C$SpriteOrpheus.c$64$1_0$181 Def000053
+S _orpheus_recharge Def000609
+S _Destroy_SpriteOrpheus Def000961
+S A$SpriteOrpheus$970 Def00035C
+S A$SpriteOrpheus$961 Def00034D
+S A$SpriteOrpheus$934 Def000335
+S A$SpriteOrpheus$916 Def000320
+S A$SpriteOrpheus$862 Def0002F5
+S A$SpriteOrpheus$853 Def0002EF
+S A$SpriteOrpheus$844 Def0002D4
+S A$SpriteOrpheus$835 Def0002C5
+S A$SpriteOrpheus$826 Def0002BA
+S A$SpriteOrpheus$790 Def00028D
+S A$SpriteOrpheus$781 Def00028A
+S A$SpriteOrpheus$772 Def00027B
+S A$SpriteOrpheus$763 Def000271
+S A$SpriteOrpheus$745 Def00025A
+S A$SpriteOrpheus$736 Def000251
+S A$SpriteOrpheus$727 Def000242
+S A$SpriteOrpheus$718 Def000238
+S A$SpriteOrpheus$682 Def000210
+S A$SpriteOrpheus$673 Def000206
+S A$SpriteOrpheus$664 Def0001FB
+S A$SpriteOrpheus$655 Def0001EB
+S A$SpriteOrpheus$646 Def0001E1
+S A$SpriteOrpheus$628 Def0001CD
+S A$SpriteOrpheus$619 Def0001C6
+S A$SpriteOrpheus$574 Def00018F
+S A$SpriteOrpheus$565 Def000185
+S A$SpriteOrpheus$556 Def00017B
+S A$SpriteOrpheus$547 Def00016E
+S A$SpriteOrpheus$475 Def000120
+S A$SpriteOrpheus$439 Def0000F7
+S A$SpriteOrpheus$385 Def0000BB
+S A$SpriteOrpheus$277 Def000072
+S A$SpriteOrpheus$268 Def00006B
+S A$SpriteOrpheus$196 Def00002D
+S A$SpriteOrpheus$187 Def000027
+S A$SpriteOrpheus$178 Def000021
+S A$SpriteOrpheus$169 Def000018
+S C$SpriteOrpheus.c$83$1_0$181 Def000090
+S C$SpriteOrpheus.c$74$1_0$181 Def000063
+S C$SpriteOrpheus.c$65$1_0$181 Def000020
+S A$SpriteOrpheus$971 Def00035F
+S A$SpriteOrpheus$962 Def00034F
+S A$SpriteOrpheus$935 Def000336
+S A$SpriteOrpheus$926 Def00032C
+S A$SpriteOrpheus$917 Def000323
+S A$SpriteOrpheus$890 Def00030B
+S A$SpriteOrpheus$863 Def0002F7
+S A$SpriteOrpheus$854 Def0002F2
+S A$SpriteOrpheus$845 Def0002D7
+S A$SpriteOrpheus$836 Def0002C7
+S A$SpriteOrpheus$791 Def00028F
+S A$SpriteOrpheus$773 Def00027C
+S A$SpriteOrpheus$764 Def000272
+S A$SpriteOrpheus$746 Def00025B
+S A$SpriteOrpheus$737 Def000253
+S A$SpriteOrpheus$728 Def000243
+S A$SpriteOrpheus$719 Def000239
+S A$SpriteOrpheus$683 Def000212
+S A$SpriteOrpheus$674 Def000207
+S A$SpriteOrpheus$665 Def0001FD
+S A$SpriteOrpheus$656 Def0001ED
+S A$SpriteOrpheus$647 Def0001E4
+S A$SpriteOrpheus$629 Def0001D0
+S A$SpriteOrpheus$575 Def000192
+S A$SpriteOrpheus$557 Def00017D
+S A$SpriteOrpheus$548 Def00016F
+S A$SpriteOrpheus$539 Def000166
+S A$SpriteOrpheus$485 Def00012B
+S A$SpriteOrpheus$476 Def000121
+S A$SpriteOrpheus$458 Def00010B
+S A$SpriteOrpheus$449 Def000105
+S A$SpriteOrpheus$395 Def0000C3
+S A$SpriteOrpheus$386 Def0000BE
+S A$SpriteOrpheus$287 Def00007C
+S A$SpriteOrpheus$278 Def000075
+S A$SpriteOrpheus$197 Def00002E
+S A$SpriteOrpheus$188 Def000028
+S A$SpriteOrpheus$179 Def000022
+S C$SpriteOrpheus.c$84$1_0$181 Def000095
+S C$SpriteOrpheus.c$75$1_0$181 Def000068
+S C$SpriteOrpheus.c$66$1_0$181 Def000023
+S _a_orpheus_idleup Def00009B
+S A$SpriteOrpheus$990 Def000377
+S A$SpriteOrpheus$972 Def000362
+S A$SpriteOrpheus$963 Def000352
+S A$SpriteOrpheus$954 Def000349
+S A$SpriteOrpheus$936 Def000337
+S A$SpriteOrpheus$927 Def00032D
+S A$SpriteOrpheus$918 Def000324
+S A$SpriteOrpheus$909 Def00031A
+S A$SpriteOrpheus$882 Def000308
+S A$SpriteOrpheus$864 Def0002FA
+S A$SpriteOrpheus$846 Def0002DA
+S A$SpriteOrpheus$837 Def0002CA
+S A$SpriteOrpheus$792 Def000291
+S A$SpriteOrpheus$774 Def00027E
+S A$SpriteOrpheus$765 Def000274
+S A$SpriteOrpheus$747 Def00025D
+S A$SpriteOrpheus$729 Def000245
+S A$SpriteOrpheus$684 Def000213
+S A$SpriteOrpheus$675 Def000209
+S A$SpriteOrpheus$657 Def0001F0
+S A$SpriteOrpheus$585 Def000199
+S A$SpriteOrpheus$558 Def00017F
+S A$SpriteOrpheus$549 Def000170
+S A$SpriteOrpheus$486 Def00012D
+S A$SpriteOrpheus$477 Def000122
+S A$SpriteOrpheus$468 Def000118
+S A$SpriteOrpheus$459 Def00010D
+S A$SpriteOrpheus$396 Def0000C5
+S A$SpriteOrpheus$387 Def0000C0
+S A$SpriteOrpheus$297 Def000086
+S A$SpriteOrpheus$288 Def00007F
+S A$SpriteOrpheus$198 Def00002F
+S A$SpriteOrpheus$189 Def000029
+S C$SpriteOrpheus.c$90$2_0$184 Def0000C2
+S C$SpriteOrpheus.c$85$1_0$181 Def00009A
+S C$SpriteOrpheus.c$76$1_0$181 Def00006D
+S C$SpriteOrpheus.c$67$1_0$181 Def00002B
+S A$SpriteOrpheus$991 Def00037A
+S A$SpriteOrpheus$973 Def000365
+S A$SpriteOrpheus$964 Def000353
+S A$SpriteOrpheus$955 Def00034A
+S A$SpriteOrpheus$937 Def000338
+S A$SpriteOrpheus$928 Def00032E
+S A$SpriteOrpheus$919 Def000326
+S A$SpriteOrpheus$847 Def0002DD
+S A$SpriteOrpheus$838 Def0002CB
+S A$SpriteOrpheus$793 Def000293
+S A$SpriteOrpheus$775 Def000280
+S A$SpriteOrpheus$766 Def000277
+S A$SpriteOrpheus$757 Def000268
+S A$SpriteOrpheus$748 Def00025E
+S A$SpriteOrpheus$685 Def000215
+S A$SpriteOrpheus$676 Def00020C
+S A$SpriteOrpheus$658 Def0001F1
+S A$SpriteOrpheus$586 Def00019B
+S A$SpriteOrpheus$496 Def000136
+S A$SpriteOrpheus$487 Def000130
+S A$SpriteOrpheus$478 Def000124
+S A$SpriteOrpheus$469 Def00011B
+S A$SpriteOrpheus$397 Def0000C6
+S A$SpriteOrpheus$298 Def000089
+S A$SpriteOrpheus$199 Def000030
+S C$SpriteOrpheus.c$91$2_0$184 Def0000C3
+S C$SpriteOrpheus.c$77$1_0$181 Def000072
+S C$SpriteOrpheus.c$68$1_0$181 Def000034
+S _orpheus_hit Def000948
+S A$SpriteOrpheus$992 Def00037B
+S A$SpriteOrpheus$974 Def000368
+S A$SpriteOrpheus$965 Def000354
+S A$SpriteOrpheus$956 Def00034B
+S A$SpriteOrpheus$947 Def000341
+S A$SpriteOrpheus$938 Def000339
+S A$SpriteOrpheus$929 Def000331
+S A$SpriteOrpheus$848 Def0002E0
+S A$SpriteOrpheus$839 Def0002CC
+S A$SpriteOrpheus$776 Def000281
+S A$SpriteOrpheus$767 Def000279
+S A$SpriteOrpheus$758 Def000269
+S A$SpriteOrpheus$749 Def00025F
+S A$SpriteOrpheus$695 Def000220
+S A$SpriteOrpheus$686 Def000216
+S A$SpriteOrpheus$677 Def00020E
+S A$SpriteOrpheus$659 Def0001F3
+S A$SpriteOrpheus$596 Def0001A6
+S A$SpriteOrpheus$587 Def00019C
+S A$SpriteOrpheus$569 Def000186
+S A$SpriteOrpheus$497 Def000139
+S A$SpriteOrpheus$479 Def000127
+S A$SpriteOrpheus$398 Def0000C7
+S XG$Update_SpriteOrpheus$0$0 Def000608
+S C$SpriteOrpheus.c$92$2_0$184 Def0000D0
+S G$a_orpheus_idleup$0_0$0 Def00009B
+S C$SpriteOrpheus.c$78$1_0$181 Def000077
+S C$SpriteOrpheus.c$69$1_0$181 Def00003B
+S _a_orpheus_idleh Def0000A0
+S _a_orpheus_walk_down Def0000A8
+S A$SpriteOrpheus$993 Def00037C
+S A$SpriteOrpheus$975 Def00036B
+S A$SpriteOrpheus$966 Def000355
+S A$SpriteOrpheus$948 Def000343
+S A$SpriteOrpheus$939 Def00033A
+S A$SpriteOrpheus$894 Def00030E
+S A$SpriteOrpheus$876 Def000300
+S A$SpriteOrpheus$849 Def0002E3
+S A$SpriteOrpheus$786 Def00028C
+S A$SpriteOrpheus$777 Def000283
+S A$SpriteOrpheus$759 Def00026B
+S A$SpriteOrpheus$696 Def000222
+S A$SpriteOrpheus$687 Def000217
+S A$SpriteOrpheus$669 Def000200
+S A$SpriteOrpheus$597 Def0001A8
+S A$SpriteOrpheus$588 Def00019D
+S A$SpriteOrpheus$579 Def000193
+S A$SpriteOrpheus$498 Def00013B
+S A$SpriteOrpheus$399 Def0000C9
+S C$SpriteOrpheus.c$79$1_0$181 Def00007C
+S A$SpriteOrpheus$994 Def00037D
+S A$SpriteOrpheus$985 Def000374
+S A$SpriteOrpheus$976 Def00036E
+S A$SpriteOrpheus$949 Def000346
+S A$SpriteOrpheus$895 Def00030F
+S A$SpriteOrpheus$877 Def000302
+S A$SpriteOrpheus$868 Def0002FD
+S A$SpriteOrpheus$778 Def000284
+S A$SpriteOrpheus$697 Def000223
+S A$SpriteOrpheus$688 Def000219
+S A$SpriteOrpheus$598 Def0001AB
+S A$SpriteOrpheus$589 Def00019F
+S C$SpriteOrpheus.c$87$1_0$183 Def0000B9
+S A$SpriteOrpheus$995 Def00037E
+S A$SpriteOrpheus$986 Def000376
+S A$SpriteOrpheus$977 Def000371
+S A$SpriteOrpheus$968 Def000356
+S A$SpriteOrpheus$878 Def000305
+S A$SpriteOrpheus$797 Def000295
+S A$SpriteOrpheus$779 Def000285
+S A$SpriteOrpheus$689 Def00021C
+S C$SpriteOrpheus.c$97$1_0$183 Def0000EE
+S C$SpriteOrpheus.c$95$2_0$184 Def0000E3
+S C$SpriteOrpheus.c$93$3_0$185 Def0000D6
+S G$a_orpheus_walk_down$0_0$0 Def0000A8
+S G$a_orpheus_idleh$0_0$0 Def0000A0
+S _a_orpheus_hit_up Def0000B3
+S A$SpriteOrpheus$996 Def00037F
+S A$SpriteOrpheus$969 Def000359
+S A$SpriteOrpheus$798 Def000296
+S C$SpriteOrpheus.c$96$2_0$184 Def0000EB
+S C$SpriteOrpheus.c$89$1_0$183 Def0000BB
+S A$SpriteOrpheus$997 Def000380
+S A$SpriteOrpheus$799 Def000298
+S G$orpheus_update_position$0$0 Def000654
+S A$SpriteOrpheus$899 Def000312
+S G$a_orpheus_hit_up$0_0$0 Def0000B3
+S _a_orpheus_hit_h Def0000B6
+S XG$Destroy_SpriteOrpheus$0$0 Def000961
+S XG$orpheus_recharge$0$0 Def000653
+S C$SpriteOrpheus.c$98$2_0$186 Def000107
+S C$SpriteOrpheus.c$99$2_0$186 Def00010B
+S G$a_orpheus_hit_h$0_0$0 Def0000B6
+S XG$orpheus_hit$0$0 Def000960
+S _a_orpheus_idledown Def00009D
+S _orpheus_update_position Def000654
+S G$a_orpheus_idledown$0_0$0 Def00009D
+S G$Start_SpriteOrpheus$0$0 Def000000
+S G$orhpeus_change_state$0$0 Def0006B9
+S _a_orpheus_hit_down Def0000B0
+S G$a_orpheus_hit_down$0_0$0 Def0000B0
+S XG$orpheus_update_position$0$0 Def0006B8
+S A$SpriteOrpheus$1100 Def0003C8
+S A$SpriteOrpheus$1010 Def000385
+S A$SpriteOrpheus$1001 Def000381
+S A$SpriteOrpheus$2100 Def0007A6
+S A$SpriteOrpheus$1020 Def00038E
+S _Start_SpriteOrpheus Def000000
+S A$SpriteOrpheus$2101 Def0007A7
+S A$SpriteOrpheus$2020 Def000756
+S A$SpriteOrpheus$2011 Def00074E
+S A$SpriteOrpheus$1300 Def00049B
+S A$SpriteOrpheus$1120 Def0003DC
+S A$SpriteOrpheus$1102 Def0003CA
+S A$SpriteOrpheus$1021 Def00038F
+S C$SpriteOrpheus.c$200$4_0$211 Def000445
+S _orhpeus_change_state Def0006B9
+S A$SpriteOrpheus$2210 Def000805
+S A$SpriteOrpheus$2201 Def0007FF
+S A$SpriteOrpheus$2102 Def0007A8
+S A$SpriteOrpheus$2030 Def000760
+S A$SpriteOrpheus$2021 Def000757
+S A$SpriteOrpheus$2012 Def000751
+S A$SpriteOrpheus$2003 Def00074B
+S A$SpriteOrpheus$1400 Def000504
+S A$SpriteOrpheus$1310 Def0004A4
+S A$SpriteOrpheus$1301 Def00049C
+S A$SpriteOrpheus$1211 Def000445
+S A$SpriteOrpheus$1121 Def0003DD
+S A$SpriteOrpheus$1103 Def0003CC
+S C$SpriteOrpheus.c$210$2_0$204 Def000463
+S C$SpriteOrpheus.c$201$4_0$211 Def000445
+S C$SpriteOrpheus.c$140$2_0$202 Def000295
+S A$SpriteOrpheus$2103 Def0007A9
+S A$SpriteOrpheus$2040 Def00076C
+S A$SpriteOrpheus$2022 Def000758
+S A$SpriteOrpheus$2013 Def000752
+S A$SpriteOrpheus$1500 Def00056B
+S A$SpriteOrpheus$1410 Def00050E
+S A$SpriteOrpheus$1401 Def000505
+S A$SpriteOrpheus$1320 Def0004AC
+S A$SpriteOrpheus$1311 Def0004A7
+S A$SpriteOrpheus$1302 Def00049D
+S A$SpriteOrpheus$1230 Def000456
+S A$SpriteOrpheus$1221 Def000452
+S A$SpriteOrpheus$1212 Def000447
+S A$SpriteOrpheus$1203 Def000443
+S A$SpriteOrpheus$1131 Def0003E7
+S A$SpriteOrpheus$1122 Def0003DF
+S A$SpriteOrpheus$1113 Def0003D5
+S A$SpriteOrpheus$1104 Def0003CE
+S A$SpriteOrpheus$1014 Def000386
+S C$SpriteOrpheus.c$211$2_0$204 Def000467
+S C$SpriteOrpheus.c$202$4_0$211 Def000452
+S A$SpriteOrpheus$2410 Def0008D5
+S A$SpriteOrpheus$2230 Def000817
+S A$SpriteOrpheus$2104 Def0007AC
+S A$SpriteOrpheus$2050 Def000777
+S A$SpriteOrpheus$2041 Def00076D
+S A$SpriteOrpheus$2023 Def000759
+S A$SpriteOrpheus$1600 Def0005D4
+S A$SpriteOrpheus$1510 Def000571
+S A$SpriteOrpheus$1420 Def00051B
+S A$SpriteOrpheus$1411 Def000510
+S A$SpriteOrpheus$1402 Def000508
+S A$SpriteOrpheus$1330 Def0004B9
+S A$SpriteOrpheus$1321 Def0004AD
+S A$SpriteOrpheus$1231 Def000457
+S A$SpriteOrpheus$1213 Def000448
+S A$SpriteOrpheus$1150 Def0003FF
+S A$SpriteOrpheus$1141 Def0003F1
+S A$SpriteOrpheus$1132 Def0003EA
+S A$SpriteOrpheus$1114 Def0003D8
+S A$SpriteOrpheus$1060 Def0003A2
+S A$SpriteOrpheus$1042 Def000398
+S A$SpriteOrpheus$1033 Def000392
+S A$SpriteOrpheus$1015 Def000389
+S C$SpriteOrpheus.c$300$2_0$233 Def0007A3
+S C$SpriteOrpheus.c$212$3_0$212 Def00046C
+S C$SpriteOrpheus.c$203$4_0$211 Def000454
+S A$SpriteOrpheus$2411 Def0008D8
+S A$SpriteOrpheus$2321 Def00086E
+S A$SpriteOrpheus$2303 Def00085F
+S A$SpriteOrpheus$2240 Def000823
+S A$SpriteOrpheus$2231 Def000818
+S A$SpriteOrpheus$2213 Def000806
+S A$SpriteOrpheus$2150 Def0007D3
+S A$SpriteOrpheus$2132 Def0007BE
+S A$SpriteOrpheus$2123 Def0007B7
+S A$SpriteOrpheus$2105 Def0007AD
+S A$SpriteOrpheus$2051 Def00077A
+S A$SpriteOrpheus$2042 Def00076E
+S A$SpriteOrpheus$2024 Def00075A
+S A$SpriteOrpheus$1700 Def00062D
+S A$SpriteOrpheus$1610 Def0005DE
+S A$SpriteOrpheus$1601 Def0005D5
+S A$SpriteOrpheus$1520 Def00057E
+S A$SpriteOrpheus$1511 Def000573
+S A$SpriteOrpheus$1421 Def00051C
+S A$SpriteOrpheus$1403 Def00050A
+S A$SpriteOrpheus$1331 Def0004BB
+S A$SpriteOrpheus$1322 Def0004AE
+S A$SpriteOrpheus$1232 Def000458
+S A$SpriteOrpheus$1214 Def000449
+S A$SpriteOrpheus$1160 Def00040F
+S A$SpriteOrpheus$1151 Def000400
+S A$SpriteOrpheus$1142 Def0003F4
+S A$SpriteOrpheus$1115 Def0003D9
+S A$SpriteOrpheus$1106 Def0003CF
+S A$SpriteOrpheus$1070 Def0003AB
+S A$SpriteOrpheus$1061 Def0003A3
+S A$SpriteOrpheus$1052 Def0003A0
+S A$SpriteOrpheus$1043 Def00039B
+S A$SpriteOrpheus$1034 Def000393
+S A$SpriteOrpheus$1025 Def000390
+S A$SpriteOrpheus$1016 Def00038A
+S C$SpriteOrpheus.c$310$2_0$233 Def0007EF
+S C$SpriteOrpheus.c$301$2_0$233 Def0007AF
+S C$SpriteOrpheus.c$220$2_1$214 Def0005AB
+S C$SpriteOrpheus.c$213$3_0$212 Def00047A
+S C$SpriteOrpheus.c$204$4_0$211 Def000454
+S C$SpriteOrpheus.c$150$2_0$204 Def0002FD
+S C$SpriteOrpheus.c$141$3_0$203 Def0002A5
+S A$SpriteOrpheus$2520 Def00093B
+S A$SpriteOrpheus$2511 Def000936
+S A$SpriteOrpheus$2412 Def0008DB
+S A$SpriteOrpheus$2340 Def000881
+S A$SpriteOrpheus$2331 Def000878
+S A$SpriteOrpheus$2322 Def000871
+S A$SpriteOrpheus$2313 Def00086B
+S A$SpriteOrpheus$2304 Def000862
+S A$SpriteOrpheus$2250 Def00082E
+S A$SpriteOrpheus$2241 Def000824
+S A$SpriteOrpheus$2223 Def00080E
+S A$SpriteOrpheus$2214 Def000809
+S A$SpriteOrpheus$2151 Def0007D4
+S A$SpriteOrpheus$2133 Def0007C1
+S A$SpriteOrpheus$2124 Def0007B8
+S A$SpriteOrpheus$2070 Def000785
+S A$SpriteOrpheus$2052 Def00077B
+S A$SpriteOrpheus$2034 Def000761
+S A$SpriteOrpheus$2025 Def00075B
+S A$SpriteOrpheus$1800 Def00067F
+S A$SpriteOrpheus$1710 Def000637
+S A$SpriteOrpheus$1701 Def00062E
+S A$SpriteOrpheus$1620 Def0005EA
+S A$SpriteOrpheus$1611 Def0005DF
+S A$SpriteOrpheus$1602 Def0005D6
+S A$SpriteOrpheus$1530 Def000589
+S A$SpriteOrpheus$1521 Def00057F
+S A$SpriteOrpheus$1512 Def000574
+S A$SpriteOrpheus$1440 Def000531
+S A$SpriteOrpheus$1431 Def000525
+S A$SpriteOrpheus$1422 Def00051D
+S A$SpriteOrpheus$1341 Def0004C1
+S A$SpriteOrpheus$1323 Def0004B1
+S A$SpriteOrpheus$1314 Def0004A8
+S A$SpriteOrpheus$1260 Def000470
+S A$SpriteOrpheus$1233 Def00045A
+S A$SpriteOrpheus$1215 Def00044B
+S A$SpriteOrpheus$1161 Def000412
+S A$SpriteOrpheus$1152 Def000402
+S A$SpriteOrpheus$1107 Def0003D1
+S A$SpriteOrpheus$1017 Def00038B
+S C$SpriteOrpheus.c$320$2_0$233 Def000844
+S C$SpriteOrpheus.c$311$2_0$233 Def0007FF
+S C$SpriteOrpheus.c$302$2_0$233 Def0007B2
+S C$SpriteOrpheus.c$142$3_0$203 Def0002A8
+S C$SpriteOrpheus.c$120$2_0$190 Def0001AE
+S A$SpriteOrpheus$2530 Def000941
+S A$SpriteOrpheus$2413 Def0008DC
+S A$SpriteOrpheus$2350 Def00088F
+S A$SpriteOrpheus$2341 Def000883
+S A$SpriteOrpheus$2332 Def00087B
+S A$SpriteOrpheus$2305 Def000863
+S A$SpriteOrpheus$2251 Def00082F
+S A$SpriteOrpheus$2242 Def000825
+S A$SpriteOrpheus$2224 Def000811
+S A$SpriteOrpheus$2170 Def0007E0
+S A$SpriteOrpheus$2143 Def0007C7
+S A$SpriteOrpheus$2125 Def0007B9
+S A$SpriteOrpheus$2080 Def00078F
+S A$SpriteOrpheus$2071 Def000786
+S A$SpriteOrpheus$2035 Def000763
+S A$SpriteOrpheus$2026 Def00075C
+S A$SpriteOrpheus$2017 Def000753
+S A$SpriteOrpheus$1900 Def0006D7
+S A$SpriteOrpheus$1810 Def00068E
+S A$SpriteOrpheus$1801 Def000681
+S A$SpriteOrpheus$1711 Def00063A
+S A$SpriteOrpheus$1702 Def00062F
+S A$SpriteOrpheus$1630 Def0005F8
+S A$SpriteOrpheus$1621 Def0005EB
+S A$SpriteOrpheus$1612 Def0005E0
+S A$SpriteOrpheus$1603 Def0005D7
+S A$SpriteOrpheus$1540 Def000595
+S A$SpriteOrpheus$1531 Def00058A
+S A$SpriteOrpheus$1522 Def000580
+S A$SpriteOrpheus$1513 Def000575
+S A$SpriteOrpheus$1504 Def00056D
+S A$SpriteOrpheus$1441 Def000532
+S A$SpriteOrpheus$1432 Def000526
+S A$SpriteOrpheus$1423 Def00051E
+S A$SpriteOrpheus$1360 Def0004D4
+S A$SpriteOrpheus$1351 Def0004CA
+S A$SpriteOrpheus$1342 Def0004C2
+S A$SpriteOrpheus$1324 Def0004B2
+S A$SpriteOrpheus$1306 Def0004A0
+S A$SpriteOrpheus$1261 Def000471
+S A$SpriteOrpheus$1252 Def000467
+S A$SpriteOrpheus$1234 Def00045D
+S A$SpriteOrpheus$1216 Def00044E
+S A$SpriteOrpheus$1180 Def000430
+S A$SpriteOrpheus$1162 Def000415
+S A$SpriteOrpheus$1153 Def000405
+S A$SpriteOrpheus$1126 Def0003E2
+S A$SpriteOrpheus$1108 Def0003D2
+S A$SpriteOrpheus$1090 Def0003B8
+S A$SpriteOrpheus$1018 Def00038C
+S A$SpriteOrpheus$1009 Def000383
+S C$SpriteOrpheus.c$321$2_0$233 Def00084F
+S C$SpriteOrpheus.c$312$2_0$233 Def000802
+S C$SpriteOrpheus.c$303$2_0$233 Def0007B2
+S C$SpriteOrpheus.c$190$3_0$210 Def0003E7
+S C$SpriteOrpheus.c$152$2_0$204 Def000300
+S A$SpriteOrpheus$2603 Def000961
+S A$SpriteOrpheus$2531 Def000942
+S A$SpriteOrpheus$2432 Def0008EB
+S A$SpriteOrpheus$2423 Def0008E1
+S A$SpriteOrpheus$2414 Def0008DD
+S A$SpriteOrpheus$2351 Def000892
+S A$SpriteOrpheus$2342 Def000884
+S A$SpriteOrpheus$2306 Def000864
+S A$SpriteOrpheus$2270 Def00083F
+S A$SpriteOrpheus$2252 Def000832
+S A$SpriteOrpheus$2243 Def000826
+S A$SpriteOrpheus$2225 Def000812
+S A$SpriteOrpheus$2171 Def0007E1
+S A$SpriteOrpheus$2144 Def0007C9
+S A$SpriteOrpheus$2126 Def0007BA
+S A$SpriteOrpheus$2117 Def0007B2
+S A$SpriteOrpheus$2090 Def000797
+S A$SpriteOrpheus$2081 Def000790
+S A$SpriteOrpheus$2072 Def000787
+S A$SpriteOrpheus$2036 Def000764
+S A$SpriteOrpheus$2027 Def00075D
+S A$SpriteOrpheus$2018 Def000754
+S A$SpriteOrpheus$1910 Def0006EA
+S A$SpriteOrpheus$1901 Def0006D8
+S A$SpriteOrpheus$1811 Def00068F
+S A$SpriteOrpheus$1802 Def000682
+S A$SpriteOrpheus$1730 Def00064D
+S A$SpriteOrpheus$1721 Def000642
+S A$SpriteOrpheus$1712 Def00063B
+S A$SpriteOrpheus$1640 Def000603
+S A$SpriteOrpheus$1631 Def0005F9
+S A$SpriteOrpheus$1622 Def0005EE
+S A$SpriteOrpheus$1613 Def0005E1
+S A$SpriteOrpheus$1604 Def0005D8
+S A$SpriteOrpheus$1541 Def000596
+S A$SpriteOrpheus$1532 Def00058B
+S A$SpriteOrpheus$1523 Def000582
+S A$SpriteOrpheus$1514 Def000576
+S A$SpriteOrpheus$1505 Def000570
+S A$SpriteOrpheus$1460 Def000546
+S A$SpriteOrpheus$1442 Def000533
+S A$SpriteOrpheus$1433 Def000527
+S A$SpriteOrpheus$1424 Def000520
+S A$SpriteOrpheus$1415 Def000513
+S A$SpriteOrpheus$1361 Def0004D5
+S A$SpriteOrpheus$1352 Def0004CB
+S A$SpriteOrpheus$1343 Def0004C3
+S A$SpriteOrpheus$1325 Def0004B3
+S A$SpriteOrpheus$1307 Def0004A3
+S A$SpriteOrpheus$1280 Def000481
+S A$SpriteOrpheus$1262 Def000473
+S A$SpriteOrpheus$1253 Def000469
+S A$SpriteOrpheus$1235 Def000460
+S A$SpriteOrpheus$1217 Def000451
+S A$SpriteOrpheus$1181 Def000433
+S A$SpriteOrpheus$1163 Def000418
+S A$SpriteOrpheus$1154 Def000406
+S A$SpriteOrpheus$1136 Def0003EC
+S A$SpriteOrpheus$1127 Def0003E5
+S A$SpriteOrpheus$1109 Def0003D3
+S A$SpriteOrpheus$1091 Def0003BB
+S A$SpriteOrpheus$1073 Def0003AC
+S A$SpriteOrpheus$1046 Def00039C
+S A$SpriteOrpheus$1019 Def00038D
+S C$SpriteOrpheus.c$340$2_0$233 Def0008E1
+S C$SpriteOrpheus.c$322$2_0$233 Def00085F
+S C$SpriteOrpheus.c$313$2_0$233 Def000802
+S C$SpriteOrpheus.c$304$2_0$233 Def0007B7
+S C$SpriteOrpheus.c$261$1_0$223 Def000653
+S C$SpriteOrpheus.c$250$2_0$224 Def000611
+S C$SpriteOrpheus.c$221$3_1$215 Def0004BC
+S C$SpriteOrpheus.c$191$3_0$210 Def0003EC
+S C$SpriteOrpheus.c$160$3_0$205 Def000320
+S C$SpriteOrpheus.c$153$2_0$204 Def000300
+S A$SpriteOrpheus$2532 Def000943
+S A$SpriteOrpheus$2451 Def0008FA
+S A$SpriteOrpheus$2433 Def0008ED
+S A$SpriteOrpheus$2424 Def0008E4
+S A$SpriteOrpheus$2415 Def0008DE
+S A$SpriteOrpheus$2370 Def0008B1
+S A$SpriteOrpheus$2352 Def000895
+S A$SpriteOrpheus$2343 Def000886
+S A$SpriteOrpheus$2307 Def000865
+S A$SpriteOrpheus$2280 Def000847
+S A$SpriteOrpheus$2253 Def000833
+S A$SpriteOrpheus$2235 Def000819
+S A$SpriteOrpheus$2226 Def000813
+S A$SpriteOrpheus$2217 Def00080A
+S A$SpriteOrpheus$2190 Def0007F1
+S A$SpriteOrpheus$2172 Def0007E2
+S A$SpriteOrpheus$2163 Def0007DA
+S A$SpriteOrpheus$2145 Def0007CA
+S A$SpriteOrpheus$2136 Def0007C2
+S A$SpriteOrpheus$2127 Def0007BB
+S A$SpriteOrpheus$2118 Def0007B5
+S A$SpriteOrpheus$2109 Def0007AF
+S A$SpriteOrpheus$2091 Def00079A
+S A$SpriteOrpheus$2082 Def000791
+S A$SpriteOrpheus$2073 Def000788
+S A$SpriteOrpheus$2064 Def000780
+S A$SpriteOrpheus$2046 Def000771
+S A$SpriteOrpheus$2037 Def000765
+S A$SpriteOrpheus$2028 Def00075E
+S A$SpriteOrpheus$2019 Def000755
+S A$SpriteOrpheus$1911 Def0006ED
+S A$SpriteOrpheus$1902 Def0006D9
+S A$SpriteOrpheus$1821 Def000699
+S A$SpriteOrpheus$1812 Def000690
+S A$SpriteOrpheus$1803 Def000683
+S A$SpriteOrpheus$1722 Def000645
+S A$SpriteOrpheus$1650 Def000608
+S A$SpriteOrpheus$1632 Def0005FA
+S A$SpriteOrpheus$1623 Def0005EF
+S A$SpriteOrpheus$1614 Def0005E2
+S A$SpriteOrpheus$1605 Def0005D9
+S A$SpriteOrpheus$1533 Def00058C
+S A$SpriteOrpheus$1524 Def000583
+S A$SpriteOrpheus$1515 Def000579
+S A$SpriteOrpheus$1470 Def00054E
+S A$SpriteOrpheus$1461 Def000547
+S A$SpriteOrpheus$1443 Def000534
+S A$SpriteOrpheus$1434 Def000528
+S A$SpriteOrpheus$1425 Def000521
+S A$SpriteOrpheus$1416 Def000515
+S A$SpriteOrpheus$1407 Def00050B
+S A$SpriteOrpheus$1380 Def0004EA
+S A$SpriteOrpheus$1362 Def0004D7
+S A$SpriteOrpheus$1353 Def0004CC
+S A$SpriteOrpheus$1344 Def0004C4
+S A$SpriteOrpheus$1335 Def0004BC
+S A$SpriteOrpheus$1326 Def0004B4
+S A$SpriteOrpheus$1290 Def00048D
+S A$SpriteOrpheus$1263 Def000476
+S A$SpriteOrpheus$1254 Def00046A
+S A$SpriteOrpheus$1164 Def00041B
+S A$SpriteOrpheus$1155 Def000407
+S A$SpriteOrpheus$1146 Def0003F6
+S A$SpriteOrpheus$1137 Def0003EF
+S A$SpriteOrpheus$1092 Def0003BC
+S A$SpriteOrpheus$1083 Def0003B0
+S A$SpriteOrpheus$1074 Def0003AD
+S A$SpriteOrpheus$1065 Def0003A4
+S A$SpriteOrpheus$1047 Def00039D
+S A$SpriteOrpheus$1038 Def000394
+S C$SpriteOrpheus.c$362$1_0$231 Def00093D
+S C$SpriteOrpheus.c$350$2_0$233 Def000915
+S C$SpriteOrpheus.c$341$2_0$233 Def0008E1
+S C$SpriteOrpheus.c$330$3_0$234 Def0008AD
+S C$SpriteOrpheus.c$323$2_0$233 Def00086B
+S C$SpriteOrpheus.c$314$2_0$233 Def00080E
+S C$SpriteOrpheus.c$305$2_0$233 Def0007C7
+S C$SpriteOrpheus.c$232$6_1$220 Def000513
+S C$SpriteOrpheus.c$208$2_0$204 Def000461
+S C$SpriteOrpheus.c$192$3_0$210 Def0003F1
+S C$SpriteOrpheus.c$154$2_0$204 Def000308
+S C$SpriteOrpheus.c$122$1_0$183 Def0001B1
+S C$SpriteOrpheus.c$114$2_0$190 Def000182
+S C$SpriteOrpheus.c$113$1_0$183 Def000169
+S C$SpriteOrpheus.c$100$2_0$186 Def000118
+S G$Update_SpriteOrpheus$0$0 Def0000B9
+S A$SpriteOrpheus$2542 Def000947
+S A$SpriteOrpheus$2533 Def000945
+S A$SpriteOrpheus$2506 Def000931
+S A$SpriteOrpheus$2470 Def00090F
+S A$SpriteOrpheus$2461 Def000904
+S A$SpriteOrpheus$2452 Def0008FD
+S A$SpriteOrpheus$2434 Def0008F0
+S A$SpriteOrpheus$2425 Def0008E5
+S A$SpriteOrpheus$2407 Def0008D1
+S A$SpriteOrpheus$2371 Def0008B4
+S A$SpriteOrpheus$2353 Def000898
+S A$SpriteOrpheus$2344 Def000888
+S A$SpriteOrpheus$2335 Def00087C
+S A$SpriteOrpheus$2326 Def000873
+S A$SpriteOrpheus$2308 Def000868
+S A$SpriteOrpheus$2281 Def000848
+S A$SpriteOrpheus$2236 Def00081B
+S A$SpriteOrpheus$2227 Def000814
+S A$SpriteOrpheus$2218 Def00080B
+S A$SpriteOrpheus$2209 Def000802
+S A$SpriteOrpheus$2191 Def0007F2
+S A$SpriteOrpheus$2182 Def0007EA
+S A$SpriteOrpheus$2173 Def0007E3
+S A$SpriteOrpheus$2164 Def0007DD
+S A$SpriteOrpheus$2155 Def0007D7
+S A$SpriteOrpheus$2146 Def0007CB
+S A$SpriteOrpheus$2137 Def0007C3
+S A$SpriteOrpheus$2128 Def0007BC
+S A$SpriteOrpheus$2119 Def0007B6
+S A$SpriteOrpheus$2092 Def00079D
+S A$SpriteOrpheus$2083 Def000792
+S A$SpriteOrpheus$2074 Def000789
+S A$SpriteOrpheus$2065 Def000783
+S A$SpriteOrpheus$2056 Def00077D
+S A$SpriteOrpheus$2047 Def000774
+S A$SpriteOrpheus$2038 Def000768
+S A$SpriteOrpheus$2029 Def00075F
+S A$SpriteOrpheus$1912 Def0006F0
+S A$SpriteOrpheus$1903 Def0006DA
+S A$SpriteOrpheus$1813 Def000691
+S A$SpriteOrpheus$1804 Def000684
+S A$SpriteOrpheus$1723 Def000646
+S A$SpriteOrpheus$1633 Def0005FB
+S A$SpriteOrpheus$1624 Def0005F0
+S A$SpriteOrpheus$1615 Def0005E4
+S A$SpriteOrpheus$1606 Def0005DA
+S A$SpriteOrpheus$1570 Def0005B0
+S A$SpriteOrpheus$1552 Def00059E
+S A$SpriteOrpheus$1534 Def00058D
+S A$SpriteOrpheus$1525 Def000584
+S A$SpriteOrpheus$1516 Def00057A
+S A$SpriteOrpheus$1480 Def000557
+S A$SpriteOrpheus$1471 Def00054F
+S A$SpriteOrpheus$1462 Def000548
+S A$SpriteOrpheus$1453 Def00053C
+S A$SpriteOrpheus$1444 Def000536
+S A$SpriteOrpheus$1435 Def000529
+S A$SpriteOrpheus$1426 Def000522
+S A$SpriteOrpheus$1417 Def000516
+S A$SpriteOrpheus$1408 Def00050C
+S A$SpriteOrpheus$1390 Def0004F7
+S A$SpriteOrpheus$1381 Def0004ED
+S A$SpriteOrpheus$1372 Def0004DF
+S A$SpriteOrpheus$1363 Def0004DA
+S A$SpriteOrpheus$1354 Def0004CD
+S A$SpriteOrpheus$1345 Def0004C5
+S A$SpriteOrpheus$1336 Def0004BD
+S A$SpriteOrpheus$1327 Def0004B6
+S A$SpriteOrpheus$1318 Def0004A9
+S A$SpriteOrpheus$1291 Def00048E
+S A$SpriteOrpheus$1264 Def000479
+S A$SpriteOrpheus$1165 Def00041E
+S A$SpriteOrpheus$1156 Def000408
+S A$SpriteOrpheus$1147 Def0003F8
+S A$SpriteOrpheus$1093 Def0003BD
+S A$SpriteOrpheus$1084 Def0003B2
+S A$SpriteOrpheus$1075 Def0003AE
+S A$SpriteOrpheus$1066 Def0003A7
+S A$SpriteOrpheus$1048 Def00039E
+S A$SpriteOrpheus$1039 Def000397
+S C$SpriteOrpheus.c$363$1_0$231 Def00093D
+S C$SpriteOrpheus.c$342$2_0$233 Def0008EB
+S C$SpriteOrpheus.c$331$3_0$234 Def0008BD
+S C$SpriteOrpheus.c$324$2_0$233 Def00086E
+S C$SpriteOrpheus.c$315$2_0$233 Def000819
+S C$SpriteOrpheus.c$306$2_0$233 Def0007D7
+S C$SpriteOrpheus.c$233$6_1$220 Def000561
+S C$SpriteOrpheus.c$209$2_0$204 Def000463
+S C$SpriteOrpheus.c$193$3_0$210 Def0003F6
+S C$SpriteOrpheus.c$155$2_0$204 Def00030B
+S C$SpriteOrpheus.c$130$2_1$183 Def000210
+S C$SpriteOrpheus.c$123$1_0$183 Def0001BF
+S C$SpriteOrpheus.c$115$2_0$190 Def000186
+S C$SpriteOrpheus.c$105$1_0$183 Def000136
+S A$SpriteOrpheus$2534 Def000946
+S A$SpriteOrpheus$2507 Def000934
+S A$SpriteOrpheus$2480 Def00091E
+S A$SpriteOrpheus$2471 Def000912
+S A$SpriteOrpheus$2462 Def000907
+S A$SpriteOrpheus$2426 Def0008E6
+S A$SpriteOrpheus$2408 Def0008D3
+S A$SpriteOrpheus$2390 Def0008C3
+S A$SpriteOrpheus$2372 Def0008B7
+S A$SpriteOrpheus$2354 Def00089B
+S A$SpriteOrpheus$2345 Def00088B
+S A$SpriteOrpheus$2336 Def00087F
+S A$SpriteOrpheus$2327 Def000876
+S A$SpriteOrpheus$2309 Def000869
+S A$SpriteOrpheus$2291 Def00084F
+S A$SpriteOrpheus$2282 Def000849
+S A$SpriteOrpheus$2273 Def000840
+S A$SpriteOrpheus$2237 Def00081C
+S A$SpriteOrpheus$2228 Def000815
+S A$SpriteOrpheus$2219 Def00080C
+S A$SpriteOrpheus$2192 Def0007F3
+S A$SpriteOrpheus$2183 Def0007EB
+S A$SpriteOrpheus$2174 Def0007E4
+S A$SpriteOrpheus$2165 Def0007DE
+S A$SpriteOrpheus$2147 Def0007CE
+S A$SpriteOrpheus$2138 Def0007C4
+S A$SpriteOrpheus$2129 Def0007BD
+S A$SpriteOrpheus$2093 Def00079E
+S A$SpriteOrpheus$2075 Def00078A
+S A$SpriteOrpheus$2066 Def000784
+S A$SpriteOrpheus$2048 Def000775
+S A$SpriteOrpheus$2039 Def00076B
+S A$SpriteOrpheus$1940 Def000710
+S A$SpriteOrpheus$1931 Def000707
+S A$SpriteOrpheus$1913 Def0006F3
+S A$SpriteOrpheus$1841 Def0006A9
+S A$SpriteOrpheus$1832 Def00069F
+S A$SpriteOrpheus$1814 Def000694
+S A$SpriteOrpheus$1805 Def000687
+S A$SpriteOrpheus$1760 Def000656
+S A$SpriteOrpheus$1724 Def000647
+S A$SpriteOrpheus$1706 Def000631
+S A$SpriteOrpheus$1670 Def00060E
+S A$SpriteOrpheus$1634 Def0005FC
+S A$SpriteOrpheus$1625 Def0005F1
+S A$SpriteOrpheus$1616 Def0005E5
+S A$SpriteOrpheus$1607 Def0005DB
+S A$SpriteOrpheus$1580 Def0005BA
+S A$SpriteOrpheus$1571 Def0005B1
+S A$SpriteOrpheus$1553 Def0005A0
+S A$SpriteOrpheus$1535 Def00058F
+S A$SpriteOrpheus$1526 Def000585
+S A$SpriteOrpheus$1517 Def00057B
+S A$SpriteOrpheus$1481 Def000558
+S A$SpriteOrpheus$1472 Def000550
+S A$SpriteOrpheus$1463 Def000549
+S A$SpriteOrpheus$1454 Def00053D
+S A$SpriteOrpheus$1445 Def000537
+S A$SpriteOrpheus$1436 Def00052C
+S A$SpriteOrpheus$1427 Def000523
+S A$SpriteOrpheus$1418 Def000517
+S A$SpriteOrpheus$1409 Def00050D
+S A$SpriteOrpheus$1391 Def0004F8
+S A$SpriteOrpheus$1382 Def0004EF
+S A$SpriteOrpheus$1373 Def0004E1
+S A$SpriteOrpheus$1364 Def0004DD
+S A$SpriteOrpheus$1355 Def0004CF
+S A$SpriteOrpheus$1346 Def0004C6
+S A$SpriteOrpheus$1337 Def0004BF
+S A$SpriteOrpheus$1328 Def0004B7
+S A$SpriteOrpheus$1319 Def0004AB
+S A$SpriteOrpheus$1292 Def00048F
+S A$SpriteOrpheus$1283 Def000483
+S A$SpriteOrpheus$1247 Def000463
+S A$SpriteOrpheus$1229 Def000454
+S A$SpriteOrpheus$1193 Def000436
+S A$SpriteOrpheus$1175 Def000427
+S A$SpriteOrpheus$1166 Def000421
+S A$SpriteOrpheus$1148 Def0003FB
+S A$SpriteOrpheus$1094 Def0003BE
+S A$SpriteOrpheus$1085 Def0003B5
+S C$SpriteOrpheus.c$364$1_0$231 Def000947
+S C$SpriteOrpheus.c$343$2_0$233 Def0008F3
+S C$SpriteOrpheus.c$325$2_0$233 Def00086E
+S C$SpriteOrpheus.c$316$2_0$233 Def000829
+S C$SpriteOrpheus.c$307$2_0$233 Def0007DA
+S C$SpriteOrpheus.c$280$2_0$233 Def000702
+S C$SpriteOrpheus.c$251$3_0$225 Def000613
+S C$SpriteOrpheus.c$242$3_1$215 Def0005AB
+S C$SpriteOrpheus.c$222$4_1$216 Def0004C1
+S C$SpriteOrpheus.c$181$3_0$205 Def0003B0
+S C$SpriteOrpheus.c$161$4_0$206 Def00032C
+S C$SpriteOrpheus.c$156$2_0$204 Def00030B
+S C$SpriteOrpheus.c$131$2_1$183 Def000220
+S C$SpriteOrpheus.c$116$2_0$190 Def000193
+S A$SpriteOrpheus$2562 Def00094D
+S A$SpriteOrpheus$2481 Def00091F
+S A$SpriteOrpheus$2472 Def000913
+S A$SpriteOrpheus$2427 Def0008E7
+S A$SpriteOrpheus$2409 Def0008D4
+S A$SpriteOrpheus$2391 Def0008C6
+S A$SpriteOrpheus$2373 Def0008B8
+S A$SpriteOrpheus$2355 Def00089E
+S A$SpriteOrpheus$2346 Def00088C
+S A$SpriteOrpheus$2292 Def000851
+S A$SpriteOrpheus$2283 Def00084A
+S A$SpriteOrpheus$2274 Def000841
+S A$SpriteOrpheus$2265 Def000838
+S A$SpriteOrpheus$2247 Def000829
+S A$SpriteOrpheus$2238 Def00081D
+S A$SpriteOrpheus$2229 Def000816
+S A$SpriteOrpheus$2193 Def0007F6
+S A$SpriteOrpheus$2184 Def0007EC
+S A$SpriteOrpheus$2175 Def0007E5
+S A$SpriteOrpheus$2148 Def0007D1
+S A$SpriteOrpheus$2139 Def0007C5
+S A$SpriteOrpheus$2094 Def00079F
+S A$SpriteOrpheus$2076 Def00078B
+S A$SpriteOrpheus$2049 Def000776
+S A$SpriteOrpheus$1950 Def000718
+S A$SpriteOrpheus$1941 Def000711
+S A$SpriteOrpheus$1932 Def000708
+S A$SpriteOrpheus$1914 Def0006F6
+S A$SpriteOrpheus$1905 Def0006DB
+S A$SpriteOrpheus$1842 Def0006AB
+S A$SpriteOrpheus$1833 Def0006A0
+S A$SpriteOrpheus$1806 Def000688
+S A$SpriteOrpheus$1770 Def000662
+S A$SpriteOrpheus$1761 Def000659
+S A$SpriteOrpheus$1725 Def000648
+S A$SpriteOrpheus$1716 Def00063D
+S A$SpriteOrpheus$1707 Def000634
+S A$SpriteOrpheus$1635 Def0005FD
+S A$SpriteOrpheus$1626 Def0005F3
+S A$SpriteOrpheus$1617 Def0005E7
+S A$SpriteOrpheus$1608 Def0005DC
+S A$SpriteOrpheus$1590 Def0005C6
+S A$SpriteOrpheus$1581 Def0005BB
+S A$SpriteOrpheus$1572 Def0005B2
+S A$SpriteOrpheus$1554 Def0005A1
+S A$SpriteOrpheus$1545 Def000598
+S A$SpriteOrpheus$1536 Def000591
+S A$SpriteOrpheus$1527 Def000586
+S A$SpriteOrpheus$1518 Def00057C
+S A$SpriteOrpheus$1491 Def000561
+S A$SpriteOrpheus$1482 Def000559
+S A$SpriteOrpheus$1455 Def00053E
+S A$SpriteOrpheus$1446 Def000538
+S A$SpriteOrpheus$1437 Def00052D
+S A$SpriteOrpheus$1419 Def000518
+S A$SpriteOrpheus$1392 Def0004F9
+S A$SpriteOrpheus$1383 Def0004F0
+S A$SpriteOrpheus$1374 Def0004E2
+S A$SpriteOrpheus$1356 Def0004D0
+S A$SpriteOrpheus$1347 Def0004C8
+S A$SpriteOrpheus$1329 Def0004B8
+S A$SpriteOrpheus$1293 Def000490
+S A$SpriteOrpheus$1284 Def000484
+S A$SpriteOrpheus$1248 Def000466
+S A$SpriteOrpheus$1239 Def000461
+S A$SpriteOrpheus$1194 Def000438
+S A$SpriteOrpheus$1185 Def000434
+S A$SpriteOrpheus$1176 Def000429
+S A$SpriteOrpheus$1167 Def000424
+S A$SpriteOrpheus$1158 Def000409
+S A$SpriteOrpheus$1149 Def0003FC
+S A$SpriteOrpheus$1095 Def0003BF
+S C$SpriteOrpheus.c$344$2_0$233 Def0008F5
+S C$SpriteOrpheus.c$333$3_0$234 Def0008BF
+S C$SpriteOrpheus.c$326$2_0$233 Def000873
+S C$SpriteOrpheus.c$317$2_0$233 Def000835
+S C$SpriteOrpheus.c$308$2_0$233 Def0007DA
+S C$SpriteOrpheus.c$290$2_0$233 Def00074E
+S C$SpriteOrpheus.c$281$2_0$233 Def000702
+S C$SpriteOrpheus.c$275$1_0$231 Def0006B9
+S C$SpriteOrpheus.c$252$3_0$225 Def000615
+S C$SpriteOrpheus.c$222$2_1$183 Def0004A9
+S C$SpriteOrpheus.c$162$4_0$206 Def000332
+S C$SpriteOrpheus.c$157$2_0$204 Def00030E
+S C$SpriteOrpheus.c$148$2_0$204 Def0002F5
+S C$SpriteOrpheus.c$132$2_1$183 Def000230
+S C$SpriteOrpheus.c$124$2_0$192 Def0001CA
+S C$SpriteOrpheus.c$103$2_0$186 Def00012B
+S C$SpriteOrpheus.c$101$3_0$187 Def00011E
+S XG$Start_SpriteOrpheus$0$0 Def00009A
+S A$SpriteOrpheus$2572 Def000956
+S A$SpriteOrpheus$2563 Def000950
+S A$SpriteOrpheus$2482 Def000921
+S A$SpriteOrpheus$2446 Def0008F5
+S A$SpriteOrpheus$2428 Def0008E8
+S A$SpriteOrpheus$2392 Def0008C9
+S A$SpriteOrpheus$2374 Def0008B9
+S A$SpriteOrpheus$2356 Def0008A1
+S A$SpriteOrpheus$2347 Def00088D
+S A$SpriteOrpheus$2293 Def000852
+S A$SpriteOrpheus$2284 Def00084B
+S A$SpriteOrpheus$2275 Def000842
+S A$SpriteOrpheus$2266 Def00083B
+S A$SpriteOrpheus$2257 Def000835
+S A$SpriteOrpheus$2248 Def00082C
+S A$SpriteOrpheus$2239 Def000820
+S A$SpriteOrpheus$2194 Def0007F9
+S A$SpriteOrpheus$2185 Def0007ED
+S A$SpriteOrpheus$2149 Def0007D2
+S A$SpriteOrpheus$2095 Def0007A0
+S A$SpriteOrpheus$2077 Def00078C
+S A$SpriteOrpheus$1960 Def000725
+S A$SpriteOrpheus$1951 Def000719
+S A$SpriteOrpheus$1942 Def000712
+S A$SpriteOrpheus$1933 Def000709
+S A$SpriteOrpheus$1915 Def0006F9
+S A$SpriteOrpheus$1906 Def0006DE
+S A$SpriteOrpheus$1852 Def0006B6
+S A$SpriteOrpheus$1843 Def0006AC
+S A$SpriteOrpheus$1834 Def0006A2
+S A$SpriteOrpheus$1825 Def00069A
+S A$SpriteOrpheus$1807 Def000689
+S A$SpriteOrpheus$1780 Def000668
+S A$SpriteOrpheus$1762 Def00065A
+S A$SpriteOrpheus$1744 Def000653
+S A$SpriteOrpheus$1735 Def00064E
+S A$SpriteOrpheus$1726 Def000649
+S A$SpriteOrpheus$1717 Def000640
+S A$SpriteOrpheus$1708 Def000635
+S A$SpriteOrpheus$1690 Def00061F
+S A$SpriteOrpheus$1645 Def000606
+S A$SpriteOrpheus$1636 Def0005FF
+S A$SpriteOrpheus$1627 Def0005F4
+S A$SpriteOrpheus$1618 Def0005E8
+S A$SpriteOrpheus$1609 Def0005DD
+S A$SpriteOrpheus$1591 Def0005C9
+S A$SpriteOrpheus$1582 Def0005BD
+S A$SpriteOrpheus$1573 Def0005B3
+S A$SpriteOrpheus$1555 Def0005A2
+S A$SpriteOrpheus$1546 Def00059A
+S A$SpriteOrpheus$1537 Def000592
+S A$SpriteOrpheus$1528 Def000587
+S A$SpriteOrpheus$1519 Def00057D
+S A$SpriteOrpheus$1492 Def000562
+S A$SpriteOrpheus$1483 Def00055B
+S A$SpriteOrpheus$1456 Def000541
+S A$SpriteOrpheus$1447 Def000539
+S A$SpriteOrpheus$1438 Def00052E
+S A$SpriteOrpheus$1393 Def0004FA
+S A$SpriteOrpheus$1384 Def0004F1
+S A$SpriteOrpheus$1375 Def0004E3
+S A$SpriteOrpheus$1357 Def0004D1
+S A$SpriteOrpheus$1294 Def000491
+S A$SpriteOrpheus$1285 Def000487
+S A$SpriteOrpheus$1276 Def00047D
+S A$SpriteOrpheus$1258 Def00046C
+S A$SpriteOrpheus$1195 Def000439
+S A$SpriteOrpheus$1177 Def00042A
+S A$SpriteOrpheus$1159 Def00040C
+S A$SpriteOrpheus$1096 Def0003C1
+S A$SpriteOrpheus$1069 Def0003A8
+S XG$orhpeus_change_state$0$0 Def000947
+S C$SpriteOrpheus.c$351$3_0$235 Def00092A
+S C$SpriteOrpheus.c$345$2_0$233 Def0008F5
+S C$SpriteOrpheus.c$334$3_0$234 Def0008BF
+S C$SpriteOrpheus.c$327$2_0$233 Def000878
+S C$SpriteOrpheus.c$318$2_0$233 Def000838
+S C$SpriteOrpheus.c$309$2_0$233 Def0007DF
+S C$SpriteOrpheus.c$291$2_0$233 Def00074E
+S C$SpriteOrpheus.c$282$2_0$233 Def000707
+S C$SpriteOrpheus.c$276$1_0$231 Def0006B9
+S C$SpriteOrpheus.c$253$3_0$225 Def00061C
+S C$SpriteOrpheus.c$248$1_0$223 Def000609
+S C$SpriteOrpheus.c$236$6_1$220 Def000571
+S C$SpriteOrpheus.c$234$7_1$221 Def00056D
+S C$SpriteOrpheus.c$226$3_1$215 Def0004DF
+S C$SpriteOrpheus.c$216$1_0$183 Def00047D
+S C$SpriteOrpheus.c$194$4_0$211 Def000427
+S C$SpriteOrpheus.c$183$3_0$205 Def0003B0
+S C$SpriteOrpheus.c$149$2_0$204 Def0002F5
+S C$SpriteOrpheus.c$133$2_0$193 Def000242
+S C$SpriteOrpheus.c$133$2_1$183 Def0001E1
+S C$SpriteOrpheus.c$111$2_0$188 Def00015E
+S C$SpriteOrpheus.c$104$2_0$186 Def000133
+S A$SpriteOrpheus$2573 Def000959
+S A$SpriteOrpheus$2528 Def00093D
+S A$SpriteOrpheus$2519 Def000938
+S A$SpriteOrpheus$2483 Def000924
+S A$SpriteOrpheus$2456 Def0008FF
+S A$SpriteOrpheus$2447 Def0008F8
+S A$SpriteOrpheus$2438 Def0008F3
+S A$SpriteOrpheus$2393 Def0008CA
+S A$SpriteOrpheus$2375 Def0008BA
+S A$SpriteOrpheus$2357 Def0008A4
+S A$SpriteOrpheus$2348 Def00088E
+S A$SpriteOrpheus$2339 Def000880
+S A$SpriteOrpheus$2294 Def000853
+S A$SpriteOrpheus$2285 Def00084C
+S A$SpriteOrpheus$2249 Def00082D
+S A$SpriteOrpheus$2195 Def0007FA
+S A$SpriteOrpheus$2087 Def000793
+S A$SpriteOrpheus$2078 Def00078D
+S A$SpriteOrpheus$1970 Def00072C
+S A$SpriteOrpheus$1952 Def00071C
+S A$SpriteOrpheus$1943 Def000713
+S A$SpriteOrpheus$1934 Def00070A
+S A$SpriteOrpheus$1925 Def000702
+S A$SpriteOrpheus$1916 Def0006FC
+S A$SpriteOrpheus$1907 Def0006E1
+S A$SpriteOrpheus$1880 Def0006C1
+S A$SpriteOrpheus$1853 Def0006B7
+S A$SpriteOrpheus$1844 Def0006AD
+S A$SpriteOrpheus$1835 Def0006A4
+S A$SpriteOrpheus$1826 Def00069B
+S A$SpriteOrpheus$1817 Def000695
+S A$SpriteOrpheus$1808 Def00068A
+S A$SpriteOrpheus$1790 Def000675
+S A$SpriteOrpheus$1781 Def00066B
+S A$SpriteOrpheus$1763 Def00065B
+S A$SpriteOrpheus$1736 Def000651
+S A$SpriteOrpheus$1727 Def00064A
+S A$SpriteOrpheus$1709 Def000636
+S A$SpriteOrpheus$1691 Def000620
+S A$SpriteOrpheus$1664 Def000609
+S A$SpriteOrpheus$1637 Def000600
+S A$SpriteOrpheus$1628 Def0005F5
+S A$SpriteOrpheus$1619 Def0005E9
+S A$SpriteOrpheus$1592 Def0005CA
+S A$SpriteOrpheus$1583 Def0005BE
+S A$SpriteOrpheus$1574 Def0005B4
+S A$SpriteOrpheus$1556 Def0005A4
+S A$SpriteOrpheus$1547 Def00059B
+S A$SpriteOrpheus$1538 Def000593
+S A$SpriteOrpheus$1529 Def000588
+S A$SpriteOrpheus$1493 Def000563
+S A$SpriteOrpheus$1484 Def00055C
+S A$SpriteOrpheus$1457 Def000542
+S A$SpriteOrpheus$1448 Def00053A
+S A$SpriteOrpheus$1439 Def00052F
+S A$SpriteOrpheus$1394 Def0004FC
+S A$SpriteOrpheus$1376 Def0004E4
+S A$SpriteOrpheus$1358 Def0004D2
+S A$SpriteOrpheus$1295 Def000493
+S A$SpriteOrpheus$1286 Def000488
+S A$SpriteOrpheus$1277 Def000480
+S A$SpriteOrpheus$1268 Def00047A
+S A$SpriteOrpheus$1259 Def00046F
+S A$SpriteOrpheus$1196 Def00043A
+S A$SpriteOrpheus$1178 Def00042B
+S A$SpriteOrpheus$1097 Def0003C3
+S C$SpriteOrpheus.c$352$3_0$235 Def00092A
+S C$SpriteOrpheus.c$346$2_0$233 Def0008FA
+S C$SpriteOrpheus.c$335$3_0$234 Def0008CF
+S C$SpriteOrpheus.c$319$2_0$233 Def000838
+S C$SpriteOrpheus.c$292$2_0$233 Def000753
+S C$SpriteOrpheus.c$283$2_0$233 Def000715
+S C$SpriteOrpheus.c$263$1_0$227 Def000654
+S C$SpriteOrpheus.c$247$2_1$223 Def000609
+S C$SpriteOrpheus.c$161$2_1$183 Def00053C
+S C$SpriteOrpheus.c$195$4_0$211 Def000427
+S C$SpriteOrpheus.c$170$5_0$208 Def000383
+S C$SpriteOrpheus.c$145$1_0$183 Def0002AD
+S C$SpriteOrpheus.c$134$2_0$193 Def000255
+S C$SpriteOrpheus.c$119$2_0$190 Def0001A6
+S C$SpriteOrpheus.c$117$3_0$191 Def000199
+S C$SpriteOrpheus.c$112$2_0$188 Def000166
+S _a_orpheus_walk_up Def0000A5
+S A$SpriteOrpheus$2556 Def000948
+S A$SpriteOrpheus$2529 Def000940
+S A$SpriteOrpheus$2493 Def00092A
+S A$SpriteOrpheus$2484 Def000926
+S A$SpriteOrpheus$2466 Def000909
+S A$SpriteOrpheus$2457 Def000902
+S A$SpriteOrpheus$2394 Def0008CB
+S A$SpriteOrpheus$2367 Def0008AD
+S A$SpriteOrpheus$2358 Def0008A7
+S A$SpriteOrpheus$2295 Def000856
+S A$SpriteOrpheus$2286 Def00084D
+S A$SpriteOrpheus$2196 Def0007FB
+S A$SpriteOrpheus$2178 Def0007E6
+S A$SpriteOrpheus$2169 Def0007DF
+S A$SpriteOrpheus$2088 Def000795
+S A$SpriteOrpheus$2079 Def00078E
+S A$SpriteOrpheus$1980 Def000733
+S A$SpriteOrpheus$1953 Def00071F
+S A$SpriteOrpheus$1944 Def000714
+S A$SpriteOrpheus$1935 Def00070B
+S A$SpriteOrpheus$1926 Def000705
+S A$SpriteOrpheus$1917 Def0006FF
+S A$SpriteOrpheus$1908 Def0006E4
+S A$SpriteOrpheus$1881 Def0006C2
+S A$SpriteOrpheus$1872 Def0006B9
+S A$SpriteOrpheus$1845 Def0006AF
+S A$SpriteOrpheus$1836 Def0006A6
+S A$SpriteOrpheus$1827 Def00069C
+S A$SpriteOrpheus$1818 Def000698
+S A$SpriteOrpheus$1809 Def00068D
+S A$SpriteOrpheus$1791 Def000676
+S A$SpriteOrpheus$1782 Def00066C
+S A$SpriteOrpheus$1773 Def000663
+S A$SpriteOrpheus$1764 Def00065C
+S A$SpriteOrpheus$1755 Def000654
+S A$SpriteOrpheus$1728 Def00064B
+S A$SpriteOrpheus$1692 Def000621
+S A$SpriteOrpheus$1683 Def000615
+S A$SpriteOrpheus$1674 Def000611
+S A$SpriteOrpheus$1665 Def00060C
+S A$SpriteOrpheus$1638 Def000601
+S A$SpriteOrpheus$1629 Def0005F6
+S A$SpriteOrpheus$1593 Def0005CB
+S A$SpriteOrpheus$1584 Def0005BF
+S A$SpriteOrpheus$1575 Def0005B5
+S A$SpriteOrpheus$1566 Def0005AB
+S A$SpriteOrpheus$1557 Def0005A7
+S A$SpriteOrpheus$1539 Def000594
+S A$SpriteOrpheus$1494 Def000565
+S A$SpriteOrpheus$1485 Def00055D
+S A$SpriteOrpheus$1476 Def000551
+S A$SpriteOrpheus$1467 Def00054B
+S A$SpriteOrpheus$1458 Def000543
+S A$SpriteOrpheus$1449 Def00053B
+S A$SpriteOrpheus$1377 Def0004E7
+S A$SpriteOrpheus$1359 Def0004D3
+S A$SpriteOrpheus$1287 Def000489
+S A$SpriteOrpheus$1197 Def00043C
+S A$SpriteOrpheus$1179 Def00042D
+S A$SpriteOrpheus$1098 Def0003C5
+S A$SpriteOrpheus$200 Def000031
+S C$SpriteOrpheus.c$370$2_0$237 Def000956
+S C$SpriteOrpheus.c$353$3_0$235 Def00092F
+S C$SpriteOrpheus.c$347$2_0$233 Def0008FF
+S C$SpriteOrpheus.c$293$2_0$233 Def000761
+S C$SpriteOrpheus.c$284$2_0$233 Def000725
+S C$SpriteOrpheus.c$273$1_0$227 Def0006B8
+S C$SpriteOrpheus.c$264$1_0$227 Def000656
+S C$SpriteOrpheus.c$231$5_1$219 Def00050B
+S C$SpriteOrpheus.c$228$3_1$215 Def0004DF
+S C$SpriteOrpheus.c$224$5_1$217 Def0004CA
+S C$SpriteOrpheus.c$196$4_0$211 Def000434
+S C$SpriteOrpheus.c$189$3_0$210 Def0003E2
+S C$SpriteOrpheus.c$187$2_0$204 Def0003DC
+S C$SpriteOrpheus.c$171$5_0$208 Def000386
+S C$SpriteOrpheus.c$164$4_0$207 Def00034C
+S C$SpriteOrpheus.c$158$3_0$205 Def000312
+S C$SpriteOrpheus.c$135$2_0$193 Def000268
+S C$SpriteOrpheus.c$128$1_0$183 Def0001E6
+S A$SpriteOrpheus$2557 Def00094B
+S A$SpriteOrpheus$2494 Def00092D
+S A$SpriteOrpheus$2485 Def000928
+S A$SpriteOrpheus$2476 Def000915
+S A$SpriteOrpheus$2467 Def00090C
+S A$SpriteOrpheus$2395 Def0008CC
+S A$SpriteOrpheus$2368 Def0008AF
+S A$SpriteOrpheus$2359 Def0008AA
+S A$SpriteOrpheus$2296 Def000859
+S A$SpriteOrpheus$2287 Def00084E
+S A$SpriteOrpheus$2269 Def00083C
+S A$SpriteOrpheus$2197 Def0007FC
+S A$SpriteOrpheus$2179 Def0007E9
+S A$SpriteOrpheus$2089 Def000796
+S A$SpriteOrpheus$1981 Def000734
+S A$SpriteOrpheus$1954 Def000720
+S A$SpriteOrpheus$1936 Def00070C
+S A$SpriteOrpheus$1927 Def000706
+S A$SpriteOrpheus$1909 Def0006E7
+S A$SpriteOrpheus$1882 Def0006C4
+S A$SpriteOrpheus$1873 Def0006BC
+S A$SpriteOrpheus$1846 Def0006B2
+S A$SpriteOrpheus$1837 Def0006A7
+S A$SpriteOrpheus$1828 Def00069D
+S A$SpriteOrpheus$1792 Def000677
+S A$SpriteOrpheus$1783 Def00066D
+S A$SpriteOrpheus$1765 Def00065D
+S A$SpriteOrpheus$1756 Def000655
+S A$SpriteOrpheus$1729 Def00064C
+S A$SpriteOrpheus$1693 Def000622
+S A$SpriteOrpheus$1684 Def000618
+S A$SpriteOrpheus$1675 Def000612
+S A$SpriteOrpheus$1666 Def00060D
+S A$SpriteOrpheus$1639 Def000602
+S A$SpriteOrpheus$1594 Def0005CC
+S A$SpriteOrpheus$1585 Def0005C0
+S A$SpriteOrpheus$1576 Def0005B6
+S A$SpriteOrpheus$1567 Def0005AD
+S A$SpriteOrpheus$1558 Def0005AA
+S A$SpriteOrpheus$1495 Def000566
+S A$SpriteOrpheus$1486 Def00055E
+S A$SpriteOrpheus$1477 Def000552
+S A$SpriteOrpheus$1468 Def00054C
+S A$SpriteOrpheus$1459 Def000544
+S A$SpriteOrpheus$1378 Def0004E8
+S A$SpriteOrpheus$1297 Def000495
+S A$SpriteOrpheus$1288 Def00048A
+S A$SpriteOrpheus$1198 Def00043F
+S A$SpriteOrpheus$1099 Def0003C7
+S A$SpriteOrpheus$210 Def000038
+S A$SpriteOrpheus$201 Def000032
+S G$Destroy_SpriteOrpheus$0$0 Def000961
+S C$SpriteOrpheus.c$373$1_0$236 Def000960
+S C$SpriteOrpheus.c$371$2_0$237 Def00095B
+S C$SpriteOrpheus.c$354$3_0$235 Def000931
+S C$SpriteOrpheus.c$348$2_0$233 Def000904
+S C$SpriteOrpheus.c$337$3_0$234 Def0008D1
+S C$SpriteOrpheus.c$294$2_0$233 Def000771
+S C$SpriteOrpheus.c$285$2_0$233 Def000728
+S C$SpriteOrpheus.c$279$1_0$231 Def0006C9
+S C$SpriteOrpheus.c$277$2_0$232 Def0006C7
+S C$SpriteOrpheus.c$265$1_0$227 Def00069A
+S C$SpriteOrpheus.c$254$4_0$226 Def000631
+S C$SpriteOrpheus.c$249$2_0$224 Def00060E
+S G$orpheus_recharge$0$0 Def000609
+S C$SpriteOrpheus.c$239$6_1$220 Def00059E
+S C$SpriteOrpheus.c$197$4_0$211 Def000436
+S C$SpriteOrpheus.c$172$5_0$208 Def000390
+S C$SpriteOrpheus.c$159$3_0$205 Def000316
+S C$SpriteOrpheus.c$147$1_0$183 Def0002BB
+S C$SpriteOrpheus.c$136$2_0$193 Def00027B
+S C$SpriteOrpheus.c$127$2_1$183 Def0004FF
+S A$SpriteOrpheus$2567 Def000951
+S A$SpriteOrpheus$2558 Def00094C
+S A$SpriteOrpheus$2477 Def000918
+S A$SpriteOrpheus$2468 Def00090D
+S A$SpriteOrpheus$2387 Def0008BF
+S A$SpriteOrpheus$2369 Def0008B0
+S A$SpriteOrpheus$2297 Def00085A
+S A$SpriteOrpheus$2279 Def000844
+S A$SpriteOrpheus$2189 Def0007EF
+S A$SpriteOrpheus$2099 Def0007A3
+S A$SpriteOrpheus$1991 Def00073B
+S A$SpriteOrpheus$1982 Def000735
+S A$SpriteOrpheus$1955 Def000721
+S A$SpriteOrpheus$1937 Def00070D
+S A$SpriteOrpheus$1883 Def0006C5
+S A$SpriteOrpheus$1847 Def0006B5
+S A$SpriteOrpheus$1793 Def000678
+S A$SpriteOrpheus$1766 Def00065E
+S A$SpriteOrpheus$1694 Def000623
+S A$SpriteOrpheus$1685 Def00061B
+S A$SpriteOrpheus$1595 Def0005CE
+S A$SpriteOrpheus$1586 Def0005C2
+S A$SpriteOrpheus$1577 Def0005B7
+S A$SpriteOrpheus$1568 Def0005AE
+S A$SpriteOrpheus$1496 Def000567
+S A$SpriteOrpheus$1487 Def000560
+S A$SpriteOrpheus$1478 Def000553
+S A$SpriteOrpheus$1469 Def00054D
+S A$SpriteOrpheus$1388 Def0004F4
+S A$SpriteOrpheus$1379 Def0004E9
+S A$SpriteOrpheus$1298 Def000498
+S A$SpriteOrpheus$1289 Def00048B
+S A$SpriteOrpheus$1199 Def000442
+S A$SpriteOrpheus$400 Def0000CC
+S A$SpriteOrpheus$220 Def00003F
+S A$SpriteOrpheus$211 Def000039
+S A$SpriteOrpheus$202 Def000033
+S C$SpriteOrpheus.c$355$3_0$235 Def000931
+S C$SpriteOrpheus.c$349$2_0$233 Def000909
+S C$SpriteOrpheus.c$338$3_0$234 Def0008D1
+S C$SpriteOrpheus.c$329$3_0$234 Def0008AD
+S C$SpriteOrpheus.c$295$2_0$233 Def00077D
+S C$SpriteOrpheus.c$286$2_0$233 Def000728
+S C$SpriteOrpheus.c$255$4_0$226 Def00063D
+S C$SpriteOrpheus.c$245$2_1$183 Def000608
+S C$SpriteOrpheus.c$237$7_1$222 Def000598
+S C$SpriteOrpheus.c$198$4_0$211 Def000436
+S C$SpriteOrpheus.c$173$5_0$208 Def000392
+S C$SpriteOrpheus.c$139$1_0$183 Def00028D
+S C$SpriteOrpheus.c$106$2_0$188 Def00013D
+S G$a_orpheus_walk_up$0_0$0 Def0000A5
+S _a_orpheus_walk_h Def0000AB
+S A$SpriteOrpheus$2586 Def000960
+S A$SpriteOrpheus$2577 Def00095B
+S A$SpriteOrpheus$2568 Def000954
+S A$SpriteOrpheus$2478 Def000919
+S A$SpriteOrpheus$2469 Def00090E
+S A$SpriteOrpheus$2388 Def0008C1
+S A$SpriteOrpheus$2379 Def0008BD
+S A$SpriteOrpheus$2298 Def00085B
+S A$SpriteOrpheus$1992 Def00073D
+S A$SpriteOrpheus$1983 Def000736
+S A$SpriteOrpheus$1974 Def00072D
+S A$SpriteOrpheus$1956 Def000722
+S A$SpriteOrpheus$1938 Def00070E
+S A$SpriteOrpheus$1893 Def0006C9
+S A$SpriteOrpheus$1884 Def0006C6
+S A$SpriteOrpheus$1794 Def000679
+S A$SpriteOrpheus$1785 Def00066F
+S A$SpriteOrpheus$1776 Def000664
+S A$SpriteOrpheus$1767 Def00065F
+S A$SpriteOrpheus$1695 Def000626
+S A$SpriteOrpheus$1596 Def0005CF
+S A$SpriteOrpheus$1587 Def0005C3
+S A$SpriteOrpheus$1578 Def0005B8
+S A$SpriteOrpheus$1569 Def0005AF
+S A$SpriteOrpheus$1497 Def000568
+S A$SpriteOrpheus$1479 Def000556
+S A$SpriteOrpheus$1398 Def0004FF
+S A$SpriteOrpheus$1389 Def0004F6
+S A$SpriteOrpheus$1299 Def000499
+S A$SpriteOrpheus$401 Def0000CF
+S A$SpriteOrpheus$302 Def00008B
+S A$SpriteOrpheus$221 Def000040
+S A$SpriteOrpheus$212 Def00003A
+S C$SpriteOrpheus.c$366$1_0$236 Def000948
+S C$SpriteOrpheus.c$356$3_0$235 Def000936
+S C$SpriteOrpheus.c$296$2_0$233 Def000780
+S C$SpriteOrpheus.c$287$2_0$233 Def00072D
+S C$SpriteOrpheus.c$258$3_0$225 Def00064E
+S C$SpriteOrpheus.c$256$4_0$226 Def000642
+S C$SpriteOrpheus.c$199$4_0$211 Def000443
+S C$SpriteOrpheus.c$174$5_0$208 Def000392
+S C$SpriteOrpheus.c$165$5_0$208 Def000374
+S C$SpriteOrpheus.c$129$2_1$183 Def000200
+S C$SpriteOrpheus.c$107$2_0$188 Def00013E
+S A$SpriteOrpheus$2578 Def00095E
+S A$SpriteOrpheus$2479 Def00091B
+S A$SpriteOrpheus$2389 Def0008C2
+S A$SpriteOrpheus$2299 Def00085C
+S A$SpriteOrpheus$1993 Def00073E
+S A$SpriteOrpheus$1984 Def000737
+S A$SpriteOrpheus$1975 Def00072E
+S A$SpriteOrpheus$1948 Def000715
+S A$SpriteOrpheus$1939 Def00070F
+S A$SpriteOrpheus$1894 Def0006CB
+S A$SpriteOrpheus$1876 Def0006BD
+S A$SpriteOrpheus$1858 Def0006B8
+S A$SpriteOrpheus$1795 Def00067A
+S A$SpriteOrpheus$1777 Def000665
+S A$SpriteOrpheus$1768 Def000660
+S A$SpriteOrpheus$1696 Def000627
+S A$SpriteOrpheus$1597 Def0005D0
+S A$SpriteOrpheus$1588 Def0005C4
+S A$SpriteOrpheus$1579 Def0005B9
+S A$SpriteOrpheus$1498 Def000569
+S A$SpriteOrpheus$1399 Def000502
+S A$SpriteOrpheus$510 Def000144
+S A$SpriteOrpheus$411 Def0000D6
+S A$SpriteOrpheus$321 Def00009A
+S A$SpriteOrpheus$312 Def000095
+S A$SpriteOrpheus$303 Def00008E
+S A$SpriteOrpheus$222 Def000041
+S C$SpriteOrpheus.c$367$1_0$236 Def000948
+S C$SpriteOrpheus.c$357$3_0$235 Def000938
+S C$SpriteOrpheus.c$297$2_0$233 Def000780
+S C$SpriteOrpheus.c$288$2_0$233 Def00073B
+S C$SpriteOrpheus.c$175$5_0$208 Def000394
+S C$SpriteOrpheus.c$166$5_0$208 Def000374
+S C$SpriteOrpheus.c$166$2_1$183 Def000551
+S C$SpriteOrpheus.c$108$2_0$188 Def00014B
+S A$SpriteOrpheus$2498 Def00092F
+S A$SpriteOrpheus$2399 Def0008CF
+S A$SpriteOrpheus$1994 Def00073F
+S A$SpriteOrpheus$1985 Def000738
+S A$SpriteOrpheus$1976 Def00072F
+S A$SpriteOrpheus$1949 Def000717
+S A$SpriteOrpheus$1895 Def0006CD
+S A$SpriteOrpheus$1877 Def0006C0
+S A$SpriteOrpheus$1787 Def000671
+S A$SpriteOrpheus$1778 Def000666
+S A$SpriteOrpheus$1769 Def000661
+S A$SpriteOrpheus$1697 Def000629
+S A$SpriteOrpheus$1679 Def000613
+S A$SpriteOrpheus$1598 Def0005D1
+S A$SpriteOrpheus$1589 Def0005C5
+S A$SpriteOrpheus$1499 Def00056A
+S A$SpriteOrpheus$700 Def000225
+S A$SpriteOrpheus$610 Def0001B8
+S A$SpriteOrpheus$511 Def000147
+S A$SpriteOrpheus$502 Def00013D
+S A$SpriteOrpheus$412 Def0000D8
+S A$SpriteOrpheus$313 Def000098
+S A$SpriteOrpheus$250 Def000059
+S A$SpriteOrpheus$232 Def000048
+S A$SpriteOrpheus$223 Def000042
+S A$SpriteOrpheus$160 Def00000D
+S G$orpheus_hit$0$0 Def000948
+S C$SpriteOrpheus.c$358$3_0$235 Def000938
+S C$SpriteOrpheus.c$298$2_0$233 Def000785
+S C$SpriteOrpheus.c$289$2_0$233 Def00074B
+S C$SpriteOrpheus.c$267$2_0$228 Def00069F
+S C$SpriteOrpheus.c$229$4_1$218 Def0004F4
+S C$SpriteOrpheus.c$186$3_0$209 Def0003D5
+S C$SpriteOrpheus.c$185$2_1$183 Def0003B8
+S C$SpriteOrpheus.c$176$5_0$208 Def0003A0
+S C$SpriteOrpheus.c$167$5_0$208 Def000377
+S G$a_orpheus_walk_h$0_0$0 Def0000AB
+S A$SpriteOrpheus$1995 Def000742
+S A$SpriteOrpheus$1986 Def000739
+S A$SpriteOrpheus$1977 Def000730
+S A$SpriteOrpheus$1968 Def000728
+S A$SpriteOrpheus$1896 Def0006CE
+S A$SpriteOrpheus$1797 Def00067C
+S A$SpriteOrpheus$1788 Def000672
+S A$SpriteOrpheus$1779 Def000667
+S A$SpriteOrpheus$1698 Def00062A
+S A$SpriteOrpheus$1689 Def00061C
+S A$SpriteOrpheus$1599 Def0005D3
+S A$SpriteOrpheus$800 Def00029A
+S A$SpriteOrpheus$710 Def000230
+S A$SpriteOrpheus$701 Def000226
+S A$SpriteOrpheus$620 Def0001C9
+S A$SpriteOrpheus$611 Def0001BB
+S A$SpriteOrpheus$602 Def0001AE
+S A$SpriteOrpheus$512 Def00014A
+S A$SpriteOrpheus$440 Def0000F9
+S A$SpriteOrpheus$422 Def0000E3
+S A$SpriteOrpheus$413 Def0000D9
+S A$SpriteOrpheus$251 Def00005A
+S A$SpriteOrpheus$233 Def00004B
+S A$SpriteOrpheus$224 Def000043
+S A$SpriteOrpheus$206 Def000034
+S A$SpriteOrpheus$170 Def000019
+S A$SpriteOrpheus$152 Def000000
+S C$SpriteOrpheus.c$375$1_0$239 Def000961
+S C$SpriteOrpheus.c$299$2_0$233 Def000793
+S C$SpriteOrpheus.c$177$5_0$208 Def0003A2
+S C$SpriteOrpheus.c$168$5_0$208 Def000381
+S _Update_SpriteOrpheus Def0000B9
+S A$SpriteOrpheus$1996 Def000745
+S A$SpriteOrpheus$1987 Def00073A
+S A$SpriteOrpheus$1978 Def000731
+S A$SpriteOrpheus$1969 Def00072B
+S A$SpriteOrpheus$1897 Def0006D1
+S A$SpriteOrpheus$1888 Def0006C7
+S A$SpriteOrpheus$1789 Def000674
+S A$SpriteOrpheus$1699 Def00062B
+S A$SpriteOrpheus$900 Def000315
+S A$SpriteOrpheus$810 Def0002A5
+S A$SpriteOrpheus$801 Def00029B
+S A$SpriteOrpheus$720 Def00023B
+S A$SpriteOrpheus$711 Def000231
+S A$SpriteOrpheus$702 Def000227
+S A$SpriteOrpheus$630 Def0001D1
+S A$SpriteOrpheus$612 Def0001BC
+S A$SpriteOrpheus$522 Def000151
+S A$SpriteOrpheus$441 Def0000FB
+S A$SpriteOrpheus$423 Def0000E5
+S A$SpriteOrpheus$414 Def0000DA
+S A$SpriteOrpheus$405 Def0000D0
+S A$SpriteOrpheus$252 Def00005B
+S A$SpriteOrpheus$243 Def000053
+S A$SpriteOrpheus$234 Def00004D
+S A$SpriteOrpheus$225 Def000044
+S A$SpriteOrpheus$216 Def00003B
+S A$SpriteOrpheus$207 Def000035
+S A$SpriteOrpheus$171 Def00001B
+S A$SpriteOrpheus$153 Def000002
+S C$SpriteOrpheus.c$376$1_0$239 Def000961
+S C$SpriteOrpheus.c$368$2_0$237 Def00094D
+S C$SpriteOrpheus.c$178$5_0$208 Def0003A2
+S C$SpriteOrpheus.c$169$5_0$208 Def000383
+S C$SpriteOrpheus.c$109$3_0$189 Def000151
+A _INITIALIZER size 11 flags 0 addr 0
+S FSpriteOrpheus$__xinit_countdown_step$0_0$0 Def00000F
+S FSpriteOrpheus$__xinit_orpheus_hp$0_0$0 Def000003
+S FSpriteOrpheus$__xinit_new_state$0_0$0 Def000000
+S FSpriteOrpheus$__xinit_hit_frameskip_max$0_0$0 Def000009
+S FSpriteOrpheus$__xinit_push_vx$0_0$0 Def00000B
+S FSpriteOrpheus$__xinit_push_vy$0_0$0 Def00000C
+S FSpriteOrpheus$__xinit_orpheus_state_before$0_0$0 Def00000A
+S FSpriteOrpheus$__xinit_orpheus_wait$0_0$0 Def00000D
+S FSpriteOrpheus$__xinit_countdown$0_0$0 Def00000E
+S FSpriteOrpheus$__xinit_orpheus_hp_max$0_0$0 Def000002
+S FSpriteOrpheus$__xinit_a_walk_counter_x$0_0$0 Def000005
+S FSpriteOrpheus$__xinit_hit_frameskip$0_0$0 Def000008
+S FSpriteOrpheus$__xinit_a_walk_counter_y$0_0$0 Def000006
+S FSpriteOrpheus$__xinit_orpheus_hitted$0_0$0 Def000007
+S FSpriteOrpheus$__xinit_orpheus_hit_countdown$0_0$0 Def000004
+S FSpriteOrpheus$__xinit_countdown_verso$0_0$0 Def000010
+S FSpriteOrpheus$__xinit_orpheus_power_max$0_0$0 Def000001
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 01 00
+T 00 00 00
+R 00 00 01 00
+T 00 00 00
+R 00 00 02 00
+T 00 00 00
+R 00 00 02 00
+T 01 00 00
+R 00 00 02 00
+T 01 00 00
+R 00 00 02 00
+T 02 00 00
+R 00 00 02 00
+T 02 00 00
+R 00 00 02 00
+T 03 00 00
+R 00 00 02 00
+T 03 00 00
+R 00 00 02 00
+T 04 00 00
+R 00 00 02 00
+T 04 00 00
+R 00 00 02 00
+T 05 00 00
+R 00 00 02 00
+T 05 00 00
+R 00 00 02 00
+T 06 00 00
+R 00 00 02 00
+T 06 00 00
+R 00 00 02 00
+T 07 00 00
+R 00 00 02 00
+T 07 00 00
+R 00 00 02 00
+T 08 00 00
+R 00 00 02 00
+T 08 00 00
+R 00 00 02 00
+T 09 00 00
+R 00 00 02 00
+T 09 00 00
+R 00 00 02 00
+T 0A 00 00
+R 00 00 02 00
+T 0A 00 00
+R 00 00 02 00
+T 0B 00 00
+R 00 00 02 00
+T 0B 00 00
+R 00 00 02 00
+T 0C 00 00
+R 00 00 02 00
+T 0C 00 00
+R 00 00 02 00
+T 0D 00 00
+R 00 00 02 00
+T 0D 00 00
+R 00 00 02 00
+T 0E 00 00
+R 00 00 02 00
+T 0E 00 00
+R 00 00 02 00
+T 0F 00 00
+R 00 00 02 00
+T 0F 00 00
+R 00 00 02 00
+T 10 00 00
+R 00 00 02 00
+T 10 00 00
+R 00 00 02 00
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 3E 08 F5 33 01 9B 00 21 00 00 2A 5F 56
+R 00 00 07 00 00 08 07 00 02 0B 06 00
+T 0D 00 00 CD 00 00 21 00 00 2A 46 C6 1B 4F 78 CE
+R 00 00 07 00 02 04 03 00 02 07 06 00
+T 1A 00 00 00 21 00 00 71 23 32 2A 4F 3A 47 03 03
+R 00 00 07 00 00 05 01 00
+T 27 00 00 AF 02 2A 4F 3A 47 03 03 03 AF 02 2A 4F
+R 00 00 07 00
+T 34 00 00 3A 47 03 AF 02 2A 4F 3A 47 AF 02 2A 4F
+R 00 00 07 00
+T 41 00 00 46 03 03 03 03 AF 02 FA 00 00 D6 11 28
+R 00 00 07 00 02 0B 02 00
+T 4E 00 00 14 3E D0 E0 00 00 00 21 00 00 2A 4F 46
+R 00 00 07 00 0B 07 11 00 02 0B 06 00
+T 59 00 00 03 03 03 03 0A CB A7 CB E7 02
+R 00 00 07 00
+T 63 00 00
+R 00 00 07 00
+T 63 00 00 21 07 00 36 00 21 04 00 36 00 21 05 00
+R 00 00 07 00 00 04 02 00 00 09 02 00 00 0E 02 00
+T 70 00 00 36 00 21 06 00 36 00 21 08 00 36 00 21
+R 00 00 07 00 00 06 02 00 00 0B 02 00
+T 7D 00 00 09 00 36 00 21 0D 00 36 00 21 0F 00 36
+R 00 00 07 00 00 03 02 00 00 08 02 00 00 0D 02 00
+T 8A 00 00 01 21 01 00 36 28 21 0E 00 36 28 21
+R 00 00 07 00 00 05 02 00 00 0A 02 00
+T 96 00 00 10 00 36 00 C9
+R 00 00 07 00 00 03 02 00
+T 9B 00 00
+R 00 00 07 00
+T 9B 00 00 01 05
+R 00 00 07 00
+T 9D 00 00
+R 00 00 07 00
+T 9D 00 00 02 02 03
+R 00 00 07 00
+T A0 00 00
+R 00 00 07 00
+T A0 00 00 04 0A 0A 0A 09
+R 00 00 07 00
+T A5 00 00
+R 00 00 07 00
+T A5 00 00 02 05 06
+R 00 00 07 00
+T A8 00 00
+R 00 00 07 00
+T A8 00 00 02 02 03
+R 00 00 07 00
+T AB 00 00
+R 00 00 07 00
+T AB 00 00 04 09 0A 09 08
+R 00 00 07 00
+T B0 00 00
+R 00 00 07 00
+T B0 00 00 02 00 02
+R 00 00 07 00
+T B3 00 00
+R 00 00 07 00
+T B3 00 00 02 00 05
+R 00 00 07 00
+T B6 00 00
+R 00 00 07 00
+T B6 00 00 02 00 09
+R 00 00 07 00
+T B9 00 00
+R 00 00 07 00
+T B9 00 00 E8 F7 21 06 00 CB 7E 28 2C 34 3E 08 F5
+R 00 00 07 00 00 06 02 00
+T C6 00 00 33 1E 00 00 00 21 B9 06 CD 00 00 33 FA
+R 00 00 07 00 0B 05 05 00 00 09 07 00 02 0C 12 00
+T D1 00 00 06 00 B7 20 0D 3E 02 F5 33 1E 00 00 00
+R 00 00 07 00 00 03 02 00 0B 0D 05 00
+T DC 00 00 21 B9 06 CD 00 00 33
+R 00 00 07 00 00 04 07 00 02 07 12 00
+T E3 00 00
+R 00 00 07 00
+T E3 00 00 1E 00 00 00 21 54 06 CD 00 00 C3
+R 00 00 07 00 0B 04 1A 00 00 08 07 00 02 0B 12 00
+T EC 00 00 06 06
+R 00 00 07 00 00 03 07 00
+T EE 00 00
+R 00 00 07 00
+T EE 00 00 21 06 00 5E AF 57 96 CB 7B 28 07 CB 7A
+R 00 00 07 00 00 04 02 00
+T FB 00 00 20 08 BF 18 05
+R 00 00 07 00
+T 00 01 00
+R 00 00 07 00
+T 00 01 00 CB 7A 28 01 37
+R 00 00 07 00
+T 05 01 00
+R 00 00 07 00
+T 05 01 00 30 2F 21 06 00 35 3E 09 F5 33 1E
+R 00 00 07 00 00 06 02 00
+T 10 01 00 00 00 00 21 B9 06 CD 00 00 33 FA
+R 00 00 07 00 0B 03 05 00 00 07 07 00 02 0A 12 00
+T 19 01 00 06 00 B7 20 0D 3E 03 F5 33 1E 00 00 00
+R 00 00 07 00 00 03 02 00 0B 0D 05 00
+T 24 01 00 21 B9 06 CD 00 00 33
+R 00 00 07 00 00 04 07 00 02 07 12 00
+T 2B 01 00
+R 00 00 07 00
+T 2B 01 00 1E 00 00 00 21 54 06 CD 00 00 C3
+R 00 00 07 00 0B 04 1A 00 00 08 07 00 02 0B 12 00
+T 34 01 00 06 06
+R 00 00 07 00 00 03 07 00
+T 36 01 00
+R 00 00 07 00
+T 36 01 00 21 05 00 CB 7E 28 2C 34 3E 06 F5 33 1E
+R 00 00 07 00 00 04 02 00
+T 43 01 00 00 00 00 21 B9 06 CD 00 00 33 FA
+R 00 00 07 00 0B 03 05 00 00 07 07 00 02 0A 12 00
+T 4C 01 00 05 00 B7 20 0D 3E 04 F5 33 1E 00 00 00
+R 00 00 07 00 00 03 02 00 0B 0D 05 00
+T 57 01 00 21 B9 06 CD 00 00 33
+R 00 00 07 00 00 04 07 00 02 07 12 00
+T 5E 01 00
+R 00 00 07 00
+T 5E 01 00 1E 00 00 00 21 54 06 CD 00 00 C3
+R 00 00 07 00 0B 04 1A 00 00 08 07 00 02 0B 12 00
+T 67 01 00 06 06
+R 00 00 07 00 00 03 07 00
+T 69 01 00
+R 00 00 07 00
+T 69 01 00 21 05 00 5E AF 57 96 CB 7B 28 07 CB 7A
+R 00 00 07 00 00 04 02 00
+T 76 01 00 20 08 BF 18 05
+R 00 00 07 00
+T 7B 01 00
+R 00 00 07 00
+T 7B 01 00 CB 7A 28 01 37
+R 00 00 07 00
+T 80 01 00
+R 00 00 07 00
+T 80 01 00 30 2F 21 05 00 35 3E 07 F5 33 1E
+R 00 00 07 00 00 06 02 00
+T 8B 01 00 00 00 00 21 B9 06 CD 00 00 33 FA
+R 00 00 07 00 0B 03 05 00 00 07 07 00 02 0A 12 00
+T 94 01 00 05 00 B7 20 0D 3E 05 F5 33 1E 00 00 00
+R 00 00 07 00 00 03 02 00 0B 0D 05 00
+T 9F 01 00 21 B9 06 CD 00 00 33
+R 00 00 07 00 00 04 07 00 02 07 12 00
+T A6 01 00
+R 00 00 07 00
+T A6 01 00 1E 00 00 00 21 54 06 CD 00 00 C3
+R 00 00 07 00 0B 04 1A 00 00 08 07 00 02 0B 12 00
+T AF 01 00 06 06
+R 00 00 07 00 00 03 07 00
+T B1 01 00
+R 00 00 07 00
+T B1 01 00 FA 00 00 B7 C2 06 06 FA 00 00 B7 C2
+R 00 00 07 00 02 04 0B 00 00 08 07 00 02 0B 14 00
+T BD 01 00 06 06 FA 00 00 B7 C2 06 06 FA
+R 00 00 07 00 00 03 07 00 02 06 0D 00 00 0A 07 00
+T C7 01 00 00 00 B7 C2 06 06 21 00 00 2A 4F 46 0A
+R 00 00 07 00 02 03 09 00 00 07 07 00 00 0A 01 00
+T D4 01 00 EA 00 00 0A F8 06 77 FA 00 00 F8 07 77
+R 00 00 07 00 00 04 02 00 02 0B 08 00
+T E1 01 00 FA 00 00 F8 08 32 2B 7E D6 0C 20 0B 21
+R 00 00 07 00 02 04 17 00
+T EE 01 00 04 00 7E EE 80 D6 8A D2 8C 02
+R 00 00 07 00 00 03 02 00 00 0B 07 00
+T F8 01 00
+R 00 00 07 00
+T F8 01 00 F8 06 7E D6 0B CA 8C 02 F8 07 7E E6 08
+R 00 00 07 00 00 09 07 00
+T 05 02 00 57 B7 28 07 21 00 00 36 09 18 7C
+R 00 00 07 00 00 08 02 00
+T 10 02 00
+R 00 00 07 00
+T 10 02 00 F8 07 7E E6 04 5F B7 28 07 21 00 00 36
+R 00 00 07 00 00 0D 02 00
+T 1D 02 00 08 18 6C
+R 00 00 07 00
+T 20 02 00
+R 00 00 07 00
+T 20 02 00 F8 07 7E E6 02 67 B7 28 07 21 00 00 36
+R 00 00 07 00 00 0D 02 00
+T 2D 02 00 06 18 5C
+R 00 00 07 00
+T 30 02 00
+R 00 00 07 00
+T 30 02 00 E5 F8 09 7E E1 E6 01 6F B7 28 07 21
+R 00 00 07 00
+T 3C 02 00 00 00 36 07 18 4A
+R 00 00 07 00 00 03 02 00
+T 42 02 00
+R 00 00 07 00
+T 42 02 00 E5 F8 0A CB 5E E1 28 0B 7A B7 20 07 21
+R 00 00 07 00
+T 4F 02 00 00 00 36 03 18 37
+R 00 00 07 00 00 03 02 00
+T 55 02 00
+R 00 00 07 00
+T 55 02 00 E5 F8 0A CB 56 E1 28 0B 7B B7 20 07 21
+R 00 00 07 00
+T 62 02 00 00 00 36 02 18 24
+R 00 00 07 00 00 03 02 00
+T 68 02 00
+R 00 00 07 00
+T 68 02 00 E5 F8 0A CB 4E E1 28 0B 7C B7 20 07 21
+R 00 00 07 00
+T 75 02 00 00 00 36 04 18 11
+R 00 00 07 00 00 03 02 00
+T 7B 02 00
+R 00 00 07 00
+T 7B 02 00 E5 F8 0A CB 46 E1 28 09 7D B7 20 05 21
+R 00 00 07 00
+T 88 02 00 00 00 36 05
+R 00 00 07 00 00 03 02 00
+T 8C 02 00
+R 00 00 07 00
+T 8C 02 00 0A FE 0C 28 1C FE 0B 28 18 E5 F8 09 CB
+R 00 00 07 00
+T 99 02 00 6E E1 28 10 E5 F8 0A CB 6E E1 20 08 EA
+R 00 00 07 00
+T A6 02 00 0A 00 21 00 00 36 0B
+R 00 00 07 00 00 03 02 00 00 06 02 00
+T AD 02 00
+R 00 00 07 00
+T AD 02 00 FA 00 00 F5 33 1E 00 00 00 21 B9 06 CD
+R 00 00 07 00 00 04 02 00 0B 09 05 00 00 0D 07 00
+T B8 02 00 00 00 33 3E 0C 21 00 00 96 DA 7D 04 4E
+R 00 00 07 00 02 03 12 00 00 09 02 00 00 0D 07 00
+T C5 02 00 06 00 21 CE 02 09 09 09 E9
+R 00 00 07 00 00 06 07 00
+T CE 02 00
+R 00 00 07 00
+T CE 02 00 C3 7D 04 C3 7D 04 C3 F5 02 C3
+R 00 00 07 00 00 04 07 00 00 07 07 00 00 0A 07 00
+T D8 02 00 F5 02 C3 F5 02 C3 F5 02 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T E1 02 00 00 03 C3 00 03 C3 00 03 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T EA 02 00 00 03 C3 7D 04 C3 63 04 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T F3 02 00 0B 03
+R 00 00 07 00 00 03 07 00
+T F5 02 00
+R 00 00 07 00
+T F5 02 00 1E 00 00 00 21 09 06 CD 00 00 C3
+R 00 00 07 00 0B 04 0C 00 00 08 07 00 02 0B 12 00
+T FE 02 00 7D 04
+R 00 00 07 00 00 03 07 00
+T 00 03 00
+R 00 00 07 00
+T 00 03 00 1E 00 00 00 21 54 06 CD 00 00 C3
+R 00 00 07 00 0B 04 1A 00 00 08 07 00 02 0B 12 00
+T 09 03 00 7D 04
+R 00 00 07 00 00 03 07 00
+T 0B 03 00
+R 00 00 07 00
+T 0B 03 00 21 08 00 35 C2 B8 03 21 09 00 34 7E EA
+R 00 00 07 00 00 04 02 00 00 08 07 00 00 0B 02 00
+T 18 03 00 08 00 21 00 00 2A 4F 46 FA 0B 00 B7 20
+R 00 00 07 00 00 03 02 00 00 06 01 00 00 0C 02 00
+T 25 03 00 06 FA 0C 00 B7 28 15
+R 00 00 07 00 00 05 02 00
+T 2C 03 00
+R 00 00 07 00
+T 2C 03 00 03 03 FA 0B 00 02 21 00 00 2A 4F 46 03
+R 00 00 07 00 00 06 02 00 00 0A 01 00
+T 39 03 00 03 03 FA 0C 00 02 18 6F
+R 00 00 07 00 00 06 02 00
+T 41 03 00
+R 00 00 07 00
+T 41 03 00 3E 09 21 0A 00 96 38 67 03 03 03 5E 16
+R 00 00 07 00 00 06 02 00
+T 4E 03 00 00 21 56 03 19 19 19 E9
+R 00 00 07 00 00 05 07 00
+T 56 03 00
+R 00 00 07 00
+T 56 03 00 C3 B0 03 C3 B0 03 C3 83 03 C3
+R 00 00 07 00 00 04 07 00 00 07 07 00 00 0A 07 00
+T 60 03 00 74 03 C3 92 03 C3 A2 03 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T 69 03 00 92 03 C3 A2 03 C3 83 03 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T 72 03 00 74 03
+R 00 00 07 00 00 03 07 00
+T 74 03 00
+R 00 00 07 00
+T 74 03 00 3E FF 02 21 00 00 2A 4F 46 03 03 AF 02
+R 00 00 07 00 00 07 01 00
+T 81 03 00 18 2D
+R 00 00 07 00
+T 83 03 00
+R 00 00 07 00
+T 83 03 00 3E 01 02 21 00 00 2A 4F 46 03 03 AF 02
+R 00 00 07 00 00 07 01 00
+T 90 03 00 18 1E
+R 00 00 07 00
+T 92 03 00
+R 00 00 07 00
+T 92 03 00 AF 02 21 00 00 6E FA 01 00 67 23 23 36
+R 00 00 07 00 00 06 01 00 00 0A 01 00
+T 9F 03 00 01 18 0E
+R 00 00 07 00
+T A2 03 00
+R 00 00 07 00
+T A2 03 00 AF 02 21 00 00 6E FA 01 00 67 23 23 36
+R 00 00 07 00 00 06 01 00 00 0A 01 00
+T AF 03 00 FF
+R 00 00 07 00
+T B0 03 00
+R 00 00 07 00
+T B0 03 00 1E 00 00 00 21 54 06 CD 00 00
+R 00 00 07 00 0B 04 1A 00 00 08 07 00 02 0B 12 00
+T B8 03 00
+R 00 00 07 00
+T B8 03 00 21 04 00 5E AF 57 96 CB 7B 28 07 CB 7A
+R 00 00 07 00 00 04 02 00
+T C5 03 00 20 08 BF 18 05
+R 00 00 07 00
+T CA 03 00
+R 00 00 07 00
+T CA 03 00 CB 7A 28 01 37
+R 00 00 07 00
+T CF 03 00
+R 00 00 07 00
+T CF 03 00 3E 00 17 B7 28 07 21 04 00 35 C3 7D 04
+R 00 00 07 00 00 0A 02 00 00 0E 07 00
+T DC 03 00
+R 00 00 07 00
+T DC 03 00 4F CB 41 C2 7D 04 21 04 00 36 00 21
+R 00 00 07 00 00 07 07 00 00 0A 02 00
+T E8 03 00 07 00 36 00 21 0B 00 36 00 21 0C 00 36
+R 00 00 07 00 00 03 02 00 00 08 02 00 00 0D 02 00
+T F5 03 00 00 3E 09 21 0A 00 96 DA 7D 04 4E 06 00
+R 00 00 07 00 00 07 02 00 00 0B 07 00
+T 02 04 00 21 09 04 09 09 09 E9
+R 00 00 07 00 00 04 07 00
+T 09 04 00
+R 00 00 07 00
+T 09 04 00 C3 36 04 C3 36 04 C3 36 04 C3
+R 00 00 07 00 00 04 07 00 00 07 07 00 00 0A 07 00
+T 13 04 00 27 04 C3 45 04 C3 54 04 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T 1C 04 00 45 04 C3 54 04 C3 36 04 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T 25 04 00 27 04
+R 00 00 07 00 00 03 07 00
+T 27 04 00
+R 00 00 07 00
+T 27 04 00 3E 03 F5 33 1E 00 00 00 21 B9 06 CD
+R 00 00 07 00 0B 08 05 00 00 0C 07 00
+T 31 04 00 00 00 33 18 47
+R 00 00 07 00 02 03 12 00
+T 36 04 00
+R 00 00 07 00
+T 36 04 00 3E 02 F5 33 1E 00 00 00 21 B9 06 CD
+R 00 00 07 00 0B 08 05 00 00 0C 07 00
+T 40 04 00 00 00 33 18 38
+R 00 00 07 00 02 03 12 00
+T 45 04 00
+R 00 00 07 00
+T 45 04 00 3E 04 F5 33 1E 00 00 00 21 B9 06 CD
+R 00 00 07 00 0B 08 05 00 00 0C 07 00
+T 4F 04 00 00 00 33 18 29
+R 00 00 07 00 02 03 12 00
+T 54 04 00
+R 00 00 07 00
+T 54 04 00 3E 05 F5 33 1E 00 00 00 21 B9 06 CD
+R 00 00 07 00 0B 08 05 00 00 0C 07 00
+T 5E 04 00 00 00 33 18 1A
+R 00 00 07 00 02 03 12 00
+T 63 04 00
+R 00 00 07 00
+T 63 04 00 21 0D 00 35 3E 01 96 38 11 FA 0A 00 F5
+R 00 00 07 00 00 04 02 00 00 0D 02 00
+T 70 04 00 33 1E 00 00 00 21 B9 06 CD 00 00 33 C3
+R 00 00 07 00 0B 05 05 00 00 09 07 00 02 0C 12 00
+T 7B 04 00 06 06
+R 00 00 07 00 00 03 07 00
+T 7D 04 00
+R 00 00 07 00
+T 7D 04 00 FA 01 00 6F 26 00 29 11 00 00 19 5D 54
+R 00 00 07 00 02 04 13 00 02 0B 07 00
+T 8A 04 00 1A F8 04 22 13 1A 77 F8 08 36 00
+R 00 00 07 00
+T 95 04 00
+R 00 00 07 00
+T 95 04 00 21 00 00 46 F8 08 7E 90 CA 06 06 21
+R 00 00 07 00 02 04 13 00 00 0C 07 00
+T A1 04 00 00 00 6E FA 01 00 67 4E F8 04 2A 5F 56
+R 00 00 07 00 00 03 01 00 00 07 01 00
+T AE 04 00 21 13 00 19 E5 7D F8 04 77 E1 7C F8 03
+R 00 00 07 00
+T BB 04 00 77 79 D6 0B 20 1E 2B 2A 5F 56 1A FE 02
+R 00 00 07 00
+T C8 04 00 20 15 23 F5 33 3E 0C F5 33 5E 23 56 D5
+R 00 00 07 00
+T D5 04 00 1E 00 00 00 21 00 00 CD 00 00 E8 04
+R 00 00 07 00 0B 04 10 00 02 08 04 00 02 0B 12 00
+T DF 04 00
+R 00 00 07 00
+T DF 04 00 F8 04 4E 23 46 21 00 00 5E 23 56 CD
+R 00 00 07 00 02 09 06 00
+T EB 04 00 00 00 F8 07 77 B7 CA AB 05 F8 02 2A 5F
+R 00 00 07 00 02 03 0E 00 00 0A 07 00
+T F8 04 00 56 1A D6 02 C2 AB 05 FA 00 00 F8 00 77
+R 00 00 07 00 00 08 07 00 00 0B 01 00
+T 05 05 00 FA 01 00 F8 01 77 D1 D5 1A D6 0C CA
+R 00 00 07 00 00 04 01 00
+T 11 05 00 AB 05 F8 04 2A 5F 56 21 1B 00 19 E5 7D
+R 00 00 07 00 00 03 07 00
+T 1E 05 00 F8 08 77 E1 7C F8 07 32 2A 5F 56 21
+R 00 00 07 00
+T 2A 05 00 02 00 19 E5 7D F8 06 77 E1 7C F8 05 32
+R 00 00 07 00
+T 37 05 00 2A 5F 56 1A 4F D1 D5 21 02 00 19 E5 7D
+R 00 00 07 00
+T 44 05 00 F8 04 77 E1 7C F8 03 32 2A 5F 56 1A 47
+R 00 00 07 00
+T 51 05 00 D1 D5 21 03 00 19 E5 7D F8 06 77 E1 7C
+R 00 00 07 00
+T 5E 05 00 F8 05 77 79 90 28 0C 2B 2A 5F 56 1A B7
+R 00 00 07 00
+T 6B 05 00 20 04 21 0B 00 71
+R 00 00 07 00 00 06 02 00
+T 71 05 00
+R 00 00 07 00
+T 71 05 00 F8 06 2A 5F 56 21 03 00 19 33 33 5D 54
+R 00 00 07 00
+T 7E 05 00 D5 1A F8 06 32 2B 2A 5F 2A 23 57 1A 32
+R 00 00 07 00
+T 8B 05 00 2A 96 28 0F F8 02 2A 5F 56 1A B7 20 06
+R 00 00 07 00
+T 98 05 00 F8 06 7E EA 0C 00
+R 00 00 07 00 00 07 02 00
+T 9E 05 00
+R 00 00 07 00
+T 9E 05 00 3E 0C F5 33 1E 00 00 00 21 B9 06 CD
+R 00 00 07 00 0B 08 05 00 00 0C 07 00
+T A8 05 00 00 00 33
+R 00 00 07 00 02 03 12 00
+T AB 05 00
+R 00 00 07 00
+T AB 05 00 F8 08 34 3A 2B 22 AF 32 2A 5F 56 6B 62
+R 00 00 07 00
+T B8 05 00 23 E5 7D F8 06 77 E1 7C F8 05 32 2A 5F
+R 00 00 07 00
+T C5 05 00 56 21 00 00 19 E5 7D F8 08 77 E1 7C F8
+R 00 00 07 00 02 05 13 00
+T D2 05 00 07 32 2A 5F 56 1A 77 3A 22 AF 32 3A 2B
+R 00 00 07 00
+T DF 05 00 22 AF 32 CB 26 23 CB 16 2B 2A 5F 56 21
+R 00 00 07 00
+T EC 05 00 00 00 19 E5 7D F8 08 77 E1 7C F8 07 32
+R 00 00 07 00 02 03 07 00
+T F9 05 00 2A 5F 56 1A F8 04 22 13 1A 77 C3 95 04
+R 00 00 07 00 00 0E 07 00
+T 06 06 00
+R 00 00 07 00
+T 06 06 00 E8 09 C9
+R 00 00 07 00
+T 09 06 00
+R 00 00 07 00
+T 09 06 00 FA 10 00 B7 C8 21 0F 00 35 C0 36 01 FA
+R 00 00 07 00 00 04 02 00 00 09 02 00
+T 16 06 00 0E 00 21 10 00 86 EA 0E 00 4F 07 9F 47
+R 00 00 07 00 00 03 02 00 00 06 02 00 00 0A 02 00
+T 23 06 00 21 01 00 5E 16 00 7B 91 20 21 7A 90 20
+R 00 00 07 00 00 04 02 00
+T 30 06 00 1D 21 00 00 2A 4F 46 21 04 00 09 36 FF
+R 00 00 07 00 00 05 01 00
+T 3D 06 00 21 10 00 36 00 21 00 00 2A 4F 46 03 03
+R 00 00 07 00 00 04 02 00 00 09 01 00
+T 4A 06 00 03 03 AF 02
+R 00 00 07 00
+T 4E 06 00
+R 00 00 07 00
+T 4E 06 00 21 00 00 36 01 C9
+R 00 00 07 00 02 04 00 00
+T 54 06 00
+R 00 00 07 00
+T 54 06 00 3B 3B 21 00 00 2A 4F 46 69 60 23 33 33
+R 00 00 07 00 00 06 01 00
+T 61 06 00 E5 69 60 23 23 23 56 21 00 00 7E 3C 18
+R 00 00 07 00 02 0B 16 00
+T 6E 06 00 02
+R 00 00 07 00
+T 6F 06 00
+R 00 00 07 00
+T 6F 06 00 CB 22
+R 00 00 07 00
+T 71 06 00
+R 00 00 07 00
+T 71 06 00 3D 20 FB 03 03 0A 46 4F 04 18 02
+R 00 00 07 00
+T 7C 06 00
+R 00 00 07 00
+T 7C 06 00 CB 21
+R 00 00 07 00
+T 7E 06 00
+R 00 00 07 00
+T 7E 06 00 05 20 FB D5 33 79 21 00 00 5E 23 56 CD
+R 00 00 07 00 02 0A 06 00
+T 8B 06 00 00 00 4F E1 E5 71 21 00 00 6E FA 01 00
+R 00 00 07 00 02 03 01 00 00 0A 01 00 00 0E 01 00
+T 98 06 00 67 23 4E 79 B7 28 17 79 D6 78 38 12 3E
+R 00 00 07 00
+T A5 06 00 7F 91 38 0D 3E 0C F5 33 1E 00 00 00 21
+R 00 00 07 00 0B 0C 05 00
+T B0 06 00 B9 06 CD 00 00 33
+R 00 00 07 00 00 03 07 00 02 06 12 00
+T B6 06 00
+R 00 00 07 00
+T B6 06 00 33 33 C9
+R 00 00 07 00
+T B9 06 00
+R 00 00 07 00
+T B9 06 00 21 00 00 6E FA 01 00 67 4E F8 06 7E 91
+R 00 00 07 00 00 04 01 00 00 08 01 00
+T C6 06 00 C8 18 00
+R 00 00 07 00
+T C9 06 00
+R 00 00 07 00
+T C9 06 00 3E 0C F8 06 96 DA 3D 09 4E 06 00 21
+R 00 00 07 00 00 09 07 00
+T D5 06 00 DB 06 09 09 09 E9
+R 00 00 07 00 00 03 07 00
+T DB 06 00
+R 00 00 07 00
+T DB 06 00 C3 3D 09 C3 3D 09 C3 28 07 C3
+R 00 00 07 00 00 04 07 00 00 07 07 00 00 0A 07 00
+T E5 06 00 02 07 C3 4E 07 C3 80 07 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T EE 06 00 02 08 C3 38 08 C3 DA 07 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T F7 06 00 B2 07 C3 3D 09 C3 F5 08 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T 00 07 00 6E 08
+R 00 00 07 00 00 03 07 00
+T 02 07 00
+R 00 00 07 00
+T 02 07 00 21 00 00 2A 4F 3A 47 03 03 03 AF 02 2A
+R 00 00 07 00 00 04 01 00
+T 0F 07 00 4F 46 03 03 AF 02 3E 04 F5 33 01 9D 00
+R 00 00 07 00 00 0E 07 00
+T 1C 07 00 21 00 00 2A 5F 56 CD 00 00 C3 3D 09
+R 00 00 07 00 02 04 06 00 02 0A 03 00 00 0D 07 00
+T 28 07 00
+R 00 00 07 00
+T 28 07 00 21 00 00 2A 4F 3A 47 03 03 03 AF 02 2A
+R 00 00 07 00 00 04 01 00
+T 35 07 00 4F 46 03 03 AF 02 3E 04 F5 33 01 9B 00
+R 00 00 07 00 00 0E 07 00
+T 42 07 00 21 00 00 2A 5F 56 CD 00 00 C3 3D 09
+R 00 00 07 00 02 04 06 00 02 0A 03 00 00 0D 07 00
+T 4E 07 00
+R 00 00 07 00
+T 4E 07 00 21 00 00 2A 4F 3A 47 03 03 03 AF 02 2A
+R 00 00 07 00 00 04 01 00
+T 5B 07 00 4F 46 03 03 AF 02 3E 04 F5 33 01 A0 00
+R 00 00 07 00 00 0E 07 00
+T 68 07 00 21 00 00 2A 5F 56 CD 00 00 21 00 00 2A
+R 00 00 07 00 02 04 06 00 02 0A 03 00 02 0D 06 00
+T 75 07 00 4F 46 21 10 00 09 36 02 C3 3D 09
+R 00 00 07 00 00 0C 07 00
+T 80 07 00
+R 00 00 07 00
+T 80 07 00 21 00 00 2A 4F 3A 47 03 03 AF 02 2A 4F
+R 00 00 07 00 00 04 01 00
+T 8D 07 00 46 03 03 03 AF 02 3E 04 F5 33 01 A0 00
+R 00 00 07 00 00 0E 07 00
+T 9A 07 00 21 00 00 2A 5F 56 CD 00 00 21 00 00 2A
+R 00 00 07 00 02 04 06 00 02 0A 03 00 02 0D 06 00
+T A7 07 00 4F 46 21 10 00 09 36 00 C3 3D 09
+R 00 00 07 00 00 0C 07 00
+T B2 07 00
+R 00 00 07 00
+T B2 07 00 21 00 00 2A 4F 3A 47 03 03 AF 02 6E FA
+R 00 00 07 00 00 04 01 00
+T BF 07 00 01 00 67 23 23 23 36 01 3E 0C F5 33 01
+R 00 00 07 00 00 03 01 00
+T CC 07 00 A8 00 21 00 00 2A 5F 56 CD 00 00 C3
+R 00 00 07 00 00 03 07 00 02 06 06 00 02 0C 03 00
+T D8 07 00 3D 09
+R 00 00 07 00 00 03 07 00
+T DA 07 00
+R 00 00 07 00
+T DA 07 00 21 00 00 2A 4F 3A 47 03 03 AF 02 6E FA
+R 00 00 07 00 00 04 01 00
+T E7 07 00 01 00 67 23 23 23 36 FF 3E 08 F5 33 01
+R 00 00 07 00 00 03 01 00
+T F4 07 00 A5 00 21 00 00 2A 5F 56 CD 00 00 C3
+R 00 00 07 00 00 03 07 00 02 06 06 00 02 0C 03 00
+T 00 08 00 3D 09
+R 00 00 07 00 00 03 07 00
+T 02 08 00
+R 00 00 07 00
+T 02 08 00 21 00 00 6E FA 01 00 67 23 23 36 FF 21
+R 00 00 07 00 00 04 01 00 00 08 01 00
+T 0F 08 00 00 00 2A 4F 46 03 03 03 AF 02 3E 0C F5
+R 00 00 07 00 00 03 01 00
+T 1C 08 00 33 01 AB 00 21 00 00 2A 5F 56 CD 00 00
+R 00 00 07 00 00 05 07 00 02 08 06 00 02 0E 03 00
+T 29 08 00 21 00 00 2A 4F 46 21 10 00 09 36 02 C3
+R 00 00 07 00 02 04 06 00
+T 36 08 00 3D 09
+R 00 00 07 00 00 03 07 00
+T 38 08 00
+R 00 00 07 00
+T 38 08 00 21 00 00 6E FA 01 00 67 23 23 36 01 21
+R 00 00 07 00 00 04 01 00 00 08 01 00
+T 45 08 00 00 00 2A 4F 46 03 03 03 AF 02 3E 0C F5
+R 00 00 07 00 00 03 01 00
+T 52 08 00 33 01 AB 00 21 00 00 2A 5F 56 CD 00 00
+R 00 00 07 00 00 05 07 00 02 08 06 00 02 0E 03 00
+T 5F 08 00 21 00 00 2A 4F 46 21 10 00 09 36 00 C3
+R 00 00 07 00 02 04 06 00
+T 6C 08 00 3D 09
+R 00 00 07 00 00 03 07 00
+T 6E 08 00
+R 00 00 07 00
+T 6E 08 00 21 09 00 36 01 21 08 00 36 01 21 00 00
+R 00 00 07 00 00 04 02 00 00 09 02 00 00 0E 01 00
+T 7B 08 00 6E FA 01 00 67 4E 3E 09 91 38 5B 06 00
+R 00 00 07 00 00 05 01 00
+T 88 08 00 21 8F 08 09 09 09 E9
+R 00 00 07 00 00 04 07 00
+T 8F 08 00
+R 00 00 07 00
+T 8F 08 00 C3 E1 08 C3 E1 08 C3 BF 08 C3
+R 00 00 07 00 00 04 07 00 00 07 07 00 00 0A 07 00
+T 99 08 00 AD 08 C3 D1 08 C3 D1 08 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T A2 08 00 D1 08 C3 D1 08 C3 BF 08 C3
+R 00 00 07 00 00 03 07 00 00 06 07 00 00 09 07 00
+T AB 08 00 AD 08
+R 00 00 07 00 00 03 07 00
+T AD 08 00
+R 00 00 07 00
+T AD 08 00 3E 18 F5 33 01 B0 00 21 00 00 2A 5F 56
+R 00 00 07 00 00 08 07 00 02 0B 06 00
+T BA 08 00 CD 00 00 18 22
+R 00 00 07 00 02 04 03 00
+T BF 08 00
+R 00 00 07 00
+T BF 08 00 3E 18 F5 33 01 B3 00 21 00 00 2A 5F 56
+R 00 00 07 00 00 08 07 00 02 0B 06 00
+T CC 08 00 CD 00 00 18 10
+R 00 00 07 00 02 04 03 00
+T D1 08 00
+R 00 00 07 00
+T D1 08 00 3E 18 F5 33 01 B6 00 21 00 00 2A 5F 56
+R 00 00 07 00 00 08 07 00 02 0B 06 00
+T DE 08 00 CD 00 00
+R 00 00 07 00 02 04 03 00
+T E1 08 00
+R 00 00 07 00
+T E1 08 00 21 00 00 2A 4F 46 0A EA 0A 00 1E
+R 00 00 07 00 00 04 01 00 00 0B 02 00
+T EC 08 00 00 00 00 21 48 09 CD 00 00 18 48
+R 00 00 07 00 0B 03 0F 00 00 07 07 00 02 0A 12 00
+T F5 08 00
+R 00 00 07 00
+T F5 08 00 21 0F 00 36 01 21 0E 00 36 00 21 10 00
+R 00 00 07 00 00 04 02 00 00 09 02 00 00 0E 02 00
+T 02 09 00 36 01 21 00 00 36 01 21 00 00 2A 4F 46
+R 00 00 07 00 02 06 00 00 00 0B 01 00
+T 0F 09 00 21 04 00 09 36 01 FA 00 00 B7 28 0F FA
+R 00 00 07 00 02 0A 19 00
+T 1C 09 00 00 00 3D 28 17 FA 00 00 D6 02 28 09 18
+R 00 00 07 00 02 03 19 00 02 09 19 00
+T 29 09 00 13
+R 00 00 07 00
+T 2A 09 00
+R 00 00 07 00
+T 2A 09 00 21 0D 00 36 78 18 0C
+R 00 00 07 00 00 04 02 00
+T 31 09 00
+R 00 00 07 00
+T 31 09 00 21 0D 00 36 78 18 05
+R 00 00 07 00 00 04 02 00
+T 38 09 00
+R 00 00 07 00
+T 38 09 00 21 0D 00 36 C8
+R 00 00 07 00 00 04 02 00
+T 3D 09 00
+R 00 00 07 00
+T 3D 09 00 21 00 00 2A 4F 46 F8 06 7E 02 C9
+R 00 00 07 00 00 04 01 00
+T 48 09 00
+R 00 00 07 00
+T 48 09 00 FA 07 00 B7 C0 21 03 00 35 21 04 00 36
+R 00 00 07 00 00 04 02 00 00 09 02 00 00 0D 02 00
+T 55 09 00 20 21 07 00 36 01 21 00 00 36 01 C9
+R 00 00 07 00 00 05 02 00 02 0A 00 00
+T 61 09 00
+R 00 00 07 00
+T 61 09 00 C9
+R 00 00 07 00
+T 00 00 00
+R 00 00 08 00
+T 00 00 00 00
+R 00 00 08 00
+T 01 00 00
+R 00 00 08 00
+T 01 00 00 00
+R 00 00 08 00
+T 02 00 00
+R 00 00 08 00
+T 02 00 00 04
+R 00 00 08 00
+T 03 00 00
+R 00 00 08 00
+T 03 00 00 04
+R 00 00 08 00
+T 04 00 00
+R 00 00 08 00
+T 04 00 00 00
+R 00 00 08 00
+T 05 00 00
+R 00 00 08 00
+T 05 00 00 00
+R 00 00 08 00
+T 06 00 00
+R 00 00 08 00
+T 06 00 00 00
+R 00 00 08 00
+T 07 00 00
+R 00 00 08 00
+T 07 00 00 00
+R 00 00 08 00
+T 08 00 00
+R 00 00 08 00
+T 08 00 00 00
+R 00 00 08 00
+T 09 00 00
+R 00 00 08 00
+T 09 00 00 00
+R 00 00 08 00
+T 0A 00 00
+R 00 00 08 00
+T 0A 00 00 00
+R 00 00 08 00
+T 0B 00 00
+R 00 00 08 00
+T 0B 00 00 00
+R 00 00 08 00
+T 0C 00 00
+R 00 00 08 00
+T 0C 00 00 00
+R 00 00 08 00
+T 0D 00 00
+R 00 00 08 00
+T 0D 00 00 00
+R 00 00 08 00
+T 0E 00 00
+R 00 00 08 00
+T 0E 00 00 00
+R 00 00 08 00
+T 0F 00 00
+R 00 00 08 00
+T 0F 00 00 00
+R 00 00 08 00
+T 10 00 00
+R 00 00 08 00
+T 10 00 00 00
+R 00 00 08 00

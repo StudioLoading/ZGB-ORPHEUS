@@ -1,0 +1,101 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module SpriteCamera
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _Destroy_SpriteCamera
+                                     12 	.globl _Update_SpriteCamera
+                                     13 	.globl _Start_SpriteCamera
+                                     14 	.globl ___bank_SpriteCamera
+                                     15 ;--------------------------------------------------------
+                                     16 ; special function registers
+                                     17 ;--------------------------------------------------------
+                                     18 ;--------------------------------------------------------
+                                     19 ; ram data
+                                     20 ;--------------------------------------------------------
+                                     21 	.area _DATA
+                                     22 ;--------------------------------------------------------
+                                     23 ; ram data
+                                     24 ;--------------------------------------------------------
+                                     25 	.area _INITIALIZED
+                                     26 ;--------------------------------------------------------
+                                     27 ; absolute external ram data
+                                     28 ;--------------------------------------------------------
+                                     29 	.area _DABS (ABS)
+                                     30 ;--------------------------------------------------------
+                                     31 ; global & static initialisations
+                                     32 ;--------------------------------------------------------
+                                     33 	.area _HOME
+                                     34 	.area _GSINIT
+                                     35 	.area _GSFINAL
+                                     36 	.area _GSINIT
+                                     37 ;--------------------------------------------------------
+                                     38 ; Home
+                                     39 ;--------------------------------------------------------
+                                     40 	.area _HOME
+                                     41 	.area _HOME
+                                     42 ;--------------------------------------------------------
+                                     43 ; code
+                                     44 ;--------------------------------------------------------
+                                     45 	.area _CODE_255
+                           000000    46 	G$Start_SpriteCamera$0$0	= .
+                                     47 	.globl	G$Start_SpriteCamera$0$0
+                           000000    48 	C$SpriteCamera.c$3$0_0$2	= .
+                                     49 	.globl	C$SpriteCamera.c$3$0_0$2
+                                     50 ;SpriteCamera.c:3: void START() {
+                                     51 ;	---------------------------------
+                                     52 ; Function Start_SpriteCamera
+                                     53 ; ---------------------------------
+      000000                         54 _Start_SpriteCamera::
+                           000000    55 	C$SpriteCamera.c$4$0_0$2	= .
+                                     56 	.globl	C$SpriteCamera.c$4$0_0$2
+                                     57 ;SpriteCamera.c:4: }
+                           000000    58 	C$SpriteCamera.c$4$0_0$2	= .
+                                     59 	.globl	C$SpriteCamera.c$4$0_0$2
+                           000000    60 	XG$Start_SpriteCamera$0$0	= .
+                                     61 	.globl	XG$Start_SpriteCamera$0$0
+      000000 C9               [16]   62 	ret
+                           0000FF    63 G$__bank_SpriteCamera$0_0$0 == 0x00ff
+                           0000FF    64 ___bank_SpriteCamera	=	0x00ff
+                           000001    65 	G$Update_SpriteCamera$0$0	= .
+                                     66 	.globl	G$Update_SpriteCamera$0$0
+                           000001    67 	C$SpriteCamera.c$6$0_0$4	= .
+                                     68 	.globl	C$SpriteCamera.c$6$0_0$4
+                                     69 ;SpriteCamera.c:6: void UPDATE() {
+                                     70 ;	---------------------------------
+                                     71 ; Function Update_SpriteCamera
+                                     72 ; ---------------------------------
+      000001                         73 _Update_SpriteCamera::
+                           000001    74 	C$SpriteCamera.c$7$0_0$4	= .
+                                     75 	.globl	C$SpriteCamera.c$7$0_0$4
+                                     76 ;SpriteCamera.c:7: }
+                           000001    77 	C$SpriteCamera.c$7$0_0$4	= .
+                                     78 	.globl	C$SpriteCamera.c$7$0_0$4
+                           000001    79 	XG$Update_SpriteCamera$0$0	= .
+                                     80 	.globl	XG$Update_SpriteCamera$0$0
+      000001 C9               [16]   81 	ret
+                           000002    82 	G$Destroy_SpriteCamera$0$0	= .
+                                     83 	.globl	G$Destroy_SpriteCamera$0$0
+                           000002    84 	C$SpriteCamera.c$9$0_0$6	= .
+                                     85 	.globl	C$SpriteCamera.c$9$0_0$6
+                                     86 ;SpriteCamera.c:9: void DESTROY() {
+                                     87 ;	---------------------------------
+                                     88 ; Function Destroy_SpriteCamera
+                                     89 ; ---------------------------------
+      000002                         90 _Destroy_SpriteCamera::
+                           000002    91 	C$SpriteCamera.c$10$0_0$6	= .
+                                     92 	.globl	C$SpriteCamera.c$10$0_0$6
+                                     93 ;SpriteCamera.c:10: }
+                           000002    94 	C$SpriteCamera.c$10$0_0$6	= .
+                                     95 	.globl	C$SpriteCamera.c$10$0_0$6
+                           000002    96 	XG$Destroy_SpriteCamera$0$0	= .
+                                     97 	.globl	XG$Destroy_SpriteCamera$0$0
+      000002 C9               [16]   98 	ret
+                                     99 	.area _CODE_255
+                                    100 	.area _INITIALIZER
+                                    101 	.area _CABS (ABS)

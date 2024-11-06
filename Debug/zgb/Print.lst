@@ -1,0 +1,594 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Print
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _uitoa
+                                     12 	.globl _itoa
+                                     13 	.globl _UpdateMapTile
+                                     14 	.globl _font_offset
+                                     15 	.globl _print_target
+                                     16 	.globl _print_y
+                                     17 	.globl _print_x
+                                     18 	.globl _Printf
+                                     19 ;--------------------------------------------------------
+                                     20 ; special function registers
+                                     21 ;--------------------------------------------------------
+                                     22 ;--------------------------------------------------------
+                                     23 ; ram data
+                                     24 ;--------------------------------------------------------
+                                     25 	.area _DATA
+                                     26 ;--------------------------------------------------------
+                                     27 ; ram data
+                                     28 ;--------------------------------------------------------
+                                     29 	.area _INITIALIZED
+                           000000    30 G$print_x$0_0$0==.
+      000000                         31 _print_x::
+      000000                         32 	.ds 1
+                           000001    33 G$print_y$0_0$0==.
+      000001                         34 _print_y::
+      000001                         35 	.ds 1
+                           000002    36 G$print_target$0_0$0==.
+      000002                         37 _print_target::
+      000002                         38 	.ds 1
+                           000003    39 G$font_offset$0_0$0==.
+      000003                         40 _font_offset::
+      000003                         41 	.ds 2
+                                     42 ;--------------------------------------------------------
+                                     43 ; absolute external ram data
+                                     44 ;--------------------------------------------------------
+                                     45 	.area _DABS (ABS)
+                                     46 ;--------------------------------------------------------
+                                     47 ; global & static initialisations
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _HOME
+                                     50 	.area _GSINIT
+                                     51 	.area _GSFINAL
+                                     52 	.area _GSINIT
+                                     53 ;--------------------------------------------------------
+                                     54 ; Home
+                                     55 ;--------------------------------------------------------
+                                     56 	.area _HOME
+                                     57 	.area _HOME
+                                     58 ;--------------------------------------------------------
+                                     59 ; code
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _CODE
+                           000000    62 	G$Printf$0$0	= .
+                                     63 	.globl	G$Printf$0$0
+                           000000    64 	C$Print.c$13$0_0$190	= .
+                                     65 	.globl	C$Print.c$13$0_0$190
+                                     66 ;C:/ZGB-2023.0/common/src/Print.c:13: void Printf(const char* txt, ...){
+                                     67 ;	---------------------------------
+                                     68 ; Function Printf
+                                     69 ; ---------------------------------
+      000000                         70 _Printf::
+      000000 E8 F3            [16]   71 	add	sp, #-13
+                           000002    72 	C$Print.c$15$2_0$190	= .
+                                     73 	.globl	C$Print.c$15$2_0$190
+                                     74 ;C:/ZGB-2023.0/common/src/Print.c:15: unsigned char c = 0;
+      000002 F8 0A            [12]   75 	ldhl	sp,	#10
+      000004 36 00            [12]   76 	ld	(hl), #0x00
+                           000006    77 	C$Print.c$19$1_0$190	= .
+                                     78 	.globl	C$Print.c$19$1_0$190
+                                     79 ;C:/ZGB-2023.0/common/src/Print.c:19: va_start(list, txt); 
+      000006 F8 11            [12]   80 	ldhl	sp,#17
+      000008 4D               [ 4]   81 	ld	c, l
+      000009 44               [ 4]   82 	ld	b, h
+      00000A F8 0B            [12]   83 	ldhl	sp,	#11
+      00000C 79               [ 4]   84 	ld	a, c
+      00000D 22               [ 8]   85 	ld	(hl+), a
+      00000E 70               [ 8]   86 	ld	(hl), b
+                           00000F    87 	C$Print.c$20$5_0$198	= .
+                                     88 	.globl	C$Print.c$20$5_0$198
+                                     89 ;C:/ZGB-2023.0/common/src/Print.c:20: while(*txt) {
+      00000F                         90 00134$:
+      00000F F8 0F            [12]   91 	ldhl	sp,	#15
+      000011 2A               [ 8]   92 	ld	a, (hl+)
+      000012 4F               [ 4]   93 	ld	c, a
+      000013 46               [ 8]   94 	ld	b, (hl)
+      000014 0A               [ 8]   95 	ld	a, (bc)
+                           000015    96 	C$Print.c$21$2_0$191	= .
+                                     97 	.globl	C$Print.c$21$2_0$191
+                                     98 ;C:/ZGB-2023.0/common/src/Print.c:21: if(*txt == ' ') {
+      000015 4F               [ 4]   99 	ld	c,a
+      000016 B7               [ 4]  100 	or	a,a
+      000017 CAr32r02         [16]  101 	jp	Z,00137$
+      00001A D6 20            [ 8]  102 	sub	a, #0x20
+      00001C 20 07            [12]  103 	jr	NZ, 00129$
+                           00001E   104 	C$Print.c$22$3_0$192	= .
+                                    105 	.globl	C$Print.c$22$3_0$192
+                                    106 ;C:/ZGB-2023.0/common/src/Print.c:22: c = 0;
+      00001E F8 0A            [12]  107 	ldhl	sp,	#10
+      000020 36 00            [12]  108 	ld	(hl), #0x00
+      000022 C3rCEr01         [16]  109 	jp	00130$
+      000025                        110 00129$:
+                           000025   111 	C$Print.c$23$2_0$191	= .
+                                    112 	.globl	C$Print.c$23$2_0$191
+                                    113 ;C:/ZGB-2023.0/common/src/Print.c:23: } else if(*txt >= 'A' && *txt <= 'Z'){
+      000025 79               [ 4]  114 	ld	a, c
+      000026 EE 80            [ 8]  115 	xor	a, #0x80
+      000028 D6 C1            [ 8]  116 	sub	a, #0xc1
+      00002A 38 20            [12]  117 	jr	C, 00125$
+      00002C 59               [ 4]  118 	ld	e, c
+      00002D 3E 5A            [ 8]  119 	ld	a,#0x5a
+      00002F 57               [ 4]  120 	ld	d,a
+      000030 91               [ 4]  121 	sub	a, c
+      000031 CB 7B            [ 8]  122 	bit	7, e
+      000033 28 07            [12]  123 	jr	Z, 00302$
+      000035 CB 7A            [ 8]  124 	bit	7, d
+      000037 20 08            [12]  125 	jr	NZ, 00303$
+      000039 BF               [ 4]  126 	cp	a, a
+      00003A 18 05            [12]  127 	jr	00303$
+      00003C                        128 00302$:
+      00003C CB 7A            [ 8]  129 	bit	7, d
+      00003E 28 01            [12]  130 	jr	Z, 00303$
+      000040 37               [ 4]  131 	scf
+      000041                        132 00303$:
+      000041 38 09            [12]  133 	jr	C, 00125$
+                           000043   134 	C$Print.c$24$3_0$193	= .
+                                    135 	.globl	C$Print.c$24$3_0$193
+                                    136 ;C:/ZGB-2023.0/common/src/Print.c:24: c = 1 + *txt - 'A';
+      000043 79               [ 4]  137 	ld	a, c
+      000044 C6 C0            [ 8]  138 	add	a, #0xc0
+      000046 F8 0A            [12]  139 	ldhl	sp,	#10
+      000048 77               [ 8]  140 	ld	(hl), a
+      000049 C3rCEr01         [16]  141 	jp	00130$
+      00004C                        142 00125$:
+                           00004C   143 	C$Print.c$25$2_0$191	= .
+                                    144 	.globl	C$Print.c$25$2_0$191
+                                    145 ;C:/ZGB-2023.0/common/src/Print.c:25: } else if(*txt >= 'a' && *txt <= 'z') {
+      00004C F8 0F            [12]  146 	ldhl	sp,	#15
+      00004E 2A               [ 8]  147 	ld	a, (hl+)
+      00004F 4F               [ 4]  148 	ld	c, a
+      000050 46               [ 8]  149 	ld	b, (hl)
+      000051 0A               [ 8]  150 	ld	a, (bc)
+      000052 4F               [ 4]  151 	ld	c, a
+      000053 EE 80            [ 8]  152 	xor	a, #0x80
+      000055 D6 E1            [ 8]  153 	sub	a, #0xe1
+      000057 38 20            [12]  154 	jr	C, 00121$
+      000059 59               [ 4]  155 	ld	e, c
+      00005A 3E 7A            [ 8]  156 	ld	a,#0x7a
+      00005C 57               [ 4]  157 	ld	d,a
+      00005D 91               [ 4]  158 	sub	a, c
+      00005E CB 7B            [ 8]  159 	bit	7, e
+      000060 28 07            [12]  160 	jr	Z, 00304$
+      000062 CB 7A            [ 8]  161 	bit	7, d
+      000064 20 08            [12]  162 	jr	NZ, 00305$
+      000066 BF               [ 4]  163 	cp	a, a
+      000067 18 05            [12]  164 	jr	00305$
+      000069                        165 00304$:
+      000069 CB 7A            [ 8]  166 	bit	7, d
+      00006B 28 01            [12]  167 	jr	Z, 00305$
+      00006D 37               [ 4]  168 	scf
+      00006E                        169 00305$:
+      00006E 38 09            [12]  170 	jr	C, 00121$
+                           000070   171 	C$Print.c$26$3_0$194	= .
+                                    172 	.globl	C$Print.c$26$3_0$194
+                                    173 ;C:/ZGB-2023.0/common/src/Print.c:26: c = 1 + *txt - 'a';
+      000070 79               [ 4]  174 	ld	a, c
+      000071 C6 A0            [ 8]  175 	add	a, #0xa0
+      000073 F8 0A            [12]  176 	ldhl	sp,	#10
+      000075 77               [ 8]  177 	ld	(hl), a
+      000076 C3rCEr01         [16]  178 	jp	00130$
+      000079                        179 00121$:
+                           000079   180 	C$Print.c$27$2_0$191	= .
+                                    181 	.globl	C$Print.c$27$2_0$191
+                                    182 ;C:/ZGB-2023.0/common/src/Print.c:27: } else if(*txt >= '0' && *txt <= '9') {
+      000079 F8 0F            [12]  183 	ldhl	sp,	#15
+      00007B 2A               [ 8]  184 	ld	a, (hl+)
+      00007C 4F               [ 4]  185 	ld	c, a
+      00007D 46               [ 8]  186 	ld	b, (hl)
+      00007E 0A               [ 8]  187 	ld	a, (bc)
+      00007F 4F               [ 4]  188 	ld	c, a
+      000080 EE 80            [ 8]  189 	xor	a, #0x80
+      000082 D6 B0            [ 8]  190 	sub	a, #0xb0
+      000084 38 20            [12]  191 	jr	C, 00117$
+      000086 59               [ 4]  192 	ld	e, c
+      000087 3E 39            [ 8]  193 	ld	a,#0x39
+      000089 57               [ 4]  194 	ld	d,a
+      00008A 91               [ 4]  195 	sub	a, c
+      00008B CB 7B            [ 8]  196 	bit	7, e
+      00008D 28 07            [12]  197 	jr	Z, 00306$
+      00008F CB 7A            [ 8]  198 	bit	7, d
+      000091 20 08            [12]  199 	jr	NZ, 00307$
+      000093 BF               [ 4]  200 	cp	a, a
+      000094 18 05            [12]  201 	jr	00307$
+      000096                        202 00306$:
+      000096 CB 7A            [ 8]  203 	bit	7, d
+      000098 28 01            [12]  204 	jr	Z, 00307$
+      00009A 37               [ 4]  205 	scf
+      00009B                        206 00307$:
+      00009B 38 09            [12]  207 	jr	C, 00117$
+                           00009D   208 	C$Print.c$28$3_0$195	= .
+                                    209 	.globl	C$Print.c$28$3_0$195
+                                    210 ;C:/ZGB-2023.0/common/src/Print.c:28: c = 27 + *txt - '0';
+      00009D 79               [ 4]  211 	ld	a, c
+      00009E C6 EB            [ 8]  212 	add	a, #0xeb
+      0000A0 F8 0A            [12]  213 	ldhl	sp,	#10
+      0000A2 77               [ 8]  214 	ld	(hl), a
+      0000A3 C3rCEr01         [16]  215 	jp	00130$
+      0000A6                        216 00117$:
+                           0000A6   217 	C$Print.c$30$3_0$196	= .
+                                    218 	.globl	C$Print.c$30$3_0$196
+                                    219 ;C:/ZGB-2023.0/common/src/Print.c:30: switch(*txt) {
+      0000A6 F8 0F            [12]  220 	ldhl	sp,	#15
+      0000A8 2A               [ 8]  221 	ld	a, (hl+)
+      0000A9 4F               [ 4]  222 	ld	c, a
+      0000AA 46               [ 8]  223 	ld	b, (hl)
+      0000AB 0A               [ 8]  224 	ld	a, (bc)
+      0000AC FE 21            [ 8]  225 	cp	a, #0x21
+      0000AE 28 23            [12]  226 	jr	Z, 00101$
+      0000B0 FE 25            [ 8]  227 	cp	a, #0x25
+      0000B2 28 57            [12]  228 	jr	Z, 00109$
+      0000B4 FE 27            [ 8]  229 	cp	a, #0x27
+      0000B6 28 22            [12]  230 	jr	Z, 00102$
+      0000B8 FE 28            [ 8]  231 	cp	a, #0x28
+      0000BA 28 25            [12]  232 	jr	Z, 00103$
+      0000BC FE 29            [ 8]  233 	cp	a, #0x29
+      0000BE 28 28            [12]  234 	jr	Z, 00104$
+      0000C0 FE 2C            [ 8]  235 	cp	a, #0x2c
+      0000C2 28 2B            [12]  236 	jr	Z, 00105$
+      0000C4 FE 2E            [ 8]  237 	cp	a, #0x2e
+      0000C6 28 2E            [12]  238 	jr	Z, 00106$
+      0000C8 FE 3A            [ 8]  239 	cp	a, #0x3a
+      0000CA 28 31            [12]  240 	jr	Z, 00107$
+      0000CC D6 3F            [ 8]  241 	sub	a, #0x3f
+      0000CE 28 34            [12]  242 	jr	Z, 00108$
+      0000D0 C3rCEr01         [16]  243 	jp	00130$
+                           0000D3   244 	C$Print.c$31$4_0$197	= .
+                                    245 	.globl	C$Print.c$31$4_0$197
+                                    246 ;C:/ZGB-2023.0/common/src/Print.c:31: case  '!': c= 37; break;
+      0000D3                        247 00101$:
+      0000D3 F8 0A            [12]  248 	ldhl	sp,	#10
+      0000D5 36 25            [12]  249 	ld	(hl), #0x25
+      0000D7 C3rCEr01         [16]  250 	jp	00130$
+                           0000DA   251 	C$Print.c$32$4_0$197	= .
+                                    252 	.globl	C$Print.c$32$4_0$197
+                                    253 ;C:/ZGB-2023.0/common/src/Print.c:32: case '\'': c= 38; break;
+      0000DA                        254 00102$:
+      0000DA F8 0A            [12]  255 	ldhl	sp,	#10
+      0000DC 36 26            [12]  256 	ld	(hl), #0x26
+      0000DE C3rCEr01         [16]  257 	jp	00130$
+                           0000E1   258 	C$Print.c$33$4_0$197	= .
+                                    259 	.globl	C$Print.c$33$4_0$197
+                                    260 ;C:/ZGB-2023.0/common/src/Print.c:33: case  '(': c= 39; break;
+      0000E1                        261 00103$:
+      0000E1 F8 0A            [12]  262 	ldhl	sp,	#10
+      0000E3 36 27            [12]  263 	ld	(hl), #0x27
+      0000E5 C3rCEr01         [16]  264 	jp	00130$
+                           0000E8   265 	C$Print.c$34$4_0$197	= .
+                                    266 	.globl	C$Print.c$34$4_0$197
+                                    267 ;C:/ZGB-2023.0/common/src/Print.c:34: case  ')': c= 40; break;
+      0000E8                        268 00104$:
+      0000E8 F8 0A            [12]  269 	ldhl	sp,	#10
+      0000EA 36 28            [12]  270 	ld	(hl), #0x28
+      0000EC C3rCEr01         [16]  271 	jp	00130$
+                           0000EF   272 	C$Print.c$35$4_0$197	= .
+                                    273 	.globl	C$Print.c$35$4_0$197
+                                    274 ;C:/ZGB-2023.0/common/src/Print.c:35: case  ',': c= 41; break;
+      0000EF                        275 00105$:
+      0000EF F8 0A            [12]  276 	ldhl	sp,	#10
+      0000F1 36 29            [12]  277 	ld	(hl), #0x29
+      0000F3 C3rCEr01         [16]  278 	jp	00130$
+                           0000F6   279 	C$Print.c$36$4_0$197	= .
+                                    280 	.globl	C$Print.c$36$4_0$197
+                                    281 ;C:/ZGB-2023.0/common/src/Print.c:36: case  '.': c= 42; break;
+      0000F6                        282 00106$:
+      0000F6 F8 0A            [12]  283 	ldhl	sp,	#10
+      0000F8 36 2A            [12]  284 	ld	(hl), #0x2a
+      0000FA C3rCEr01         [16]  285 	jp	00130$
+                           0000FD   286 	C$Print.c$37$4_0$197	= .
+                                    287 	.globl	C$Print.c$37$4_0$197
+                                    288 ;C:/ZGB-2023.0/common/src/Print.c:37: case  ':': c= 43; break;
+      0000FD                        289 00107$:
+      0000FD F8 0A            [12]  290 	ldhl	sp,	#10
+      0000FF 36 2B            [12]  291 	ld	(hl), #0x2b
+      000101 C3rCEr01         [16]  292 	jp	00130$
+                           000104   293 	C$Print.c$38$4_0$197	= .
+                                    294 	.globl	C$Print.c$38$4_0$197
+                                    295 ;C:/ZGB-2023.0/common/src/Print.c:38: case  '?': c= 44; break;
+      000104                        296 00108$:
+      000104 F8 0A            [12]  297 	ldhl	sp,	#10
+      000106 36 2C            [12]  298 	ld	(hl), #0x2c
+      000108 C3rCEr01         [16]  299 	jp	00130$
+                           00010B   300 	C$Print.c$39$4_0$197	= .
+                                    301 	.globl	C$Print.c$39$4_0$197
+                                    302 ;C:/ZGB-2023.0/common/src/Print.c:39: case  '%':
+      00010B                        303 00109$:
+                           00010B   304 	C$Print.c$40$4_0$197	= .
+                                    305 	.globl	C$Print.c$40$4_0$197
+                                    306 ;C:/ZGB-2023.0/common/src/Print.c:40: switch(*(txt + 1)) {
+      00010B 03               [ 8]  307 	inc	bc
+      00010C 0A               [ 8]  308 	ld	a, (bc)
+      00010D FE 64            [ 8]  309 	cp	a, #0x64
+      00010F 28 10            [12]  310 	jr	Z, 00111$
+      000111 FE 69            [ 8]  311 	cp	a, #0x69
+      000113 28 0C            [12]  312 	jr	Z, 00111$
+      000115 FE 73            [ 8]  313 	cp	a, #0x73
+      000117 CArA1r01         [16]  314 	jp	Z,00113$
+      00011A D6 75            [ 8]  315 	sub	a, #0x75
+      00011C 28 43            [12]  316 	jr	Z, 00112$
+      00011E C3rCEr01         [16]  317 	jp	00130$
+                           000121   318 	C$Print.c$42$5_0$198	= .
+                                    319 	.globl	C$Print.c$42$5_0$198
+                                    320 ;C:/ZGB-2023.0/common/src/Print.c:42: case 'i':
+      000121                        321 00111$:
+                           000121   322 	C$Print.c$43$5_0$198	= .
+                                    323 	.globl	C$Print.c$43$5_0$198
+                                    324 ;C:/ZGB-2023.0/common/src/Print.c:43: itoa(va_arg(list, INT16), tmp, 10);
+      000121 F8 0B            [12]  325 	ldhl	sp,	#11
+      000123 2A               [ 8]  326 	ld	a, (hl+)
+      000124 4F               [ 4]  327 	ld	c, a
+      000125 3A               [ 8]  328 	ld	a, (hl-)
+      000126 47               [ 4]  329 	ld	b, a
+      000127 03               [ 8]  330 	inc	bc
+      000128 03               [ 8]  331 	inc	bc
+      000129 79               [ 4]  332 	ld	a, c
+      00012A 22               [ 8]  333 	ld	(hl+), a
+      00012B 70               [ 8]  334 	ld	(hl), b
+      00012C 0B               [ 8]  335 	dec	bc
+      00012D 0B               [ 8]  336 	dec	bc
+      00012E 69               [ 4]  337 	ld	l, c
+      00012F 60               [ 4]  338 	ld	h, b
+      000130 2A               [ 8]  339 	ld	a, (hl+)
+      000131 4F               [ 4]  340 	ld	c, a
+      000132 46               [ 8]  341 	ld	b, (hl)
+      000133 3E 0A            [ 8]  342 	ld	a, #0x0a
+      000135 F5               [16]  343 	push	af
+      000136 33               [ 8]  344 	inc	sp
+      000137 21 01 00         [12]  345 	ld	hl, #1
+      00013A 39               [ 8]  346 	add	hl, sp
+      00013B E5               [16]  347 	push	hl
+      00013C C5               [16]  348 	push	bc
+      00013D CDr00r00         [24]  349 	call	_itoa
+      000140 E8 05            [16]  350 	add	sp, #5
+                           000142   351 	C$Print.c$44$5_0$198	= .
+                                    352 	.globl	C$Print.c$44$5_0$198
+                                    353 ;C:/ZGB-2023.0/common/src/Print.c:44: Printf(tmp);
+      000142 21 00 00         [12]  354 	ld	hl, #0
+      000145 39               [ 8]  355 	add	hl, sp
+      000146 E5               [16]  356 	push	hl
+      000147 CDr00r00         [24]  357 	call	_Printf
+      00014A E1               [12]  358 	pop	hl
+                           00014B   359 	C$Print.c$45$5_0$198	= .
+                                    360 	.globl	C$Print.c$45$5_0$198
+                                    361 ;C:/ZGB-2023.0/common/src/Print.c:45: txt += 2;
+      00014B F8 0F            [12]  362 	ldhl	sp,#15
+      00014D 2A               [ 8]  363 	ld	a, (hl+)
+      00014E 5F               [ 4]  364 	ld	e, a
+      00014F 56               [ 8]  365 	ld	d, (hl)
+      000150 21 02 00         [12]  366 	ld	hl, #0x0002
+      000153 19               [ 8]  367 	add	hl, de
+      000154 E5               [16]  368 	push	hl
+      000155 7D               [ 4]  369 	ld	a, l
+      000156 F8 11            [12]  370 	ldhl	sp,	#17
+      000158 77               [ 8]  371 	ld	(hl), a
+      000159 E1               [12]  372 	pop	hl
+      00015A 7C               [ 4]  373 	ld	a, h
+      00015B F8 10            [12]  374 	ldhl	sp,	#16
+      00015D 77               [ 8]  375 	ld	(hl), a
+                           00015E   376 	C$Print.c$46$5_0$198	= .
+                                    377 	.globl	C$Print.c$46$5_0$198
+                                    378 ;C:/ZGB-2023.0/common/src/Print.c:46: continue;
+      00015E C3r0Fr00         [16]  379 	jp	00134$
+                           000161   380 	C$Print.c$48$5_0$198	= .
+                                    381 	.globl	C$Print.c$48$5_0$198
+                                    382 ;C:/ZGB-2023.0/common/src/Print.c:48: case 'u':
+      000161                        383 00112$:
+                           000161   384 	C$Print.c$49$5_0$198	= .
+                                    385 	.globl	C$Print.c$49$5_0$198
+                                    386 ;C:/ZGB-2023.0/common/src/Print.c:49: uitoa(va_arg(list, INT16), tmp, 10);
+      000161 F8 0B            [12]  387 	ldhl	sp,	#11
+      000163 2A               [ 8]  388 	ld	a, (hl+)
+      000164 4F               [ 4]  389 	ld	c, a
+      000165 3A               [ 8]  390 	ld	a, (hl-)
+      000166 47               [ 4]  391 	ld	b, a
+      000167 03               [ 8]  392 	inc	bc
+      000168 03               [ 8]  393 	inc	bc
+      000169 79               [ 4]  394 	ld	a, c
+      00016A 22               [ 8]  395 	ld	(hl+), a
+      00016B 70               [ 8]  396 	ld	(hl), b
+      00016C 0B               [ 8]  397 	dec	bc
+      00016D 0B               [ 8]  398 	dec	bc
+      00016E 69               [ 4]  399 	ld	l, c
+      00016F 60               [ 4]  400 	ld	h, b
+      000170 2A               [ 8]  401 	ld	a, (hl+)
+      000171 4F               [ 4]  402 	ld	c, a
+      000172 46               [ 8]  403 	ld	b, (hl)
+      000173 3E 0A            [ 8]  404 	ld	a, #0x0a
+      000175 F5               [16]  405 	push	af
+      000176 33               [ 8]  406 	inc	sp
+      000177 21 01 00         [12]  407 	ld	hl, #1
+      00017A 39               [ 8]  408 	add	hl, sp
+      00017B E5               [16]  409 	push	hl
+      00017C C5               [16]  410 	push	bc
+      00017D CDr00r00         [24]  411 	call	_uitoa
+      000180 E8 05            [16]  412 	add	sp, #5
+                           000182   413 	C$Print.c$50$5_0$198	= .
+                                    414 	.globl	C$Print.c$50$5_0$198
+                                    415 ;C:/ZGB-2023.0/common/src/Print.c:50: Printf(tmp);
+      000182 21 00 00         [12]  416 	ld	hl, #0
+      000185 39               [ 8]  417 	add	hl, sp
+      000186 E5               [16]  418 	push	hl
+      000187 CDr00r00         [24]  419 	call	_Printf
+      00018A E1               [12]  420 	pop	hl
+                           00018B   421 	C$Print.c$51$5_0$198	= .
+                                    422 	.globl	C$Print.c$51$5_0$198
+                                    423 ;C:/ZGB-2023.0/common/src/Print.c:51: txt += 2;
+      00018B F8 0F            [12]  424 	ldhl	sp,#15
+      00018D 2A               [ 8]  425 	ld	a, (hl+)
+      00018E 5F               [ 4]  426 	ld	e, a
+      00018F 56               [ 8]  427 	ld	d, (hl)
+      000190 21 02 00         [12]  428 	ld	hl, #0x0002
+      000193 19               [ 8]  429 	add	hl, de
+      000194 E5               [16]  430 	push	hl
+      000195 7D               [ 4]  431 	ld	a, l
+      000196 F8 11            [12]  432 	ldhl	sp,	#17
+      000198 77               [ 8]  433 	ld	(hl), a
+      000199 E1               [12]  434 	pop	hl
+      00019A 7C               [ 4]  435 	ld	a, h
+      00019B F8 10            [12]  436 	ldhl	sp,	#16
+      00019D 77               [ 8]  437 	ld	(hl), a
+                           00019E   438 	C$Print.c$52$5_0$198	= .
+                                    439 	.globl	C$Print.c$52$5_0$198
+                                    440 ;C:/ZGB-2023.0/common/src/Print.c:52: continue;
+      00019E C3r0Fr00         [16]  441 	jp	00134$
+                           0001A1   442 	C$Print.c$54$5_0$198	= .
+                                    443 	.globl	C$Print.c$54$5_0$198
+                                    444 ;C:/ZGB-2023.0/common/src/Print.c:54: case 's':
+      0001A1                        445 00113$:
+                           0001A1   446 	C$Print.c$55$5_0$198	= .
+                                    447 	.globl	C$Print.c$55$5_0$198
+                                    448 ;C:/ZGB-2023.0/common/src/Print.c:55: Printf(va_arg(list, char*));
+      0001A1 F8 0B            [12]  449 	ldhl	sp,	#11
+      0001A3 2A               [ 8]  450 	ld	a, (hl+)
+      0001A4 4F               [ 4]  451 	ld	c, a
+      0001A5 3A               [ 8]  452 	ld	a, (hl-)
+      0001A6 47               [ 4]  453 	ld	b, a
+      0001A7 03               [ 8]  454 	inc	bc
+      0001A8 03               [ 8]  455 	inc	bc
+      0001A9 79               [ 4]  456 	ld	a, c
+      0001AA 22               [ 8]  457 	ld	(hl+), a
+      0001AB 70               [ 8]  458 	ld	(hl), b
+      0001AC 0B               [ 8]  459 	dec	bc
+      0001AD 0B               [ 8]  460 	dec	bc
+      0001AE 69               [ 4]  461 	ld	l, c
+      0001AF 60               [ 4]  462 	ld	h, b
+      0001B0 2A               [ 8]  463 	ld	a, (hl+)
+      0001B1 4F               [ 4]  464 	ld	c, a
+      0001B2 46               [ 8]  465 	ld	b, (hl)
+      0001B3 C5               [16]  466 	push	bc
+      0001B4 CDr00r00         [24]  467 	call	_Printf
+      0001B7 E1               [12]  468 	pop	hl
+                           0001B8   469 	C$Print.c$56$5_0$198	= .
+                                    470 	.globl	C$Print.c$56$5_0$198
+                                    471 ;C:/ZGB-2023.0/common/src/Print.c:56: txt += 2;
+      0001B8 F8 0F            [12]  472 	ldhl	sp,#15
+      0001BA 2A               [ 8]  473 	ld	a, (hl+)
+      0001BB 5F               [ 4]  474 	ld	e, a
+      0001BC 56               [ 8]  475 	ld	d, (hl)
+      0001BD 21 02 00         [12]  476 	ld	hl, #0x0002
+      0001C0 19               [ 8]  477 	add	hl, de
+      0001C1 E5               [16]  478 	push	hl
+      0001C2 7D               [ 4]  479 	ld	a, l
+      0001C3 F8 11            [12]  480 	ldhl	sp,	#17
+      0001C5 77               [ 8]  481 	ld	(hl), a
+      0001C6 E1               [12]  482 	pop	hl
+      0001C7 7C               [ 4]  483 	ld	a, h
+      0001C8 F8 10            [12]  484 	ldhl	sp,	#16
+      0001CA 77               [ 8]  485 	ld	(hl), a
+                           0001CB   486 	C$Print.c$57$5_0$198	= .
+                                    487 	.globl	C$Print.c$57$5_0$198
+                                    488 ;C:/ZGB-2023.0/common/src/Print.c:57: continue;
+      0001CB C3r0Fr00         [16]  489 	jp	00134$
+                           0001CE   490 	C$Print.c$60$2_0$191	= .
+                                    491 	.globl	C$Print.c$60$2_0$191
+                                    492 ;C:/ZGB-2023.0/common/src/Print.c:60: }
+      0001CE                        493 00130$:
+                           0001CE   494 	C$Print.c$62$2_0$191	= .
+                                    495 	.globl	C$Print.c$62$2_0$191
+                                    496 ;C:/ZGB-2023.0/common/src/Print.c:62: if(print_target == PRINT_BKG)
+      0001CE FAr02r00         [16]  497 	ld	a, (#_print_target)
+      0001D1 B7               [ 4]  498 	or	a, a
+      0001D2 20 30            [12]  499 	jr	NZ, 00132$
+                           0001D4   500 	C$Print.c$63$2_0$191	= .
+                                    501 	.globl	C$Print.c$63$2_0$191
+                                    502 ;C:/ZGB-2023.0/common/src/Print.c:63: UpdateMapTile(print_target, 0x1F & (print_x + scroll_offset_x), 0x1F & (print_y + scroll_offset_y), font_offset, c, 0);
+      0001D4 FAr01r00         [16]  503 	ld	a, (#_print_y)
+      0001D7 21r00r00         [12]  504 	ld	hl, #_scroll_offset_y
+      0001DA 86               [ 8]  505 	add	a, (hl)
+      0001DB E6 1F            [ 8]  506 	and	a, #0x1f
+      0001DD 47               [ 4]  507 	ld	b, a
+      0001DE FAr00r00         [16]  508 	ld	a, (#_print_x)
+      0001E1 21r00r00         [12]  509 	ld	hl, #_scroll_offset_x
+      0001E4 86               [ 8]  510 	add	a, (hl)
+      0001E5 E6 1F            [ 8]  511 	and	a, #0x1f
+      0001E7 5F               [ 4]  512 	ld	e, a
+      0001E8 21 00 00         [12]  513 	ld	hl, #0x0000
+      0001EB E5               [16]  514 	push	hl
+      0001EC F8 0C            [12]  515 	ldhl	sp,	#12
+      0001EE 7E               [ 8]  516 	ld	a, (hl)
+      0001EF F5               [16]  517 	push	af
+      0001F0 33               [ 8]  518 	inc	sp
+      0001F1 21r03r00         [12]  519 	ld	hl, #_font_offset
+      0001F4 6E               [ 8]  520 	ld	l, (hl)
+                                    521 ;	spillPairReg hl
+                                    522 ;	spillPairReg hl
+      0001F5 FAr04r00         [16]  523 	ld	a, (_font_offset + 1)
+      0001F8 67               [ 4]  524 	ld	h, a
+                                    525 ;	spillPairReg hl
+                                    526 ;	spillPairReg hl
+      0001F9 E5               [16]  527 	push	hl
+      0001FA C5               [16]  528 	push	bc
+      0001FB 33               [ 8]  529 	inc	sp
+      0001FC FAr02r00         [16]  530 	ld	a, (#_print_target)
+      0001FF CDr00r00         [24]  531 	call	_UpdateMapTile
+      000202 18 1F            [12]  532 	jr	00133$
+      000204                        533 00132$:
+                           000204   534 	C$Print.c$65$2_0$191	= .
+                                    535 	.globl	C$Print.c$65$2_0$191
+                                    536 ;C:/ZGB-2023.0/common/src/Print.c:65: UpdateMapTile(print_target, print_x, print_y, font_offset, c, 0);
+      000204 11 00 00         [12]  537 	ld	de, #0x0000
+      000207 D5               [16]  538 	push	de
+      000208 F8 0C            [12]  539 	ldhl	sp,	#12
+      00020A 7E               [ 8]  540 	ld	a, (hl)
+      00020B F5               [16]  541 	push	af
+      00020C 33               [ 8]  542 	inc	sp
+      00020D 21r03r00         [12]  543 	ld	hl, #_font_offset
+      000210 2A               [ 8]  544 	ld	a, (hl+)
+      000211 5F               [ 4]  545 	ld	e, a
+      000212 56               [ 8]  546 	ld	d, (hl)
+      000213 D5               [16]  547 	push	de
+      000214 FAr01r00         [16]  548 	ld	a, (#_print_y)
+      000217 F5               [16]  549 	push	af
+      000218 33               [ 8]  550 	inc	sp
+      000219 21r00r00         [12]  551 	ld	hl, #_print_x
+      00021C 5E               [ 8]  552 	ld	e, (hl)
+      00021D FAr02r00         [16]  553 	ld	a, (#_print_target)
+      000220 CDr00r00         [24]  554 	call	_UpdateMapTile
+      000223                        555 00133$:
+                           000223   556 	C$Print.c$67$2_0$191	= .
+                                    557 	.globl	C$Print.c$67$2_0$191
+                                    558 ;C:/ZGB-2023.0/common/src/Print.c:67: print_x ++;
+      000223 21r00r00         [12]  559 	ld	hl, #_print_x
+      000226 34               [12]  560 	inc	(hl)
+                           000227   561 	C$Print.c$68$2_0$191	= .
+                                    562 	.globl	C$Print.c$68$2_0$191
+                                    563 ;C:/ZGB-2023.0/common/src/Print.c:68: txt ++;
+      000227 F8 0F            [12]  564 	ldhl	sp,	#15
+      000229 34               [12]  565 	inc	(hl)
+      00022A C2r0Fr00         [16]  566 	jp	NZ,00134$
+      00022D 23               [ 8]  567 	inc	hl
+      00022E 34               [12]  568 	inc	(hl)
+      00022F C3r0Fr00         [16]  569 	jp	00134$
+      000232                        570 00137$:
+                           000232   571 	C$Print.c$71$1_0$190	= .
+                                    572 	.globl	C$Print.c$71$1_0$190
+                                    573 ;C:/ZGB-2023.0/common/src/Print.c:71: }
+      000232 E8 0D            [16]  574 	add	sp, #13
+                           000234   575 	C$Print.c$71$1_0$190	= .
+                                    576 	.globl	C$Print.c$71$1_0$190
+                           000234   577 	XG$Printf$0$0	= .
+                                    578 	.globl	XG$Printf$0$0
+      000234 C9               [16]  579 	ret
+                                    580 	.area _CODE
+                                    581 	.area _INITIALIZER
+                           000000   582 FPrint$__xinit_print_x$0_0$0 == .
+      000000                        583 __xinit__print_x:
+      000000 00                     584 	.db #0x00	; 0
+                           000001   585 FPrint$__xinit_print_y$0_0$0 == .
+      000001                        586 __xinit__print_y:
+      000001 00                     587 	.db #0x00	; 0
+                           000002   588 FPrint$__xinit_print_target$0_0$0 == .
+      000002                        589 __xinit__print_target:
+      000002 00                     590 	.db #0x00	; 0
+                           000003   591 FPrint$__xinit_font_offset$0_0$0 == .
+      000003                        592 __xinit__font_offset:
+      000003 00 00                  593 	.dw #0x0000
+                                    594 	.area _CABS (ABS)

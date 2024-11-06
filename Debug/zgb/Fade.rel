@@ -1,0 +1,46 @@
+;!FILE ../Debug/zgb/Fade.asm
+XL3
+H 9 areas 18 global symbols
+M Fade
+O -msm83
+S _FadeIn_b Ref000000
+S _FadeOut_b Ref000000
+S .__.ABS. Def000000
+S b_FadeIn_b Ref000000
+S b_FadeOut_b Ref000000
+S ___sdcc_bcall_ehl Ref000000
+A _CODE size 10 flags 0 addr 0
+S _FadeIn Def000000
+S _FadeOut Def000008
+S C$Fade.c$11$1_0$125 Def000008
+S C$Fade.c$12$1_0$125 Def000008
+S C$Fade.c$13$1_0$125 Def00000D
+S XG$FadeIn$0$0 Def000005
+S XG$FadeOut$0$0 Def00000D
+S A$Fade$60 Def000000
+S A$Fade$61 Def000002
+S C$Fade.c$7$0_0$124 Def000000
+S A$Fade$91 Def00000D
+S A$Fade$82 Def000008
+S C$Fade.c$8$1_0$124 Def000000
+S A$Fade$83 Def00000A
+S C$Fade.c$9$1_0$124 Def000005
+S A$Fade$69 Def000005
+S G$FadeIn$0$0 Def000000
+S G$FadeOut$0$0 Def000008
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 00 00
+T 00 00 00 1E 00 00 00 21 00 00 C3 00 00
+R 00 00 00 00 0B 04 03 00 02 08 00 00 02 0B 05 00
+T 08 00 00
+R 00 00 00 00
+T 08 00 00 1E 00 00 00 21 00 00 C3 00 00
+R 00 00 00 00 0B 04 04 00 02 08 01 00 02 0B 05 00

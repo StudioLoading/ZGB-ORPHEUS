@@ -1,0 +1,127 @@
+;!FILE ../Debug/zgb/Vector.asm
+XL3
+H 9 areas 5D global symbols
+M Vector
+O -msm83
+S .__.ABS. Def000000
+S _memcpy Ref000000
+A _CODE size 59 flags 0 addr 0
+S A$Vector$100 Def00001D
+S C$Vector.c$10$1_0$140 Def000011
+S A$Vector$110 Def000027
+S A$Vector$101 Def00001E
+S C$Vector.c$11$1_0$140 Def00004A
+S A$Vector$120 Def000031
+S A$Vector$111 Def000028
+S A$Vector$102 Def00001F
+S C$Vector.c$12$1_0$140 Def000058
+S G$VectorAdd$0$0 Def000000
+S A$Vector$130 Def00003C
+S A$Vector$121 Def000032
+S A$Vector$112 Def000029
+S A$Vector$103 Def000020
+S A$Vector$140 Def000045
+S A$Vector$131 Def00003D
+S A$Vector$122 Def000033
+S A$Vector$113 Def00002A
+S A$Vector$104 Def000021
+S A$Vector$150 Def00004D
+S A$Vector$132 Def00003E
+S A$Vector$123 Def000034
+S A$Vector$114 Def00002B
+S A$Vector$105 Def000022
+S A$Vector$151 Def00004E
+S A$Vector$133 Def00003F
+S A$Vector$124 Def000035
+S A$Vector$115 Def00002C
+S A$Vector$106 Def000023
+S A$Vector$152 Def00004F
+S A$Vector$143 Def000046
+S A$Vector$134 Def000040
+S A$Vector$125 Def000036
+S A$Vector$116 Def00002D
+S A$Vector$107 Def000024
+S A$Vector$162 Def000056
+S A$Vector$153 Def000050
+S A$Vector$144 Def000047
+S A$Vector$135 Def000041
+S A$Vector$126 Def000037
+S A$Vector$117 Def00002E
+S A$Vector$108 Def000025
+S A$Vector$154 Def000051
+S A$Vector$136 Def000043
+S A$Vector$127 Def000038
+S A$Vector$118 Def00002F
+S A$Vector$109 Def000026
+S A$Vector$155 Def000052
+S A$Vector$137 Def000044
+S A$Vector$128 Def000039
+S A$Vector$119 Def000030
+S A$Vector$156 Def000053
+S A$Vector$129 Def00003B
+S A$Vector$157 Def000054
+S A$Vector$148 Def00004A
+S A$Vector$167 Def000058
+S A$Vector$158 Def000055
+S A$Vector$149 Def00004C
+S _VectorAdd Def000000
+S A$Vector$60 Def000003
+S A$Vector$61 Def000004
+S A$Vector$62 Def000005
+S A$Vector$90 Def000011
+S A$Vector$72 Def000009
+S A$Vector$63 Def000007
+S A$Vector$54 Def000000
+S C$Vector.c$9$1_0$140 Def00000A
+S A$Vector$91 Def000012
+S A$Vector$82 Def00000A
+S A$Vector$64 Def000008
+S G$VectorRemovePos$0$0 Def00000A
+S A$Vector$92 Def000013
+S A$Vector$83 Def00000C
+S XG$VectorAdd$0$0 Def000009
+S C$Vector.c$5$0_0$138 Def000000
+S A$Vector$93 Def000014
+S A$Vector$84 Def00000E
+S A$Vector$94 Def000015
+S A$Vector$85 Def00000F
+S A$Vector$58 Def000001
+S C$Vector.c$6$1_0$138 Def000001
+S A$Vector$95 Def000016
+S A$Vector$86 Def000010
+S A$Vector$59 Def000002
+S C$Vector.c$7$1_0$138 Def000009
+S A$Vector$96 Def000017
+S A$Vector$97 Def000018
+S A$Vector$98 Def000019
+S A$Vector$99 Def00001B
+S _VectorRemovePos Def00000A
+S XG$VectorRemovePos$0$0 Def000058
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 00 00
+T 00 00 00 4F 1A 3C 12 6F 26 00 19 71 C9
+R 00 00 00 00
+T 0A 00 00
+R 00 00 00 00
+T 0A 00 00 E8 FA F8 04 73 23 72 2B 5E 23 56 F5 1A
+R 00 00 00 00
+T 17 00 00 4F F1 06 00 F8 00 22 AF 22 23 D1 D5 79
+R 00 00 00 00
+T 24 00 00 93 5F 78 9A 32 7B 22 23 C1 C5 03 03 2A
+R 00 00 00 00
+T 31 00 00 66 6F 09 4D 44 D1 D5 13 F8 04 2A 66 6F
+R 00 00 00 00
+T 3E 00 00 19 5D 54 F8 02 2A 66 6F E5 CD 00 00 F8
+R 00 00 00 00 02 0D 01 00
+T 4B 00 00 04 2A 5F 56 1A 4F 0D 3A 6E 67 71 E8 06
+R 00 00 00 00
+T 58 00 00 C9
+R 00 00 00 00

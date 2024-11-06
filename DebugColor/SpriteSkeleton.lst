@@ -1,0 +1,464 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module SpriteSkeleton
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _Destroy_SpriteSkeleton
+                                     12 	.globl _Update_SpriteSkeleton
+                                     13 	.globl _Start_SpriteSkeleton
+                                     14 	.globl b_e_destroy
+                                     15 	.globl _e_destroy
+                                     16 	.globl b_e_management
+                                     17 	.globl _e_management
+                                     18 	.globl b_e_change_state
+                                     19 	.globl _e_change_state
+                                     20 	.globl b_e_start
+                                     21 	.globl _e_start
+                                     22 	.globl _SetSpriteAnim
+                                     23 	.globl _a_skeleton_repelled
+                                     24 	.globl _a_skeleton_h
+                                     25 	.globl _a_skeleton_down
+                                     26 	.globl _a_skeleton_up
+                                     27 	.globl _a_skeleton_hidden
+                                     28 	.globl ___bank_SpriteSkeleton
+                                     29 	.globl b_skeleton_update_anim
+                                     30 	.globl _skeleton_update_anim
+                                     31 ;--------------------------------------------------------
+                                     32 ; special function registers
+                                     33 ;--------------------------------------------------------
+                                     34 ;--------------------------------------------------------
+                                     35 ; ram data
+                                     36 ;--------------------------------------------------------
+                                     37 	.area _DATA
+                                     38 ;--------------------------------------------------------
+                                     39 ; ram data
+                                     40 ;--------------------------------------------------------
+                                     41 	.area _INITIALIZED
+                                     42 ;--------------------------------------------------------
+                                     43 ; absolute external ram data
+                                     44 ;--------------------------------------------------------
+                                     45 	.area _DABS (ABS)
+                                     46 ;--------------------------------------------------------
+                                     47 ; global & static initialisations
+                                     48 ;--------------------------------------------------------
+                                     49 	.area _HOME
+                                     50 	.area _GSINIT
+                                     51 	.area _GSFINAL
+                                     52 	.area _GSINIT
+                                     53 ;--------------------------------------------------------
+                                     54 ; Home
+                                     55 ;--------------------------------------------------------
+                                     56 	.area _HOME
+                                     57 	.area _HOME
+                                     58 ;--------------------------------------------------------
+                                     59 ; code
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _CODE_255
+                           000000    62 	G$Start_SpriteSkeleton$0$0	= .
+                                     63 	.globl	G$Start_SpriteSkeleton$0$0
+                           000000    64 	C$SpriteSkeleton.c$29$0_0$186	= .
+                                     65 	.globl	C$SpriteSkeleton.c$29$0_0$186
+                                     66 ;SpriteSkeleton.c:29: void START(){
+                                     67 ;	---------------------------------
+                                     68 ; Function Start_SpriteSkeleton
+                                     69 ; ---------------------------------
+      000000                         70 _Start_SpriteSkeleton::
+                           000000    71 	C$SpriteSkeleton.c$30$1_0$186	= .
+                                     72 	.globl	C$SpriteSkeleton.c$30$1_0$186
+                                     73 ;SpriteSkeleton.c:30: SetSpriteAnim(THIS, a_skeleton_hidden, 6);
+      000000 3E 06            [ 8]   74 	ld	a, #0x06
+      000002 F5               [16]   75 	push	af
+      000003 33               [ 8]   76 	inc	sp
+      000004 01r7Fr00         [12]   77 	ld	bc, #_a_skeleton_hidden
+      000007 21r00r00         [12]   78 	ld	hl, #_THIS
+      00000A 2A               [ 8]   79 	ld	a, (hl+)
+      00000B 5F               [ 4]   80 	ld	e, a
+      00000C 56               [ 8]   81 	ld	d, (hl)
+      00000D CDr00r00         [24]   82 	call	_SetSpriteAnim
+                           000010    83 	C$SpriteSkeleton.c$31$1_1$187	= .
+                                     84 	.globl	C$SpriteSkeleton.c$31$1_1$187
+                                     85 ;SpriteSkeleton.c:31: struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+      000010 21r00r00         [12]   86 	ld	hl, #_THIS
+      000013 2A               [ 8]   87 	ld	a, (hl+)
+      000014 46               [ 8]   88 	ld	b, (hl)
+      000015 C6 1B            [ 8]   89 	add	a, #0x1b
+      000017 4F               [ 4]   90 	ld	c, a
+      000018 30 01            [12]   91 	jr	NC, 00122$
+      00001A 04               [ 4]   92 	inc	b
+      00001B                         93 00122$:
+                           00001B    94 	C$SpriteSkeleton.c$32$1_1$187	= .
+                                     95 	.globl	C$SpriteSkeleton.c$32$1_1$187
+                                     96 ;SpriteSkeleton.c:32: e_data->frmskip = 16u;
+      00001B 21 07 00         [12]   97 	ld	hl, #0x0007
+      00001E 09               [ 8]   98 	add	hl, bc
+      00001F 36 10            [12]   99 	ld	(hl), #0x10
+                           000021   100 	C$SpriteSkeleton.c$33$1_1$187	= .
+                                    101 	.globl	C$SpriteSkeleton.c$33$1_1$187
+                                    102 ;SpriteSkeleton.c:33: e_start(e_data, IDLE_DOWN);
+      000021 3E 03            [ 8]  103 	ld	a, #0x03
+      000023 F5               [16]  104 	push	af
+      000024 33               [ 8]  105 	inc	sp
+      000025 C5               [16]  106 	push	bc
+      000026 1Er00            [ 8]  107 	ld	e, #b_e_start
+      000028 21r00r00         [12]  108 	ld	hl, #_e_start
+      00002B CDr00r00         [24]  109 	call	___sdcc_bcall_ehl
+      00002E E8 03            [16]  110 	add	sp, #3
+                           000030   111 	C$SpriteSkeleton.c$34$1_1$186	= .
+                                    112 	.globl	C$SpriteSkeleton.c$34$1_1$186
+                                    113 ;SpriteSkeleton.c:34: if(_cpu != CGB_TYPE){
+      000030 FAr00r00         [16]  114 	ld	a, (#__cpu)
+      000033 D6 11            [ 8]  115 	sub	a, #0x11
+      000035 3E 01            [ 8]  116 	ld	a, #0x01
+      000037 28 01            [12]  117 	jr	Z, 00124$
+      000039 AF               [ 4]  118 	xor	a, a
+      00003A                        119 00124$:
+      00003A 4F               [ 4]  120 	ld	c, a
+      00003B CB 41            [ 8]  121 	bit	0, c
+      00003D 20 20            [12]  122 	jr	NZ, 00105$
+                           00003F   123 	C$SpriteSkeleton.c$35$2_1$188	= .
+                                    124 	.globl	C$SpriteSkeleton.c$35$2_1$188
+                                    125 ;SpriteSkeleton.c:35: OBP1_REG = PAL_DEF(0, 0, 1, 3);
+      00003F 3E D0            [ 8]  126 	ld	a, #0xd0
+      000041 E0r00            [12]  127 	ldh	(_OBP1_REG + 0), a
+                           000043   128 	C$SpriteSkeleton.c$31$1_1$186	= .
+                                    129 	.globl	C$SpriteSkeleton.c$31$1_1$186
+                                    130 ;SpriteSkeleton.c:31: struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+      000043 21r00r00         [12]  131 	ld	hl, #_THIS
+      000046 2A               [ 8]  132 	ld	a, (hl+)
+      000047 5F               [ 4]  133 	ld	e, a
+      000048 56               [ 8]  134 	ld	d, (hl)
+                           000049   135 	C$SpriteSkeleton.c$36$1_1$186	= .
+                                    136 	.globl	C$SpriteSkeleton.c$36$1_1$186
+                                    137 ;SpriteSkeleton.c:36: SPRITE_SET_PALETTE(THIS,1);
+      000049 21 04 00         [12]  138 	ld	hl, #0x0004
+      00004C 19               [ 8]  139 	add	hl, de
+      00004D 5E               [ 8]  140 	ld	e, (hl)
+      00004E 79               [ 4]  141 	ld	a, c
+      00004F B7               [ 4]  142 	or	a, a
+      000050 28 08            [12]  143 	jr	Z, 00102$
+      000052 7B               [ 4]  144 	ld	a, e
+      000053 E6 F8            [ 8]  145 	and	a, #0xf8
+      000055 F6 11            [ 8]  146 	or	a, #0x11
+      000057 77               [ 8]  147 	ld	(hl), a
+      000058 18 05            [12]  148 	jr	00105$
+      00005A                        149 00102$:
+      00005A CB A3            [ 8]  150 	res	4, e
+      00005C CB E3            [ 8]  151 	set	4, e
+      00005E 73               [ 8]  152 	ld	(hl), e
+      00005F                        153 00105$:
+                           00005F   154 	C$SpriteSkeleton.c$38$1_1$187	= .
+                                    155 	.globl	C$SpriteSkeleton.c$38$1_1$187
+                                    156 ;SpriteSkeleton.c:38: e_change_state(THIS, WALK_DOWN, THIS->type);
+      00005F 21r00r00         [12]  157 	ld	hl, #_THIS
+      000062 2A               [ 8]  158 	ld	a, (hl+)
+      000063 4F               [ 4]  159 	ld	c, a
+      000064 46               [ 8]  160 	ld	b, (hl)
+      000065 21 13 00         [12]  161 	ld	hl, #0x0013
+      000068 09               [ 8]  162 	add	hl, bc
+      000069 66               [ 8]  163 	ld	h, (hl)
+      00006A 2E 09            [ 8]  164 	ld	l, #0x09
+      00006C E5               [16]  165 	push	hl
+      00006D 21r00r00         [12]  166 	ld	hl, #_THIS
+      000070 2A               [ 8]  167 	ld	a, (hl+)
+      000071 5F               [ 4]  168 	ld	e, a
+      000072 56               [ 8]  169 	ld	d, (hl)
+      000073 D5               [16]  170 	push	de
+      000074 1Er00            [ 8]  171 	ld	e, #b_e_change_state
+      000076 21r00r00         [12]  172 	ld	hl, #_e_change_state
+      000079 CDr00r00         [24]  173 	call	___sdcc_bcall_ehl
+      00007C E8 04            [16]  174 	add	sp, #4
+                           00007E   175 	C$SpriteSkeleton.c$39$1_1$186	= .
+                                    176 	.globl	C$SpriteSkeleton.c$39$1_1$186
+                                    177 ;SpriteSkeleton.c:39: }
+                           00007E   178 	C$SpriteSkeleton.c$39$1_1$186	= .
+                                    179 	.globl	C$SpriteSkeleton.c$39$1_1$186
+                           00007E   180 	XG$Start_SpriteSkeleton$0$0	= .
+                                    181 	.globl	XG$Start_SpriteSkeleton$0$0
+      00007E C9               [16]  182 	ret
+                           0000FF   183 G$__bank_SpriteSkeleton$0_0$0 == 0x00ff
+                           0000FF   184 ___bank_SpriteSkeleton	=	0x00ff
+                           00007F   185 G$a_skeleton_hidden$0_0$0 == .
+      00007F                        186 _a_skeleton_hidden:
+      00007F 01                     187 	.db #0x01	; 1
+      000080 00                     188 	.db #0x00	; 0
+                           000081   189 G$a_skeleton_up$0_0$0 == .
+      000081                        190 _a_skeleton_up:
+      000081 02                     191 	.db #0x02	; 2
+      000082 01                     192 	.db #0x01	; 1
+      000083 02                     193 	.db #0x02	; 2
+                           000084   194 G$a_skeleton_down$0_0$0 == .
+      000084                        195 _a_skeleton_down:
+      000084 02                     196 	.db #0x02	; 2
+      000085 03                     197 	.db #0x03	; 3
+      000086 04                     198 	.db #0x04	; 4
+                           000087   199 G$a_skeleton_h$0_0$0 == .
+      000087                        200 _a_skeleton_h:
+      000087 02                     201 	.db #0x02	; 2
+      000088 05                     202 	.db #0x05	; 5
+      000089 06                     203 	.db #0x06	; 6
+                           00008A   204 G$a_skeleton_repelled$0_0$0 == .
+      00008A                        205 _a_skeleton_repelled:
+      00008A 04                     206 	.db #0x04	; 4
+      00008B 01                     207 	.db #0x01	; 1
+      00008C 05                     208 	.db #0x05	; 5
+      00008D 03                     209 	.db #0x03	; 3
+      00008E 06                     210 	.db #0x06	; 6
+                           00008F   211 	G$Update_SpriteSkeleton$0$0	= .
+                                    212 	.globl	G$Update_SpriteSkeleton$0$0
+                           00008F   213 	C$SpriteSkeleton.c$41$1_1$189	= .
+                                    214 	.globl	C$SpriteSkeleton.c$41$1_1$189
+                                    215 ;SpriteSkeleton.c:41: void UPDATE(){
+                                    216 ;	---------------------------------
+                                    217 ; Function Update_SpriteSkeleton
+                                    218 ; ---------------------------------
+      00008F                        219 _Update_SpriteSkeleton::
+                           00008F   220 	C$SpriteSkeleton.c$42$1_0$189	= .
+                                    221 	.globl	C$SpriteSkeleton.c$42$1_0$189
+                                    222 ;SpriteSkeleton.c:42: struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+      00008F 21r00r00         [12]  223 	ld	hl, #_THIS
+      000092 2A               [ 8]  224 	ld	a, (hl+)
+      000093 4F               [ 4]  225 	ld	c, a
+      000094 46               [ 8]  226 	ld	b, (hl)
+                           000095   227 	C$SpriteSkeleton.c$43$1_0$189	= .
+                                    228 	.globl	C$SpriteSkeleton.c$43$1_0$189
+                                    229 ;SpriteSkeleton.c:43: if(e_data->e_configured == 0){
+      000095 21 21 00         [12]  230 	ld	hl, #0x21
+      000098 09               [ 8]  231 	add	hl,bc
+      000099 7E               [ 8]  232 	ld	a, (hl)
+      00009A B7               [ 4]  233 	or	a, a
+                           00009B   234 	C$SpriteSkeleton.c$44$2_0$190	= .
+                                    235 	.globl	C$SpriteSkeleton.c$44$2_0$190
+                                    236 ;SpriteSkeleton.c:44: return;
+      00009B C8               [20]  237 	ret	Z
+                           00009C   238 	C$SpriteSkeleton.c$46$1_0$189	= .
+                                    239 	.globl	C$SpriteSkeleton.c$46$1_0$189
+                                    240 ;SpriteSkeleton.c:46: e_management(THIS);
+      00009C 21r00r00         [12]  241 	ld	hl, #_THIS
+      00009F 2A               [ 8]  242 	ld	a, (hl+)
+      0000A0 5F               [ 4]  243 	ld	e, a
+      0000A1 56               [ 8]  244 	ld	d, (hl)
+      0000A2 D5               [16]  245 	push	de
+      0000A3 1Er00            [ 8]  246 	ld	e, #b_e_management
+      0000A5 21r00r00         [12]  247 	ld	hl, #_e_management
+      0000A8 CDr00r00         [24]  248 	call	___sdcc_bcall_ehl
+      0000AB E1               [12]  249 	pop	hl
+                           0000AC   250 	C$SpriteSkeleton.c$47$1_0$189	= .
+                                    251 	.globl	C$SpriteSkeleton.c$47$1_0$189
+                                    252 ;SpriteSkeleton.c:47: }
+                           0000AC   253 	C$SpriteSkeleton.c$47$1_0$189	= .
+                                    254 	.globl	C$SpriteSkeleton.c$47$1_0$189
+                           0000AC   255 	XG$Update_SpriteSkeleton$0$0	= .
+                                    256 	.globl	XG$Update_SpriteSkeleton$0$0
+      0000AC C9               [16]  257 	ret
+                           0000AD   258 	G$skeleton_update_anim$0$0	= .
+                                    259 	.globl	G$skeleton_update_anim$0$0
+                           0000AD   260 	C$SpriteSkeleton.c$49$1_0$192	= .
+                                    261 	.globl	C$SpriteSkeleton.c$49$1_0$192
+                                    262 ;SpriteSkeleton.c:49: void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
+                                    263 ;	---------------------------------
+                                    264 ; Function skeleton_update_anim
+                                    265 ; ---------------------------------
+                           0000FF   266 	b_skeleton_update_anim	= 255
+      0000AD                        267 _skeleton_update_anim::
+                           0000AD   268 	C$SpriteSkeleton.c$50$1_0$192	= .
+                                    269 	.globl	C$SpriteSkeleton.c$50$1_0$192
+                                    270 ;SpriteSkeleton.c:50: switch(new_state){
+      0000AD 3E 0C            [ 8]  271 	ld	a, #0x0c
+      0000AF F8 08            [12]  272 	ldhl	sp,	#8
+      0000B1 96               [ 8]  273 	sub	a, (hl)
+      0000B2 D8               [20]  274 	ret	C
+                           0000B3   275 	C$SpriteSkeleton.c$58$1_0$192	= .
+                                    276 	.globl	C$SpriteSkeleton.c$58$1_0$192
+                                    277 ;SpriteSkeleton.c:58: s_enemy->mirror = V_MIRROR;
+      0000B3 2B               [ 8]  278 	dec	hl
+      0000B4 2B               [ 8]  279 	dec	hl
+      0000B5 5E               [ 8]  280 	ld	e, (hl)
+      0000B6 23               [ 8]  281 	inc	hl
+      0000B7 56               [ 8]  282 	ld	d, (hl)
+      0000B8 21 10 00         [12]  283 	ld	hl, #0x0010
+      0000BB 19               [ 8]  284 	add	hl, de
+      0000BC 4D               [ 4]  285 	ld	c, l
+      0000BD 44               [ 4]  286 	ld	b, h
+                           0000BE   287 	C$SpriteSkeleton.c$50$1_0$192	= .
+                                    288 	.globl	C$SpriteSkeleton.c$50$1_0$192
+                                    289 ;SpriteSkeleton.c:50: switch(new_state){
+      0000BE D5               [16]  290 	push	de
+      0000BF F8 0A            [12]  291 	ldhl	sp,	#10
+      0000C1 5E               [ 8]  292 	ld	e, (hl)
+      0000C2 16 00            [ 8]  293 	ld	d, #0x00
+      0000C4 21rCCr00         [12]  294 	ld	hl, #00120$
+      0000C7 19               [ 8]  295 	add	hl, de
+      0000C8 19               [ 8]  296 	add	hl, de
+      0000C9 19               [ 8]  297 	add	hl, de
+      0000CA D1               [12]  298 	pop	de
+      0000CB E9               [ 4]  299 	jp	(hl)
+      0000CC                        300 00120$:
+      0000CC C3r3Dr01         [16]  301 	jp	00111$
+      0000CF C3r3Dr01         [16]  302 	jp	00111$
+      0000D2 C3rF3r00         [16]  303 	jp	00102$
+      0000D5 C3r03r01         [16]  304 	jp	00104$
+      0000D8 C3r13r01         [16]  305 	jp	00106$
+      0000DB C3r21r01         [16]  306 	jp	00108$
+      0000DE C3r13r01         [16]  307 	jp	00106$
+      0000E1 C3r21r01         [16]  308 	jp	00108$
+      0000E4 C3rF3r00         [16]  309 	jp	00102$
+      0000E7 C3r03r01         [16]  310 	jp	00104$
+      0000EA C3r3Dr01         [16]  311 	jp	00111$
+      0000ED C3r3Dr01         [16]  312 	jp	00111$
+      0000F0 C3r2Er01         [16]  313 	jp	00109$
+                           0000F3   314 	C$SpriteSkeleton.c$51$2_0$193	= .
+                                    315 	.globl	C$SpriteSkeleton.c$51$2_0$193
+                                    316 ;SpriteSkeleton.c:51: case IDLE_UP: case WALK_UP: 
+      0000F3                        317 00102$:
+                           0000F3   318 	C$SpriteSkeleton.c$52$2_0$193	= .
+                                    319 	.globl	C$SpriteSkeleton.c$52$2_0$193
+                                    320 ;SpriteSkeleton.c:52: SetSpriteAnim(s_enemy, a_skeleton_up, 6);
+      0000F3 3E 06            [ 8]  321 	ld	a, #0x06
+      0000F5 F5               [16]  322 	push	af
+      0000F6 33               [ 8]  323 	inc	sp
+      0000F7 01r81r00         [12]  324 	ld	bc, #_a_skeleton_up
+      0000FA F8 07            [12]  325 	ldhl	sp,	#7
+      0000FC 2A               [ 8]  326 	ld	a, (hl+)
+      0000FD 5F               [ 4]  327 	ld	e, a
+      0000FE 56               [ 8]  328 	ld	d, (hl)
+      0000FF CDr00r00         [24]  329 	call	_SetSpriteAnim
+                           000102   330 	C$SpriteSkeleton.c$53$2_0$193	= .
+                                    331 	.globl	C$SpriteSkeleton.c$53$2_0$193
+                                    332 ;SpriteSkeleton.c:53: break;
+      000102 C9               [16]  333 	ret
+                           000103   334 	C$SpriteSkeleton.c$54$2_0$193	= .
+                                    335 	.globl	C$SpriteSkeleton.c$54$2_0$193
+                                    336 ;SpriteSkeleton.c:54: case IDLE_DOWN: case WALK_DOWN:
+      000103                        337 00104$:
+                           000103   338 	C$SpriteSkeleton.c$55$2_0$193	= .
+                                    339 	.globl	C$SpriteSkeleton.c$55$2_0$193
+                                    340 ;SpriteSkeleton.c:55: SetSpriteAnim(s_enemy, a_skeleton_down, 6);
+      000103 3E 06            [ 8]  341 	ld	a, #0x06
+      000105 F5               [16]  342 	push	af
+      000106 33               [ 8]  343 	inc	sp
+      000107 01r84r00         [12]  344 	ld	bc, #_a_skeleton_down
+      00010A F8 07            [12]  345 	ldhl	sp,	#7
+      00010C 2A               [ 8]  346 	ld	a, (hl+)
+      00010D 5F               [ 4]  347 	ld	e, a
+      00010E 56               [ 8]  348 	ld	d, (hl)
+      00010F CDr00r00         [24]  349 	call	_SetSpriteAnim
+                           000112   350 	C$SpriteSkeleton.c$56$2_0$193	= .
+                                    351 	.globl	C$SpriteSkeleton.c$56$2_0$193
+                                    352 ;SpriteSkeleton.c:56: break;
+      000112 C9               [16]  353 	ret
+                           000113   354 	C$SpriteSkeleton.c$57$2_0$193	= .
+                                    355 	.globl	C$SpriteSkeleton.c$57$2_0$193
+                                    356 ;SpriteSkeleton.c:57: case IDLE_LEFT: case WALK_LEFT:
+      000113                        357 00106$:
+                           000113   358 	C$SpriteSkeleton.c$58$2_0$193	= .
+                                    359 	.globl	C$SpriteSkeleton.c$58$2_0$193
+                                    360 ;SpriteSkeleton.c:58: s_enemy->mirror = V_MIRROR;
+      000113 3E 02            [ 8]  361 	ld	a, #0x02
+      000115 02               [ 8]  362 	ld	(bc), a
+                           000116   363 	C$SpriteSkeleton.c$59$2_0$193	= .
+                                    364 	.globl	C$SpriteSkeleton.c$59$2_0$193
+                                    365 ;SpriteSkeleton.c:59: SetSpriteAnim(s_enemy, a_skeleton_h, 8);
+      000116 3E 08            [ 8]  366 	ld	a, #0x08
+      000118 F5               [16]  367 	push	af
+      000119 33               [ 8]  368 	inc	sp
+      00011A 01r87r00         [12]  369 	ld	bc, #_a_skeleton_h
+      00011D CDr00r00         [24]  370 	call	_SetSpriteAnim
+                           000120   371 	C$SpriteSkeleton.c$60$2_0$193	= .
+                                    372 	.globl	C$SpriteSkeleton.c$60$2_0$193
+                                    373 ;SpriteSkeleton.c:60: break;
+      000120 C9               [16]  374 	ret
+                           000121   375 	C$SpriteSkeleton.c$61$2_0$193	= .
+                                    376 	.globl	C$SpriteSkeleton.c$61$2_0$193
+                                    377 ;SpriteSkeleton.c:61: case IDLE_RIGHT: case WALK_RIGHT: 
+      000121                        378 00108$:
+                           000121   379 	C$SpriteSkeleton.c$62$2_0$193	= .
+                                    380 	.globl	C$SpriteSkeleton.c$62$2_0$193
+                                    381 ;SpriteSkeleton.c:62: s_enemy->mirror = NO_MIRROR;
+      000121 AF               [ 4]  382 	xor	a, a
+      000122 02               [ 8]  383 	ld	(bc), a
+                           000123   384 	C$SpriteSkeleton.c$63$2_0$193	= .
+                                    385 	.globl	C$SpriteSkeleton.c$63$2_0$193
+                                    386 ;SpriteSkeleton.c:63: SetSpriteAnim(s_enemy, a_skeleton_h, 8);
+      000123 3E 08            [ 8]  387 	ld	a, #0x08
+      000125 F5               [16]  388 	push	af
+      000126 33               [ 8]  389 	inc	sp
+      000127 01r87r00         [12]  390 	ld	bc, #_a_skeleton_h
+      00012A CDr00r00         [24]  391 	call	_SetSpriteAnim
+                           00012D   392 	C$SpriteSkeleton.c$64$2_0$193	= .
+                                    393 	.globl	C$SpriteSkeleton.c$64$2_0$193
+                                    394 ;SpriteSkeleton.c:64: break;
+      00012D C9               [16]  395 	ret
+                           00012E   396 	C$SpriteSkeleton.c$65$2_0$193	= .
+                                    397 	.globl	C$SpriteSkeleton.c$65$2_0$193
+                                    398 ;SpriteSkeleton.c:65: case HIT:
+      00012E                        399 00109$:
+                           00012E   400 	C$SpriteSkeleton.c$66$2_0$193	= .
+                                    401 	.globl	C$SpriteSkeleton.c$66$2_0$193
+                                    402 ;SpriteSkeleton.c:66: SetSpriteAnim(s_enemy, a_skeleton_repelled, 12);
+      00012E 3E 0C            [ 8]  403 	ld	a, #0x0c
+      000130 F5               [16]  404 	push	af
+      000131 33               [ 8]  405 	inc	sp
+      000132 01r8Ar00         [12]  406 	ld	bc, #_a_skeleton_repelled
+      000135 F8 07            [12]  407 	ldhl	sp,	#7
+      000137 2A               [ 8]  408 	ld	a, (hl+)
+      000138 5F               [ 4]  409 	ld	e, a
+      000139 56               [ 8]  410 	ld	d, (hl)
+      00013A CDr00r00         [24]  411 	call	_SetSpriteAnim
+                           00013D   412 	C$SpriteSkeleton.c$68$1_0$192	= .
+                                    413 	.globl	C$SpriteSkeleton.c$68$1_0$192
+                                    414 ;SpriteSkeleton.c:68: }
+      00013D                        415 00111$:
+                           00013D   416 	C$SpriteSkeleton.c$69$1_0$192	= .
+                                    417 	.globl	C$SpriteSkeleton.c$69$1_0$192
+                                    418 ;SpriteSkeleton.c:69: }
+                           00013D   419 	C$SpriteSkeleton.c$69$1_0$192	= .
+                                    420 	.globl	C$SpriteSkeleton.c$69$1_0$192
+                           00013D   421 	XG$skeleton_update_anim$0$0	= .
+                                    422 	.globl	XG$skeleton_update_anim$0$0
+      00013D C9               [16]  423 	ret
+                           00013E   424 	G$Destroy_SpriteSkeleton$0$0	= .
+                                    425 	.globl	G$Destroy_SpriteSkeleton$0$0
+                           00013E   426 	C$SpriteSkeleton.c$71$1_0$194	= .
+                                    427 	.globl	C$SpriteSkeleton.c$71$1_0$194
+                                    428 ;SpriteSkeleton.c:71: void DESTROY(){
+                                    429 ;	---------------------------------
+                                    430 ; Function Destroy_SpriteSkeleton
+                                    431 ; ---------------------------------
+      00013E                        432 _Destroy_SpriteSkeleton::
+                           00013E   433 	C$SpriteSkeleton.c$72$1_0$194	= .
+                                    434 	.globl	C$SpriteSkeleton.c$72$1_0$194
+                                    435 ;SpriteSkeleton.c:72: e_destroy(THIS, THIS->type);
+      00013E 21r00r00         [12]  436 	ld	hl, #_THIS
+      000141 2A               [ 8]  437 	ld	a, (hl+)
+      000142 4F               [ 4]  438 	ld	c, a
+      000143 46               [ 8]  439 	ld	b, (hl)
+      000144 21 13 00         [12]  440 	ld	hl, #0x0013
+      000147 09               [ 8]  441 	add	hl, bc
+      000148 7E               [ 8]  442 	ld	a, (hl)
+      000149 F5               [16]  443 	push	af
+      00014A 33               [ 8]  444 	inc	sp
+      00014B 21r00r00         [12]  445 	ld	hl, #_THIS
+      00014E 2A               [ 8]  446 	ld	a, (hl+)
+      00014F 5F               [ 4]  447 	ld	e, a
+      000150 56               [ 8]  448 	ld	d, (hl)
+      000151 D5               [16]  449 	push	de
+      000152 1Er00            [ 8]  450 	ld	e, #b_e_destroy
+      000154 21r00r00         [12]  451 	ld	hl, #_e_destroy
+      000157 CDr00r00         [24]  452 	call	___sdcc_bcall_ehl
+      00015A E8 03            [16]  453 	add	sp, #3
+                           00015C   454 	C$SpriteSkeleton.c$73$1_0$194	= .
+                                    455 	.globl	C$SpriteSkeleton.c$73$1_0$194
+                                    456 ;SpriteSkeleton.c:73: }
+                           00015C   457 	C$SpriteSkeleton.c$73$1_0$194	= .
+                                    458 	.globl	C$SpriteSkeleton.c$73$1_0$194
+                           00015C   459 	XG$Destroy_SpriteSkeleton$0$0	= .
+                                    460 	.globl	XG$Destroy_SpriteSkeleton$0$0
+      00015C C9               [16]  461 	ret
+                                    462 	.area _CODE_255
+                                    463 	.area _INITIALIZER
+                                    464 	.area _CABS (ABS)

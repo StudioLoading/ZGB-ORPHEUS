@@ -1,0 +1,325 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+  7 A$SpriteSkeleton$103                                           000021 GR
+  7 A$SpriteSkeleton$104                                           000023 GR
+  7 A$SpriteSkeleton$105                                           000024 GR
+  7 A$SpriteSkeleton$106                                           000025 GR
+  7 A$SpriteSkeleton$107                                           000026 GR
+  7 A$SpriteSkeleton$108                                           000028 GR
+  7 A$SpriteSkeleton$109                                           00002B GR
+  7 A$SpriteSkeleton$110                                           00002E GR
+  7 A$SpriteSkeleton$114                                           000030 GR
+  7 A$SpriteSkeleton$115                                           000033 GR
+  7 A$SpriteSkeleton$116                                           000035 GR
+  7 A$SpriteSkeleton$117                                           000037 GR
+  7 A$SpriteSkeleton$118                                           000039 GR
+  7 A$SpriteSkeleton$120                                           00003A GR
+  7 A$SpriteSkeleton$121                                           00003B GR
+  7 A$SpriteSkeleton$122                                           00003D GR
+  7 A$SpriteSkeleton$126                                           00003F GR
+  7 A$SpriteSkeleton$127                                           000041 GR
+  7 A$SpriteSkeleton$131                                           000043 GR
+  7 A$SpriteSkeleton$132                                           000046 GR
+  7 A$SpriteSkeleton$133                                           000047 GR
+  7 A$SpriteSkeleton$134                                           000048 GR
+  7 A$SpriteSkeleton$138                                           000049 GR
+  7 A$SpriteSkeleton$139                                           00004C GR
+  7 A$SpriteSkeleton$140                                           00004D GR
+  7 A$SpriteSkeleton$141                                           00004E GR
+  7 A$SpriteSkeleton$142                                           00004F GR
+  7 A$SpriteSkeleton$143                                           000050 GR
+  7 A$SpriteSkeleton$144                                           000052 GR
+  7 A$SpriteSkeleton$145                                           000053 GR
+  7 A$SpriteSkeleton$146                                           000055 GR
+  7 A$SpriteSkeleton$147                                           000057 GR
+  7 A$SpriteSkeleton$148                                           000058 GR
+  7 A$SpriteSkeleton$150                                           00005A GR
+  7 A$SpriteSkeleton$151                                           00005C GR
+  7 A$SpriteSkeleton$152                                           00005E GR
+  7 A$SpriteSkeleton$157                                           00005F GR
+  7 A$SpriteSkeleton$158                                           000062 GR
+  7 A$SpriteSkeleton$159                                           000063 GR
+  7 A$SpriteSkeleton$160                                           000064 GR
+  7 A$SpriteSkeleton$161                                           000065 GR
+  7 A$SpriteSkeleton$162                                           000068 GR
+  7 A$SpriteSkeleton$163                                           000069 GR
+  7 A$SpriteSkeleton$164                                           00006A GR
+  7 A$SpriteSkeleton$165                                           00006C GR
+  7 A$SpriteSkeleton$166                                           00006D GR
+  7 A$SpriteSkeleton$167                                           000070 GR
+  7 A$SpriteSkeleton$168                                           000071 GR
+  7 A$SpriteSkeleton$169                                           000072 GR
+  7 A$SpriteSkeleton$170                                           000073 GR
+  7 A$SpriteSkeleton$171                                           000074 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  7 A$SpriteSkeleton$172                                           000076 GR
+  7 A$SpriteSkeleton$173                                           000079 GR
+  7 A$SpriteSkeleton$174                                           00007C GR
+  7 A$SpriteSkeleton$182                                           00007E GR
+  7 A$SpriteSkeleton$223                                           00008F GR
+  7 A$SpriteSkeleton$224                                           000092 GR
+  7 A$SpriteSkeleton$225                                           000093 GR
+  7 A$SpriteSkeleton$226                                           000094 GR
+  7 A$SpriteSkeleton$230                                           000095 GR
+  7 A$SpriteSkeleton$231                                           000098 GR
+  7 A$SpriteSkeleton$232                                           000099 GR
+  7 A$SpriteSkeleton$233                                           00009A GR
+  7 A$SpriteSkeleton$237                                           00009B GR
+  7 A$SpriteSkeleton$241                                           00009C GR
+  7 A$SpriteSkeleton$242                                           00009F GR
+  7 A$SpriteSkeleton$243                                           0000A0 GR
+  7 A$SpriteSkeleton$244                                           0000A1 GR
+  7 A$SpriteSkeleton$245                                           0000A2 GR
+  7 A$SpriteSkeleton$246                                           0000A3 GR
+  7 A$SpriteSkeleton$247                                           0000A5 GR
+  7 A$SpriteSkeleton$248                                           0000A8 GR
+  7 A$SpriteSkeleton$249                                           0000AB GR
+  7 A$SpriteSkeleton$257                                           0000AC GR
+  7 A$SpriteSkeleton$271                                           0000AD GR
+  7 A$SpriteSkeleton$272                                           0000AF GR
+  7 A$SpriteSkeleton$273                                           0000B1 GR
+  7 A$SpriteSkeleton$274                                           0000B2 GR
+  7 A$SpriteSkeleton$278                                           0000B3 GR
+  7 A$SpriteSkeleton$279                                           0000B4 GR
+  7 A$SpriteSkeleton$280                                           0000B5 GR
+  7 A$SpriteSkeleton$281                                           0000B6 GR
+  7 A$SpriteSkeleton$282                                           0000B7 GR
+  7 A$SpriteSkeleton$283                                           0000B8 GR
+  7 A$SpriteSkeleton$284                                           0000BB GR
+  7 A$SpriteSkeleton$285                                           0000BC GR
+  7 A$SpriteSkeleton$286                                           0000BD GR
+  7 A$SpriteSkeleton$290                                           0000BE GR
+  7 A$SpriteSkeleton$291                                           0000BF GR
+  7 A$SpriteSkeleton$292                                           0000C1 GR
+  7 A$SpriteSkeleton$293                                           0000C2 GR
+  7 A$SpriteSkeleton$294                                           0000C4 GR
+  7 A$SpriteSkeleton$295                                           0000C7 GR
+  7 A$SpriteSkeleton$296                                           0000C8 GR
+  7 A$SpriteSkeleton$297                                           0000C9 GR
+  7 A$SpriteSkeleton$298                                           0000CA GR
+  7 A$SpriteSkeleton$299                                           0000CB GR
+  7 A$SpriteSkeleton$301                                           0000CC GR
+  7 A$SpriteSkeleton$302                                           0000CF GR
+  7 A$SpriteSkeleton$303                                           0000D2 GR
+  7 A$SpriteSkeleton$304                                           0000D5 GR
+  7 A$SpriteSkeleton$305                                           0000D8 GR
+  7 A$SpriteSkeleton$306                                           0000DB GR
+  7 A$SpriteSkeleton$307                                           0000DE GR
+  7 A$SpriteSkeleton$308                                           0000E1 GR
+  7 A$SpriteSkeleton$309                                           0000E4 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 3
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  7 A$SpriteSkeleton$310                                           0000E7 GR
+  7 A$SpriteSkeleton$311                                           0000EA GR
+  7 A$SpriteSkeleton$312                                           0000ED GR
+  7 A$SpriteSkeleton$313                                           0000F0 GR
+  7 A$SpriteSkeleton$321                                           0000F3 GR
+  7 A$SpriteSkeleton$322                                           0000F5 GR
+  7 A$SpriteSkeleton$323                                           0000F6 GR
+  7 A$SpriteSkeleton$324                                           0000F7 GR
+  7 A$SpriteSkeleton$325                                           0000FA GR
+  7 A$SpriteSkeleton$326                                           0000FC GR
+  7 A$SpriteSkeleton$327                                           0000FD GR
+  7 A$SpriteSkeleton$328                                           0000FE GR
+  7 A$SpriteSkeleton$329                                           0000FF GR
+  7 A$SpriteSkeleton$333                                           000102 GR
+  7 A$SpriteSkeleton$341                                           000103 GR
+  7 A$SpriteSkeleton$342                                           000105 GR
+  7 A$SpriteSkeleton$343                                           000106 GR
+  7 A$SpriteSkeleton$344                                           000107 GR
+  7 A$SpriteSkeleton$345                                           00010A GR
+  7 A$SpriteSkeleton$346                                           00010C GR
+  7 A$SpriteSkeleton$347                                           00010D GR
+  7 A$SpriteSkeleton$348                                           00010E GR
+  7 A$SpriteSkeleton$349                                           00010F GR
+  7 A$SpriteSkeleton$353                                           000112 GR
+  7 A$SpriteSkeleton$361                                           000113 GR
+  7 A$SpriteSkeleton$362                                           000115 GR
+  7 A$SpriteSkeleton$366                                           000116 GR
+  7 A$SpriteSkeleton$367                                           000118 GR
+  7 A$SpriteSkeleton$368                                           000119 GR
+  7 A$SpriteSkeleton$369                                           00011A GR
+  7 A$SpriteSkeleton$370                                           00011D GR
+  7 A$SpriteSkeleton$374                                           000120 GR
+  7 A$SpriteSkeleton$382                                           000121 GR
+  7 A$SpriteSkeleton$383                                           000122 GR
+  7 A$SpriteSkeleton$387                                           000123 GR
+  7 A$SpriteSkeleton$388                                           000125 GR
+  7 A$SpriteSkeleton$389                                           000126 GR
+  7 A$SpriteSkeleton$390                                           000127 GR
+  7 A$SpriteSkeleton$391                                           00012A GR
+  7 A$SpriteSkeleton$395                                           00012D GR
+  7 A$SpriteSkeleton$403                                           00012E GR
+  7 A$SpriteSkeleton$404                                           000130 GR
+  7 A$SpriteSkeleton$405                                           000131 GR
+  7 A$SpriteSkeleton$406                                           000132 GR
+  7 A$SpriteSkeleton$407                                           000135 GR
+  7 A$SpriteSkeleton$408                                           000137 GR
+  7 A$SpriteSkeleton$409                                           000138 GR
+  7 A$SpriteSkeleton$410                                           000139 GR
+  7 A$SpriteSkeleton$411                                           00013A GR
+  7 A$SpriteSkeleton$423                                           00013D GR
+  7 A$SpriteSkeleton$436                                           00013E GR
+  7 A$SpriteSkeleton$437                                           000141 GR
+  7 A$SpriteSkeleton$438                                           000142 GR
+  7 A$SpriteSkeleton$439                                           000143 GR
+  7 A$SpriteSkeleton$440                                           000144 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 4
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  7 A$SpriteSkeleton$441                                           000147 GR
+  7 A$SpriteSkeleton$442                                           000148 GR
+  7 A$SpriteSkeleton$443                                           000149 GR
+  7 A$SpriteSkeleton$444                                           00014A GR
+  7 A$SpriteSkeleton$445                                           00014B GR
+  7 A$SpriteSkeleton$446                                           00014E GR
+  7 A$SpriteSkeleton$447                                           00014F GR
+  7 A$SpriteSkeleton$448                                           000150 GR
+  7 A$SpriteSkeleton$449                                           000151 GR
+  7 A$SpriteSkeleton$450                                           000152 GR
+  7 A$SpriteSkeleton$451                                           000154 GR
+  7 A$SpriteSkeleton$452                                           000157 GR
+  7 A$SpriteSkeleton$453                                           00015A GR
+  7 A$SpriteSkeleton$461                                           00015C GR
+  7 A$SpriteSkeleton$74                                            000000 GR
+  7 A$SpriteSkeleton$75                                            000002 GR
+  7 A$SpriteSkeleton$76                                            000003 GR
+  7 A$SpriteSkeleton$77                                            000004 GR
+  7 A$SpriteSkeleton$78                                            000007 GR
+  7 A$SpriteSkeleton$79                                            00000A GR
+  7 A$SpriteSkeleton$80                                            00000B GR
+  7 A$SpriteSkeleton$81                                            00000C GR
+  7 A$SpriteSkeleton$82                                            00000D GR
+  7 A$SpriteSkeleton$86                                            000010 GR
+  7 A$SpriteSkeleton$87                                            000013 GR
+  7 A$SpriteSkeleton$88                                            000014 GR
+  7 A$SpriteSkeleton$89                                            000015 GR
+  7 A$SpriteSkeleton$90                                            000017 GR
+  7 A$SpriteSkeleton$91                                            000018 GR
+  7 A$SpriteSkeleton$92                                            00001A GR
+  7 A$SpriteSkeleton$97                                            00001B GR
+  7 A$SpriteSkeleton$98                                            00001E GR
+  7 A$SpriteSkeleton$99                                            00001F GR
+  7 C$SpriteSkeleton.c$29$0_0$186                               =  000000 GR
+  7 C$SpriteSkeleton.c$30$1_0$186                               =  000000 GR
+  7 C$SpriteSkeleton.c$31$1_1$186                               =  000043 GR
+  7 C$SpriteSkeleton.c$31$1_1$187                               =  000010 GR
+  7 C$SpriteSkeleton.c$32$1_1$187                               =  00001B GR
+  7 C$SpriteSkeleton.c$33$1_1$187                               =  000021 GR
+  7 C$SpriteSkeleton.c$34$1_1$186                               =  000030 GR
+  7 C$SpriteSkeleton.c$35$2_1$188                               =  00003F GR
+  7 C$SpriteSkeleton.c$36$1_1$186                               =  000049 GR
+  7 C$SpriteSkeleton.c$38$1_1$187                               =  00005F GR
+  7 C$SpriteSkeleton.c$39$1_1$186                               =  00007E GR
+  7 C$SpriteSkeleton.c$41$1_1$189                               =  00008F GR
+  7 C$SpriteSkeleton.c$42$1_0$189                               =  00008F GR
+  7 C$SpriteSkeleton.c$43$1_0$189                               =  000095 GR
+  7 C$SpriteSkeleton.c$44$2_0$190                               =  00009B GR
+  7 C$SpriteSkeleton.c$46$1_0$189                               =  00009C GR
+  7 C$SpriteSkeleton.c$47$1_0$189                               =  0000AC GR
+  7 C$SpriteSkeleton.c$49$1_0$192                               =  0000AD GR
+  7 C$SpriteSkeleton.c$50$1_0$192                               =  0000BE GR
+  7 C$SpriteSkeleton.c$51$2_0$193                               =  0000F3 GR
+  7 C$SpriteSkeleton.c$52$2_0$193                               =  0000F3 GR
+  7 C$SpriteSkeleton.c$53$2_0$193                               =  000102 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 5
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  7 C$SpriteSkeleton.c$54$2_0$193                               =  000103 GR
+  7 C$SpriteSkeleton.c$55$2_0$193                               =  000103 GR
+  7 C$SpriteSkeleton.c$56$2_0$193                               =  000112 GR
+  7 C$SpriteSkeleton.c$57$2_0$193                               =  000113 GR
+  7 C$SpriteSkeleton.c$58$1_0$192                               =  0000B3 GR
+  7 C$SpriteSkeleton.c$58$2_0$193                               =  000113 GR
+  7 C$SpriteSkeleton.c$59$2_0$193                               =  000116 GR
+  7 C$SpriteSkeleton.c$60$2_0$193                               =  000120 GR
+  7 C$SpriteSkeleton.c$61$2_0$193                               =  000121 GR
+  7 C$SpriteSkeleton.c$62$2_0$193                               =  000121 GR
+  7 C$SpriteSkeleton.c$63$2_0$193                               =  000123 GR
+  7 C$SpriteSkeleton.c$64$2_0$193                               =  00012D GR
+  7 C$SpriteSkeleton.c$65$2_0$193                               =  00012E GR
+  7 C$SpriteSkeleton.c$66$2_0$193                               =  00012E GR
+  7 C$SpriteSkeleton.c$68$1_0$192                               =  00013D GR
+  7 C$SpriteSkeleton.c$69$1_0$192                               =  00013D GR
+  7 C$SpriteSkeleton.c$71$1_0$194                               =  00013E GR
+  7 C$SpriteSkeleton.c$72$1_0$194                               =  00013E GR
+  7 C$SpriteSkeleton.c$73$1_0$194                               =  00015C GR
+  7 G$Destroy_SpriteSkeleton$0$0                                =  00013E GR
+  7 G$Start_SpriteSkeleton$0$0                                  =  000000 GR
+  7 G$Update_SpriteSkeleton$0$0                                 =  00008F GR
+    G$__bank_SpriteSkeleton$0_0$0                               =  0000FF G
+  7 G$a_skeleton_down$0_0$0                                     =  000084 GR
+  7 G$a_skeleton_h$0_0$0                                        =  000087 GR
+  7 G$a_skeleton_hidden$0_0$0                                   =  00007F GR
+  7 G$a_skeleton_repelled$0_0$0                                 =  00008A GR
+  7 G$a_skeleton_up$0_0$0                                       =  000081 GR
+  7 G$skeleton_update_anim$0$0                                  =  0000AD GR
+  7 XG$Destroy_SpriteSkeleton$0$0                               =  00015C GR
+  7 XG$Start_SpriteSkeleton$0$0                                 =  00007E GR
+  7 XG$Update_SpriteSkeleton$0$0                                =  0000AC GR
+  7 XG$skeleton_update_anim$0$0                                 =  00013D GR
+  7 _Destroy_SpriteSkeleton                                        00013E GR
+    _OBP1_REG                                                      ****** GX
+    _SetSpriteAnim                                                 ****** GX
+  7 _Start_SpriteSkeleton                                          000000 GR
+    _THIS                                                          ****** GX
+  7 _Update_SpriteSkeleton                                         00008F GR
+    ___bank_SpriteSkeleton                                      =  0000FF G
+    ___sdcc_bcall_ehl                                              ****** GX
+    __cpu                                                          ****** GX
+  7 _a_skeleton_down                                               000084 GR
+  7 _a_skeleton_h                                                  000087 GR
+  7 _a_skeleton_hidden                                             00007F GR
+  7 _a_skeleton_repelled                                           00008A GR
+  7 _a_skeleton_up                                                 000081 GR
+    _e_change_state                                                ****** GX
+    _e_destroy                                                     ****** GX
+    _e_management                                                  ****** GX
+    _e_start                                                       ****** GX
+  7 _skeleton_update_anim                                          0000AD GR
+    b_e_change_state                                               ****** GX
+    b_e_destroy                                                    ****** GX
+    b_e_management                                                 ****** GX
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 6
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    b_e_start                                                      ****** GX
+    b_skeleton_update_anim                                      =  0000FF G
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 7
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size      0   flags    0
+   1 _DATA                                      size      0   flags    0
+   2 _INITIALIZED                               size      0   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size      0   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _CODE_255                                  size    15D   flags    0
+   8 _INITIALIZER                               size      0   flags    0
+   9 _CABS                                      size      0   flags    8
+

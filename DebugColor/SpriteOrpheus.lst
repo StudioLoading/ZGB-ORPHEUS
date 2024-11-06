@@ -1,0 +1,2670 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module SpriteOrpheus
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _Destroy_SpriteOrpheus
+                                     12 	.globl _Update_SpriteOrpheus
+                                     13 	.globl _Start_SpriteOrpheus
+                                     14 	.globl b_e_change_state
+                                     15 	.globl _e_change_state
+                                     16 	.globl _CheckCollision
+                                     17 	.globl _TranslateSprite
+                                     18 	.globl _SetSpriteAnim
+                                     19 	.globl _countdown_verso
+                                     20 	.globl _countdown_step
+                                     21 	.globl _countdown
+                                     22 	.globl _orpheus_wait
+                                     23 	.globl _push_vy
+                                     24 	.globl _push_vx
+                                     25 	.globl _orpheus_state_before
+                                     26 	.globl _hit_frameskip_max
+                                     27 	.globl _hit_frameskip
+                                     28 	.globl _orpheus_hitted
+                                     29 	.globl _a_walk_counter_y
+                                     30 	.globl _a_walk_counter_x
+                                     31 	.globl _orpheus_hit_countdown
+                                     32 	.globl _orpheus_hp
+                                     33 	.globl _orpheus_hp_max
+                                     34 	.globl _orpheus_power_max
+                                     35 	.globl _new_state
+                                     36 	.globl _orpheus_info
+                                     37 	.globl _a_orpheus_hit_h
+                                     38 	.globl _a_orpheus_hit_up
+                                     39 	.globl _a_orpheus_hit_down
+                                     40 	.globl _a_orpheus_walk_h
+                                     41 	.globl _a_orpheus_walk_down
+                                     42 	.globl _a_orpheus_walk_up
+                                     43 	.globl _a_orpheus_idleh
+                                     44 	.globl _a_orpheus_idledown
+                                     45 	.globl _a_orpheus_idleup
+                                     46 	.globl ___bank_SpriteOrpheus
+                                     47 	.globl b_orpheus_recharge
+                                     48 	.globl _orpheus_recharge
+                                     49 	.globl b_orpheus_update_position
+                                     50 	.globl _orpheus_update_position
+                                     51 	.globl b_orhpeus_change_state
+                                     52 	.globl _orhpeus_change_state
+                                     53 	.globl b_orpheus_hit
+                                     54 	.globl _orpheus_hit
+                                     55 ;--------------------------------------------------------
+                                     56 ; special function registers
+                                     57 ;--------------------------------------------------------
+                                     58 ;--------------------------------------------------------
+                                     59 ; ram data
+                                     60 ;--------------------------------------------------------
+                                     61 	.area _DATA
+                           000000    62 G$orpheus_info$0_0$0==.
+      000000                         63 _orpheus_info::
+      000000                         64 	.ds 2
+                                     65 ;--------------------------------------------------------
+                                     66 ; ram data
+                                     67 ;--------------------------------------------------------
+                                     68 	.area _INITIALIZED
+                           000000    69 G$new_state$0_0$0==.
+      000000                         70 _new_state::
+      000000                         71 	.ds 1
+                           000001    72 G$orpheus_power_max$0_0$0==.
+      000001                         73 _orpheus_power_max::
+      000001                         74 	.ds 1
+                           000002    75 G$orpheus_hp_max$0_0$0==.
+      000002                         76 _orpheus_hp_max::
+      000002                         77 	.ds 1
+                           000003    78 G$orpheus_hp$0_0$0==.
+      000003                         79 _orpheus_hp::
+      000003                         80 	.ds 1
+                           000004    81 G$orpheus_hit_countdown$0_0$0==.
+      000004                         82 _orpheus_hit_countdown::
+      000004                         83 	.ds 1
+                           000005    84 G$a_walk_counter_x$0_0$0==.
+      000005                         85 _a_walk_counter_x::
+      000005                         86 	.ds 1
+                           000006    87 G$a_walk_counter_y$0_0$0==.
+      000006                         88 _a_walk_counter_y::
+      000006                         89 	.ds 1
+                           000007    90 G$orpheus_hitted$0_0$0==.
+      000007                         91 _orpheus_hitted::
+      000007                         92 	.ds 1
+                           000008    93 G$hit_frameskip$0_0$0==.
+      000008                         94 _hit_frameskip::
+      000008                         95 	.ds 1
+                           000009    96 G$hit_frameskip_max$0_0$0==.
+      000009                         97 _hit_frameskip_max::
+      000009                         98 	.ds 1
+                           00000A    99 G$orpheus_state_before$0_0$0==.
+      00000A                        100 _orpheus_state_before::
+      00000A                        101 	.ds 1
+                           00000B   102 G$push_vx$0_0$0==.
+      00000B                        103 _push_vx::
+      00000B                        104 	.ds 1
+                           00000C   105 G$push_vy$0_0$0==.
+      00000C                        106 _push_vy::
+      00000C                        107 	.ds 1
+                           00000D   108 G$orpheus_wait$0_0$0==.
+      00000D                        109 _orpheus_wait::
+      00000D                        110 	.ds 1
+                           00000E   111 G$countdown$0_0$0==.
+      00000E                        112 _countdown::
+      00000E                        113 	.ds 1
+                           00000F   114 G$countdown_step$0_0$0==.
+      00000F                        115 _countdown_step::
+      00000F                        116 	.ds 1
+                           000010   117 G$countdown_verso$0_0$0==.
+      000010                        118 _countdown_verso::
+      000010                        119 	.ds 1
+                                    120 ;--------------------------------------------------------
+                                    121 ; absolute external ram data
+                                    122 ;--------------------------------------------------------
+                                    123 	.area _DABS (ABS)
+                                    124 ;--------------------------------------------------------
+                                    125 ; global & static initialisations
+                                    126 ;--------------------------------------------------------
+                                    127 	.area _HOME
+                                    128 	.area _GSINIT
+                                    129 	.area _GSFINAL
+                                    130 	.area _GSINIT
+                                    131 ;--------------------------------------------------------
+                                    132 ; Home
+                                    133 ;--------------------------------------------------------
+                                    134 	.area _HOME
+                                    135 	.area _HOME
+                                    136 ;--------------------------------------------------------
+                                    137 ; code
+                                    138 ;--------------------------------------------------------
+                                    139 	.area _CODE_255
+                           000000   140 	G$Start_SpriteOrpheus$0$0	= .
+                                    141 	.globl	G$Start_SpriteOrpheus$0$0
+                           000000   142 	C$SpriteOrpheus.c$62$0_0$182	= .
+                                    143 	.globl	C$SpriteOrpheus.c$62$0_0$182
+                                    144 ;SpriteOrpheus.c:62: void START() {
+                                    145 ;	---------------------------------
+                                    146 ; Function Start_SpriteOrpheus
+                                    147 ; ---------------------------------
+      000000                        148 _Start_SpriteOrpheus::
+                           000000   149 	C$SpriteOrpheus.c$63$1_0$182	= .
+                                    150 	.globl	C$SpriteOrpheus.c$63$1_0$182
+                                    151 ;SpriteOrpheus.c:63: SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
+      000000 3E 08            [ 8]  152 	ld	a, #0x08
+      000002 F5               [16]  153 	push	af
+      000003 33               [ 8]  154 	inc	sp
+      000004 01rAFr00         [12]  155 	ld	bc, #_a_orpheus_idleup
+      000007 21r00r00         [12]  156 	ld	hl, #_THIS
+      00000A 2A               [ 8]  157 	ld	a, (hl+)
+      00000B 5F               [ 4]  158 	ld	e, a
+      00000C 56               [ 8]  159 	ld	d, (hl)
+      00000D CDr00r00         [24]  160 	call	_SetSpriteAnim
+                           000010   161 	C$SpriteOrpheus.c$64$1_0$182	= .
+                                    162 	.globl	C$SpriteOrpheus.c$64$1_0$182
+                                    163 ;SpriteOrpheus.c:64: orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
+      000010 21r00r00         [12]  164 	ld	hl, #_THIS
+      000013 2A               [ 8]  165 	ld	a, (hl+)
+      000014 4E               [ 8]  166 	ld	c, (hl)
+      000015 C6 1B            [ 8]  167 	add	a, #0x1b
+      000017 47               [ 4]  168 	ld	b, a
+      000018 79               [ 4]  169 	ld	a, c
+      000019 CE 00            [ 8]  170 	adc	a, #0x00
+      00001B 21r00r00         [12]  171 	ld	hl, #_orpheus_info
+      00001E 70               [ 8]  172 	ld	(hl), b
+      00001F 23               [ 8]  173 	inc	hl
+                           000020   174 	C$SpriteOrpheus.c$65$1_0$182	= .
+                                    175 	.globl	C$SpriteOrpheus.c$65$1_0$182
+                                    176 ;SpriteOrpheus.c:65: orpheus_info->vx = 0;
+      000020 32               [ 8]  177 	ld	(hl-), a
+      000021 2A               [ 8]  178 	ld	a, (hl+)
+      000022 4F               [ 4]  179 	ld	c, a
+                           000023   180 	C$SpriteOrpheus.c$66$1_0$182	= .
+                                    181 	.globl	C$SpriteOrpheus.c$66$1_0$182
+                                    182 ;SpriteOrpheus.c:66: orpheus_info->vy = 0;
+      000023 3A               [ 8]  183 	ld	a, (hl-)
+      000024 47               [ 4]  184 	ld	b, a
+      000025 03               [ 8]  185 	inc	bc
+      000026 03               [ 8]  186 	inc	bc
+      000027 AF               [ 4]  187 	xor	a, a
+      000028 02               [ 8]  188 	ld	(bc), a
+      000029 2A               [ 8]  189 	ld	a, (hl+)
+      00002A 4F               [ 4]  190 	ld	c, a
+                           00002B   191 	C$SpriteOrpheus.c$67$1_0$182	= .
+                                    192 	.globl	C$SpriteOrpheus.c$67$1_0$182
+                                    193 ;SpriteOrpheus.c:67: orpheus_info->tile_collision = 0u;
+      00002B 3A               [ 8]  194 	ld	a, (hl-)
+      00002C 47               [ 4]  195 	ld	b, a
+      00002D 03               [ 8]  196 	inc	bc
+      00002E 03               [ 8]  197 	inc	bc
+      00002F 03               [ 8]  198 	inc	bc
+      000030 AF               [ 4]  199 	xor	a, a
+      000031 02               [ 8]  200 	ld	(bc), a
+      000032 2A               [ 8]  201 	ld	a, (hl+)
+      000033 4F               [ 4]  202 	ld	c, a
+                           000034   203 	C$SpriteOrpheus.c$68$1_0$182	= .
+                                    204 	.globl	C$SpriteOrpheus.c$68$1_0$182
+                                    205 ;SpriteOrpheus.c:68: orpheus_info->ow_state = GENERIC_IDLE;
+      000034 3A               [ 8]  206 	ld	a, (hl-)
+      000035 47               [ 4]  207 	ld	b, a
+      000036 03               [ 8]  208 	inc	bc
+      000037 AF               [ 4]  209 	xor	a, a
+      000038 02               [ 8]  210 	ld	(bc), a
+      000039 2A               [ 8]  211 	ld	a, (hl+)
+      00003A 4F               [ 4]  212 	ld	c, a
+                           00003B   213 	C$SpriteOrpheus.c$69$1_0$182	= .
+                                    214 	.globl	C$SpriteOrpheus.c$69$1_0$182
+                                    215 ;SpriteOrpheus.c:69: orpheus_info->charming = 0;
+      00003B 3A               [ 8]  216 	ld	a, (hl-)
+      00003C 47               [ 4]  217 	ld	b, a
+      00003D AF               [ 4]  218 	xor	a, a
+      00003E 02               [ 8]  219 	ld	(bc), a
+      00003F 2A               [ 8]  220 	ld	a, (hl+)
+      000040 4F               [ 4]  221 	ld	c, a
+      000041 46               [ 8]  222 	ld	b, (hl)
+      000042 03               [ 8]  223 	inc	bc
+      000043 03               [ 8]  224 	inc	bc
+      000044 03               [ 8]  225 	inc	bc
+      000045 03               [ 8]  226 	inc	bc
+      000046 AF               [ 4]  227 	xor	a, a
+      000047 02               [ 8]  228 	ld	(bc), a
+                           000048   229 	C$SpriteOrpheus.c$70$1_0$182	= .
+                                    230 	.globl	C$SpriteOrpheus.c$70$1_0$182
+                                    231 ;SpriteOrpheus.c:70: if(_cpu != CGB_TYPE){
+      000048 FAr00r00         [16]  232 	ld	a, (#__cpu)
+      00004B D6 11            [ 8]  233 	sub	a, #0x11
+      00004D 3E 01            [ 8]  234 	ld	a, #0x01
+      00004F 28 01            [12]  235 	jr	Z, 00123$
+      000051 AF               [ 4]  236 	xor	a, a
+      000052                        237 00123$:
+      000052 4F               [ 4]  238 	ld	c, a
+      000053 CB 41            [ 8]  239 	bit	0, c
+      000055 20 20            [12]  240 	jr	NZ, 00105$
+                           000057   241 	C$SpriteOrpheus.c$71$2_0$183	= .
+                                    242 	.globl	C$SpriteOrpheus.c$71$2_0$183
+                                    243 ;SpriteOrpheus.c:71: OBP1_REG = PAL_DEF(0, 0, 1, 3);
+      000057 3E D0            [ 8]  244 	ld	a, #0xd0
+      000059 E0r00            [12]  245 	ldh	(_OBP1_REG + 0), a
+                           00005B   246 	C$SpriteOrpheus.c$64$1_0$182	= .
+                                    247 	.globl	C$SpriteOrpheus.c$64$1_0$182
+                                    248 ;SpriteOrpheus.c:64: orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
+      00005B 21r00r00         [12]  249 	ld	hl, #_THIS
+      00005E 2A               [ 8]  250 	ld	a, (hl+)
+      00005F 5F               [ 4]  251 	ld	e, a
+      000060 56               [ 8]  252 	ld	d, (hl)
+                           000061   253 	C$SpriteOrpheus.c$72$1_0$182	= .
+                                    254 	.globl	C$SpriteOrpheus.c$72$1_0$182
+                                    255 ;SpriteOrpheus.c:72: SPRITE_SET_PALETTE(THIS,1);
+      000061 21 04 00         [12]  256 	ld	hl, #0x0004
+      000064 19               [ 8]  257 	add	hl, de
+      000065 5E               [ 8]  258 	ld	e, (hl)
+      000066 79               [ 4]  259 	ld	a, c
+      000067 B7               [ 4]  260 	or	a, a
+      000068 28 08            [12]  261 	jr	Z, 00102$
+      00006A 7B               [ 4]  262 	ld	a, e
+      00006B E6 F8            [ 8]  263 	and	a, #0xf8
+      00006D F6 11            [ 8]  264 	or	a, #0x11
+      00006F 77               [ 8]  265 	ld	(hl), a
+      000070 18 05            [12]  266 	jr	00105$
+      000072                        267 00102$:
+      000072 CB A3            [ 8]  268 	res	4, e
+      000074 CB E3            [ 8]  269 	set	4, e
+      000076 73               [ 8]  270 	ld	(hl), e
+      000077                        271 00105$:
+                           000077   272 	C$SpriteOrpheus.c$74$1_0$182	= .
+                                    273 	.globl	C$SpriteOrpheus.c$74$1_0$182
+                                    274 ;SpriteOrpheus.c:74: orpheus_hitted = 0u;
+      000077 21r07r00         [12]  275 	ld	hl, #_orpheus_hitted
+      00007A 36 00            [12]  276 	ld	(hl), #0x00
+                           00007C   277 	C$SpriteOrpheus.c$75$1_0$182	= .
+                                    278 	.globl	C$SpriteOrpheus.c$75$1_0$182
+                                    279 ;SpriteOrpheus.c:75: orpheus_hit_countdown = 0;
+      00007C 21r04r00         [12]  280 	ld	hl, #_orpheus_hit_countdown
+      00007F 36 00            [12]  281 	ld	(hl), #0x00
+                           000081   282 	C$SpriteOrpheus.c$76$1_0$182	= .
+                                    283 	.globl	C$SpriteOrpheus.c$76$1_0$182
+                                    284 ;SpriteOrpheus.c:76: a_walk_counter_x = 0;
+      000081 21r05r00         [12]  285 	ld	hl, #_a_walk_counter_x
+      000084 36 00            [12]  286 	ld	(hl), #0x00
+                           000086   287 	C$SpriteOrpheus.c$77$1_0$182	= .
+                                    288 	.globl	C$SpriteOrpheus.c$77$1_0$182
+                                    289 ;SpriteOrpheus.c:77: a_walk_counter_y = 0;
+      000086 21r06r00         [12]  290 	ld	hl, #_a_walk_counter_y
+      000089 36 00            [12]  291 	ld	(hl), #0x00
+                           00008B   292 	C$SpriteOrpheus.c$78$1_0$182	= .
+                                    293 	.globl	C$SpriteOrpheus.c$78$1_0$182
+                                    294 ;SpriteOrpheus.c:78: hit_frameskip = 0;
+      00008B 21r08r00         [12]  295 	ld	hl, #_hit_frameskip
+      00008E 36 00            [12]  296 	ld	(hl), #0x00
+                           000090   297 	C$SpriteOrpheus.c$79$1_0$182	= .
+                                    298 	.globl	C$SpriteOrpheus.c$79$1_0$182
+                                    299 ;SpriteOrpheus.c:79: hit_frameskip_max = 0;
+      000090 21r09r00         [12]  300 	ld	hl, #_hit_frameskip_max
+      000093 36 00            [12]  301 	ld	(hl), #0x00
+                           000095   302 	C$SpriteOrpheus.c$80$1_0$182	= .
+                                    303 	.globl	C$SpriteOrpheus.c$80$1_0$182
+                                    304 ;SpriteOrpheus.c:80: orpheus_wait = 0u;
+      000095 21r0Dr00         [12]  305 	ld	hl, #_orpheus_wait
+      000098 36 00            [12]  306 	ld	(hl), #0x00
+                           00009A   307 	C$SpriteOrpheus.c$81$1_0$182	= .
+                                    308 	.globl	C$SpriteOrpheus.c$81$1_0$182
+                                    309 ;SpriteOrpheus.c:81: countdown_step = COUNTDOWN_STEP_MAX;
+      00009A 21r0Fr00         [12]  310 	ld	hl, #_countdown_step
+      00009D 36 01            [12]  311 	ld	(hl), #0x01
+                           00009F   312 	C$SpriteOrpheus.c$82$1_0$182	= .
+                                    313 	.globl	C$SpriteOrpheus.c$82$1_0$182
+                                    314 ;SpriteOrpheus.c:82: orpheus_power_max = POWER_MAX;
+      00009F 21r01r00         [12]  315 	ld	hl, #_orpheus_power_max
+      0000A2 36 28            [12]  316 	ld	(hl), #0x28
+                           0000A4   317 	C$SpriteOrpheus.c$83$1_0$182	= .
+                                    318 	.globl	C$SpriteOrpheus.c$83$1_0$182
+                                    319 ;SpriteOrpheus.c:83: countdown = orpheus_power_max;
+      0000A4 21r0Er00         [12]  320 	ld	hl, #_countdown
+      0000A7 36 28            [12]  321 	ld	(hl), #0x28
+                           0000A9   322 	C$SpriteOrpheus.c$84$1_0$182	= .
+                                    323 	.globl	C$SpriteOrpheus.c$84$1_0$182
+                                    324 ;SpriteOrpheus.c:84: countdown_verso = 0;
+      0000A9 21r10r00         [12]  325 	ld	hl, #_countdown_verso
+      0000AC 36 00            [12]  326 	ld	(hl), #0x00
+                           0000AE   327 	C$SpriteOrpheus.c$85$1_0$182	= .
+                                    328 	.globl	C$SpriteOrpheus.c$85$1_0$182
+                                    329 ;SpriteOrpheus.c:85: }
+                           0000AE   330 	C$SpriteOrpheus.c$85$1_0$182	= .
+                                    331 	.globl	C$SpriteOrpheus.c$85$1_0$182
+                           0000AE   332 	XG$Start_SpriteOrpheus$0$0	= .
+                                    333 	.globl	XG$Start_SpriteOrpheus$0$0
+      0000AE C9               [16]  334 	ret
+                           0000FF   335 G$__bank_SpriteOrpheus$0_0$0 == 0x00ff
+                           0000FF   336 ___bank_SpriteOrpheus	=	0x00ff
+                           0000AF   337 G$a_orpheus_idleup$0_0$0 == .
+      0000AF                        338 _a_orpheus_idleup:
+      0000AF 01                     339 	.db #0x01	; 1
+      0000B0 05                     340 	.db #0x05	; 5
+                           0000B1   341 G$a_orpheus_idledown$0_0$0 == .
+      0000B1                        342 _a_orpheus_idledown:
+      0000B1 02                     343 	.db #0x02	; 2
+      0000B2 02                     344 	.db #0x02	; 2
+      0000B3 03                     345 	.db #0x03	; 3
+                           0000B4   346 G$a_orpheus_idleh$0_0$0 == .
+      0000B4                        347 _a_orpheus_idleh:
+      0000B4 04                     348 	.db #0x04	; 4
+      0000B5 0A                     349 	.db #0x0a	; 10
+      0000B6 0A                     350 	.db #0x0a	; 10
+      0000B7 0A                     351 	.db #0x0a	; 10
+      0000B8 09                     352 	.db #0x09	; 9
+                           0000B9   353 G$a_orpheus_walk_up$0_0$0 == .
+      0000B9                        354 _a_orpheus_walk_up:
+      0000B9 02                     355 	.db #0x02	; 2
+      0000BA 05                     356 	.db #0x05	; 5
+      0000BB 06                     357 	.db #0x06	; 6
+                           0000BC   358 G$a_orpheus_walk_down$0_0$0 == .
+      0000BC                        359 _a_orpheus_walk_down:
+      0000BC 02                     360 	.db #0x02	; 2
+      0000BD 02                     361 	.db #0x02	; 2
+      0000BE 03                     362 	.db #0x03	; 3
+                           0000BF   363 G$a_orpheus_walk_h$0_0$0 == .
+      0000BF                        364 _a_orpheus_walk_h:
+      0000BF 04                     365 	.db #0x04	; 4
+      0000C0 09                     366 	.db #0x09	; 9
+      0000C1 0A                     367 	.db #0x0a	; 10
+      0000C2 09                     368 	.db #0x09	; 9
+      0000C3 08                     369 	.db #0x08	; 8
+                           0000C4   370 G$a_orpheus_hit_down$0_0$0 == .
+      0000C4                        371 _a_orpheus_hit_down:
+      0000C4 02                     372 	.db #0x02	; 2
+      0000C5 00                     373 	.db #0x00	; 0
+      0000C6 02                     374 	.db #0x02	; 2
+                           0000C7   375 G$a_orpheus_hit_up$0_0$0 == .
+      0000C7                        376 _a_orpheus_hit_up:
+      0000C7 02                     377 	.db #0x02	; 2
+      0000C8 00                     378 	.db #0x00	; 0
+      0000C9 05                     379 	.db #0x05	; 5
+                           0000CA   380 G$a_orpheus_hit_h$0_0$0 == .
+      0000CA                        381 _a_orpheus_hit_h:
+      0000CA 02                     382 	.db #0x02	; 2
+      0000CB 00                     383 	.db #0x00	; 0
+      0000CC 09                     384 	.db #0x09	; 9
+                           0000CD   385 	G$Update_SpriteOrpheus$0$0	= .
+                                    386 	.globl	G$Update_SpriteOrpheus$0$0
+                           0000CD   387 	C$SpriteOrpheus.c$87$1_0$184	= .
+                                    388 	.globl	C$SpriteOrpheus.c$87$1_0$184
+                                    389 ;SpriteOrpheus.c:87: void UPDATE() {
+                                    390 ;	---------------------------------
+                                    391 ; Function Update_SpriteOrpheus
+                                    392 ; ---------------------------------
+      0000CD                        393 _Update_SpriteOrpheus::
+      0000CD E8 F7            [16]  394 	add	sp, #-9
+                           0000CF   395 	C$SpriteOrpheus.c$89$1_0$184	= .
+                                    396 	.globl	C$SpriteOrpheus.c$89$1_0$184
+                                    397 ;SpriteOrpheus.c:89: if(a_walk_counter_y < 0){
+      0000CF 21r06r00         [12]  398 	ld	hl, #_a_walk_counter_y
+      0000D2 CB 7E            [12]  399 	bit	7, (hl)
+      0000D4 28 2C            [12]  400 	jr	Z, 00118$
+                           0000D6   401 	C$SpriteOrpheus.c$90$2_0$185	= .
+                                    402 	.globl	C$SpriteOrpheus.c$90$2_0$185
+                                    403 ;SpriteOrpheus.c:90: a_walk_counter_y++;
+      0000D6 34               [12]  404 	inc	(hl)
+                           0000D7   405 	C$SpriteOrpheus.c$91$2_0$185	= .
+                                    406 	.globl	C$SpriteOrpheus.c$91$2_0$185
+                                    407 ;SpriteOrpheus.c:91: orhpeus_change_state(WALK_UP);
+      0000D7 3E 08            [ 8]  408 	ld	a, #0x08
+      0000D9 F5               [16]  409 	push	af
+      0000DA 33               [ 8]  410 	inc	sp
+      0000DB 1Er00            [ 8]  411 	ld	e, #b_orhpeus_change_state
+      0000DD 21rCDr06         [12]  412 	ld	hl, #_orhpeus_change_state
+      0000E0 CDr00r00         [24]  413 	call	___sdcc_bcall_ehl
+      0000E3 33               [ 8]  414 	inc	sp
+                           0000E4   415 	C$SpriteOrpheus.c$92$2_0$185	= .
+                                    416 	.globl	C$SpriteOrpheus.c$92$2_0$185
+                                    417 ;SpriteOrpheus.c:92: if(a_walk_counter_y == 0){
+      0000E4 FAr06r00         [16]  418 	ld	a, (#_a_walk_counter_y)
+      0000E7 B7               [ 4]  419 	or	a, a
+      0000E8 20 0D            [12]  420 	jr	NZ, 00102$
+                           0000EA   421 	C$SpriteOrpheus.c$93$3_0$186	= .
+                                    422 	.globl	C$SpriteOrpheus.c$93$3_0$186
+                                    423 ;SpriteOrpheus.c:93: orhpeus_change_state(IDLE_UP);    
+      0000EA 3E 02            [ 8]  424 	ld	a, #0x02
+      0000EC F5               [16]  425 	push	af
+      0000ED 33               [ 8]  426 	inc	sp
+      0000EE 1Er00            [ 8]  427 	ld	e, #b_orhpeus_change_state
+      0000F0 21rCDr06         [12]  428 	ld	hl, #_orhpeus_change_state
+      0000F3 CDr00r00         [24]  429 	call	___sdcc_bcall_ehl
+      0000F6 33               [ 8]  430 	inc	sp
+      0000F7                        431 00102$:
+                           0000F7   432 	C$SpriteOrpheus.c$95$2_0$185	= .
+                                    433 	.globl	C$SpriteOrpheus.c$95$2_0$185
+                                    434 ;SpriteOrpheus.c:95: orpheus_update_position();
+      0000F7 1Er00            [ 8]  435 	ld	e, #b_orpheus_update_position
+      0000F9 21r68r06         [12]  436 	ld	hl, #_orpheus_update_position
+      0000FC CDr00r00         [24]  437 	call	___sdcc_bcall_ehl
+                           0000FF   438 	C$SpriteOrpheus.c$96$2_0$185	= .
+                                    439 	.globl	C$SpriteOrpheus.c$96$2_0$185
+                                    440 ;SpriteOrpheus.c:96: return;
+      0000FF C3r1Ar06         [16]  441 	jp	00226$
+      000102                        442 00118$:
+                           000102   443 	C$SpriteOrpheus.c$97$1_0$184	= .
+                                    444 	.globl	C$SpriteOrpheus.c$97$1_0$184
+                                    445 ;SpriteOrpheus.c:97: }else if(a_walk_counter_y > 0){
+      000102 21r06r00         [12]  446 	ld	hl, #_a_walk_counter_y
+      000105 5E               [ 8]  447 	ld	e, (hl)
+      000106 AF               [ 4]  448 	xor	a, a
+      000107 57               [ 4]  449 	ld	d, a
+      000108 96               [ 8]  450 	sub	a, (hl)
+      000109 CB 7B            [ 8]  451 	bit	7, e
+      00010B 28 07            [12]  452 	jr	Z, 00565$
+      00010D CB 7A            [ 8]  453 	bit	7, d
+      00010F 20 08            [12]  454 	jr	NZ, 00566$
+      000111 BF               [ 4]  455 	cp	a, a
+      000112 18 05            [12]  456 	jr	00566$
+      000114                        457 00565$:
+      000114 CB 7A            [ 8]  458 	bit	7, d
+      000116 28 01            [12]  459 	jr	Z, 00566$
+      000118 37               [ 4]  460 	scf
+      000119                        461 00566$:
+      000119 30 2F            [12]  462 	jr	NC, 00115$
+                           00011B   463 	C$SpriteOrpheus.c$98$2_0$187	= .
+                                    464 	.globl	C$SpriteOrpheus.c$98$2_0$187
+                                    465 ;SpriteOrpheus.c:98: a_walk_counter_y--;
+      00011B 21r06r00         [12]  466 	ld	hl, #_a_walk_counter_y
+      00011E 35               [12]  467 	dec	(hl)
+                           00011F   468 	C$SpriteOrpheus.c$99$2_0$187	= .
+                                    469 	.globl	C$SpriteOrpheus.c$99$2_0$187
+                                    470 ;SpriteOrpheus.c:99: orhpeus_change_state(WALK_DOWN);
+      00011F 3E 09            [ 8]  471 	ld	a, #0x09
+      000121 F5               [16]  472 	push	af
+      000122 33               [ 8]  473 	inc	sp
+      000123 1Er00            [ 8]  474 	ld	e, #b_orhpeus_change_state
+      000125 21rCDr06         [12]  475 	ld	hl, #_orhpeus_change_state
+      000128 CDr00r00         [24]  476 	call	___sdcc_bcall_ehl
+      00012B 33               [ 8]  477 	inc	sp
+                           00012C   478 	C$SpriteOrpheus.c$100$2_0$187	= .
+                                    479 	.globl	C$SpriteOrpheus.c$100$2_0$187
+                                    480 ;SpriteOrpheus.c:100: if(a_walk_counter_y == 0){
+      00012C FAr06r00         [16]  481 	ld	a, (#_a_walk_counter_y)
+      00012F B7               [ 4]  482 	or	a, a
+      000130 20 0D            [12]  483 	jr	NZ, 00104$
+                           000132   484 	C$SpriteOrpheus.c$101$3_0$188	= .
+                                    485 	.globl	C$SpriteOrpheus.c$101$3_0$188
+                                    486 ;SpriteOrpheus.c:101: orhpeus_change_state(IDLE_DOWN);    
+      000132 3E 03            [ 8]  487 	ld	a, #0x03
+      000134 F5               [16]  488 	push	af
+      000135 33               [ 8]  489 	inc	sp
+      000136 1Er00            [ 8]  490 	ld	e, #b_orhpeus_change_state
+      000138 21rCDr06         [12]  491 	ld	hl, #_orhpeus_change_state
+      00013B CDr00r00         [24]  492 	call	___sdcc_bcall_ehl
+      00013E 33               [ 8]  493 	inc	sp
+      00013F                        494 00104$:
+                           00013F   495 	C$SpriteOrpheus.c$103$2_0$187	= .
+                                    496 	.globl	C$SpriteOrpheus.c$103$2_0$187
+                                    497 ;SpriteOrpheus.c:103: orpheus_update_position();
+      00013F 1Er00            [ 8]  498 	ld	e, #b_orpheus_update_position
+      000141 21r68r06         [12]  499 	ld	hl, #_orpheus_update_position
+      000144 CDr00r00         [24]  500 	call	___sdcc_bcall_ehl
+                           000147   501 	C$SpriteOrpheus.c$104$2_0$187	= .
+                                    502 	.globl	C$SpriteOrpheus.c$104$2_0$187
+                                    503 ;SpriteOrpheus.c:104: return;
+      000147 C3r1Ar06         [16]  504 	jp	00226$
+      00014A                        505 00115$:
+                           00014A   506 	C$SpriteOrpheus.c$105$1_0$184	= .
+                                    507 	.globl	C$SpriteOrpheus.c$105$1_0$184
+                                    508 ;SpriteOrpheus.c:105: }else if(a_walk_counter_x < 0){
+      00014A 21r05r00         [12]  509 	ld	hl, #_a_walk_counter_x
+      00014D CB 7E            [12]  510 	bit	7, (hl)
+      00014F 28 2C            [12]  511 	jr	Z, 00112$
+                           000151   512 	C$SpriteOrpheus.c$106$2_0$189	= .
+                                    513 	.globl	C$SpriteOrpheus.c$106$2_0$189
+                                    514 ;SpriteOrpheus.c:106: a_walk_counter_x++;
+      000151 34               [12]  515 	inc	(hl)
+                           000152   516 	C$SpriteOrpheus.c$107$2_0$189	= .
+                                    517 	.globl	C$SpriteOrpheus.c$107$2_0$189
+                                    518 ;SpriteOrpheus.c:107: orhpeus_change_state(WALK_LEFT);
+      000152 3E 06            [ 8]  519 	ld	a, #0x06
+      000154 F5               [16]  520 	push	af
+      000155 33               [ 8]  521 	inc	sp
+      000156 1Er00            [ 8]  522 	ld	e, #b_orhpeus_change_state
+      000158 21rCDr06         [12]  523 	ld	hl, #_orhpeus_change_state
+      00015B CDr00r00         [24]  524 	call	___sdcc_bcall_ehl
+      00015E 33               [ 8]  525 	inc	sp
+                           00015F   526 	C$SpriteOrpheus.c$108$2_0$189	= .
+                                    527 	.globl	C$SpriteOrpheus.c$108$2_0$189
+                                    528 ;SpriteOrpheus.c:108: if(a_walk_counter_x == 0){
+      00015F FAr05r00         [16]  529 	ld	a, (#_a_walk_counter_x)
+      000162 B7               [ 4]  530 	or	a, a
+      000163 20 0D            [12]  531 	jr	NZ, 00106$
+                           000165   532 	C$SpriteOrpheus.c$109$3_0$190	= .
+                                    533 	.globl	C$SpriteOrpheus.c$109$3_0$190
+                                    534 ;SpriteOrpheus.c:109: orhpeus_change_state(IDLE_LEFT);    
+      000165 3E 04            [ 8]  535 	ld	a, #0x04
+      000167 F5               [16]  536 	push	af
+      000168 33               [ 8]  537 	inc	sp
+      000169 1Er00            [ 8]  538 	ld	e, #b_orhpeus_change_state
+      00016B 21rCDr06         [12]  539 	ld	hl, #_orhpeus_change_state
+      00016E CDr00r00         [24]  540 	call	___sdcc_bcall_ehl
+      000171 33               [ 8]  541 	inc	sp
+      000172                        542 00106$:
+                           000172   543 	C$SpriteOrpheus.c$111$2_0$189	= .
+                                    544 	.globl	C$SpriteOrpheus.c$111$2_0$189
+                                    545 ;SpriteOrpheus.c:111: orpheus_update_position();
+      000172 1Er00            [ 8]  546 	ld	e, #b_orpheus_update_position
+      000174 21r68r06         [12]  547 	ld	hl, #_orpheus_update_position
+      000177 CDr00r00         [24]  548 	call	___sdcc_bcall_ehl
+                           00017A   549 	C$SpriteOrpheus.c$112$2_0$189	= .
+                                    550 	.globl	C$SpriteOrpheus.c$112$2_0$189
+                                    551 ;SpriteOrpheus.c:112: return;
+      00017A C3r1Ar06         [16]  552 	jp	00226$
+      00017D                        553 00112$:
+                           00017D   554 	C$SpriteOrpheus.c$113$1_0$184	= .
+                                    555 	.globl	C$SpriteOrpheus.c$113$1_0$184
+                                    556 ;SpriteOrpheus.c:113: }else if(a_walk_counter_x > 0){
+      00017D 21r05r00         [12]  557 	ld	hl, #_a_walk_counter_x
+      000180 5E               [ 8]  558 	ld	e, (hl)
+      000181 AF               [ 4]  559 	xor	a, a
+      000182 57               [ 4]  560 	ld	d, a
+      000183 96               [ 8]  561 	sub	a, (hl)
+      000184 CB 7B            [ 8]  562 	bit	7, e
+      000186 28 07            [12]  563 	jr	Z, 00567$
+      000188 CB 7A            [ 8]  564 	bit	7, d
+      00018A 20 08            [12]  565 	jr	NZ, 00568$
+      00018C BF               [ 4]  566 	cp	a, a
+      00018D 18 05            [12]  567 	jr	00568$
+      00018F                        568 00567$:
+      00018F CB 7A            [ 8]  569 	bit	7, d
+      000191 28 01            [12]  570 	jr	Z, 00568$
+      000193 37               [ 4]  571 	scf
+      000194                        572 00568$:
+      000194 30 2F            [12]  573 	jr	NC, 00116$
+                           000196   574 	C$SpriteOrpheus.c$114$2_0$191	= .
+                                    575 	.globl	C$SpriteOrpheus.c$114$2_0$191
+                                    576 ;SpriteOrpheus.c:114: a_walk_counter_x--;
+      000196 21r05r00         [12]  577 	ld	hl, #_a_walk_counter_x
+      000199 35               [12]  578 	dec	(hl)
+                           00019A   579 	C$SpriteOrpheus.c$115$2_0$191	= .
+                                    580 	.globl	C$SpriteOrpheus.c$115$2_0$191
+                                    581 ;SpriteOrpheus.c:115: orhpeus_change_state(WALK_RIGHT);
+      00019A 3E 07            [ 8]  582 	ld	a, #0x07
+      00019C F5               [16]  583 	push	af
+      00019D 33               [ 8]  584 	inc	sp
+      00019E 1Er00            [ 8]  585 	ld	e, #b_orhpeus_change_state
+      0001A0 21rCDr06         [12]  586 	ld	hl, #_orhpeus_change_state
+      0001A3 CDr00r00         [24]  587 	call	___sdcc_bcall_ehl
+      0001A6 33               [ 8]  588 	inc	sp
+                           0001A7   589 	C$SpriteOrpheus.c$116$2_0$191	= .
+                                    590 	.globl	C$SpriteOrpheus.c$116$2_0$191
+                                    591 ;SpriteOrpheus.c:116: if(a_walk_counter_x == 0){
+      0001A7 FAr05r00         [16]  592 	ld	a, (#_a_walk_counter_x)
+      0001AA B7               [ 4]  593 	or	a, a
+      0001AB 20 0D            [12]  594 	jr	NZ, 00108$
+                           0001AD   595 	C$SpriteOrpheus.c$117$3_0$192	= .
+                                    596 	.globl	C$SpriteOrpheus.c$117$3_0$192
+                                    597 ;SpriteOrpheus.c:117: orhpeus_change_state(IDLE_RIGHT);    
+      0001AD 3E 05            [ 8]  598 	ld	a, #0x05
+      0001AF F5               [16]  599 	push	af
+      0001B0 33               [ 8]  600 	inc	sp
+      0001B1 1Er00            [ 8]  601 	ld	e, #b_orhpeus_change_state
+      0001B3 21rCDr06         [12]  602 	ld	hl, #_orhpeus_change_state
+      0001B6 CDr00r00         [24]  603 	call	___sdcc_bcall_ehl
+      0001B9 33               [ 8]  604 	inc	sp
+      0001BA                        605 00108$:
+                           0001BA   606 	C$SpriteOrpheus.c$119$2_0$191	= .
+                                    607 	.globl	C$SpriteOrpheus.c$119$2_0$191
+                                    608 ;SpriteOrpheus.c:119: orpheus_update_position();
+      0001BA 1Er00            [ 8]  609 	ld	e, #b_orpheus_update_position
+      0001BC 21r68r06         [12]  610 	ld	hl, #_orpheus_update_position
+      0001BF CDr00r00         [24]  611 	call	___sdcc_bcall_ehl
+                           0001C2   612 	C$SpriteOrpheus.c$120$2_0$191	= .
+                                    613 	.globl	C$SpriteOrpheus.c$120$2_0$191
+                                    614 ;SpriteOrpheus.c:120: return;
+      0001C2 C3r1Ar06         [16]  615 	jp	00226$
+      0001C5                        616 00116$:
+                           0001C5   617 	C$SpriteOrpheus.c$122$1_0$184	= .
+                                    618 	.globl	C$SpriteOrpheus.c$122$1_0$184
+                                    619 ;SpriteOrpheus.c:122: if(move_camera_up || move_camera_down  
+      0001C5 FAr00r00         [16]  620 	ld	a, (#_move_camera_up)
+      0001C8 B7               [ 4]  621 	or	a, a
+      0001C9 C2r1Ar06         [16]  622 	jp	NZ,00226$
+      0001CC FAr00r00         [16]  623 	ld	a, (#_move_camera_down)
+      0001CF B7               [ 4]  624 	or	a, a
+      0001D0 C2r1Ar06         [16]  625 	jp	NZ,00226$
+                           0001D3   626 	C$SpriteOrpheus.c$123$1_0$184	= .
+                                    627 	.globl	C$SpriteOrpheus.c$123$1_0$184
+                                    628 ;SpriteOrpheus.c:123: || move_camera_left || move_camera_right){
+      0001D3 FAr00r00         [16]  629 	ld	a, (#_move_camera_left)
+      0001D6 B7               [ 4]  630 	or	a, a
+      0001D7 C2r1Ar06         [16]  631 	jp	NZ,00226$
+      0001DA FAr00r00         [16]  632 	ld	a, (#_move_camera_right)
+      0001DD B7               [ 4]  633 	or	a, a
+                           0001DE   634 	C$SpriteOrpheus.c$124$2_0$193	= .
+                                    635 	.globl	C$SpriteOrpheus.c$124$2_0$193
+                                    636 ;SpriteOrpheus.c:124: return;
+      0001DE C2r1Ar06         [16]  637 	jp	NZ,00226$
+                           0001E1   638 	C$SpriteOrpheus.c$127$2_1$184	= .
+                                    639 	.globl	C$SpriteOrpheus.c$127$2_1$184
+                                    640 ;SpriteOrpheus.c:127: new_state = orpheus_info->ow_state;
+      0001E1 21r00r00         [12]  641 	ld	hl, #_orpheus_info
+      0001E4 2A               [ 8]  642 	ld	a, (hl+)
+      0001E5 4F               [ 4]  643 	ld	c, a
+      0001E6 46               [ 8]  644 	ld	b, (hl)
+      0001E7 0A               [ 8]  645 	ld	a, (bc)
+      0001E8 EAr00r00         [16]  646 	ld	(#_new_state),a
+      0001EB 0A               [ 8]  647 	ld	a, (bc)
+      0001EC F8 06            [12]  648 	ldhl	sp,	#6
+      0001EE 77               [ 8]  649 	ld	(hl), a
+                           0001EF   650 	C$SpriteOrpheus.c$129$2_1$184	= .
+                                    651 	.globl	C$SpriteOrpheus.c$129$2_1$184
+                                    652 ;SpriteOrpheus.c:129: if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
+      0001EF FAr00r00         [16]  653 	ld	a, (#_keys)
+      0001F2 F8 07            [12]  654 	ldhl	sp,	#7
+      0001F4 77               [ 8]  655 	ld	(hl), a
+                           0001F5   656 	C$SpriteOrpheus.c$133$2_1$184	= .
+                                    657 	.globl	C$SpriteOrpheus.c$133$2_1$184
+                                    658 ;SpriteOrpheus.c:133: else if(KEY_RELEASED(J_DOWN)){new_state = IDLE_DOWN;}
+      0001F5 FAr00r00         [16]  659 	ld	a, (#_previous_keys)
+      0001F8 F8 08            [12]  660 	ldhl	sp,	#8
+                           0001FA   661 	C$SpriteOrpheus.c$128$1_0$184	= .
+                                    662 	.globl	C$SpriteOrpheus.c$128$1_0$184
+                                    663 ;SpriteOrpheus.c:128: if((orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10) && orpheus_info->ow_state != ATTACK){
+      0001FA 32               [ 8]  664 	ld	(hl-), a
+      0001FB 2B               [ 8]  665 	dec	hl
+      0001FC 7E               [ 8]  666 	ld	a, (hl)
+      0001FD D6 0C            [ 8]  667 	sub	a, #0x0c
+      0001FF 20 0B            [12]  668 	jr	NZ, 00155$
+      000201 21r04r00         [12]  669 	ld	hl, #_orpheus_hit_countdown
+      000204 7E               [ 8]  670 	ld	a, (hl)
+      000205 EE 80            [ 8]  671 	xor	a, #0x80
+      000207 D6 8A            [ 8]  672 	sub	a, #0x8a
+      000209 D2rA0r02         [16]  673 	jp	NC, 00153$
+      00020C                        674 00155$:
+      00020C F8 06            [12]  675 	ldhl	sp,	#6
+      00020E 7E               [ 8]  676 	ld	a, (hl)
+      00020F D6 0B            [ 8]  677 	sub	a, #0x0b
+      000211 CArA0r02         [16]  678 	jp	Z,00153$
+                           000214   679 	C$SpriteOrpheus.c$129$2_1$184	= .
+                                    680 	.globl	C$SpriteOrpheus.c$129$2_1$184
+                                    681 ;SpriteOrpheus.c:129: if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
+      000214 F8 07            [12]  682 	ldhl	sp,	#7
+      000216 7E               [ 8]  683 	ld	a, (hl)
+      000217 E6 08            [ 8]  684 	and	a, #0x08
+      000219 57               [ 4]  685 	ld	d, a
+      00021A B7               [ 4]  686 	or	a, a
+      00021B 28 07            [12]  687 	jr	Z, 00150$
+      00021D 21r00r00         [12]  688 	ld	hl, #_new_state
+      000220 36 09            [12]  689 	ld	(hl), #0x09
+      000222 18 7C            [12]  690 	jr	00153$
+      000224                        691 00150$:
+                           000224   692 	C$SpriteOrpheus.c$130$2_1$184	= .
+                                    693 	.globl	C$SpriteOrpheus.c$130$2_1$184
+                                    694 ;SpriteOrpheus.c:130: else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
+      000224 F8 07            [12]  695 	ldhl	sp,	#7
+      000226 7E               [ 8]  696 	ld	a, (hl)
+      000227 E6 04            [ 8]  697 	and	a, #0x04
+      000229 5F               [ 4]  698 	ld	e, a
+      00022A B7               [ 4]  699 	or	a, a
+      00022B 28 07            [12]  700 	jr	Z, 00147$
+      00022D 21r00r00         [12]  701 	ld	hl, #_new_state
+      000230 36 08            [12]  702 	ld	(hl), #0x08
+      000232 18 6C            [12]  703 	jr	00153$
+      000234                        704 00147$:
+                           000234   705 	C$SpriteOrpheus.c$131$2_1$184	= .
+                                    706 	.globl	C$SpriteOrpheus.c$131$2_1$184
+                                    707 ;SpriteOrpheus.c:131: else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
+      000234 F8 07            [12]  708 	ldhl	sp,	#7
+      000236 7E               [ 8]  709 	ld	a, (hl)
+      000237 E6 02            [ 8]  710 	and	a, #0x02
+                                    711 ;	spillPairReg hl
+                                    712 ;	spillPairReg hl
+      000239 67               [ 4]  713 	ld	h, a
+      00023A B7               [ 4]  714 	or	a, a
+      00023B 28 07            [12]  715 	jr	Z, 00144$
+      00023D 21r00r00         [12]  716 	ld	hl, #_new_state
+      000240 36 06            [12]  717 	ld	(hl), #0x06
+      000242 18 5C            [12]  718 	jr	00153$
+      000244                        719 00144$:
+                           000244   720 	C$SpriteOrpheus.c$132$2_1$184	= .
+                                    721 	.globl	C$SpriteOrpheus.c$132$2_1$184
+                                    722 ;SpriteOrpheus.c:132: else if(KEY_PRESSED(J_RIGHT)){new_state = WALK_RIGHT;}
+      000244 E5               [16]  723 	push	hl
+      000245 F8 09            [12]  724 	ldhl	sp,	#9
+      000247 7E               [ 8]  725 	ld	a, (hl)
+      000248 E1               [12]  726 	pop	hl
+      000249 E6 01            [ 8]  727 	and	a, #0x01
+                                    728 ;	spillPairReg hl
+                                    729 ;	spillPairReg hl
+      00024B 6F               [ 4]  730 	ld	l, a
+      00024C B7               [ 4]  731 	or	a, a
+      00024D 28 07            [12]  732 	jr	Z, 00141$
+      00024F 21r00r00         [12]  733 	ld	hl, #_new_state
+      000252 36 07            [12]  734 	ld	(hl), #0x07
+      000254 18 4A            [12]  735 	jr	00153$
+      000256                        736 00141$:
+                           000256   737 	C$SpriteOrpheus.c$133$2_0$194	= .
+                                    738 	.globl	C$SpriteOrpheus.c$133$2_0$194
+                                    739 ;SpriteOrpheus.c:133: else if(KEY_RELEASED(J_DOWN)){new_state = IDLE_DOWN;}
+      000256 E5               [16]  740 	push	hl
+      000257 F8 0A            [12]  741 	ldhl	sp,	#10
+      000259 CB 5E            [12]  742 	bit	3, (hl)
+      00025B E1               [12]  743 	pop	hl
+      00025C 28 0B            [12]  744 	jr	Z, 00137$
+      00025E 7A               [ 4]  745 	ld	a, d
+      00025F B7               [ 4]  746 	or	a, a
+      000260 20 07            [12]  747 	jr	NZ, 00137$
+      000262 21r00r00         [12]  748 	ld	hl, #_new_state
+      000265 36 03            [12]  749 	ld	(hl), #0x03
+      000267 18 37            [12]  750 	jr	00153$
+      000269                        751 00137$:
+                           000269   752 	C$SpriteOrpheus.c$134$2_0$194	= .
+                                    753 	.globl	C$SpriteOrpheus.c$134$2_0$194
+                                    754 ;SpriteOrpheus.c:134: else if(KEY_RELEASED(J_UP)){new_state = IDLE_UP;}
+      000269 E5               [16]  755 	push	hl
+      00026A F8 0A            [12]  756 	ldhl	sp,	#10
+      00026C CB 56            [12]  757 	bit	2, (hl)
+      00026E E1               [12]  758 	pop	hl
+      00026F 28 0B            [12]  759 	jr	Z, 00133$
+      000271 7B               [ 4]  760 	ld	a, e
+      000272 B7               [ 4]  761 	or	a, a
+      000273 20 07            [12]  762 	jr	NZ, 00133$
+      000275 21r00r00         [12]  763 	ld	hl, #_new_state
+      000278 36 02            [12]  764 	ld	(hl), #0x02
+      00027A 18 24            [12]  765 	jr	00153$
+      00027C                        766 00133$:
+                           00027C   767 	C$SpriteOrpheus.c$135$2_0$194	= .
+                                    768 	.globl	C$SpriteOrpheus.c$135$2_0$194
+                                    769 ;SpriteOrpheus.c:135: else if(KEY_RELEASED(J_LEFT)){new_state = IDLE_LEFT;}
+      00027C E5               [16]  770 	push	hl
+      00027D F8 0A            [12]  771 	ldhl	sp,	#10
+      00027F CB 4E            [12]  772 	bit	1, (hl)
+      000281 E1               [12]  773 	pop	hl
+      000282 28 0B            [12]  774 	jr	Z, 00129$
+      000284 7C               [ 4]  775 	ld	a, h
+      000285 B7               [ 4]  776 	or	a, a
+      000286 20 07            [12]  777 	jr	NZ, 00129$
+      000288 21r00r00         [12]  778 	ld	hl, #_new_state
+      00028B 36 04            [12]  779 	ld	(hl), #0x04
+      00028D 18 11            [12]  780 	jr	00153$
+      00028F                        781 00129$:
+                           00028F   782 	C$SpriteOrpheus.c$136$2_0$194	= .
+                                    783 	.globl	C$SpriteOrpheus.c$136$2_0$194
+                                    784 ;SpriteOrpheus.c:136: else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
+      00028F E5               [16]  785 	push	hl
+      000290 F8 0A            [12]  786 	ldhl	sp,	#10
+      000292 CB 46            [12]  787 	bit	0, (hl)
+      000294 E1               [12]  788 	pop	hl
+      000295 28 09            [12]  789 	jr	Z, 00153$
+      000297 7D               [ 4]  790 	ld	a, l
+      000298 B7               [ 4]  791 	or	a, a
+      000299 20 05            [12]  792 	jr	NZ, 00153$
+      00029B 21r00r00         [12]  793 	ld	hl, #_new_state
+      00029E 36 05            [12]  794 	ld	(hl), #0x05
+      0002A0                        795 00153$:
+                           0002A0   796 	C$SpriteOrpheus.c$127$2_1$184	= .
+                                    797 	.globl	C$SpriteOrpheus.c$127$2_1$184
+                                    798 ;SpriteOrpheus.c:127: new_state = orpheus_info->ow_state;
+      0002A0 0A               [ 8]  799 	ld	a, (bc)
+                           0002A1   800 	C$SpriteOrpheus.c$139$1_0$184	= .
+                                    801 	.globl	C$SpriteOrpheus.c$139$1_0$184
+                                    802 ;SpriteOrpheus.c:139: if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != ATTACK){
+      0002A1 FE 0C            [ 8]  803 	cp	a, #0x0c
+      0002A3 28 1C            [12]  804 	jr	Z, 00160$
+      0002A5 FE 0B            [ 8]  805 	cp	a, #0x0b
+      0002A7 28 18            [12]  806 	jr	Z, 00160$
+                           0002A9   807 	C$SpriteOrpheus.c$140$2_0$203	= .
+                                    808 	.globl	C$SpriteOrpheus.c$140$2_0$203
+                                    809 ;SpriteOrpheus.c:140: if (KEY_TICKED(J_B)) { //countdown == orpheus_power_max && ){
+      0002A9 E5               [16]  810 	push	hl
+      0002AA F8 09            [12]  811 	ldhl	sp,	#9
+      0002AC CB 6E            [12]  812 	bit	5, (hl)
+      0002AE E1               [12]  813 	pop	hl
+      0002AF 28 10            [12]  814 	jr	Z, 00160$
+      0002B1 E5               [16]  815 	push	hl
+      0002B2 F8 0A            [12]  816 	ldhl	sp,	#10
+      0002B4 CB 6E            [12]  817 	bit	5, (hl)
+      0002B6 E1               [12]  818 	pop	hl
+      0002B7 20 08            [12]  819 	jr	NZ, 00160$
+                           0002B9   820 	C$SpriteOrpheus.c$141$3_0$204	= .
+                                    821 	.globl	C$SpriteOrpheus.c$141$3_0$204
+                                    822 ;SpriteOrpheus.c:141: orpheus_state_before = orpheus_info->ow_state;
+      0002B9 EAr0Ar00         [16]  823 	ld	(#_orpheus_state_before),a
+                           0002BC   824 	C$SpriteOrpheus.c$142$3_0$204	= .
+                                    825 	.globl	C$SpriteOrpheus.c$142$3_0$204
+                                    826 ;SpriteOrpheus.c:142: new_state = ATTACK;
+      0002BC 21r00r00         [12]  827 	ld	hl, #_new_state
+      0002BF 36 0B            [12]  828 	ld	(hl), #0x0b
+      0002C1                        829 00160$:
+                           0002C1   830 	C$SpriteOrpheus.c$145$1_0$184	= .
+                                    831 	.globl	C$SpriteOrpheus.c$145$1_0$184
+                                    832 ;SpriteOrpheus.c:145: orhpeus_change_state(new_state);
+      0002C1 FAr00r00         [16]  833 	ld	a, (#_new_state)
+      0002C4 F5               [16]  834 	push	af
+      0002C5 33               [ 8]  835 	inc	sp
+      0002C6 1Er00            [ 8]  836 	ld	e, #b_orhpeus_change_state
+      0002C8 21rCDr06         [12]  837 	ld	hl, #_orhpeus_change_state
+      0002CB CDr00r00         [24]  838 	call	___sdcc_bcall_ehl
+      0002CE 33               [ 8]  839 	inc	sp
+                           0002CF   840 	C$SpriteOrpheus.c$147$1_0$184	= .
+                                    841 	.globl	C$SpriteOrpheus.c$147$1_0$184
+                                    842 ;SpriteOrpheus.c:147: switch(new_state){
+      0002CF 3E 0C            [ 8]  843 	ld	a, #0x0c
+      0002D1 21r00r00         [12]  844 	ld	hl, #_new_state
+      0002D4 96               [ 8]  845 	sub	a, (hl)
+      0002D5 DAr91r04         [16]  846 	jp	C, 00205$
+      0002D8 4E               [ 8]  847 	ld	c, (hl)
+      0002D9 06 00            [ 8]  848 	ld	b, #0x00
+      0002DB 21rE2r02         [12]  849 	ld	hl, #00581$
+      0002DE 09               [ 8]  850 	add	hl, bc
+      0002DF 09               [ 8]  851 	add	hl, bc
+      0002E0 09               [ 8]  852 	add	hl, bc
+      0002E1 E9               [ 4]  853 	jp	(hl)
+      0002E2                        854 00581$:
+      0002E2 C3r91r04         [16]  855 	jp	00205$
+      0002E5 C3r91r04         [16]  856 	jp	00205$
+      0002E8 C3r09r03         [16]  857 	jp	00165$
+      0002EB C3r09r03         [16]  858 	jp	00165$
+      0002EE C3r09r03         [16]  859 	jp	00165$
+      0002F1 C3r09r03         [16]  860 	jp	00165$
+      0002F4 C3r14r03         [16]  861 	jp	00169$
+      0002F7 C3r14r03         [16]  862 	jp	00169$
+      0002FA C3r14r03         [16]  863 	jp	00169$
+      0002FD C3r14r03         [16]  864 	jp	00169$
+      000300 C3r91r04         [16]  865 	jp	00205$
+      000303 C3r77r04         [16]  866 	jp	00202$
+      000306 C3r1Fr03         [16]  867 	jp	00170$
+                           000309   868 	C$SpriteOrpheus.c$148$2_0$205	= .
+                                    869 	.globl	C$SpriteOrpheus.c$148$2_0$205
+                                    870 ;SpriteOrpheus.c:148: case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
+      000309                        871 00165$:
+                           000309   872 	C$SpriteOrpheus.c$149$2_0$205	= .
+                                    873 	.globl	C$SpriteOrpheus.c$149$2_0$205
+                                    874 ;SpriteOrpheus.c:149: orpheus_recharge();
+      000309 1Er00            [ 8]  875 	ld	e, #b_orpheus_recharge
+      00030B 21r1Dr06         [12]  876 	ld	hl, #_orpheus_recharge
+      00030E CDr00r00         [24]  877 	call	___sdcc_bcall_ehl
+                           000311   878 	C$SpriteOrpheus.c$150$2_0$205	= .
+                                    879 	.globl	C$SpriteOrpheus.c$150$2_0$205
+                                    880 ;SpriteOrpheus.c:150: break;
+      000311 C3r91r04         [16]  881 	jp	00205$
+                           000314   882 	C$SpriteOrpheus.c$152$2_0$205	= .
+                                    883 	.globl	C$SpriteOrpheus.c$152$2_0$205
+                                    884 ;SpriteOrpheus.c:152: case WALK_LEFT: case WALK_RIGHT:
+      000314                        885 00169$:
+                           000314   886 	C$SpriteOrpheus.c$153$2_0$205	= .
+                                    887 	.globl	C$SpriteOrpheus.c$153$2_0$205
+                                    888 ;SpriteOrpheus.c:153: orpheus_update_position();
+      000314 1Er00            [ 8]  889 	ld	e, #b_orpheus_update_position
+      000316 21r68r06         [12]  890 	ld	hl, #_orpheus_update_position
+      000319 CDr00r00         [24]  891 	call	___sdcc_bcall_ehl
+                           00031C   892 	C$SpriteOrpheus.c$154$2_0$205	= .
+                                    893 	.globl	C$SpriteOrpheus.c$154$2_0$205
+                                    894 ;SpriteOrpheus.c:154: break;
+      00031C C3r91r04         [16]  895 	jp	00205$
+                           00031F   896 	C$SpriteOrpheus.c$155$2_0$205	= .
+                                    897 	.globl	C$SpriteOrpheus.c$155$2_0$205
+                                    898 ;SpriteOrpheus.c:155: case HIT:
+      00031F                        899 00170$:
+                           00031F   900 	C$SpriteOrpheus.c$156$2_0$205	= .
+                                    901 	.globl	C$SpriteOrpheus.c$156$2_0$205
+                                    902 ;SpriteOrpheus.c:156: hit_frameskip--;
+      00031F 21r08r00         [12]  903 	ld	hl, #_hit_frameskip
+                           000322   904 	C$SpriteOrpheus.c$157$2_0$205	= .
+                                    905 	.globl	C$SpriteOrpheus.c$157$2_0$205
+                                    906 ;SpriteOrpheus.c:157: if(hit_frameskip == 0){
+      000322 35               [12]  907 	dec	(hl)
+      000323 C2rCCr03         [16]  908 	jp	NZ, 00185$
+                           000326   909 	C$SpriteOrpheus.c$158$3_0$206	= .
+                                    910 	.globl	C$SpriteOrpheus.c$158$3_0$206
+                                    911 ;SpriteOrpheus.c:158: hit_frameskip_max++;
+      000326 21r09r00         [12]  912 	ld	hl, #_hit_frameskip_max
+      000329 34               [12]  913 	inc	(hl)
+                           00032A   914 	C$SpriteOrpheus.c$159$3_0$206	= .
+                                    915 	.globl	C$SpriteOrpheus.c$159$3_0$206
+                                    916 ;SpriteOrpheus.c:159: hit_frameskip = hit_frameskip_max;
+      00032A 7E               [ 8]  917 	ld	a, (hl)
+      00032B EAr08r00         [16]  918 	ld	(#_hit_frameskip),a
+                           00032E   919 	C$SpriteOrpheus.c$127$2_1$184	= .
+                                    920 	.globl	C$SpriteOrpheus.c$127$2_1$184
+                                    921 ;SpriteOrpheus.c:127: new_state = orpheus_info->ow_state;
+      00032E 21r00r00         [12]  922 	ld	hl, #_orpheus_info
+      000331 2A               [ 8]  923 	ld	a, (hl+)
+      000332 4F               [ 4]  924 	ld	c, a
+      000333 46               [ 8]  925 	ld	b, (hl)
+                           000334   926 	C$SpriteOrpheus.c$160$3_0$206	= .
+                                    927 	.globl	C$SpriteOrpheus.c$160$3_0$206
+                                    928 ;SpriteOrpheus.c:160: if(push_vx != 0 || push_vy != 0){
+      000334 FAr0Br00         [16]  929 	ld	a, (#_push_vx)
+      000337 B7               [ 4]  930 	or	a, a
+      000338 20 06            [12]  931 	jr	NZ, 00180$
+      00033A FAr0Cr00         [16]  932 	ld	a, (#_push_vy)
+      00033D B7               [ 4]  933 	or	a, a
+      00033E 28 15            [12]  934 	jr	Z, 00181$
+      000340                        935 00180$:
+                           000340   936 	C$SpriteOrpheus.c$161$4_0$207	= .
+                                    937 	.globl	C$SpriteOrpheus.c$161$4_0$207
+                                    938 ;SpriteOrpheus.c:161: orpheus_info->vx = push_vx;
+      000340 03               [ 8]  939 	inc	bc
+      000341 03               [ 8]  940 	inc	bc
+      000342 FAr0Br00         [16]  941 	ld	a, (#_push_vx)
+      000345 02               [ 8]  942 	ld	(bc), a
+                           000346   943 	C$SpriteOrpheus.c$162$4_0$207	= .
+                                    944 	.globl	C$SpriteOrpheus.c$162$4_0$207
+                                    945 ;SpriteOrpheus.c:162: orpheus_info->vy = push_vy;
+      000346 21r00r00         [12]  946 	ld	hl, #_orpheus_info
+      000349 2A               [ 8]  947 	ld	a, (hl+)
+      00034A 4F               [ 4]  948 	ld	c, a
+      00034B 46               [ 8]  949 	ld	b, (hl)
+      00034C 03               [ 8]  950 	inc	bc
+      00034D 03               [ 8]  951 	inc	bc
+      00034E 03               [ 8]  952 	inc	bc
+      00034F FAr0Cr00         [16]  953 	ld	a, (#_push_vy)
+      000352 02               [ 8]  954 	ld	(bc), a
+      000353 18 6F            [12]  955 	jr	00182$
+      000355                        956 00181$:
+                           000355   957 	C$SpriteOrpheus.c$164$4_0$208	= .
+                                    958 	.globl	C$SpriteOrpheus.c$164$4_0$208
+                                    959 ;SpriteOrpheus.c:164: switch(orpheus_state_before){
+      000355 3E 09            [ 8]  960 	ld	a, #0x09
+      000357 21r0Ar00         [12]  961 	ld	hl, #_orpheus_state_before
+      00035A 96               [ 8]  962 	sub	a, (hl)
+      00035B 38 67            [12]  963 	jr	C, 00182$
+                           00035D   964 	C$SpriteOrpheus.c$166$2_1$184	= .
+                                    965 	.globl	C$SpriteOrpheus.c$166$2_1$184
+                                    966 ;SpriteOrpheus.c:166: orpheus_info->vy = -1;
+      00035D 03               [ 8]  967 	inc	bc
+      00035E 03               [ 8]  968 	inc	bc
+      00035F 03               [ 8]  969 	inc	bc
+                           000360   970 	C$SpriteOrpheus.c$164$4_0$208	= .
+                                    971 	.globl	C$SpriteOrpheus.c$164$4_0$208
+                                    972 ;SpriteOrpheus.c:164: switch(orpheus_state_before){
+      000360 5E               [ 8]  973 	ld	e, (hl)
+      000361 16 00            [ 8]  974 	ld	d, #0x00
+      000363 21r6Ar03         [12]  975 	ld	hl, #00582$
+      000366 19               [ 8]  976 	add	hl, de
+      000367 19               [ 8]  977 	add	hl, de
+      000368 19               [ 8]  978 	add	hl, de
+      000369 E9               [ 4]  979 	jp	(hl)
+      00036A                        980 00582$:
+      00036A C3rC4r03         [16]  981 	jp	00182$
+      00036D C3rC4r03         [16]  982 	jp	00182$
+      000370 C3r97r03         [16]  983 	jp	00174$
+      000373 C3r88r03         [16]  984 	jp	00172$
+      000376 C3rA6r03         [16]  985 	jp	00176$
+      000379 C3rB6r03         [16]  986 	jp	00178$
+      00037C C3rA6r03         [16]  987 	jp	00176$
+      00037F C3rB6r03         [16]  988 	jp	00178$
+      000382 C3r97r03         [16]  989 	jp	00174$
+      000385 C3r88r03         [16]  990 	jp	00172$
+                           000388   991 	C$SpriteOrpheus.c$165$5_0$209	= .
+                                    992 	.globl	C$SpriteOrpheus.c$165$5_0$209
+                                    993 ;SpriteOrpheus.c:165: case WALK_DOWN: case IDLE_DOWN:
+      000388                        994 00172$:
+                           000388   995 	C$SpriteOrpheus.c$166$5_0$209	= .
+                                    996 	.globl	C$SpriteOrpheus.c$166$5_0$209
+                                    997 ;SpriteOrpheus.c:166: orpheus_info->vy = -1;
+      000388 3E FF            [ 8]  998 	ld	a, #0xff
+      00038A 02               [ 8]  999 	ld	(bc), a
+                           00038B  1000 	C$SpriteOrpheus.c$167$5_0$209	= .
+                                   1001 	.globl	C$SpriteOrpheus.c$167$5_0$209
+                                   1002 ;SpriteOrpheus.c:167: orpheus_info->vx = 0;
+      00038B 21r00r00         [12] 1003 	ld	hl, #_orpheus_info
+      00038E 2A               [ 8] 1004 	ld	a, (hl+)
+      00038F 4F               [ 4] 1005 	ld	c, a
+      000390 46               [ 8] 1006 	ld	b, (hl)
+      000391 03               [ 8] 1007 	inc	bc
+      000392 03               [ 8] 1008 	inc	bc
+      000393 AF               [ 4] 1009 	xor	a, a
+      000394 02               [ 8] 1010 	ld	(bc), a
+                           000395  1011 	C$SpriteOrpheus.c$168$5_0$209	= .
+                                   1012 	.globl	C$SpriteOrpheus.c$168$5_0$209
+                                   1013 ;SpriteOrpheus.c:168: break;
+      000395 18 2D            [12] 1014 	jr	00182$
+                           000397  1015 	C$SpriteOrpheus.c$169$5_0$209	= .
+                                   1016 	.globl	C$SpriteOrpheus.c$169$5_0$209
+                                   1017 ;SpriteOrpheus.c:169: case WALK_UP: case IDLE_UP:
+      000397                       1018 00174$:
+                           000397  1019 	C$SpriteOrpheus.c$170$5_0$209	= .
+                                   1020 	.globl	C$SpriteOrpheus.c$170$5_0$209
+                                   1021 ;SpriteOrpheus.c:170: orpheus_info->vy = 1;
+      000397 3E 01            [ 8] 1022 	ld	a, #0x01
+      000399 02               [ 8] 1023 	ld	(bc), a
+                           00039A  1024 	C$SpriteOrpheus.c$171$5_0$209	= .
+                                   1025 	.globl	C$SpriteOrpheus.c$171$5_0$209
+                                   1026 ;SpriteOrpheus.c:171: orpheus_info->vx = 0;
+      00039A 21r00r00         [12] 1027 	ld	hl, #_orpheus_info
+      00039D 2A               [ 8] 1028 	ld	a, (hl+)
+      00039E 4F               [ 4] 1029 	ld	c, a
+      00039F 46               [ 8] 1030 	ld	b, (hl)
+      0003A0 03               [ 8] 1031 	inc	bc
+      0003A1 03               [ 8] 1032 	inc	bc
+      0003A2 AF               [ 4] 1033 	xor	a, a
+      0003A3 02               [ 8] 1034 	ld	(bc), a
+                           0003A4  1035 	C$SpriteOrpheus.c$172$5_0$209	= .
+                                   1036 	.globl	C$SpriteOrpheus.c$172$5_0$209
+                                   1037 ;SpriteOrpheus.c:172: break;
+      0003A4 18 1E            [12] 1038 	jr	00182$
+                           0003A6  1039 	C$SpriteOrpheus.c$173$5_0$209	= .
+                                   1040 	.globl	C$SpriteOrpheus.c$173$5_0$209
+                                   1041 ;SpriteOrpheus.c:173: case WALK_LEFT: case IDLE_LEFT:
+      0003A6                       1042 00176$:
+                           0003A6  1043 	C$SpriteOrpheus.c$174$5_0$209	= .
+                                   1044 	.globl	C$SpriteOrpheus.c$174$5_0$209
+                                   1045 ;SpriteOrpheus.c:174: orpheus_info->vy = 0;
+      0003A6 AF               [ 4] 1046 	xor	a, a
+      0003A7 02               [ 8] 1047 	ld	(bc), a
+                           0003A8  1048 	C$SpriteOrpheus.c$175$5_0$209	= .
+                                   1049 	.globl	C$SpriteOrpheus.c$175$5_0$209
+                                   1050 ;SpriteOrpheus.c:175: orpheus_info->vx = 1;
+      0003A8 21r00r00         [12] 1051 	ld	hl, #_orpheus_info
+      0003AB 6E               [ 8] 1052 	ld	l, (hl)
+                                   1053 ;	spillPairReg hl
+                                   1054 ;	spillPairReg hl
+      0003AC FAr01r00         [16] 1055 	ld	a, (_orpheus_info + 1)
+      0003AF 67               [ 4] 1056 	ld	h, a
+                                   1057 ;	spillPairReg hl
+                                   1058 ;	spillPairReg hl
+      0003B0 23               [ 8] 1059 	inc	hl
+      0003B1 23               [ 8] 1060 	inc	hl
+      0003B2 36 01            [12] 1061 	ld	(hl), #0x01
+                           0003B4  1062 	C$SpriteOrpheus.c$176$5_0$209	= .
+                                   1063 	.globl	C$SpriteOrpheus.c$176$5_0$209
+                                   1064 ;SpriteOrpheus.c:176: break;
+      0003B4 18 0E            [12] 1065 	jr	00182$
+                           0003B6  1066 	C$SpriteOrpheus.c$177$5_0$209	= .
+                                   1067 	.globl	C$SpriteOrpheus.c$177$5_0$209
+                                   1068 ;SpriteOrpheus.c:177: case WALK_RIGHT: case IDLE_RIGHT:
+      0003B6                       1069 00178$:
+                           0003B6  1070 	C$SpriteOrpheus.c$178$5_0$209	= .
+                                   1071 	.globl	C$SpriteOrpheus.c$178$5_0$209
+                                   1072 ;SpriteOrpheus.c:178: orpheus_info->vy = 0;
+      0003B6 AF               [ 4] 1073 	xor	a, a
+      0003B7 02               [ 8] 1074 	ld	(bc), a
+                           0003B8  1075 	C$SpriteOrpheus.c$179$5_0$209	= .
+                                   1076 	.globl	C$SpriteOrpheus.c$179$5_0$209
+                                   1077 ;SpriteOrpheus.c:179: orpheus_info->vx = -1;
+      0003B8 21r00r00         [12] 1078 	ld	hl, #_orpheus_info
+      0003BB 6E               [ 8] 1079 	ld	l, (hl)
+                                   1080 ;	spillPairReg hl
+                                   1081 ;	spillPairReg hl
+      0003BC FAr01r00         [16] 1082 	ld	a, (_orpheus_info + 1)
+      0003BF 67               [ 4] 1083 	ld	h, a
+                                   1084 ;	spillPairReg hl
+                                   1085 ;	spillPairReg hl
+      0003C0 23               [ 8] 1086 	inc	hl
+      0003C1 23               [ 8] 1087 	inc	hl
+      0003C2 36 FF            [12] 1088 	ld	(hl), #0xff
+                           0003C4  1089 	C$SpriteOrpheus.c$181$3_0$206	= .
+                                   1090 	.globl	C$SpriteOrpheus.c$181$3_0$206
+                                   1091 ;SpriteOrpheus.c:181: }
+      0003C4                       1092 00182$:
+                           0003C4  1093 	C$SpriteOrpheus.c$183$3_0$206	= .
+                                   1094 	.globl	C$SpriteOrpheus.c$183$3_0$206
+                                   1095 ;SpriteOrpheus.c:183: orpheus_update_position();
+      0003C4 1Er00            [ 8] 1096 	ld	e, #b_orpheus_update_position
+      0003C6 21r68r06         [12] 1097 	ld	hl, #_orpheus_update_position
+      0003C9 CDr00r00         [24] 1098 	call	___sdcc_bcall_ehl
+      0003CC                       1099 00185$:
+                           0003CC  1100 	C$SpriteOrpheus.c$185$2_1$184	= .
+                                   1101 	.globl	C$SpriteOrpheus.c$185$2_1$184
+                                   1102 ;SpriteOrpheus.c:185: if(orpheus_hit_countdown > 0){//going backwards
+      0003CC 21r04r00         [12] 1103 	ld	hl, #_orpheus_hit_countdown
+      0003CF 5E               [ 8] 1104 	ld	e, (hl)
+      0003D0 AF               [ 4] 1105 	xor	a, a
+      0003D1 57               [ 4] 1106 	ld	d, a
+      0003D2 96               [ 8] 1107 	sub	a, (hl)
+      0003D3 CB 7B            [ 8] 1108 	bit	7, e
+      0003D5 28 07            [12] 1109 	jr	Z, 00583$
+      0003D7 CB 7A            [ 8] 1110 	bit	7, d
+      0003D9 20 08            [12] 1111 	jr	NZ, 00584$
+      0003DB BF               [ 4] 1112 	cp	a, a
+      0003DC 18 05            [12] 1113 	jr	00584$
+      0003DE                       1114 00583$:
+      0003DE CB 7A            [ 8] 1115 	bit	7, d
+      0003E0 28 01            [12] 1116 	jr	Z, 00584$
+      0003E2 37               [ 4] 1117 	scf
+      0003E3                       1118 00584$:
+      0003E3 3E 00            [ 8] 1119 	ld	a, #0x00
+      0003E5 17               [ 4] 1120 	rla
+      0003E6 B7               [ 4] 1121 	or	a, a
+      0003E7 28 07            [12] 1122 	jr	Z, 00200$
+                           0003E9  1123 	C$SpriteOrpheus.c$186$3_0$210	= .
+                                   1124 	.globl	C$SpriteOrpheus.c$186$3_0$210
+                                   1125 ;SpriteOrpheus.c:186: orpheus_hit_countdown--;
+      0003E9 21r04r00         [12] 1126 	ld	hl, #_orpheus_hit_countdown
+      0003EC 35               [12] 1127 	dec	(hl)
+      0003ED C3r91r04         [16] 1128 	jp	00205$
+      0003F0                       1129 00200$:
+                           0003F0  1130 	C$SpriteOrpheus.c$187$2_0$205	= .
+                                   1131 	.globl	C$SpriteOrpheus.c$187$2_0$205
+                                   1132 ;SpriteOrpheus.c:187: }else if(orpheus_hit_countdown <= 0){//hit effect ends
+      0003F0 4F               [ 4] 1133 	ld	c, a
+      0003F1 CB 41            [ 8] 1134 	bit	0, c
+      0003F3 C2r91r04         [16] 1135 	jp	NZ, 00205$
+                           0003F6  1136 	C$SpriteOrpheus.c$189$3_0$211	= .
+                                   1137 	.globl	C$SpriteOrpheus.c$189$3_0$211
+                                   1138 ;SpriteOrpheus.c:189: orpheus_hit_countdown = 0;
+      0003F6 21r04r00         [12] 1139 	ld	hl, #_orpheus_hit_countdown
+      0003F9 36 00            [12] 1140 	ld	(hl), #0x00
+                           0003FB  1141 	C$SpriteOrpheus.c$190$3_0$211	= .
+                                   1142 	.globl	C$SpriteOrpheus.c$190$3_0$211
+                                   1143 ;SpriteOrpheus.c:190: orpheus_hitted = 0u;
+      0003FB 21r07r00         [12] 1144 	ld	hl, #_orpheus_hitted
+      0003FE 36 00            [12] 1145 	ld	(hl), #0x00
+                           000400  1146 	C$SpriteOrpheus.c$191$3_0$211	= .
+                                   1147 	.globl	C$SpriteOrpheus.c$191$3_0$211
+                                   1148 ;SpriteOrpheus.c:191: push_vx = 0;
+      000400 21r0Br00         [12] 1149 	ld	hl, #_push_vx
+      000403 36 00            [12] 1150 	ld	(hl), #0x00
+                           000405  1151 	C$SpriteOrpheus.c$192$3_0$211	= .
+                                   1152 	.globl	C$SpriteOrpheus.c$192$3_0$211
+                                   1153 ;SpriteOrpheus.c:192: push_vy = 0;
+      000405 21r0Cr00         [12] 1154 	ld	hl, #_push_vy
+      000408 36 00            [12] 1155 	ld	(hl), #0x00
+                           00040A  1156 	C$SpriteOrpheus.c$193$3_0$211	= .
+                                   1157 	.globl	C$SpriteOrpheus.c$193$3_0$211
+                                   1158 ;SpriteOrpheus.c:193: switch(orpheus_state_before){
+      00040A 3E 09            [ 8] 1159 	ld	a, #0x09
+      00040C 21r0Ar00         [12] 1160 	ld	hl, #_orpheus_state_before
+      00040F 96               [ 8] 1161 	sub	a, (hl)
+      000410 DAr91r04         [16] 1162 	jp	C, 00205$
+      000413 4E               [ 8] 1163 	ld	c, (hl)
+      000414 06 00            [ 8] 1164 	ld	b, #0x00
+      000416 21r1Dr04         [12] 1165 	ld	hl, #00585$
+      000419 09               [ 8] 1166 	add	hl, bc
+      00041A 09               [ 8] 1167 	add	hl, bc
+      00041B 09               [ 8] 1168 	add	hl, bc
+      00041C E9               [ 4] 1169 	jp	(hl)
+      00041D                       1170 00585$:
+      00041D C3r4Ar04         [16] 1171 	jp	00191$
+      000420 C3r4Ar04         [16] 1172 	jp	00191$
+      000423 C3r4Ar04         [16] 1173 	jp	00191$
+      000426 C3r3Br04         [16] 1174 	jp	00187$
+      000429 C3r59r04         [16] 1175 	jp	00193$
+      00042C C3r68r04         [16] 1176 	jp	00195$
+      00042F C3r59r04         [16] 1177 	jp	00193$
+      000432 C3r68r04         [16] 1178 	jp	00195$
+      000435 C3r4Ar04         [16] 1179 	jp	00191$
+      000438 C3r3Br04         [16] 1180 	jp	00187$
+                           00043B  1181 	C$SpriteOrpheus.c$194$4_0$212	= .
+                                   1182 	.globl	C$SpriteOrpheus.c$194$4_0$212
+                                   1183 ;SpriteOrpheus.c:194: case WALK_DOWN: case IDLE_DOWN:
+      00043B                       1184 00187$:
+                           00043B  1185 	C$SpriteOrpheus.c$195$4_0$212	= .
+                                   1186 	.globl	C$SpriteOrpheus.c$195$4_0$212
+                                   1187 ;SpriteOrpheus.c:195: orhpeus_change_state(IDLE_DOWN);
+      00043B 3E 03            [ 8] 1188 	ld	a, #0x03
+      00043D F5               [16] 1189 	push	af
+      00043E 33               [ 8] 1190 	inc	sp
+      00043F 1Er00            [ 8] 1191 	ld	e, #b_orhpeus_change_state
+      000441 21rCDr06         [12] 1192 	ld	hl, #_orhpeus_change_state
+      000444 CDr00r00         [24] 1193 	call	___sdcc_bcall_ehl
+      000447 33               [ 8] 1194 	inc	sp
+                           000448  1195 	C$SpriteOrpheus.c$196$4_0$212	= .
+                                   1196 	.globl	C$SpriteOrpheus.c$196$4_0$212
+                                   1197 ;SpriteOrpheus.c:196: break;
+      000448 18 47            [12] 1198 	jr	00205$
+                           00044A  1199 	C$SpriteOrpheus.c$197$4_0$212	= .
+                                   1200 	.globl	C$SpriteOrpheus.c$197$4_0$212
+                                   1201 ;SpriteOrpheus.c:197: case WALK_UP: case IDLE_UP: case GENERIC_IDLE: case GENERIC_WALK:
+      00044A                       1202 00191$:
+                           00044A  1203 	C$SpriteOrpheus.c$198$4_0$212	= .
+                                   1204 	.globl	C$SpriteOrpheus.c$198$4_0$212
+                                   1205 ;SpriteOrpheus.c:198: orhpeus_change_state(IDLE_UP);
+      00044A 3E 02            [ 8] 1206 	ld	a, #0x02
+      00044C F5               [16] 1207 	push	af
+      00044D 33               [ 8] 1208 	inc	sp
+      00044E 1Er00            [ 8] 1209 	ld	e, #b_orhpeus_change_state
+      000450 21rCDr06         [12] 1210 	ld	hl, #_orhpeus_change_state
+      000453 CDr00r00         [24] 1211 	call	___sdcc_bcall_ehl
+      000456 33               [ 8] 1212 	inc	sp
+                           000457  1213 	C$SpriteOrpheus.c$199$4_0$212	= .
+                                   1214 	.globl	C$SpriteOrpheus.c$199$4_0$212
+                                   1215 ;SpriteOrpheus.c:199: break;
+      000457 18 38            [12] 1216 	jr	00205$
+                           000459  1217 	C$SpriteOrpheus.c$200$4_0$212	= .
+                                   1218 	.globl	C$SpriteOrpheus.c$200$4_0$212
+                                   1219 ;SpriteOrpheus.c:200: case WALK_LEFT: case IDLE_LEFT:
+      000459                       1220 00193$:
+                           000459  1221 	C$SpriteOrpheus.c$201$4_0$212	= .
+                                   1222 	.globl	C$SpriteOrpheus.c$201$4_0$212
+                                   1223 ;SpriteOrpheus.c:201: orhpeus_change_state(IDLE_LEFT);
+      000459 3E 04            [ 8] 1224 	ld	a, #0x04
+      00045B F5               [16] 1225 	push	af
+      00045C 33               [ 8] 1226 	inc	sp
+      00045D 1Er00            [ 8] 1227 	ld	e, #b_orhpeus_change_state
+      00045F 21rCDr06         [12] 1228 	ld	hl, #_orhpeus_change_state
+      000462 CDr00r00         [24] 1229 	call	___sdcc_bcall_ehl
+      000465 33               [ 8] 1230 	inc	sp
+                           000466  1231 	C$SpriteOrpheus.c$202$4_0$212	= .
+                                   1232 	.globl	C$SpriteOrpheus.c$202$4_0$212
+                                   1233 ;SpriteOrpheus.c:202: break;
+      000466 18 29            [12] 1234 	jr	00205$
+                           000468  1235 	C$SpriteOrpheus.c$203$4_0$212	= .
+                                   1236 	.globl	C$SpriteOrpheus.c$203$4_0$212
+                                   1237 ;SpriteOrpheus.c:203: case WALK_RIGHT: case IDLE_RIGHT:
+      000468                       1238 00195$:
+                           000468  1239 	C$SpriteOrpheus.c$204$4_0$212	= .
+                                   1240 	.globl	C$SpriteOrpheus.c$204$4_0$212
+                                   1241 ;SpriteOrpheus.c:204: orhpeus_change_state(IDLE_RIGHT);
+      000468 3E 05            [ 8] 1242 	ld	a, #0x05
+      00046A F5               [16] 1243 	push	af
+      00046B 33               [ 8] 1244 	inc	sp
+      00046C 1Er00            [ 8] 1245 	ld	e, #b_orhpeus_change_state
+      00046E 21rCDr06         [12] 1246 	ld	hl, #_orhpeus_change_state
+      000471 CDr00r00         [24] 1247 	call	___sdcc_bcall_ehl
+      000474 33               [ 8] 1248 	inc	sp
+                           000475  1249 	C$SpriteOrpheus.c$208$2_0$205	= .
+                                   1250 	.globl	C$SpriteOrpheus.c$208$2_0$205
+                                   1251 ;SpriteOrpheus.c:208: break;
+      000475 18 1A            [12] 1252 	jr	00205$
+                           000477  1253 	C$SpriteOrpheus.c$209$2_0$205	= .
+                                   1254 	.globl	C$SpriteOrpheus.c$209$2_0$205
+                                   1255 ;SpriteOrpheus.c:209: case ATTACK:
+      000477                       1256 00202$:
+                           000477  1257 	C$SpriteOrpheus.c$210$2_0$205	= .
+                                   1258 	.globl	C$SpriteOrpheus.c$210$2_0$205
+                                   1259 ;SpriteOrpheus.c:210: orpheus_wait--;
+      000477 21r0Dr00         [12] 1260 	ld	hl, #_orpheus_wait
+      00047A 35               [12] 1261 	dec	(hl)
+                           00047B  1262 	C$SpriteOrpheus.c$211$2_0$205	= .
+                                   1263 	.globl	C$SpriteOrpheus.c$211$2_0$205
+                                   1264 ;SpriteOrpheus.c:211: if(orpheus_wait <= 1){
+      00047B 3E 01            [ 8] 1265 	ld	a, #0x01
+      00047D 96               [ 8] 1266 	sub	a, (hl)
+      00047E 38 11            [12] 1267 	jr	C, 00205$
+                           000480  1268 	C$SpriteOrpheus.c$212$3_0$213	= .
+                                   1269 	.globl	C$SpriteOrpheus.c$212$3_0$213
+                                   1270 ;SpriteOrpheus.c:212: orhpeus_change_state(orpheus_state_before);
+      000480 FAr0Ar00         [16] 1271 	ld	a, (#_orpheus_state_before)
+      000483 F5               [16] 1272 	push	af
+      000484 33               [ 8] 1273 	inc	sp
+      000485 1Er00            [ 8] 1274 	ld	e, #b_orhpeus_change_state
+      000487 21rCDr06         [12] 1275 	ld	hl, #_orhpeus_change_state
+      00048A CDr00r00         [24] 1276 	call	___sdcc_bcall_ehl
+      00048D 33               [ 8] 1277 	inc	sp
+                           00048E  1278 	C$SpriteOrpheus.c$213$3_0$213	= .
+                                   1279 	.globl	C$SpriteOrpheus.c$213$3_0$213
+                                   1280 ;SpriteOrpheus.c:213: return;
+      00048E C3r1Ar06         [16] 1281 	jp	00226$
+                           000491  1282 	C$SpriteOrpheus.c$216$1_0$184	= .
+                                   1283 	.globl	C$SpriteOrpheus.c$216$1_0$184
+                                   1284 ;SpriteOrpheus.c:216: }
+      000491                       1285 00205$:
+                           000491  1286 	C$SpriteOrpheus.c$220$2_1$215	= .
+                                   1287 	.globl	C$SpriteOrpheus.c$220$2_1$215
+                                   1288 ;SpriteOrpheus.c:220: SPRITEMANAGER_ITERATE(scroll_o_tile, iospr) {
+      000491 FAr01r00         [16] 1289 	ld	a, (#(_sprite_manager_updatables + 1) + 0)
+      000494 6F               [ 4] 1290 	ld	l, a
+                                   1291 ;	spillPairReg hl
+                                   1292 ;	spillPairReg hl
+      000495 26 00            [ 8] 1293 	ld	h, #0x00
+                                   1294 ;	spillPairReg hl
+                                   1295 ;	spillPairReg hl
+      000497 29               [ 8] 1296 	add	hl, hl
+      000498 11r00r00         [12] 1297 	ld	de, #_sprite_manager_sprites
+      00049B 19               [ 8] 1298 	add	hl, de
+      00049C 5D               [ 4] 1299 	ld	e, l
+      00049D 54               [ 4] 1300 	ld	d, h
+      00049E 1A               [ 8] 1301 	ld	a, (de)
+      00049F F8 04            [12] 1302 	ldhl	sp,	#4
+      0004A1 22               [ 8] 1303 	ld	(hl+), a
+      0004A2 13               [ 8] 1304 	inc	de
+      0004A3 1A               [ 8] 1305 	ld	a, (de)
+      0004A4 77               [ 8] 1306 	ld	(hl), a
+      0004A5 F8 08            [12] 1307 	ldhl	sp,	#8
+      0004A7 36 00            [12] 1308 	ld	(hl), #0x00
+      0004A9                       1309 00224$:
+      0004A9 21r00r00         [12] 1310 	ld	hl, #_sprite_manager_updatables
+      0004AC 46               [ 8] 1311 	ld	b, (hl)
+      0004AD F8 08            [12] 1312 	ldhl	sp,	#8
+      0004AF 7E               [ 8] 1313 	ld	a, (hl)
+      0004B0 90               [ 4] 1314 	sub	a, b
+      0004B1 CAr1Ar06         [16] 1315 	jp	Z,00226$
+                           0004B4  1316 	C$SpriteOrpheus.c$221$3_1$216	= .
+                                   1317 	.globl	C$SpriteOrpheus.c$221$3_1$216
+                                   1318 ;SpriteOrpheus.c:221: if(orpheus_info->ow_state == ATTACK){
+      0004B4 21r00r00         [12] 1319 	ld	hl, #_orpheus_info
+      0004B7 6E               [ 8] 1320 	ld	l, (hl)
+                                   1321 ;	spillPairReg hl
+                                   1322 ;	spillPairReg hl
+      0004B8 FAr01r00         [16] 1323 	ld	a, (_orpheus_info + 1)
+      0004BB 67               [ 4] 1324 	ld	h, a
+                                   1325 ;	spillPairReg hl
+                                   1326 ;	spillPairReg hl
+      0004BC 4E               [ 8] 1327 	ld	c, (hl)
+                           0004BD  1328 	C$SpriteOrpheus.c$222$2_1$184	= .
+                                   1329 	.globl	C$SpriteOrpheus.c$222$2_1$184
+                                   1330 ;SpriteOrpheus.c:222: switch(iospr->type){
+      0004BD F8 04            [12] 1331 	ldhl	sp,#4
+      0004BF 2A               [ 8] 1332 	ld	a, (hl+)
+      0004C0 5F               [ 4] 1333 	ld	e, a
+      0004C1 56               [ 8] 1334 	ld	d, (hl)
+      0004C2 21 13 00         [12] 1335 	ld	hl, #0x0013
+      0004C5 19               [ 8] 1336 	add	hl, de
+      0004C6 E5               [16] 1337 	push	hl
+      0004C7 7D               [ 4] 1338 	ld	a, l
+      0004C8 F8 04            [12] 1339 	ldhl	sp,	#4
+      0004CA 77               [ 8] 1340 	ld	(hl), a
+      0004CB E1               [12] 1341 	pop	hl
+      0004CC 7C               [ 4] 1342 	ld	a, h
+      0004CD F8 03            [12] 1343 	ldhl	sp,	#3
+      0004CF 77               [ 8] 1344 	ld	(hl), a
+                           0004D0  1345 	C$SpriteOrpheus.c$221$3_1$216	= .
+                                   1346 	.globl	C$SpriteOrpheus.c$221$3_1$216
+                                   1347 ;SpriteOrpheus.c:221: if(orpheus_info->ow_state == ATTACK){
+      0004D0 79               [ 4] 1348 	ld	a, c
+      0004D1 D6 0B            [ 8] 1349 	sub	a, #0x0b
+      0004D3 20 1E            [12] 1350 	jr	NZ, 00209$
+                           0004D5  1351 	C$SpriteOrpheus.c$222$4_1$217	= .
+                                   1352 	.globl	C$SpriteOrpheus.c$222$4_1$217
+                                   1353 ;SpriteOrpheus.c:222: switch(iospr->type){
+      0004D5 2B               [ 8] 1354 	dec	hl
+      0004D6 2A               [ 8] 1355 	ld	a, (hl+)
+      0004D7 5F               [ 4] 1356 	ld	e, a
+      0004D8 56               [ 8] 1357 	ld	d, (hl)
+      0004D9 1A               [ 8] 1358 	ld	a, (de)
+      0004DA FE 02            [ 8] 1359 	cp	a, #0x02
+      0004DC 20 15            [12] 1360 	jr	NZ, 00209$
+                           0004DE  1361 	C$SpriteOrpheus.c$224$5_1$218	= .
+                                   1362 	.globl	C$SpriteOrpheus.c$224$5_1$218
+                                   1363 ;SpriteOrpheus.c:224: e_change_state(iospr, HIT, iospr->type);
+      0004DE 23               [ 8] 1364 	inc	hl
+      0004DF F5               [16] 1365 	push	af
+      0004E0 33               [ 8] 1366 	inc	sp
+      0004E1 3E 0C            [ 8] 1367 	ld	a, #0x0c
+      0004E3 F5               [16] 1368 	push	af
+      0004E4 33               [ 8] 1369 	inc	sp
+      0004E5 5E               [ 8] 1370 	ld	e, (hl)
+      0004E6 23               [ 8] 1371 	inc	hl
+      0004E7 56               [ 8] 1372 	ld	d, (hl)
+      0004E8 D5               [16] 1373 	push	de
+      0004E9 1Er00            [ 8] 1374 	ld	e, #b_e_change_state
+      0004EB 21r00r00         [12] 1375 	ld	hl, #_e_change_state
+      0004EE CDr00r00         [24] 1376 	call	___sdcc_bcall_ehl
+      0004F1 E8 04            [16] 1377 	add	sp, #4
+                           0004F3  1378 	C$SpriteOrpheus.c$226$3_1$216	= .
+                                   1379 	.globl	C$SpriteOrpheus.c$226$3_1$216
+                                   1380 ;SpriteOrpheus.c:226: }
+      0004F3                       1381 00209$:
+                           0004F3  1382 	C$SpriteOrpheus.c$228$3_1$216	= .
+                                   1383 	.globl	C$SpriteOrpheus.c$228$3_1$216
+                                   1384 ;SpriteOrpheus.c:228: if(CheckCollision(THIS, iospr)) {
+      0004F3 F8 04            [12] 1385 	ldhl	sp,	#4
+      0004F5 4E               [ 8] 1386 	ld	c, (hl)
+      0004F6 23               [ 8] 1387 	inc	hl
+      0004F7 46               [ 8] 1388 	ld	b, (hl)
+      0004F8 21r00r00         [12] 1389 	ld	hl, #_THIS
+      0004FB 5E               [ 8] 1390 	ld	e, (hl)
+      0004FC 23               [ 8] 1391 	inc	hl
+      0004FD 56               [ 8] 1392 	ld	d, (hl)
+      0004FE CDr00r00         [24] 1393 	call	_CheckCollision
+      000501 F8 07            [12] 1394 	ldhl	sp,#7
+      000503 77               [ 8] 1395 	ld	(hl), a
+      000504 B7               [ 4] 1396 	or	a, a
+      000505 CArBFr05         [16] 1397 	jp	Z, 00225$
+                           000508  1398 	C$SpriteOrpheus.c$229$4_1$219	= .
+                                   1399 	.globl	C$SpriteOrpheus.c$229$4_1$219
+                                   1400 ;SpriteOrpheus.c:229: switch(iospr->type){
+      000508 F8 02            [12] 1401 	ldhl	sp,#2
+      00050A 2A               [ 8] 1402 	ld	a, (hl+)
+      00050B 5F               [ 4] 1403 	ld	e, a
+      00050C 56               [ 8] 1404 	ld	d, (hl)
+      00050D 1A               [ 8] 1405 	ld	a, (de)
+      00050E D6 02            [ 8] 1406 	sub	a, #0x02
+      000510 C2rBFr05         [16] 1407 	jp	NZ,00225$
+                           000513  1408 	C$SpriteOrpheus.c$127$2_1$184	= .
+                                   1409 	.globl	C$SpriteOrpheus.c$127$2_1$184
+                                   1410 ;SpriteOrpheus.c:127: new_state = orpheus_info->ow_state;
+      000513 FAr00r00         [16] 1411 	ld	a, (#_orpheus_info)
+      000516 F8 00            [12] 1412 	ldhl	sp,	#0
+      000518 77               [ 8] 1413 	ld	(hl), a
+      000519 FAr01r00         [16] 1414 	ld	a, (#_orpheus_info + 1)
+      00051C F8 01            [12] 1415 	ldhl	sp,	#1
+      00051E 77               [ 8] 1416 	ld	(hl), a
+                           00051F  1417 	C$SpriteOrpheus.c$231$5_1$220	= .
+                                   1418 	.globl	C$SpriteOrpheus.c$231$5_1$220
+                                   1419 ;SpriteOrpheus.c:231: if(orpheus_info->ow_state != HIT){
+      00051F D1               [12] 1420 	pop	de
+      000520 D5               [16] 1421 	push	de
+      000521 1A               [ 8] 1422 	ld	a, (de)
+      000522 D6 0C            [ 8] 1423 	sub	a, #0x0c
+      000524 CArBFr05         [16] 1424 	jp	Z,00225$
+                           000527  1425 	C$SpriteOrpheus.c$232$6_1$221	= .
+                                   1426 	.globl	C$SpriteOrpheus.c$232$6_1$221
+                                   1427 ;SpriteOrpheus.c:232: struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
+      000527 F8 04            [12] 1428 	ldhl	sp,#4
+      000529 2A               [ 8] 1429 	ld	a, (hl+)
+      00052A 5F               [ 4] 1430 	ld	e, a
+      00052B 56               [ 8] 1431 	ld	d, (hl)
+      00052C 21 1B 00         [12] 1432 	ld	hl, #0x001b
+      00052F 19               [ 8] 1433 	add	hl, de
+      000530 E5               [16] 1434 	push	hl
+      000531 7D               [ 4] 1435 	ld	a, l
+      000532 F8 08            [12] 1436 	ldhl	sp,	#8
+      000534 77               [ 8] 1437 	ld	(hl), a
+      000535 E1               [12] 1438 	pop	hl
+      000536 7C               [ 4] 1439 	ld	a, h
+      000537 F8 07            [12] 1440 	ldhl	sp,	#7
+                           000539  1441 	C$SpriteOrpheus.c$233$6_1$221	= .
+                                   1442 	.globl	C$SpriteOrpheus.c$233$6_1$221
+                                   1443 ;SpriteOrpheus.c:233: if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
+      000539 32               [ 8] 1444 	ld	(hl-), a
+      00053A 2A               [ 8] 1445 	ld	a, (hl+)
+      00053B 5F               [ 4] 1446 	ld	e, a
+      00053C 56               [ 8] 1447 	ld	d, (hl)
+      00053D 21 02 00         [12] 1448 	ld	hl, #0x0002
+      000540 19               [ 8] 1449 	add	hl, de
+      000541 E5               [16] 1450 	push	hl
+      000542 7D               [ 4] 1451 	ld	a, l
+      000543 F8 06            [12] 1452 	ldhl	sp,	#6
+      000545 77               [ 8] 1453 	ld	(hl), a
+      000546 E1               [12] 1454 	pop	hl
+      000547 7C               [ 4] 1455 	ld	a, h
+      000548 F8 05            [12] 1456 	ldhl	sp,	#5
+      00054A 32               [ 8] 1457 	ld	(hl-), a
+      00054B 2A               [ 8] 1458 	ld	a, (hl+)
+      00054C 5F               [ 4] 1459 	ld	e, a
+      00054D 56               [ 8] 1460 	ld	d, (hl)
+      00054E 1A               [ 8] 1461 	ld	a, (de)
+      00054F 4F               [ 4] 1462 	ld	c, a
+                           000550  1463 	C$SpriteOrpheus.c$161$2_1$184	= .
+                                   1464 	.globl	C$SpriteOrpheus.c$161$2_1$184
+                                   1465 ;SpriteOrpheus.c:161: orpheus_info->vx = push_vx;
+      000550 D1               [12] 1466 	pop	de
+      000551 D5               [16] 1467 	push	de
+      000552 21 02 00         [12] 1468 	ld	hl, #0x0002
+      000555 19               [ 8] 1469 	add	hl, de
+      000556 E5               [16] 1470 	push	hl
+      000557 7D               [ 4] 1471 	ld	a, l
+      000558 F8 04            [12] 1472 	ldhl	sp,	#4
+      00055A 77               [ 8] 1473 	ld	(hl), a
+      00055B E1               [12] 1474 	pop	hl
+      00055C 7C               [ 4] 1475 	ld	a, h
+      00055D F8 03            [12] 1476 	ldhl	sp,	#3
+                           00055F  1477 	C$SpriteOrpheus.c$233$6_1$221	= .
+                                   1478 	.globl	C$SpriteOrpheus.c$233$6_1$221
+                                   1479 ;SpriteOrpheus.c:233: if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
+      00055F 32               [ 8] 1480 	ld	(hl-), a
+      000560 2A               [ 8] 1481 	ld	a, (hl+)
+      000561 5F               [ 4] 1482 	ld	e, a
+      000562 56               [ 8] 1483 	ld	d, (hl)
+      000563 1A               [ 8] 1484 	ld	a, (de)
+      000564 47               [ 4] 1485 	ld	b, a
+                           000565  1486 	C$SpriteOrpheus.c$166$2_1$184	= .
+                                   1487 	.globl	C$SpriteOrpheus.c$166$2_1$184
+                                   1488 ;SpriteOrpheus.c:166: orpheus_info->vy = -1;
+      000565 D1               [12] 1489 	pop	de
+      000566 D5               [16] 1490 	push	de
+      000567 21 03 00         [12] 1491 	ld	hl, #0x0003
+      00056A 19               [ 8] 1492 	add	hl, de
+      00056B E5               [16] 1493 	push	hl
+      00056C 7D               [ 4] 1494 	ld	a, l
+      00056D F8 06            [12] 1495 	ldhl	sp,	#6
+      00056F 77               [ 8] 1496 	ld	(hl), a
+      000570 E1               [12] 1497 	pop	hl
+      000571 7C               [ 4] 1498 	ld	a, h
+      000572 F8 05            [12] 1499 	ldhl	sp,	#5
+      000574 77               [ 8] 1500 	ld	(hl), a
+                           000575  1501 	C$SpriteOrpheus.c$233$6_1$221	= .
+                                   1502 	.globl	C$SpriteOrpheus.c$233$6_1$221
+                                   1503 ;SpriteOrpheus.c:233: if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
+      000575 79               [ 4] 1504 	ld	a, c
+      000576 90               [ 4] 1505 	sub	a, b
+      000577 28 0C            [12] 1506 	jr	Z, 00212$
+      000579 2B               [ 8] 1507 	dec	hl
+      00057A 2A               [ 8] 1508 	ld	a, (hl+)
+      00057B 5F               [ 4] 1509 	ld	e, a
+      00057C 56               [ 8] 1510 	ld	d, (hl)
+      00057D 1A               [ 8] 1511 	ld	a, (de)
+      00057E B7               [ 4] 1512 	or	a, a
+      00057F 20 04            [12] 1513 	jr	NZ, 00212$
+                           000581  1514 	C$SpriteOrpheus.c$234$7_1$222	= .
+                                   1515 	.globl	C$SpriteOrpheus.c$234$7_1$222
+                                   1516 ;SpriteOrpheus.c:234: push_vx = e_data->vx;
+      000581 21r0Br00         [12] 1517 	ld	hl, #_push_vx
+      000584 71               [ 8] 1518 	ld	(hl), c
+      000585                       1519 00212$:
+                           000585  1520 	C$SpriteOrpheus.c$236$6_1$221	= .
+                                   1521 	.globl	C$SpriteOrpheus.c$236$6_1$221
+                                   1522 ;SpriteOrpheus.c:236: if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
+      000585 F8 06            [12] 1523 	ldhl	sp,#6
+      000587 2A               [ 8] 1524 	ld	a, (hl+)
+      000588 5F               [ 4] 1525 	ld	e, a
+      000589 56               [ 8] 1526 	ld	d, (hl)
+      00058A 21 03 00         [12] 1527 	ld	hl, #0x0003
+      00058D 19               [ 8] 1528 	add	hl, de
+      00058E 33               [ 8] 1529 	inc	sp
+      00058F 33               [ 8] 1530 	inc	sp
+      000590 5D               [ 4] 1531 	ld	e, l
+      000591 54               [ 4] 1532 	ld	d, h
+      000592 D5               [16] 1533 	push	de
+      000593 1A               [ 8] 1534 	ld	a, (de)
+      000594 F8 06            [12] 1535 	ldhl	sp,	#6
+      000596 32               [ 8] 1536 	ld	(hl-), a
+      000597 2B               [ 8] 1537 	dec	hl
+      000598 2A               [ 8] 1538 	ld	a, (hl+)
+      000599 5F               [ 4] 1539 	ld	e, a
+      00059A 2A               [ 8] 1540 	ld	a, (hl+)
+      00059B 23               [ 8] 1541 	inc	hl
+      00059C 57               [ 4] 1542 	ld	d, a
+      00059D 1A               [ 8] 1543 	ld	a, (de)
+      00059E 32               [ 8] 1544 	ld	(hl-), a
+      00059F 2A               [ 8] 1545 	ld	a, (hl+)
+      0005A0 96               [ 8] 1546 	sub	a, (hl)
+      0005A1 28 0F            [12] 1547 	jr	Z, 00215$
+      0005A3 F8 02            [12] 1548 	ldhl	sp,#2
+      0005A5 2A               [ 8] 1549 	ld	a, (hl+)
+      0005A6 5F               [ 4] 1550 	ld	e, a
+      0005A7 56               [ 8] 1551 	ld	d, (hl)
+      0005A8 1A               [ 8] 1552 	ld	a, (de)
+      0005A9 B7               [ 4] 1553 	or	a, a
+      0005AA 20 06            [12] 1554 	jr	NZ, 00215$
+                           0005AC  1555 	C$SpriteOrpheus.c$237$7_1$223	= .
+                                   1556 	.globl	C$SpriteOrpheus.c$237$7_1$223
+                                   1557 ;SpriteOrpheus.c:237: push_vy = e_data->vy;
+      0005AC F8 06            [12] 1558 	ldhl	sp,	#6
+      0005AE 7E               [ 8] 1559 	ld	a, (hl)
+      0005AF EAr0Cr00         [16] 1560 	ld	(#_push_vy),a
+      0005B2                       1561 00215$:
+                           0005B2  1562 	C$SpriteOrpheus.c$239$6_1$221	= .
+                                   1563 	.globl	C$SpriteOrpheus.c$239$6_1$221
+                                   1564 ;SpriteOrpheus.c:239: orhpeus_change_state(HIT);
+      0005B2 3E 0C            [ 8] 1565 	ld	a, #0x0c
+      0005B4 F5               [16] 1566 	push	af
+      0005B5 33               [ 8] 1567 	inc	sp
+      0005B6 1Er00            [ 8] 1568 	ld	e, #b_orhpeus_change_state
+      0005B8 21rCDr06         [12] 1569 	ld	hl, #_orhpeus_change_state
+      0005BB CDr00r00         [24] 1570 	call	___sdcc_bcall_ehl
+      0005BE 33               [ 8] 1571 	inc	sp
+                           0005BF  1572 	C$SpriteOrpheus.c$242$3_1$216	= .
+                                   1573 	.globl	C$SpriteOrpheus.c$242$3_1$216
+                                   1574 ;SpriteOrpheus.c:242: }
+      0005BF                       1575 00225$:
+                           0005BF  1576 	C$SpriteOrpheus.c$220$2_1$215	= .
+                                   1577 	.globl	C$SpriteOrpheus.c$220$2_1$215
+                                   1578 ;SpriteOrpheus.c:220: SPRITEMANAGER_ITERATE(scroll_o_tile, iospr) {
+      0005BF F8 08            [12] 1579 	ldhl	sp,	#8
+      0005C1 34               [12] 1580 	inc	(hl)
+      0005C2 3A               [ 8] 1581 	ld	a, (hl-)
+      0005C3 2B               [ 8] 1582 	dec	hl
+      0005C4 22               [ 8] 1583 	ld	(hl+), a
+      0005C5 AF               [ 4] 1584 	xor	a, a
+      0005C6 32               [ 8] 1585 	ld	(hl-), a
+      0005C7 2A               [ 8] 1586 	ld	a, (hl+)
+      0005C8 5F               [ 4] 1587 	ld	e, a
+      0005C9 56               [ 8] 1588 	ld	d, (hl)
+      0005CA 6B               [ 4] 1589 	ld	l, e
+      0005CB 62               [ 4] 1590 	ld	h, d
+      0005CC 23               [ 8] 1591 	inc	hl
+      0005CD E5               [16] 1592 	push	hl
+      0005CE 7D               [ 4] 1593 	ld	a, l
+      0005CF F8 06            [12] 1594 	ldhl	sp,	#6
+      0005D1 77               [ 8] 1595 	ld	(hl), a
+      0005D2 E1               [12] 1596 	pop	hl
+      0005D3 7C               [ 4] 1597 	ld	a, h
+      0005D4 F8 05            [12] 1598 	ldhl	sp,	#5
+      0005D6 32               [ 8] 1599 	ld	(hl-), a
+      0005D7 2A               [ 8] 1600 	ld	a, (hl+)
+      0005D8 5F               [ 4] 1601 	ld	e, a
+      0005D9 56               [ 8] 1602 	ld	d, (hl)
+      0005DA 21r00r00         [12] 1603 	ld	hl, #_sprite_manager_updatables
+      0005DD 19               [ 8] 1604 	add	hl, de
+      0005DE E5               [16] 1605 	push	hl
+      0005DF 7D               [ 4] 1606 	ld	a, l
+      0005E0 F8 08            [12] 1607 	ldhl	sp,	#8
+      0005E2 77               [ 8] 1608 	ld	(hl), a
+      0005E3 E1               [12] 1609 	pop	hl
+      0005E4 7C               [ 4] 1610 	ld	a, h
+      0005E5 F8 07            [12] 1611 	ldhl	sp,	#7
+      0005E7 32               [ 8] 1612 	ld	(hl-), a
+      0005E8 2A               [ 8] 1613 	ld	a, (hl+)
+      0005E9 5F               [ 4] 1614 	ld	e, a
+      0005EA 56               [ 8] 1615 	ld	d, (hl)
+      0005EB 1A               [ 8] 1616 	ld	a, (de)
+      0005EC 77               [ 8] 1617 	ld	(hl), a
+      0005ED 3A               [ 8] 1618 	ld	a, (hl-)
+      0005EE 22               [ 8] 1619 	ld	(hl+), a
+      0005EF AF               [ 4] 1620 	xor	a, a
+      0005F0 32               [ 8] 1621 	ld	(hl-), a
+      0005F1 3A               [ 8] 1622 	ld	a, (hl-)
+      0005F2 2B               [ 8] 1623 	dec	hl
+      0005F3 22               [ 8] 1624 	ld	(hl+), a
+      0005F4 AF               [ 4] 1625 	xor	a, a
+      0005F5 32               [ 8] 1626 	ld	(hl-), a
+      0005F6 CB 26            [16] 1627 	sla	(hl)
+      0005F8 23               [ 8] 1628 	inc	hl
+      0005F9 CB 16            [16] 1629 	rl	(hl)
+      0005FB 2B               [ 8] 1630 	dec	hl
+      0005FC 2A               [ 8] 1631 	ld	a, (hl+)
+      0005FD 5F               [ 4] 1632 	ld	e, a
+      0005FE 56               [ 8] 1633 	ld	d, (hl)
+      0005FF 21r00r00         [12] 1634 	ld	hl, #_sprite_manager_sprites
+      000602 19               [ 8] 1635 	add	hl, de
+      000603 E5               [16] 1636 	push	hl
+      000604 7D               [ 4] 1637 	ld	a, l
+      000605 F8 08            [12] 1638 	ldhl	sp,	#8
+      000607 77               [ 8] 1639 	ld	(hl), a
+      000608 E1               [12] 1640 	pop	hl
+      000609 7C               [ 4] 1641 	ld	a, h
+      00060A F8 07            [12] 1642 	ldhl	sp,	#7
+      00060C 32               [ 8] 1643 	ld	(hl-), a
+      00060D 2A               [ 8] 1644 	ld	a, (hl+)
+      00060E 5F               [ 4] 1645 	ld	e, a
+      00060F 56               [ 8] 1646 	ld	d, (hl)
+      000610 1A               [ 8] 1647 	ld	a, (de)
+      000611 F8 04            [12] 1648 	ldhl	sp,	#4
+      000613 22               [ 8] 1649 	ld	(hl+), a
+      000614 13               [ 8] 1650 	inc	de
+      000615 1A               [ 8] 1651 	ld	a, (de)
+      000616 77               [ 8] 1652 	ld	(hl), a
+      000617 C3rA9r04         [16] 1653 	jp	00224$
+      00061A                       1654 00226$:
+                           00061A  1655 	C$SpriteOrpheus.c$245$2_1$184	= .
+                                   1656 	.globl	C$SpriteOrpheus.c$245$2_1$184
+                                   1657 ;SpriteOrpheus.c:245: }
+      00061A E8 09            [16] 1658 	add	sp, #9
+                           00061C  1659 	C$SpriteOrpheus.c$245$2_1$184	= .
+                                   1660 	.globl	C$SpriteOrpheus.c$245$2_1$184
+                           00061C  1661 	XG$Update_SpriteOrpheus$0$0	= .
+                                   1662 	.globl	XG$Update_SpriteOrpheus$0$0
+      00061C C9               [16] 1663 	ret
+                           00061D  1664 	G$orpheus_recharge$0$0	= .
+                                   1665 	.globl	G$orpheus_recharge$0$0
+                           00061D  1666 	C$SpriteOrpheus.c$247$2_1$224	= .
+                                   1667 	.globl	C$SpriteOrpheus.c$247$2_1$224
+                                   1668 ;SpriteOrpheus.c:247: void orpheus_recharge() BANKED{
+                                   1669 ;	---------------------------------
+                                   1670 ; Function orpheus_recharge
+                                   1671 ; ---------------------------------
+                           0000FF  1672 	b_orpheus_recharge	= 255
+      00061D                       1673 _orpheus_recharge::
+                           00061D  1674 	C$SpriteOrpheus.c$248$1_0$224	= .
+                                   1675 	.globl	C$SpriteOrpheus.c$248$1_0$224
+                                   1676 ;SpriteOrpheus.c:248: if(countdown_verso != 0){
+      00061D FAr10r00         [16] 1677 	ld	a, (#_countdown_verso)
+      000620 B7               [ 4] 1678 	or	a, a
+      000621 C8               [20] 1679 	ret	Z
+                           000622  1680 	C$SpriteOrpheus.c$249$2_0$225	= .
+                                   1681 	.globl	C$SpriteOrpheus.c$249$2_0$225
+                                   1682 ;SpriteOrpheus.c:249: countdown_step--;
+      000622 21r0Fr00         [12] 1683 	ld	hl, #_countdown_step
+                           000625  1684 	C$SpriteOrpheus.c$250$2_0$225	= .
+                                   1685 	.globl	C$SpriteOrpheus.c$250$2_0$225
+                                   1686 ;SpriteOrpheus.c:250: if(countdown_step == 0){
+      000625 35               [12] 1687 	dec	(hl)
+      000626 C0               [20] 1688 	ret	NZ
+                           000627  1689 	C$SpriteOrpheus.c$251$3_0$226	= .
+                                   1690 	.globl	C$SpriteOrpheus.c$251$3_0$226
+                                   1691 ;SpriteOrpheus.c:251: countdown_step = COUNTDOWN_STEP_MAX;
+      000627 36 01            [12] 1692 	ld	(hl), #0x01
+                           000629  1693 	C$SpriteOrpheus.c$252$3_0$226	= .
+                                   1694 	.globl	C$SpriteOrpheus.c$252$3_0$226
+                                   1695 ;SpriteOrpheus.c:252: countdown += countdown_verso;
+      000629 FAr0Er00         [16] 1696 	ld	a, (#_countdown)
+      00062C 21r10r00         [12] 1697 	ld	hl, #_countdown_verso
+      00062F 86               [ 8] 1698 	add	a, (hl)
+                           000630  1699 	C$SpriteOrpheus.c$253$3_0$226	= .
+                                   1700 	.globl	C$SpriteOrpheus.c$253$3_0$226
+                                   1701 ;SpriteOrpheus.c:253: if(countdown == orpheus_power_max){//RICHARGE COMPLETA
+      000630 EAr0Er00         [16] 1702 	ld	(#_countdown),a
+      000633 4F               [ 4] 1703 	ld	c, a
+      000634 07               [ 4] 1704 	rlca
+      000635 9F               [ 4] 1705 	sbc	a, a
+      000636 47               [ 4] 1706 	ld	b, a
+      000637 21r01r00         [12] 1707 	ld	hl, #_orpheus_power_max
+      00063A 5E               [ 8] 1708 	ld	e, (hl)
+      00063B 16 00            [ 8] 1709 	ld	d, #0x00
+      00063D 7B               [ 4] 1710 	ld	a, e
+      00063E 91               [ 4] 1711 	sub	a, c
+      00063F 20 21            [12] 1712 	jr	NZ, 00102$
+      000641 7A               [ 4] 1713 	ld	a, d
+      000642 90               [ 4] 1714 	sub	a, b
+      000643 20 1D            [12] 1715 	jr	NZ, 00102$
+                           000645  1716 	C$SpriteOrpheus.c$254$4_0$227	= .
+                                   1717 	.globl	C$SpriteOrpheus.c$254$4_0$227
+                                   1718 ;SpriteOrpheus.c:254: orpheus_info->charming = -1;
+      000645 21r00r00         [12] 1719 	ld	hl, #_orpheus_info
+      000648 2A               [ 8] 1720 	ld	a, (hl+)
+      000649 4F               [ 4] 1721 	ld	c, a
+      00064A 46               [ 8] 1722 	ld	b, (hl)
+      00064B 21 04 00         [12] 1723 	ld	hl, #0x0004
+      00064E 09               [ 8] 1724 	add	hl, bc
+      00064F 36 FF            [12] 1725 	ld	(hl), #0xff
+                           000651  1726 	C$SpriteOrpheus.c$255$4_0$227	= .
+                                   1727 	.globl	C$SpriteOrpheus.c$255$4_0$227
+                                   1728 ;SpriteOrpheus.c:255: countdown_verso = 0;
+      000651 21r10r00         [12] 1729 	ld	hl, #_countdown_verso
+      000654 36 00            [12] 1730 	ld	(hl), #0x00
+                           000656  1731 	C$SpriteOrpheus.c$256$4_0$227	= .
+                                   1732 	.globl	C$SpriteOrpheus.c$256$4_0$227
+                                   1733 ;SpriteOrpheus.c:256: orpheus_info->charming = 0;
+      000656 21r00r00         [12] 1734 	ld	hl, #_orpheus_info
+      000659 2A               [ 8] 1735 	ld	a, (hl+)
+      00065A 4F               [ 4] 1736 	ld	c, a
+      00065B 46               [ 8] 1737 	ld	b, (hl)
+      00065C 03               [ 8] 1738 	inc	bc
+      00065D 03               [ 8] 1739 	inc	bc
+      00065E 03               [ 8] 1740 	inc	bc
+      00065F 03               [ 8] 1741 	inc	bc
+      000660 AF               [ 4] 1742 	xor	a, a
+      000661 02               [ 8] 1743 	ld	(bc), a
+      000662                       1744 00102$:
+                           000662  1745 	C$SpriteOrpheus.c$258$3_0$226	= .
+                                   1746 	.globl	C$SpriteOrpheus.c$258$3_0$226
+                                   1747 ;SpriteOrpheus.c:258: update_hud = 1;
+      000662 21r00r00         [12] 1748 	ld	hl, #_update_hud
+      000665 36 01            [12] 1749 	ld	(hl), #0x01
+                           000667  1750 	C$SpriteOrpheus.c$261$1_0$224	= .
+                                   1751 	.globl	C$SpriteOrpheus.c$261$1_0$224
+                                   1752 ;SpriteOrpheus.c:261: }
+                           000667  1753 	C$SpriteOrpheus.c$261$1_0$224	= .
+                                   1754 	.globl	C$SpriteOrpheus.c$261$1_0$224
+                           000667  1755 	XG$orpheus_recharge$0$0	= .
+                                   1756 	.globl	XG$orpheus_recharge$0$0
+      000667 C9               [16] 1757 	ret
+                           000668  1758 	G$orpheus_update_position$0$0	= .
+                                   1759 	.globl	G$orpheus_update_position$0$0
+                           000668  1760 	C$SpriteOrpheus.c$263$1_0$228	= .
+                                   1761 	.globl	C$SpriteOrpheus.c$263$1_0$228
+                                   1762 ;SpriteOrpheus.c:263: void orpheus_update_position() BANKED{
+                                   1763 ;	---------------------------------
+                                   1764 ; Function orpheus_update_position
+                                   1765 ; ---------------------------------
+                           0000FF  1766 	b_orpheus_update_position	= 255
+      000668                       1767 _orpheus_update_position::
+      000668 3B               [ 8] 1768 	dec	sp
+      000669 3B               [ 8] 1769 	dec	sp
+                           00066A  1770 	C$SpriteOrpheus.c$264$1_0$228	= .
+                                   1771 	.globl	C$SpriteOrpheus.c$264$1_0$228
+                                   1772 ;SpriteOrpheus.c:264: orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);
+      00066A 21r00r00         [12] 1773 	ld	hl, #_orpheus_info
+      00066D 2A               [ 8] 1774 	ld	a, (hl+)
+      00066E 4F               [ 4] 1775 	ld	c, a
+      00066F 46               [ 8] 1776 	ld	b, (hl)
+      000670 69               [ 4] 1777 	ld	l, c
+      000671 60               [ 4] 1778 	ld	h, b
+      000672 23               [ 8] 1779 	inc	hl
+      000673 33               [ 8] 1780 	inc	sp
+      000674 33               [ 8] 1781 	inc	sp
+      000675 E5               [16] 1782 	push	hl
+      000676 69               [ 4] 1783 	ld	l, c
+                                   1784 ;	spillPairReg hl
+                                   1785 ;	spillPairReg hl
+      000677 60               [ 4] 1786 	ld	h, b
+                                   1787 ;	spillPairReg hl
+                                   1788 ;	spillPairReg hl
+      000678 23               [ 8] 1789 	inc	hl
+      000679 23               [ 8] 1790 	inc	hl
+      00067A 23               [ 8] 1791 	inc	hl
+      00067B 56               [ 8] 1792 	ld	d, (hl)
+      00067C 21r00r00         [12] 1793 	ld	hl, #_delta_time
+      00067F 7E               [ 8] 1794 	ld	a, (hl)
+      000680 3C               [ 4] 1795 	inc	a
+      000681 18 02            [12] 1796 	jr	00130$
+      000683                       1797 00129$:
+      000683 CB 22            [ 8] 1798 	sla	d
+      000685                       1799 00130$:
+      000685 3D               [ 4] 1800 	dec	a
+      000686 20 FB            [12] 1801 	jr	NZ,00129$
+      000688 03               [ 8] 1802 	inc	bc
+      000689 03               [ 8] 1803 	inc	bc
+      00068A 0A               [ 8] 1804 	ld	a, (bc)
+      00068B 46               [ 8] 1805 	ld	b, (hl)
+      00068C 4F               [ 4] 1806 	ld	c, a
+      00068D 04               [ 4] 1807 	inc	b
+      00068E 18 02            [12] 1808 	jr	00132$
+      000690                       1809 00131$:
+      000690 CB 21            [ 8] 1810 	sla	c
+      000692                       1811 00132$:
+      000692 05               [ 4] 1812 	dec	b
+      000693 20 FB            [12] 1813 	jr	NZ,00131$
+      000695 D5               [16] 1814 	push	de
+      000696 33               [ 8] 1815 	inc	sp
+      000697 79               [ 4] 1816 	ld	a, c
+      000698 21r00r00         [12] 1817 	ld	hl, #_THIS
+      00069B 5E               [ 8] 1818 	ld	e, (hl)
+      00069C 23               [ 8] 1819 	inc	hl
+      00069D 56               [ 8] 1820 	ld	d, (hl)
+      00069E CDr00r00         [24] 1821 	call	_TranslateSprite
+      0006A1 4F               [ 4] 1822 	ld	c, a
+      0006A2 E1               [12] 1823 	pop	hl
+      0006A3 E5               [16] 1824 	push	hl
+      0006A4 71               [ 8] 1825 	ld	(hl), c
+      0006A5 21r00r00         [12] 1826 	ld	hl, #_orpheus_info
+      0006A8 6E               [ 8] 1827 	ld	l, (hl)
+                                   1828 ;	spillPairReg hl
+                                   1829 ;	spillPairReg hl
+      0006A9 FAr01r00         [16] 1830 	ld	a, (_orpheus_info + 1)
+      0006AC 67               [ 4] 1831 	ld	h, a
+                                   1832 ;	spillPairReg hl
+                                   1833 ;	spillPairReg hl
+      0006AD 23               [ 8] 1834 	inc	hl
+                           0006AE  1835 	C$SpriteOrpheus.c$265$1_0$228	= .
+                                   1836 	.globl	C$SpriteOrpheus.c$265$1_0$228
+                                   1837 ;SpriteOrpheus.c:265: if(orpheus_info->tile_collision){
+      0006AE 4E               [ 8] 1838 	ld	c, (hl)
+      0006AF 79               [ 4] 1839 	ld	a, c
+      0006B0 B7               [ 4] 1840 	or	a, a
+      0006B1 28 17            [12] 1841 	jr	Z, 00106$
+                           0006B3  1842 	C$SpriteOrpheus.c$267$2_0$229	= .
+                                   1843 	.globl	C$SpriteOrpheus.c$267$2_0$229
+                                   1844 ;SpriteOrpheus.c:267: if(orpheus_info->tile_collision >= 120u && orpheus_info->tile_collision <= 127) {
+      0006B3 79               [ 4] 1845 	ld	a, c
+      0006B4 D6 78            [ 8] 1846 	sub	a, #0x78
+      0006B6 38 12            [12] 1847 	jr	C, 00106$
+      0006B8 3E 7F            [ 8] 1848 	ld	a, #0x7f
+      0006BA 91               [ 4] 1849 	sub	a, c
+      0006BB 38 0D            [12] 1850 	jr	C, 00106$
+                           0006BD  1851 	C$SpriteOrpheus.c$268$3_0$230	= .
+                                   1852 	.globl	C$SpriteOrpheus.c$268$3_0$230
+                                   1853 ;SpriteOrpheus.c:268: orhpeus_change_state(HIT);
+      0006BD 3E 0C            [ 8] 1854 	ld	a, #0x0c
+      0006BF F5               [16] 1855 	push	af
+      0006C0 33               [ 8] 1856 	inc	sp
+      0006C1 1Er00            [ 8] 1857 	ld	e, #b_orhpeus_change_state
+      0006C3 21rCDr06         [12] 1858 	ld	hl, #_orhpeus_change_state
+      0006C6 CDr00r00         [24] 1859 	call	___sdcc_bcall_ehl
+      0006C9 33               [ 8] 1860 	inc	sp
+      0006CA                       1861 00106$:
+                           0006CA  1862 	C$SpriteOrpheus.c$273$1_0$228	= .
+                                   1863 	.globl	C$SpriteOrpheus.c$273$1_0$228
+                                   1864 ;SpriteOrpheus.c:273: }
+      0006CA 33               [ 8] 1865 	inc	sp
+      0006CB 33               [ 8] 1866 	inc	sp
+                           0006CC  1867 	C$SpriteOrpheus.c$273$1_0$228	= .
+                                   1868 	.globl	C$SpriteOrpheus.c$273$1_0$228
+                           0006CC  1869 	XG$orpheus_update_position$0$0	= .
+                                   1870 	.globl	XG$orpheus_update_position$0$0
+      0006CC C9               [16] 1871 	ret
+                           0006CD  1872 	G$orhpeus_change_state$0$0	= .
+                                   1873 	.globl	G$orhpeus_change_state$0$0
+                           0006CD  1874 	C$SpriteOrpheus.c$275$1_0$232	= .
+                                   1875 	.globl	C$SpriteOrpheus.c$275$1_0$232
+                                   1876 ;SpriteOrpheus.c:275: void orhpeus_change_state(SPRITE_STATES new_state) BANKED{
+                                   1877 ;	---------------------------------
+                                   1878 ; Function orhpeus_change_state
+                                   1879 ; ---------------------------------
+                           0000FF  1880 	b_orhpeus_change_state	= 255
+      0006CD                       1881 _orhpeus_change_state::
+                           0006CD  1882 	C$SpriteOrpheus.c$276$1_0$232	= .
+                                   1883 	.globl	C$SpriteOrpheus.c$276$1_0$232
+                                   1884 ;SpriteOrpheus.c:276: if(orpheus_info->ow_state == new_state){
+      0006CD 21r00r00         [12] 1885 	ld	hl, #_orpheus_info
+      0006D0 6E               [ 8] 1886 	ld	l, (hl)
+                                   1887 ;	spillPairReg hl
+                                   1888 ;	spillPairReg hl
+      0006D1 FAr01r00         [16] 1889 	ld	a, (_orpheus_info + 1)
+      0006D4 67               [ 4] 1890 	ld	h, a
+                                   1891 ;	spillPairReg hl
+                                   1892 ;	spillPairReg hl
+      0006D5 4E               [ 8] 1893 	ld	c, (hl)
+      0006D6 F8 06            [12] 1894 	ldhl	sp,	#6
+      0006D8 7E               [ 8] 1895 	ld	a, (hl)
+      0006D9 91               [ 4] 1896 	sub	a, c
+      0006DA C8               [20] 1897 	ret	Z
+                           0006DB  1898 	C$SpriteOrpheus.c$277$2_0$233	= .
+                                   1899 	.globl	C$SpriteOrpheus.c$277$2_0$233
+                                   1900 ;SpriteOrpheus.c:277: return;
+      0006DB 18 00            [12] 1901 	jr	00102$
+      0006DD                       1902 00102$:
+                           0006DD  1903 	C$SpriteOrpheus.c$279$1_0$232	= .
+                                   1904 	.globl	C$SpriteOrpheus.c$279$1_0$232
+                                   1905 ;SpriteOrpheus.c:279: switch(new_state){
+      0006DD 3E 0C            [ 8] 1906 	ld	a, #0x0c
+      0006DF F8 06            [12] 1907 	ldhl	sp,	#6
+      0006E1 96               [ 8] 1908 	sub	a, (hl)
+      0006E2 DAr51r09         [16] 1909 	jp	C, 00126$
+      0006E5 4E               [ 8] 1910 	ld	c, (hl)
+      0006E6 06 00            [ 8] 1911 	ld	b, #0x00
+      0006E8 21rEFr06         [12] 1912 	ld	hl, #00173$
+      0006EB 09               [ 8] 1913 	add	hl, bc
+      0006EC 09               [ 8] 1914 	add	hl, bc
+      0006ED 09               [ 8] 1915 	add	hl, bc
+      0006EE E9               [ 4] 1916 	jp	(hl)
+      0006EF                       1917 00173$:
+      0006EF C3r51r09         [16] 1918 	jp	00126$
+      0006F2 C3r51r09         [16] 1919 	jp	00126$
+      0006F5 C3r3Cr07         [16] 1920 	jp	00104$
+      0006F8 C3r16r07         [16] 1921 	jp	00103$
+      0006FB C3r62r07         [16] 1922 	jp	00105$
+      0006FE C3r94r07         [16] 1923 	jp	00106$
+      000701 C3r16r08         [16] 1924 	jp	00109$
+      000704 C3r4Cr08         [16] 1925 	jp	00110$
+      000707 C3rEEr07         [16] 1926 	jp	00108$
+      00070A C3rC6r07         [16] 1927 	jp	00107$
+      00070D C3r51r09         [16] 1928 	jp	00126$
+      000710 C3r09r09         [16] 1929 	jp	00121$
+      000713 C3r82r08         [16] 1930 	jp	00111$
+                           000716  1931 	C$SpriteOrpheus.c$280$2_0$234	= .
+                                   1932 	.globl	C$SpriteOrpheus.c$280$2_0$234
+                                   1933 ;SpriteOrpheus.c:280: case IDLE_DOWN:
+      000716                       1934 00103$:
+                           000716  1935 	C$SpriteOrpheus.c$281$2_0$234	= .
+                                   1936 	.globl	C$SpriteOrpheus.c$281$2_0$234
+                                   1937 ;SpriteOrpheus.c:281: orpheus_info->vy = 0;
+      000716 21r00r00         [12] 1938 	ld	hl, #_orpheus_info
+      000719 2A               [ 8] 1939 	ld	a, (hl+)
+      00071A 4F               [ 4] 1940 	ld	c, a
+                           00071B  1941 	C$SpriteOrpheus.c$282$2_0$234	= .
+                                   1942 	.globl	C$SpriteOrpheus.c$282$2_0$234
+                                   1943 ;SpriteOrpheus.c:282: orpheus_info->vx = 0;
+      00071B 3A               [ 8] 1944 	ld	a, (hl-)
+      00071C 47               [ 4] 1945 	ld	b, a
+      00071D 03               [ 8] 1946 	inc	bc
+      00071E 03               [ 8] 1947 	inc	bc
+      00071F 03               [ 8] 1948 	inc	bc
+      000720 AF               [ 4] 1949 	xor	a, a
+      000721 02               [ 8] 1950 	ld	(bc), a
+      000722 2A               [ 8] 1951 	ld	a, (hl+)
+      000723 4F               [ 4] 1952 	ld	c, a
+      000724 46               [ 8] 1953 	ld	b, (hl)
+      000725 03               [ 8] 1954 	inc	bc
+      000726 03               [ 8] 1955 	inc	bc
+      000727 AF               [ 4] 1956 	xor	a, a
+      000728 02               [ 8] 1957 	ld	(bc), a
+                           000729  1958 	C$SpriteOrpheus.c$283$2_0$234	= .
+                                   1959 	.globl	C$SpriteOrpheus.c$283$2_0$234
+                                   1960 ;SpriteOrpheus.c:283: SetSpriteAnim(THIS, a_orpheus_idledown, 4u);
+      000729 3E 04            [ 8] 1961 	ld	a, #0x04
+      00072B F5               [16] 1962 	push	af
+      00072C 33               [ 8] 1963 	inc	sp
+      00072D 01rB1r00         [12] 1964 	ld	bc, #_a_orpheus_idledown
+      000730 21r00r00         [12] 1965 	ld	hl, #_THIS
+      000733 2A               [ 8] 1966 	ld	a, (hl+)
+      000734 5F               [ 4] 1967 	ld	e, a
+      000735 56               [ 8] 1968 	ld	d, (hl)
+      000736 CDr00r00         [24] 1969 	call	_SetSpriteAnim
+                           000739  1970 	C$SpriteOrpheus.c$284$2_0$234	= .
+                                   1971 	.globl	C$SpriteOrpheus.c$284$2_0$234
+                                   1972 ;SpriteOrpheus.c:284: break;
+      000739 C3r51r09         [16] 1973 	jp	00126$
+                           00073C  1974 	C$SpriteOrpheus.c$285$2_0$234	= .
+                                   1975 	.globl	C$SpriteOrpheus.c$285$2_0$234
+                                   1976 ;SpriteOrpheus.c:285: case IDLE_UP:
+      00073C                       1977 00104$:
+                           00073C  1978 	C$SpriteOrpheus.c$286$2_0$234	= .
+                                   1979 	.globl	C$SpriteOrpheus.c$286$2_0$234
+                                   1980 ;SpriteOrpheus.c:286: orpheus_info->vy = 0;
+      00073C 21r00r00         [12] 1981 	ld	hl, #_orpheus_info
+      00073F 2A               [ 8] 1982 	ld	a, (hl+)
+      000740 4F               [ 4] 1983 	ld	c, a
+                           000741  1984 	C$SpriteOrpheus.c$287$2_0$234	= .
+                                   1985 	.globl	C$SpriteOrpheus.c$287$2_0$234
+                                   1986 ;SpriteOrpheus.c:287: orpheus_info->vx = 0;
+      000741 3A               [ 8] 1987 	ld	a, (hl-)
+      000742 47               [ 4] 1988 	ld	b, a
+      000743 03               [ 8] 1989 	inc	bc
+      000744 03               [ 8] 1990 	inc	bc
+      000745 03               [ 8] 1991 	inc	bc
+      000746 AF               [ 4] 1992 	xor	a, a
+      000747 02               [ 8] 1993 	ld	(bc), a
+      000748 2A               [ 8] 1994 	ld	a, (hl+)
+      000749 4F               [ 4] 1995 	ld	c, a
+      00074A 46               [ 8] 1996 	ld	b, (hl)
+      00074B 03               [ 8] 1997 	inc	bc
+      00074C 03               [ 8] 1998 	inc	bc
+      00074D AF               [ 4] 1999 	xor	a, a
+      00074E 02               [ 8] 2000 	ld	(bc), a
+                           00074F  2001 	C$SpriteOrpheus.c$288$2_0$234	= .
+                                   2002 	.globl	C$SpriteOrpheus.c$288$2_0$234
+                                   2003 ;SpriteOrpheus.c:288: SetSpriteAnim(THIS, a_orpheus_idleup, 4u);
+      00074F 3E 04            [ 8] 2004 	ld	a, #0x04
+      000751 F5               [16] 2005 	push	af
+      000752 33               [ 8] 2006 	inc	sp
+      000753 01rAFr00         [12] 2007 	ld	bc, #_a_orpheus_idleup
+      000756 21r00r00         [12] 2008 	ld	hl, #_THIS
+      000759 2A               [ 8] 2009 	ld	a, (hl+)
+      00075A 5F               [ 4] 2010 	ld	e, a
+      00075B 56               [ 8] 2011 	ld	d, (hl)
+      00075C CDr00r00         [24] 2012 	call	_SetSpriteAnim
+                           00075F  2013 	C$SpriteOrpheus.c$289$2_0$234	= .
+                                   2014 	.globl	C$SpriteOrpheus.c$289$2_0$234
+                                   2015 ;SpriteOrpheus.c:289: break;
+      00075F C3r51r09         [16] 2016 	jp	00126$
+                           000762  2017 	C$SpriteOrpheus.c$290$2_0$234	= .
+                                   2018 	.globl	C$SpriteOrpheus.c$290$2_0$234
+                                   2019 ;SpriteOrpheus.c:290: case IDLE_LEFT:
+      000762                       2020 00105$:
+                           000762  2021 	C$SpriteOrpheus.c$291$2_0$234	= .
+                                   2022 	.globl	C$SpriteOrpheus.c$291$2_0$234
+                                   2023 ;SpriteOrpheus.c:291: orpheus_info->vy = 0;
+      000762 21r00r00         [12] 2024 	ld	hl, #_orpheus_info
+      000765 2A               [ 8] 2025 	ld	a, (hl+)
+      000766 4F               [ 4] 2026 	ld	c, a
+                           000767  2027 	C$SpriteOrpheus.c$292$2_0$234	= .
+                                   2028 	.globl	C$SpriteOrpheus.c$292$2_0$234
+                                   2029 ;SpriteOrpheus.c:292: orpheus_info->vx = 0;
+      000767 3A               [ 8] 2030 	ld	a, (hl-)
+      000768 47               [ 4] 2031 	ld	b, a
+      000769 03               [ 8] 2032 	inc	bc
+      00076A 03               [ 8] 2033 	inc	bc
+      00076B 03               [ 8] 2034 	inc	bc
+      00076C AF               [ 4] 2035 	xor	a, a
+      00076D 02               [ 8] 2036 	ld	(bc), a
+      00076E 2A               [ 8] 2037 	ld	a, (hl+)
+      00076F 4F               [ 4] 2038 	ld	c, a
+      000770 46               [ 8] 2039 	ld	b, (hl)
+      000771 03               [ 8] 2040 	inc	bc
+      000772 03               [ 8] 2041 	inc	bc
+      000773 AF               [ 4] 2042 	xor	a, a
+      000774 02               [ 8] 2043 	ld	(bc), a
+                           000775  2044 	C$SpriteOrpheus.c$293$2_0$234	= .
+                                   2045 	.globl	C$SpriteOrpheus.c$293$2_0$234
+                                   2046 ;SpriteOrpheus.c:293: SetSpriteAnim(THIS, a_orpheus_idleh, 4u);
+      000775 3E 04            [ 8] 2047 	ld	a, #0x04
+      000777 F5               [16] 2048 	push	af
+      000778 33               [ 8] 2049 	inc	sp
+      000779 01rB4r00         [12] 2050 	ld	bc, #_a_orpheus_idleh
+      00077C 21r00r00         [12] 2051 	ld	hl, #_THIS
+      00077F 2A               [ 8] 2052 	ld	a, (hl+)
+      000780 5F               [ 4] 2053 	ld	e, a
+      000781 56               [ 8] 2054 	ld	d, (hl)
+      000782 CDr00r00         [24] 2055 	call	_SetSpriteAnim
+                           000785  2056 	C$SpriteOrpheus.c$294$2_0$234	= .
+                                   2057 	.globl	C$SpriteOrpheus.c$294$2_0$234
+                                   2058 ;SpriteOrpheus.c:294: THIS->mirror = V_MIRROR;
+      000785 21r00r00         [12] 2059 	ld	hl, #_THIS
+      000788 2A               [ 8] 2060 	ld	a, (hl+)
+      000789 4F               [ 4] 2061 	ld	c, a
+      00078A 46               [ 8] 2062 	ld	b, (hl)
+      00078B 21 10 00         [12] 2063 	ld	hl, #0x0010
+      00078E 09               [ 8] 2064 	add	hl, bc
+      00078F 36 02            [12] 2065 	ld	(hl), #0x02
+                           000791  2066 	C$SpriteOrpheus.c$295$2_0$234	= .
+                                   2067 	.globl	C$SpriteOrpheus.c$295$2_0$234
+                                   2068 ;SpriteOrpheus.c:295: break;
+      000791 C3r51r09         [16] 2069 	jp	00126$
+                           000794  2070 	C$SpriteOrpheus.c$296$2_0$234	= .
+                                   2071 	.globl	C$SpriteOrpheus.c$296$2_0$234
+                                   2072 ;SpriteOrpheus.c:296: case IDLE_RIGHT:
+      000794                       2073 00106$:
+                           000794  2074 	C$SpriteOrpheus.c$297$2_0$234	= .
+                                   2075 	.globl	C$SpriteOrpheus.c$297$2_0$234
+                                   2076 ;SpriteOrpheus.c:297: orpheus_info->vx = 0;
+      000794 21r00r00         [12] 2077 	ld	hl, #_orpheus_info
+      000797 2A               [ 8] 2078 	ld	a, (hl+)
+      000798 4F               [ 4] 2079 	ld	c, a
+                           000799  2080 	C$SpriteOrpheus.c$298$2_0$234	= .
+                                   2081 	.globl	C$SpriteOrpheus.c$298$2_0$234
+                                   2082 ;SpriteOrpheus.c:298: orpheus_info->vy = 0;
+      000799 3A               [ 8] 2083 	ld	a, (hl-)
+      00079A 47               [ 4] 2084 	ld	b, a
+      00079B 03               [ 8] 2085 	inc	bc
+      00079C 03               [ 8] 2086 	inc	bc
+      00079D AF               [ 4] 2087 	xor	a, a
+      00079E 02               [ 8] 2088 	ld	(bc), a
+      00079F 2A               [ 8] 2089 	ld	a, (hl+)
+      0007A0 4F               [ 4] 2090 	ld	c, a
+      0007A1 46               [ 8] 2091 	ld	b, (hl)
+      0007A2 03               [ 8] 2092 	inc	bc
+      0007A3 03               [ 8] 2093 	inc	bc
+      0007A4 03               [ 8] 2094 	inc	bc
+      0007A5 AF               [ 4] 2095 	xor	a, a
+      0007A6 02               [ 8] 2096 	ld	(bc), a
+                           0007A7  2097 	C$SpriteOrpheus.c$299$2_0$234	= .
+                                   2098 	.globl	C$SpriteOrpheus.c$299$2_0$234
+                                   2099 ;SpriteOrpheus.c:299: SetSpriteAnim(THIS, a_orpheus_idleh, 4u);
+      0007A7 3E 04            [ 8] 2100 	ld	a, #0x04
+      0007A9 F5               [16] 2101 	push	af
+      0007AA 33               [ 8] 2102 	inc	sp
+      0007AB 01rB4r00         [12] 2103 	ld	bc, #_a_orpheus_idleh
+      0007AE 21r00r00         [12] 2104 	ld	hl, #_THIS
+      0007B1 2A               [ 8] 2105 	ld	a, (hl+)
+      0007B2 5F               [ 4] 2106 	ld	e, a
+      0007B3 56               [ 8] 2107 	ld	d, (hl)
+      0007B4 CDr00r00         [24] 2108 	call	_SetSpriteAnim
+                           0007B7  2109 	C$SpriteOrpheus.c$300$2_0$234	= .
+                                   2110 	.globl	C$SpriteOrpheus.c$300$2_0$234
+                                   2111 ;SpriteOrpheus.c:300: THIS->mirror = NO_MIRROR;
+      0007B7 21r00r00         [12] 2112 	ld	hl, #_THIS
+      0007BA 2A               [ 8] 2113 	ld	a, (hl+)
+      0007BB 4F               [ 4] 2114 	ld	c, a
+      0007BC 46               [ 8] 2115 	ld	b, (hl)
+      0007BD 21 10 00         [12] 2116 	ld	hl, #0x0010
+      0007C0 09               [ 8] 2117 	add	hl, bc
+      0007C1 36 00            [12] 2118 	ld	(hl), #0x00
+                           0007C3  2119 	C$SpriteOrpheus.c$301$2_0$234	= .
+                                   2120 	.globl	C$SpriteOrpheus.c$301$2_0$234
+                                   2121 ;SpriteOrpheus.c:301: break;
+      0007C3 C3r51r09         [16] 2122 	jp	00126$
+                           0007C6  2123 	C$SpriteOrpheus.c$302$2_0$234	= .
+                                   2124 	.globl	C$SpriteOrpheus.c$302$2_0$234
+                                   2125 ;SpriteOrpheus.c:302: case WALK_DOWN:
+      0007C6                       2126 00107$:
+                           0007C6  2127 	C$SpriteOrpheus.c$303$2_0$234	= .
+                                   2128 	.globl	C$SpriteOrpheus.c$303$2_0$234
+                                   2129 ;SpriteOrpheus.c:303: orpheus_info->vx = 0;
+      0007C6 21r00r00         [12] 2130 	ld	hl, #_orpheus_info
+      0007C9 2A               [ 8] 2131 	ld	a, (hl+)
+      0007CA 4F               [ 4] 2132 	ld	c, a
+                           0007CB  2133 	C$SpriteOrpheus.c$304$2_0$234	= .
+                                   2134 	.globl	C$SpriteOrpheus.c$304$2_0$234
+                                   2135 ;SpriteOrpheus.c:304: orpheus_info->vy = 1;
+      0007CB 3A               [ 8] 2136 	ld	a, (hl-)
+      0007CC 47               [ 4] 2137 	ld	b, a
+      0007CD 03               [ 8] 2138 	inc	bc
+      0007CE 03               [ 8] 2139 	inc	bc
+      0007CF AF               [ 4] 2140 	xor	a, a
+      0007D0 02               [ 8] 2141 	ld	(bc), a
+      0007D1 6E               [ 8] 2142 	ld	l, (hl)
+                                   2143 ;	spillPairReg hl
+                                   2144 ;	spillPairReg hl
+      0007D2 FAr01r00         [16] 2145 	ld	a, (_orpheus_info + 1)
+      0007D5 67               [ 4] 2146 	ld	h, a
+                                   2147 ;	spillPairReg hl
+                                   2148 ;	spillPairReg hl
+      0007D6 23               [ 8] 2149 	inc	hl
+      0007D7 23               [ 8] 2150 	inc	hl
+      0007D8 23               [ 8] 2151 	inc	hl
+      0007D9 36 01            [12] 2152 	ld	(hl), #0x01
+                           0007DB  2153 	C$SpriteOrpheus.c$305$2_0$234	= .
+                                   2154 	.globl	C$SpriteOrpheus.c$305$2_0$234
+                                   2155 ;SpriteOrpheus.c:305: SetSpriteAnim(THIS, a_orpheus_walk_down, 12u);
+      0007DB 3E 0C            [ 8] 2156 	ld	a, #0x0c
+      0007DD F5               [16] 2157 	push	af
+      0007DE 33               [ 8] 2158 	inc	sp
+      0007DF 01rBCr00         [12] 2159 	ld	bc, #_a_orpheus_walk_down
+      0007E2 21r00r00         [12] 2160 	ld	hl, #_THIS
+      0007E5 2A               [ 8] 2161 	ld	a, (hl+)
+      0007E6 5F               [ 4] 2162 	ld	e, a
+      0007E7 56               [ 8] 2163 	ld	d, (hl)
+      0007E8 CDr00r00         [24] 2164 	call	_SetSpriteAnim
+                           0007EB  2165 	C$SpriteOrpheus.c$306$2_0$234	= .
+                                   2166 	.globl	C$SpriteOrpheus.c$306$2_0$234
+                                   2167 ;SpriteOrpheus.c:306: break;
+      0007EB C3r51r09         [16] 2168 	jp	00126$
+                           0007EE  2169 	C$SpriteOrpheus.c$307$2_0$234	= .
+                                   2170 	.globl	C$SpriteOrpheus.c$307$2_0$234
+                                   2171 ;SpriteOrpheus.c:307: case WALK_UP:
+      0007EE                       2172 00108$:
+                           0007EE  2173 	C$SpriteOrpheus.c$308$2_0$234	= .
+                                   2174 	.globl	C$SpriteOrpheus.c$308$2_0$234
+                                   2175 ;SpriteOrpheus.c:308: orpheus_info->vx = 0;
+      0007EE 21r00r00         [12] 2176 	ld	hl, #_orpheus_info
+      0007F1 2A               [ 8] 2177 	ld	a, (hl+)
+      0007F2 4F               [ 4] 2178 	ld	c, a
+                           0007F3  2179 	C$SpriteOrpheus.c$309$2_0$234	= .
+                                   2180 	.globl	C$SpriteOrpheus.c$309$2_0$234
+                                   2181 ;SpriteOrpheus.c:309: orpheus_info->vy = -1;
+      0007F3 3A               [ 8] 2182 	ld	a, (hl-)
+      0007F4 47               [ 4] 2183 	ld	b, a
+      0007F5 03               [ 8] 2184 	inc	bc
+      0007F6 03               [ 8] 2185 	inc	bc
+      0007F7 AF               [ 4] 2186 	xor	a, a
+      0007F8 02               [ 8] 2187 	ld	(bc), a
+      0007F9 6E               [ 8] 2188 	ld	l, (hl)
+                                   2189 ;	spillPairReg hl
+                                   2190 ;	spillPairReg hl
+      0007FA FAr01r00         [16] 2191 	ld	a, (_orpheus_info + 1)
+      0007FD 67               [ 4] 2192 	ld	h, a
+                                   2193 ;	spillPairReg hl
+                                   2194 ;	spillPairReg hl
+      0007FE 23               [ 8] 2195 	inc	hl
+      0007FF 23               [ 8] 2196 	inc	hl
+      000800 23               [ 8] 2197 	inc	hl
+      000801 36 FF            [12] 2198 	ld	(hl), #0xff
+                           000803  2199 	C$SpriteOrpheus.c$310$2_0$234	= .
+                                   2200 	.globl	C$SpriteOrpheus.c$310$2_0$234
+                                   2201 ;SpriteOrpheus.c:310: SetSpriteAnim(THIS, a_orpheus_walk_up, 8u);
+      000803 3E 08            [ 8] 2202 	ld	a, #0x08
+      000805 F5               [16] 2203 	push	af
+      000806 33               [ 8] 2204 	inc	sp
+      000807 01rB9r00         [12] 2205 	ld	bc, #_a_orpheus_walk_up
+      00080A 21r00r00         [12] 2206 	ld	hl, #_THIS
+      00080D 2A               [ 8] 2207 	ld	a, (hl+)
+      00080E 5F               [ 4] 2208 	ld	e, a
+      00080F 56               [ 8] 2209 	ld	d, (hl)
+      000810 CDr00r00         [24] 2210 	call	_SetSpriteAnim
+                           000813  2211 	C$SpriteOrpheus.c$311$2_0$234	= .
+                                   2212 	.globl	C$SpriteOrpheus.c$311$2_0$234
+                                   2213 ;SpriteOrpheus.c:311: break;
+      000813 C3r51r09         [16] 2214 	jp	00126$
+                           000816  2215 	C$SpriteOrpheus.c$312$2_0$234	= .
+                                   2216 	.globl	C$SpriteOrpheus.c$312$2_0$234
+                                   2217 ;SpriteOrpheus.c:312: case WALK_LEFT:
+      000816                       2218 00109$:
+                           000816  2219 	C$SpriteOrpheus.c$313$2_0$234	= .
+                                   2220 	.globl	C$SpriteOrpheus.c$313$2_0$234
+                                   2221 ;SpriteOrpheus.c:313: orpheus_info->vx = -1;
+      000816 21r00r00         [12] 2222 	ld	hl, #_orpheus_info
+      000819 6E               [ 8] 2223 	ld	l, (hl)
+                                   2224 ;	spillPairReg hl
+                                   2225 ;	spillPairReg hl
+      00081A FAr01r00         [16] 2226 	ld	a, (_orpheus_info + 1)
+      00081D 67               [ 4] 2227 	ld	h, a
+                                   2228 ;	spillPairReg hl
+                                   2229 ;	spillPairReg hl
+      00081E 23               [ 8] 2230 	inc	hl
+      00081F 23               [ 8] 2231 	inc	hl
+      000820 36 FF            [12] 2232 	ld	(hl), #0xff
+                           000822  2233 	C$SpriteOrpheus.c$314$2_0$234	= .
+                                   2234 	.globl	C$SpriteOrpheus.c$314$2_0$234
+                                   2235 ;SpriteOrpheus.c:314: orpheus_info->vy = 0;
+      000822 21r00r00         [12] 2236 	ld	hl, #_orpheus_info
+      000825 2A               [ 8] 2237 	ld	a, (hl+)
+      000826 4F               [ 4] 2238 	ld	c, a
+      000827 46               [ 8] 2239 	ld	b, (hl)
+      000828 03               [ 8] 2240 	inc	bc
+      000829 03               [ 8] 2241 	inc	bc
+      00082A 03               [ 8] 2242 	inc	bc
+      00082B AF               [ 4] 2243 	xor	a, a
+      00082C 02               [ 8] 2244 	ld	(bc), a
+                           00082D  2245 	C$SpriteOrpheus.c$315$2_0$234	= .
+                                   2246 	.globl	C$SpriteOrpheus.c$315$2_0$234
+                                   2247 ;SpriteOrpheus.c:315: SetSpriteAnim(THIS, a_orpheus_walk_h, 12u);
+      00082D 3E 0C            [ 8] 2248 	ld	a, #0x0c
+      00082F F5               [16] 2249 	push	af
+      000830 33               [ 8] 2250 	inc	sp
+      000831 01rBFr00         [12] 2251 	ld	bc, #_a_orpheus_walk_h
+      000834 21r00r00         [12] 2252 	ld	hl, #_THIS
+      000837 2A               [ 8] 2253 	ld	a, (hl+)
+      000838 5F               [ 4] 2254 	ld	e, a
+      000839 56               [ 8] 2255 	ld	d, (hl)
+      00083A CDr00r00         [24] 2256 	call	_SetSpriteAnim
+                           00083D  2257 	C$SpriteOrpheus.c$316$2_0$234	= .
+                                   2258 	.globl	C$SpriteOrpheus.c$316$2_0$234
+                                   2259 ;SpriteOrpheus.c:316: THIS->mirror = V_MIRROR;
+      00083D 21r00r00         [12] 2260 	ld	hl, #_THIS
+      000840 2A               [ 8] 2261 	ld	a, (hl+)
+      000841 4F               [ 4] 2262 	ld	c, a
+      000842 46               [ 8] 2263 	ld	b, (hl)
+      000843 21 10 00         [12] 2264 	ld	hl, #0x0010
+      000846 09               [ 8] 2265 	add	hl, bc
+      000847 36 02            [12] 2266 	ld	(hl), #0x02
+                           000849  2267 	C$SpriteOrpheus.c$317$2_0$234	= .
+                                   2268 	.globl	C$SpriteOrpheus.c$317$2_0$234
+                                   2269 ;SpriteOrpheus.c:317: break;
+      000849 C3r51r09         [16] 2270 	jp	00126$
+                           00084C  2271 	C$SpriteOrpheus.c$318$2_0$234	= .
+                                   2272 	.globl	C$SpriteOrpheus.c$318$2_0$234
+                                   2273 ;SpriteOrpheus.c:318: case WALK_RIGHT:
+      00084C                       2274 00110$:
+                           00084C  2275 	C$SpriteOrpheus.c$319$2_0$234	= .
+                                   2276 	.globl	C$SpriteOrpheus.c$319$2_0$234
+                                   2277 ;SpriteOrpheus.c:319: orpheus_info->vx = 1;
+      00084C 21r00r00         [12] 2278 	ld	hl, #_orpheus_info
+      00084F 6E               [ 8] 2279 	ld	l, (hl)
+                                   2280 ;	spillPairReg hl
+                                   2281 ;	spillPairReg hl
+      000850 FAr01r00         [16] 2282 	ld	a, (_orpheus_info + 1)
+      000853 67               [ 4] 2283 	ld	h, a
+                                   2284 ;	spillPairReg hl
+                                   2285 ;	spillPairReg hl
+      000854 23               [ 8] 2286 	inc	hl
+      000855 23               [ 8] 2287 	inc	hl
+      000856 36 01            [12] 2288 	ld	(hl), #0x01
+                           000858  2289 	C$SpriteOrpheus.c$320$2_0$234	= .
+                                   2290 	.globl	C$SpriteOrpheus.c$320$2_0$234
+                                   2291 ;SpriteOrpheus.c:320: orpheus_info->vy = 0;
+      000858 21r00r00         [12] 2292 	ld	hl, #_orpheus_info
+      00085B 2A               [ 8] 2293 	ld	a, (hl+)
+      00085C 4F               [ 4] 2294 	ld	c, a
+      00085D 46               [ 8] 2295 	ld	b, (hl)
+      00085E 03               [ 8] 2296 	inc	bc
+      00085F 03               [ 8] 2297 	inc	bc
+      000860 03               [ 8] 2298 	inc	bc
+      000861 AF               [ 4] 2299 	xor	a, a
+      000862 02               [ 8] 2300 	ld	(bc), a
+                           000863  2301 	C$SpriteOrpheus.c$321$2_0$234	= .
+                                   2302 	.globl	C$SpriteOrpheus.c$321$2_0$234
+                                   2303 ;SpriteOrpheus.c:321: SetSpriteAnim(THIS, a_orpheus_walk_h, 12u);
+      000863 3E 0C            [ 8] 2304 	ld	a, #0x0c
+      000865 F5               [16] 2305 	push	af
+      000866 33               [ 8] 2306 	inc	sp
+      000867 01rBFr00         [12] 2307 	ld	bc, #_a_orpheus_walk_h
+      00086A 21r00r00         [12] 2308 	ld	hl, #_THIS
+      00086D 2A               [ 8] 2309 	ld	a, (hl+)
+      00086E 5F               [ 4] 2310 	ld	e, a
+      00086F 56               [ 8] 2311 	ld	d, (hl)
+      000870 CDr00r00         [24] 2312 	call	_SetSpriteAnim
+                           000873  2313 	C$SpriteOrpheus.c$322$2_0$234	= .
+                                   2314 	.globl	C$SpriteOrpheus.c$322$2_0$234
+                                   2315 ;SpriteOrpheus.c:322: THIS->mirror = NO_MIRROR;
+      000873 21r00r00         [12] 2316 	ld	hl, #_THIS
+      000876 2A               [ 8] 2317 	ld	a, (hl+)
+      000877 4F               [ 4] 2318 	ld	c, a
+      000878 46               [ 8] 2319 	ld	b, (hl)
+      000879 21 10 00         [12] 2320 	ld	hl, #0x0010
+      00087C 09               [ 8] 2321 	add	hl, bc
+      00087D 36 00            [12] 2322 	ld	(hl), #0x00
+                           00087F  2323 	C$SpriteOrpheus.c$323$2_0$234	= .
+                                   2324 	.globl	C$SpriteOrpheus.c$323$2_0$234
+                                   2325 ;SpriteOrpheus.c:323: break;
+      00087F C3r51r09         [16] 2326 	jp	00126$
+                           000882  2327 	C$SpriteOrpheus.c$324$2_0$234	= .
+                                   2328 	.globl	C$SpriteOrpheus.c$324$2_0$234
+                                   2329 ;SpriteOrpheus.c:324: case HIT:
+      000882                       2330 00111$:
+                           000882  2331 	C$SpriteOrpheus.c$325$2_0$234	= .
+                                   2332 	.globl	C$SpriteOrpheus.c$325$2_0$234
+                                   2333 ;SpriteOrpheus.c:325: hit_frameskip_max = 1;
+      000882 21r09r00         [12] 2334 	ld	hl, #_hit_frameskip_max
+      000885 36 01            [12] 2335 	ld	(hl), #0x01
+                           000887  2336 	C$SpriteOrpheus.c$326$2_0$234	= .
+                                   2337 	.globl	C$SpriteOrpheus.c$326$2_0$234
+                                   2338 ;SpriteOrpheus.c:326: hit_frameskip = 1;
+      000887 21r08r00         [12] 2339 	ld	hl, #_hit_frameskip
+      00088A 36 01            [12] 2340 	ld	(hl), #0x01
+                           00088C  2341 	C$SpriteOrpheus.c$327$2_0$234	= .
+                                   2342 	.globl	C$SpriteOrpheus.c$327$2_0$234
+                                   2343 ;SpriteOrpheus.c:327: switch(orpheus_info->ow_state){
+      00088C 21r00r00         [12] 2344 	ld	hl, #_orpheus_info
+      00088F 6E               [ 8] 2345 	ld	l, (hl)
+                                   2346 ;	spillPairReg hl
+                                   2347 ;	spillPairReg hl
+      000890 FAr01r00         [16] 2348 	ld	a, (_orpheus_info + 1)
+      000893 67               [ 4] 2349 	ld	h, a
+                                   2350 ;	spillPairReg hl
+                                   2351 ;	spillPairReg hl
+      000894 4E               [ 8] 2352 	ld	c, (hl)
+      000895 3E 09            [ 8] 2353 	ld	a, #0x09
+      000897 91               [ 4] 2354 	sub	a, c
+      000898 38 5B            [12] 2355 	jr	C, 00120$
+      00089A 06 00            [ 8] 2356 	ld	b, #0x00
+      00089C 21rA3r08         [12] 2357 	ld	hl, #00174$
+      00089F 09               [ 8] 2358 	add	hl, bc
+      0008A0 09               [ 8] 2359 	add	hl, bc
+      0008A1 09               [ 8] 2360 	add	hl, bc
+      0008A2 E9               [ 4] 2361 	jp	(hl)
+      0008A3                       2362 00174$:
+      0008A3 C3rF5r08         [16] 2363 	jp	00120$
+      0008A6 C3rF5r08         [16] 2364 	jp	00120$
+      0008A9 C3rD3r08         [16] 2365 	jp	00115$
+      0008AC C3rC1r08         [16] 2366 	jp	00113$
+      0008AF C3rE5r08         [16] 2367 	jp	00119$
+      0008B2 C3rE5r08         [16] 2368 	jp	00119$
+      0008B5 C3rE5r08         [16] 2369 	jp	00119$
+      0008B8 C3rE5r08         [16] 2370 	jp	00119$
+      0008BB C3rD3r08         [16] 2371 	jp	00115$
+      0008BE C3rC1r08         [16] 2372 	jp	00113$
+                           0008C1  2373 	C$SpriteOrpheus.c$329$3_0$235	= .
+                                   2374 	.globl	C$SpriteOrpheus.c$329$3_0$235
+                                   2375 ;SpriteOrpheus.c:329: case IDLE_DOWN:
+      0008C1                       2376 00113$:
+                           0008C1  2377 	C$SpriteOrpheus.c$330$3_0$235	= .
+                                   2378 	.globl	C$SpriteOrpheus.c$330$3_0$235
+                                   2379 ;SpriteOrpheus.c:330: SetSpriteAnim(THIS, a_orpheus_hit_down, 24u);
+      0008C1 3E 18            [ 8] 2380 	ld	a, #0x18
+      0008C3 F5               [16] 2381 	push	af
+      0008C4 33               [ 8] 2382 	inc	sp
+      0008C5 01rC4r00         [12] 2383 	ld	bc, #_a_orpheus_hit_down
+      0008C8 21r00r00         [12] 2384 	ld	hl, #_THIS
+      0008CB 2A               [ 8] 2385 	ld	a, (hl+)
+      0008CC 5F               [ 4] 2386 	ld	e, a
+      0008CD 56               [ 8] 2387 	ld	d, (hl)
+      0008CE CDr00r00         [24] 2388 	call	_SetSpriteAnim
+                           0008D1  2389 	C$SpriteOrpheus.c$331$3_0$235	= .
+                                   2390 	.globl	C$SpriteOrpheus.c$331$3_0$235
+                                   2391 ;SpriteOrpheus.c:331: break;
+      0008D1 18 22            [12] 2392 	jr	00120$
+                           0008D3  2393 	C$SpriteOrpheus.c$333$3_0$235	= .
+                                   2394 	.globl	C$SpriteOrpheus.c$333$3_0$235
+                                   2395 ;SpriteOrpheus.c:333: case IDLE_UP:
+      0008D3                       2396 00115$:
+                           0008D3  2397 	C$SpriteOrpheus.c$334$3_0$235	= .
+                                   2398 	.globl	C$SpriteOrpheus.c$334$3_0$235
+                                   2399 ;SpriteOrpheus.c:334: SetSpriteAnim(THIS, a_orpheus_hit_up, 24u);
+      0008D3 3E 18            [ 8] 2400 	ld	a, #0x18
+      0008D5 F5               [16] 2401 	push	af
+      0008D6 33               [ 8] 2402 	inc	sp
+      0008D7 01rC7r00         [12] 2403 	ld	bc, #_a_orpheus_hit_up
+      0008DA 21r00r00         [12] 2404 	ld	hl, #_THIS
+      0008DD 2A               [ 8] 2405 	ld	a, (hl+)
+      0008DE 5F               [ 4] 2406 	ld	e, a
+      0008DF 56               [ 8] 2407 	ld	d, (hl)
+      0008E0 CDr00r00         [24] 2408 	call	_SetSpriteAnim
+                           0008E3  2409 	C$SpriteOrpheus.c$335$3_0$235	= .
+                                   2410 	.globl	C$SpriteOrpheus.c$335$3_0$235
+                                   2411 ;SpriteOrpheus.c:335: break;
+      0008E3 18 10            [12] 2412 	jr	00120$
+                           0008E5  2413 	C$SpriteOrpheus.c$337$3_0$235	= .
+                                   2414 	.globl	C$SpriteOrpheus.c$337$3_0$235
+                                   2415 ;SpriteOrpheus.c:337: case IDLE_LEFT: case IDLE_RIGHT:
+      0008E5                       2416 00119$:
+                           0008E5  2417 	C$SpriteOrpheus.c$338$3_0$235	= .
+                                   2418 	.globl	C$SpriteOrpheus.c$338$3_0$235
+                                   2419 ;SpriteOrpheus.c:338: SetSpriteAnim(THIS, a_orpheus_hit_h, 24u);
+      0008E5 3E 18            [ 8] 2420 	ld	a, #0x18
+      0008E7 F5               [16] 2421 	push	af
+      0008E8 33               [ 8] 2422 	inc	sp
+      0008E9 01rCAr00         [12] 2423 	ld	bc, #_a_orpheus_hit_h
+      0008EC 21r00r00         [12] 2424 	ld	hl, #_THIS
+      0008EF 2A               [ 8] 2425 	ld	a, (hl+)
+      0008F0 5F               [ 4] 2426 	ld	e, a
+      0008F1 56               [ 8] 2427 	ld	d, (hl)
+      0008F2 CDr00r00         [24] 2428 	call	_SetSpriteAnim
+                           0008F5  2429 	C$SpriteOrpheus.c$340$2_0$234	= .
+                                   2430 	.globl	C$SpriteOrpheus.c$340$2_0$234
+                                   2431 ;SpriteOrpheus.c:340: }
+      0008F5                       2432 00120$:
+                           0008F5  2433 	C$SpriteOrpheus.c$341$2_0$234	= .
+                                   2434 	.globl	C$SpriteOrpheus.c$341$2_0$234
+                                   2435 ;SpriteOrpheus.c:341: orpheus_state_before = orpheus_info->ow_state;
+      0008F5 21r00r00         [12] 2436 	ld	hl, #_orpheus_info
+      0008F8 2A               [ 8] 2437 	ld	a, (hl+)
+      0008F9 4F               [ 4] 2438 	ld	c, a
+      0008FA 46               [ 8] 2439 	ld	b, (hl)
+      0008FB 0A               [ 8] 2440 	ld	a, (bc)
+      0008FC EAr0Ar00         [16] 2441 	ld	(#_orpheus_state_before),a
+                           0008FF  2442 	C$SpriteOrpheus.c$342$2_0$234	= .
+                                   2443 	.globl	C$SpriteOrpheus.c$342$2_0$234
+                                   2444 ;SpriteOrpheus.c:342: orpheus_hit();
+      0008FF 1Er00            [ 8] 2445 	ld	e, #b_orpheus_hit
+      000901 21r5Cr09         [12] 2446 	ld	hl, #_orpheus_hit
+      000904 CDr00r00         [24] 2447 	call	___sdcc_bcall_ehl
+                           000907  2448 	C$SpriteOrpheus.c$343$2_0$234	= .
+                                   2449 	.globl	C$SpriteOrpheus.c$343$2_0$234
+                                   2450 ;SpriteOrpheus.c:343: break;
+      000907 18 48            [12] 2451 	jr	00126$
+                           000909  2452 	C$SpriteOrpheus.c$344$2_0$234	= .
+                                   2453 	.globl	C$SpriteOrpheus.c$344$2_0$234
+                                   2454 ;SpriteOrpheus.c:344: case ATTACK:
+      000909                       2455 00121$:
+                           000909  2456 	C$SpriteOrpheus.c$345$2_0$234	= .
+                                   2457 	.globl	C$SpriteOrpheus.c$345$2_0$234
+                                   2458 ;SpriteOrpheus.c:345: countdown_step = COUNTDOWN_STEP_MAX;
+      000909 21r0Fr00         [12] 2459 	ld	hl, #_countdown_step
+      00090C 36 01            [12] 2460 	ld	(hl), #0x01
+                           00090E  2461 	C$SpriteOrpheus.c$346$2_0$234	= .
+                                   2462 	.globl	C$SpriteOrpheus.c$346$2_0$234
+                                   2463 ;SpriteOrpheus.c:346: countdown = 0;
+      00090E 21r0Er00         [12] 2464 	ld	hl, #_countdown
+      000911 36 00            [12] 2465 	ld	(hl), #0x00
+                           000913  2466 	C$SpriteOrpheus.c$347$2_0$234	= .
+                                   2467 	.globl	C$SpriteOrpheus.c$347$2_0$234
+                                   2468 ;SpriteOrpheus.c:347: countdown_verso = 1;
+      000913 21r10r00         [12] 2469 	ld	hl, #_countdown_verso
+      000916 36 01            [12] 2470 	ld	(hl), #0x01
+                           000918  2471 	C$SpriteOrpheus.c$348$2_0$234	= .
+                                   2472 	.globl	C$SpriteOrpheus.c$348$2_0$234
+                                   2473 ;SpriteOrpheus.c:348: update_hud = 1;
+      000918 21r00r00         [12] 2474 	ld	hl, #_update_hud
+      00091B 36 01            [12] 2475 	ld	(hl), #0x01
+                           00091D  2476 	C$SpriteOrpheus.c$349$2_0$234	= .
+                                   2477 	.globl	C$SpriteOrpheus.c$349$2_0$234
+                                   2478 ;SpriteOrpheus.c:349: orpheus_info->charming = 1;
+      00091D 21r00r00         [12] 2479 	ld	hl, #_orpheus_info
+      000920 2A               [ 8] 2480 	ld	a, (hl+)
+      000921 4F               [ 4] 2481 	ld	c, a
+      000922 46               [ 8] 2482 	ld	b, (hl)
+      000923 21 04 00         [12] 2483 	ld	hl, #0x0004
+      000926 09               [ 8] 2484 	add	hl, bc
+      000927 36 01            [12] 2485 	ld	(hl), #0x01
+                           000929  2486 	C$SpriteOrpheus.c$350$2_0$234	= .
+                                   2487 	.globl	C$SpriteOrpheus.c$350$2_0$234
+                                   2488 ;SpriteOrpheus.c:350: switch(song_selection){
+      000929 FAr00r00         [16] 2489 	ld	a, (#_song_selection)
+      00092C B7               [ 4] 2490 	or	a, a
+      00092D 28 0F            [12] 2491 	jr	Z, 00122$
+      00092F FAr00r00         [16] 2492 	ld	a, (#_song_selection)
+      000932 3D               [ 4] 2493 	dec	a
+      000933 28 17            [12] 2494 	jr	Z, 00124$
+      000935 FAr00r00         [16] 2495 	ld	a, (#_song_selection)
+      000938 D6 02            [ 8] 2496 	sub	a, #0x02
+      00093A 28 09            [12] 2497 	jr	Z, 00123$
+      00093C 18 13            [12] 2498 	jr	00126$
+                           00093E  2499 	C$SpriteOrpheus.c$351$3_0$236	= .
+                                   2500 	.globl	C$SpriteOrpheus.c$351$3_0$236
+                                   2501 ;SpriteOrpheus.c:351: case ATTRACT://charm
+      00093E                       2502 00122$:
+                           00093E  2503 	C$SpriteOrpheus.c$352$3_0$236	= .
+                                   2504 	.globl	C$SpriteOrpheus.c$352$3_0$236
+                                   2505 ;SpriteOrpheus.c:352: orpheus_wait = 120u;
+      00093E 21r0Dr00         [12] 2506 	ld	hl, #_orpheus_wait
+      000941 36 78            [12] 2507 	ld	(hl), #0x78
+                           000943  2508 	C$SpriteOrpheus.c$353$3_0$236	= .
+                                   2509 	.globl	C$SpriteOrpheus.c$353$3_0$236
+                                   2510 ;SpriteOrpheus.c:353: break;
+      000943 18 0C            [12] 2511 	jr	00126$
+                           000945  2512 	C$SpriteOrpheus.c$354$3_0$236	= .
+                                   2513 	.globl	C$SpriteOrpheus.c$354$3_0$236
+                                   2514 ;SpriteOrpheus.c:354: case REPEL://repell
+      000945                       2515 00123$:
+                           000945  2516 	C$SpriteOrpheus.c$355$3_0$236	= .
+                                   2517 	.globl	C$SpriteOrpheus.c$355$3_0$236
+                                   2518 ;SpriteOrpheus.c:355: orpheus_wait = 120u;
+      000945 21r0Dr00         [12] 2519 	ld	hl, #_orpheus_wait
+      000948 36 78            [12] 2520 	ld	(hl), #0x78
+                           00094A  2521 	C$SpriteOrpheus.c$356$3_0$236	= .
+                                   2522 	.globl	C$SpriteOrpheus.c$356$3_0$236
+                                   2523 ;SpriteOrpheus.c:356: break;
+      00094A 18 05            [12] 2524 	jr	00126$
+                           00094C  2525 	C$SpriteOrpheus.c$357$3_0$236	= .
+                                   2526 	.globl	C$SpriteOrpheus.c$357$3_0$236
+                                   2527 ;SpriteOrpheus.c:357: case SLEEP://attract
+      00094C                       2528 00124$:
+                           00094C  2529 	C$SpriteOrpheus.c$358$3_0$236	= .
+                                   2530 	.globl	C$SpriteOrpheus.c$358$3_0$236
+                                   2531 ;SpriteOrpheus.c:358: orpheus_wait = 200u;
+      00094C 21r0Dr00         [12] 2532 	ld	hl, #_orpheus_wait
+      00094F 36 C8            [12] 2533 	ld	(hl), #0xc8
+                           000951  2534 	C$SpriteOrpheus.c$362$1_0$232	= .
+                                   2535 	.globl	C$SpriteOrpheus.c$362$1_0$232
+                                   2536 ;SpriteOrpheus.c:362: }
+      000951                       2537 00126$:
+                           000951  2538 	C$SpriteOrpheus.c$363$1_0$232	= .
+                                   2539 	.globl	C$SpriteOrpheus.c$363$1_0$232
+                                   2540 ;SpriteOrpheus.c:363: orpheus_info->ow_state = new_state;
+      000951 21r00r00         [12] 2541 	ld	hl, #_orpheus_info
+      000954 2A               [ 8] 2542 	ld	a, (hl+)
+      000955 4F               [ 4] 2543 	ld	c, a
+      000956 46               [ 8] 2544 	ld	b, (hl)
+      000957 F8 06            [12] 2545 	ldhl	sp,	#6
+      000959 7E               [ 8] 2546 	ld	a, (hl)
+      00095A 02               [ 8] 2547 	ld	(bc), a
+                           00095B  2548 	C$SpriteOrpheus.c$364$1_0$232	= .
+                                   2549 	.globl	C$SpriteOrpheus.c$364$1_0$232
+                                   2550 ;SpriteOrpheus.c:364: }
+                           00095B  2551 	C$SpriteOrpheus.c$364$1_0$232	= .
+                                   2552 	.globl	C$SpriteOrpheus.c$364$1_0$232
+                           00095B  2553 	XG$orhpeus_change_state$0$0	= .
+                                   2554 	.globl	XG$orhpeus_change_state$0$0
+      00095B C9               [16] 2555 	ret
+                           00095C  2556 	G$orpheus_hit$0$0	= .
+                                   2557 	.globl	G$orpheus_hit$0$0
+                           00095C  2558 	C$SpriteOrpheus.c$366$1_0$237	= .
+                                   2559 	.globl	C$SpriteOrpheus.c$366$1_0$237
+                                   2560 ;SpriteOrpheus.c:366: void orpheus_hit() BANKED{
+                                   2561 ;	---------------------------------
+                                   2562 ; Function orpheus_hit
+                                   2563 ; ---------------------------------
+                           0000FF  2564 	b_orpheus_hit	= 255
+      00095C                       2565 _orpheus_hit::
+                           00095C  2566 	C$SpriteOrpheus.c$367$1_0$237	= .
+                                   2567 	.globl	C$SpriteOrpheus.c$367$1_0$237
+                                   2568 ;SpriteOrpheus.c:367: if(orpheus_hitted == 0u){
+      00095C FAr07r00         [16] 2569 	ld	a, (#_orpheus_hitted)
+      00095F B7               [ 4] 2570 	or	a, a
+      000960 C0               [20] 2571 	ret	NZ
+                           000961  2572 	C$SpriteOrpheus.c$368$2_0$238	= .
+                                   2573 	.globl	C$SpriteOrpheus.c$368$2_0$238
+                                   2574 ;SpriteOrpheus.c:368: orpheus_hp--;
+      000961 21r03r00         [12] 2575 	ld	hl, #_orpheus_hp
+      000964 35               [12] 2576 	dec	(hl)
+                           000965  2577 	C$SpriteOrpheus.c$369$2_0$238	= .
+                                   2578 	.globl	C$SpriteOrpheus.c$369$2_0$238
+                                   2579 ;SpriteOrpheus.c:369: orpheus_hit_countdown = 32;
+      000965 21r04r00         [12] 2580 	ld	hl, #_orpheus_hit_countdown
+      000968 36 20            [12] 2581 	ld	(hl), #0x20
+                           00096A  2582 	C$SpriteOrpheus.c$370$2_0$238	= .
+                                   2583 	.globl	C$SpriteOrpheus.c$370$2_0$238
+                                   2584 ;SpriteOrpheus.c:370: orpheus_hitted = 1u;
+      00096A 21r07r00         [12] 2585 	ld	hl, #_orpheus_hitted
+      00096D 36 01            [12] 2586 	ld	(hl), #0x01
+                           00096F  2587 	C$SpriteOrpheus.c$371$2_0$238	= .
+                                   2588 	.globl	C$SpriteOrpheus.c$371$2_0$238
+                                   2589 ;SpriteOrpheus.c:371: update_hud = 1;
+      00096F 21r00r00         [12] 2590 	ld	hl, #_update_hud
+      000972 36 01            [12] 2591 	ld	(hl), #0x01
+                           000974  2592 	C$SpriteOrpheus.c$373$1_0$237	= .
+                                   2593 	.globl	C$SpriteOrpheus.c$373$1_0$237
+                                   2594 ;SpriteOrpheus.c:373: }
+                           000974  2595 	C$SpriteOrpheus.c$373$1_0$237	= .
+                                   2596 	.globl	C$SpriteOrpheus.c$373$1_0$237
+                           000974  2597 	XG$orpheus_hit$0$0	= .
+                                   2598 	.globl	XG$orpheus_hit$0$0
+      000974 C9               [16] 2599 	ret
+                           000975  2600 	G$Destroy_SpriteOrpheus$0$0	= .
+                                   2601 	.globl	G$Destroy_SpriteOrpheus$0$0
+                           000975  2602 	C$SpriteOrpheus.c$375$1_0$240	= .
+                                   2603 	.globl	C$SpriteOrpheus.c$375$1_0$240
+                                   2604 ;SpriteOrpheus.c:375: void DESTROY() {
+                                   2605 ;	---------------------------------
+                                   2606 ; Function Destroy_SpriteOrpheus
+                                   2607 ; ---------------------------------
+      000975                       2608 _Destroy_SpriteOrpheus::
+                           000975  2609 	C$SpriteOrpheus.c$376$1_0$240	= .
+                                   2610 	.globl	C$SpriteOrpheus.c$376$1_0$240
+                                   2611 ;SpriteOrpheus.c:376: }
+                           000975  2612 	C$SpriteOrpheus.c$376$1_0$240	= .
+                                   2613 	.globl	C$SpriteOrpheus.c$376$1_0$240
+                           000975  2614 	XG$Destroy_SpriteOrpheus$0$0	= .
+                                   2615 	.globl	XG$Destroy_SpriteOrpheus$0$0
+      000975 C9               [16] 2616 	ret
+                                   2617 	.area _CODE_255
+                                   2618 	.area _INITIALIZER
+                           000000  2619 FSpriteOrpheus$__xinit_new_state$0_0$0 == .
+      000000                       2620 __xinit__new_state:
+      000000 00                    2621 	.db #0x00	; 0
+                           000001  2622 FSpriteOrpheus$__xinit_orpheus_power_max$0_0$0 == .
+      000001                       2623 __xinit__orpheus_power_max:
+      000001 00                    2624 	.db #0x00	; 0
+                           000002  2625 FSpriteOrpheus$__xinit_orpheus_hp_max$0_0$0 == .
+      000002                       2626 __xinit__orpheus_hp_max:
+      000002 04                    2627 	.db #0x04	; 4
+                           000003  2628 FSpriteOrpheus$__xinit_orpheus_hp$0_0$0 == .
+      000003                       2629 __xinit__orpheus_hp:
+      000003 04                    2630 	.db #0x04	;  4
+                           000004  2631 FSpriteOrpheus$__xinit_orpheus_hit_countdown$0_0$0 == .
+      000004                       2632 __xinit__orpheus_hit_countdown:
+      000004 00                    2633 	.db #0x00	;  0
+                           000005  2634 FSpriteOrpheus$__xinit_a_walk_counter_x$0_0$0 == .
+      000005                       2635 __xinit__a_walk_counter_x:
+      000005 00                    2636 	.db #0x00	;  0
+                           000006  2637 FSpriteOrpheus$__xinit_a_walk_counter_y$0_0$0 == .
+      000006                       2638 __xinit__a_walk_counter_y:
+      000006 00                    2639 	.db #0x00	;  0
+                           000007  2640 FSpriteOrpheus$__xinit_orpheus_hitted$0_0$0 == .
+      000007                       2641 __xinit__orpheus_hitted:
+      000007 00                    2642 	.db #0x00	; 0
+                           000008  2643 FSpriteOrpheus$__xinit_hit_frameskip$0_0$0 == .
+      000008                       2644 __xinit__hit_frameskip:
+      000008 00                    2645 	.db #0x00	;  0
+                           000009  2646 FSpriteOrpheus$__xinit_hit_frameskip_max$0_0$0 == .
+      000009                       2647 __xinit__hit_frameskip_max:
+      000009 00                    2648 	.db #0x00	;  0
+                           00000A  2649 FSpriteOrpheus$__xinit_orpheus_state_before$0_0$0 == .
+      00000A                       2650 __xinit__orpheus_state_before:
+      00000A 00                    2651 	.db #0x00	; 0
+                           00000B  2652 FSpriteOrpheus$__xinit_push_vx$0_0$0 == .
+      00000B                       2653 __xinit__push_vx:
+      00000B 00                    2654 	.db #0x00	;  0
+                           00000C  2655 FSpriteOrpheus$__xinit_push_vy$0_0$0 == .
+      00000C                       2656 __xinit__push_vy:
+      00000C 00                    2657 	.db #0x00	;  0
+                           00000D  2658 FSpriteOrpheus$__xinit_orpheus_wait$0_0$0 == .
+      00000D                       2659 __xinit__orpheus_wait:
+      00000D 00                    2660 	.db #0x00	; 0
+                           00000E  2661 FSpriteOrpheus$__xinit_countdown$0_0$0 == .
+      00000E                       2662 __xinit__countdown:
+      00000E 00                    2663 	.db #0x00	;  0
+                           00000F  2664 FSpriteOrpheus$__xinit_countdown_step$0_0$0 == .
+      00000F                       2665 __xinit__countdown_step:
+      00000F 00                    2666 	.db #0x00	; 0
+                           000010  2667 FSpriteOrpheus$__xinit_countdown_verso$0_0$0 == .
+      000010                       2668 __xinit__countdown_verso:
+      000010 00                    2669 	.db #0x00	;  0
+                                   2670 	.area _CABS (ABS)

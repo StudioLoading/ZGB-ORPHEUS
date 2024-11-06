@@ -1,0 +1,46 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+  7 A$SpriteCamera$62                                              000000 GR
+  7 A$SpriteCamera$81                                              000001 GR
+  7 A$SpriteCamera$98                                              000002 GR
+  7 C$SpriteCamera.c$10$0_0$6                                   =  000002 GR
+  7 C$SpriteCamera.c$3$0_0$2                                    =  000000 GR
+  7 C$SpriteCamera.c$4$0_0$2                                    =  000000 GR
+  7 C$SpriteCamera.c$6$0_0$4                                    =  000001 GR
+  7 C$SpriteCamera.c$7$0_0$4                                    =  000001 GR
+  7 C$SpriteCamera.c$9$0_0$6                                    =  000002 GR
+  7 G$Destroy_SpriteCamera$0$0                                  =  000002 GR
+  7 G$Start_SpriteCamera$0$0                                    =  000000 GR
+  7 G$Update_SpriteCamera$0$0                                   =  000001 GR
+    G$__bank_SpriteCamera$0_0$0                                 =  0000FF G
+  7 XG$Destroy_SpriteCamera$0$0                                 =  000002 GR
+  7 XG$Start_SpriteCamera$0$0                                   =  000000 GR
+  7 XG$Update_SpriteCamera$0$0                                  =  000001 GR
+  7 _Destroy_SpriteCamera                                          000002 GR
+  7 _Start_SpriteCamera                                            000000 GR
+  7 _Update_SpriteCamera                                           000001 GR
+    ___bank_SpriteCamera                                        =  0000FF G
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size      0   flags    0
+   1 _DATA                                      size      0   flags    0
+   2 _INITIALIZED                               size      0   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size      0   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _CODE_255                                  size      3   flags    0
+   8 _INITIALIZER                               size      0   flags    0
+   9 _CABS                                      size      0   flags    8
+

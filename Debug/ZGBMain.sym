@@ -1,0 +1,88 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+  0 A$ZGBMain$100                                                  00002A GR
+  0 A$ZGBMain$101                                                  00002C GR
+  0 A$ZGBMain$102                                                  00002D GR
+  0 A$ZGBMain$107                                                  00002F GR
+  0 A$ZGBMain$108                                                  000031 GR
+  0 A$ZGBMain$109                                                  000032 GR
+  0 A$ZGBMain$114                                                  000033 GR
+  0 A$ZGBMain$119                                                  000035 GR
+  0 A$ZGBMain$124                                                  000037 GR
+  0 A$ZGBMain$56                                                   000000 GR
+  0 A$ZGBMain$57                                                   000002 GR
+  0 A$ZGBMain$58                                                   000004 GR
+  0 A$ZGBMain$59                                                   000005 GR
+  0 A$ZGBMain$60                                                   000006 GR
+  0 A$ZGBMain$64                                                   000007 GR
+  0 A$ZGBMain$65                                                   00000A GR
+  0 A$ZGBMain$66                                                   00000B GR
+  0 A$ZGBMain$70                                                   00000D GR
+  0 A$ZGBMain$71                                                   00000F GR
+  0 A$ZGBMain$72                                                   000010 GR
+  0 A$ZGBMain$73                                                   000011 GR
+  0 A$ZGBMain$74                                                   000012 GR
+  0 A$ZGBMain$75                                                   000013 GR
+  0 A$ZGBMain$76                                                   000014 GR
+  0 A$ZGBMain$77                                                   000015 GR
+  0 A$ZGBMain$78                                                   000016 GR
+  0 A$ZGBMain$79                                                   000017 GR
+  0 A$ZGBMain$80                                                   000019 GR
+  0 A$ZGBMain$81                                                   00001B GR
+  0 A$ZGBMain$82                                                   00001C GR
+  0 A$ZGBMain$83                                                   00001D GR
+  0 A$ZGBMain$84                                                   00001E GR
+  0 A$ZGBMain$85                                                   00001F GR
+  0 A$ZGBMain$89                                                   000021 GR
+  0 A$ZGBMain$90                                                   000022 GR
+  0 A$ZGBMain$94                                                   000023 GR
+  0 A$ZGBMain$95                                                   000025 GR
+  0 A$ZGBMain$96                                                   000026 GR
+  0 A$ZGBMain$97                                                   000027 GR
+  0 A$ZGBMain$98                                                   000028 GR
+  0 A$ZGBMain$99                                                   000029 GR
+  0 C$ZGBMain.c$10$3_0$162                                      =  000023 GR
+  0 C$ZGBMain.c$13$2_0$161                                      =  00002F GR
+  0 C$ZGBMain.c$16$1_0$160                                      =  000033 GR
+  0 C$ZGBMain.c$17$1_0$160                                      =  000037 GR
+  0 C$ZGBMain.c$6$0_0$160                                       =  000000 GR
+  0 C$ZGBMain.c$7$1_0$160                                       =  000007 GR
+  0 C$ZGBMain.c$8$2_0$161                                       =  00000D GR
+  0 C$ZGBMain.c$9$3_0$162                                       =  000021 GR
+  7 FZGBMain$__xinit_next_state$0_0$0                           =  000000 GR
+  0 G$GetTileReplacement$0$0                                    =  000000 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  2 G$next_state$0_0$0                                          =  000000 GR
+  0 XG$GetTileReplacement$0$0                                   =  000037 GR
+  0 _GetTileReplacement                                            000000 GR
+  7 __xinit__next_state                                            000000 R
+    _current_state                                                 ****** GX
+  2 _next_state                                                    000000 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 3
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size     38   flags    0
+   1 _DATA                                      size      0   flags    0
+   2 _INITIALIZED                               size      1   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size      0   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _INITIALIZER                               size      1   flags    0
+   8 _CABS                                      size      0   flags    8
+

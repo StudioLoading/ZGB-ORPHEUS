@@ -1,0 +1,48 @@
+;!FILE ../Debug/SpriteCamera.asm
+XL3
+H A areas 15 global symbols
+M SpriteCamera
+O -msm83
+S ___bank_SpriteCamera Def000001
+S G$__bank_SpriteCamera$0_0$0 Def0000FF
+S .__.ABS. Def000000
+A _CODE size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_1 size 3 flags 0 addr 0
+S G$Start_SpriteCamera$0$0 Def000000
+S C$SpriteCamera.c$3$0_0$2 Def000000
+S C$SpriteCamera.c$4$0_0$2 Def000000
+S _Start_SpriteCamera Def000000
+S C$SpriteCamera.c$6$0_0$4 Def000001
+S C$SpriteCamera.c$7$0_0$4 Def000001
+S C$SpriteCamera.c$9$0_0$6 Def000002
+S G$Update_SpriteCamera$0$0 Def000001
+S XG$Start_SpriteCamera$0$0 Def000000
+S G$Destroy_SpriteCamera$0$0 Def000002
+S _Update_SpriteCamera Def000001
+S _Destroy_SpriteCamera Def000002
+S XG$Update_SpriteCamera$0$0 Def000001
+S A$SpriteCamera$62 Def000000
+S A$SpriteCamera$81 Def000001
+S XG$Destroy_SpriteCamera$0$0 Def000002
+S A$SpriteCamera$98 Def000002
+S C$SpriteCamera.c$10$0_0$6 Def000002
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 C9
+R 00 00 07 00
+T 01 00 00
+R 00 00 07 00
+T 01 00 00 C9
+R 00 00 07 00
+T 02 00 00
+R 00 00 07 00
+T 02 00 00 C9
+R 00 00 07 00

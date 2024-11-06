@@ -1,0 +1,2434 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+  0 A$Sprite$1000                                                  000381 GR
+  0 A$Sprite$1001                                                  000382 GR
+  0 A$Sprite$1002                                                  000383 GR
+  0 A$Sprite$1003                                                  000385 GR
+  0 A$Sprite$1004                                                  000386 GR
+  0 A$Sprite$1005                                                  000387 GR
+  0 A$Sprite$1006                                                  000388 GR
+  0 A$Sprite$1007                                                  000389 GR
+  0 A$Sprite$1008                                                  00038C GR
+  0 A$Sprite$1009                                                  00038E GR
+  0 A$Sprite$1010                                                  00038F GR
+  0 A$Sprite$1011                                                  000390 GR
+  0 A$Sprite$1012                                                  000391 GR
+  0 A$Sprite$1013                                                  000392 GR
+  0 A$Sprite$1016                                                  000393 GR
+  0 A$Sprite$1017                                                  000394 GR
+  0 A$Sprite$1019                                                  000395 GR
+  0 A$Sprite$1020                                                  000396 GR
+  0 A$Sprite$1021                                                  000397 GR
+  0 A$Sprite$1022                                                  00039A GR
+  0 A$Sprite$1023                                                  00039B GR
+  0 A$Sprite$1024                                                  00039C GR
+  0 A$Sprite$1026                                                  00039D GR
+  0 A$Sprite$1027                                                  0003A0 GR
+  0 A$Sprite$1029                                                  0003A2 GR
+  0 A$Sprite$103                                                   000000 GR
+  0 A$Sprite$1030                                                  0003A3 GR
+  0 A$Sprite$1031                                                  0003A4 GR
+  0 A$Sprite$1032                                                  0003A5 GR
+  0 A$Sprite$1033                                                  0003A6 GR
+  0 A$Sprite$1034                                                  0003A8 GR
+  0 A$Sprite$1035                                                  0003A9 GR
+  0 A$Sprite$1039                                                  0003AC GR
+  0 A$Sprite$104                                                   000002 GR
+  0 A$Sprite$1040                                                  0003AF GR
+  0 A$Sprite$1041                                                  0003B0 GR
+  0 A$Sprite$1042                                                  0003B1 GR
+  0 A$Sprite$1047                                                  0003B4 GR
+  0 A$Sprite$1048                                                  0003B5 GR
+  0 A$Sprite$1049                                                  0003B7 GR
+  0 A$Sprite$105                                                   000004 GR
+  0 A$Sprite$1050                                                  0003B8 GR
+  0 A$Sprite$1051                                                  0003B9 GR
+  0 A$Sprite$1052                                                  0003BA GR
+  0 A$Sprite$1053                                                  0003BC GR
+  0 A$Sprite$1054                                                  0003BD GR
+  0 A$Sprite$1055                                                  0003BE GR
+  0 A$Sprite$1056                                                  0003BF GR
+  0 A$Sprite$1057                                                  0003C0 GR
+  0 A$Sprite$1058                                                  0003C3 GR
+  0 A$Sprite$1059                                                  0003C5 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$106                                                   000005 GR
+  0 A$Sprite$1060                                                  0003C6 GR
+  0 A$Sprite$1061                                                  0003C7 GR
+  0 A$Sprite$1062                                                  0003C8 GR
+  0 A$Sprite$1063                                                  0003C9 GR
+  0 A$Sprite$1064                                                  0003CA GR
+  0 A$Sprite$1065                                                  0003CB GR
+  0 A$Sprite$1066                                                  0003CC GR
+  0 A$Sprite$1067                                                  0003CD GR
+  0 A$Sprite$1068                                                  0003CF GR
+  0 A$Sprite$1069                                                  0003D0 GR
+  0 A$Sprite$107                                                   000006 GR
+  0 A$Sprite$1070                                                  0003D2 GR
+  0 A$Sprite$1071                                                  0003D3 GR
+  0 A$Sprite$1073                                                  0003D4 GR
+  0 A$Sprite$1074                                                  0003D7 GR
+  0 A$Sprite$1075                                                  0003D8 GR
+  0 A$Sprite$1076                                                  0003D9 GR
+  0 A$Sprite$1078                                                  0003DA GR
+  0 A$Sprite$1079                                                  0003DD GR
+  0 A$Sprite$108                                                   000007 GR
+  0 A$Sprite$1081                                                  0003DF GR
+  0 A$Sprite$1082                                                  0003E1 GR
+  0 A$Sprite$1083                                                  0003E2 GR
+  0 A$Sprite$1084                                                  0003E4 GR
+  0 A$Sprite$1085                                                  0003E6 GR
+  0 A$Sprite$1086                                                  0003E8 GR
+  0 A$Sprite$1087                                                  0003EB GR
+  0 A$Sprite$1089                                                  0003ED GR
+  0 A$Sprite$109                                                   000008 GR
+  0 A$Sprite$1091                                                  0003F0 GR
+  0 A$Sprite$1092                                                  0003F1 GR
+  0 A$Sprite$1093                                                  0003F2 GR
+  0 A$Sprite$1094                                                  0003F3 GR
+  0 A$Sprite$1095                                                  0003F4 GR
+  0 A$Sprite$1096                                                  0003F5 GR
+  0 A$Sprite$1097                                                  0003F6 GR
+  0 A$Sprite$1098                                                  0003F8 GR
+  0 A$Sprite$1099                                                  0003F9 GR
+  0 A$Sprite$1103                                                  0003FC GR
+  0 A$Sprite$1104                                                  0003FF GR
+  0 A$Sprite$1105                                                  000400 GR
+  0 A$Sprite$1106                                                  000401 GR
+  0 A$Sprite$1111                                                  000404 GR
+  0 A$Sprite$1112                                                  000406 GR
+  0 A$Sprite$1113                                                  000407 GR
+  0 A$Sprite$1114                                                  000408 GR
+  0 A$Sprite$1115                                                  000409 GR
+  0 A$Sprite$1116                                                  00040A GR
+  0 A$Sprite$1117                                                  00040B GR
+  0 A$Sprite$1118                                                  00040D GR
+  0 A$Sprite$1119                                                  00040E GR
+  0 A$Sprite$1120                                                  00040F GR
+  0 A$Sprite$1121                                                  000410 GR
+  0 A$Sprite$1122                                                  000411 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 3
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1123                                                  000414 GR
+  0 A$Sprite$1124                                                  000416 GR
+  0 A$Sprite$1125                                                  000417 GR
+  0 A$Sprite$1126                                                  000418 GR
+  0 A$Sprite$1127                                                  000419 GR
+  0 A$Sprite$1128                                                  00041A GR
+  0 A$Sprite$113                                                   000009 GR
+  0 A$Sprite$1131                                                  00041B GR
+  0 A$Sprite$1132                                                  00041C GR
+  0 A$Sprite$1134                                                  00041D GR
+  0 A$Sprite$1135                                                  00041E GR
+  0 A$Sprite$1136                                                  00041F GR
+  0 A$Sprite$1137                                                  000422 GR
+  0 A$Sprite$1138                                                  000423 GR
+  0 A$Sprite$1139                                                  000424 GR
+  0 A$Sprite$114                                                   00000A GR
+  0 A$Sprite$1141                                                  000425 GR
+  0 A$Sprite$1142                                                  000428 GR
+  0 A$Sprite$1144                                                  00042A GR
+  0 A$Sprite$1145                                                  00042B GR
+  0 A$Sprite$1146                                                  00042D GR
+  0 A$Sprite$1147                                                  00042E GR
+  0 A$Sprite$1148                                                  000430 GR
+  0 A$Sprite$1149                                                  000431 GR
+  0 A$Sprite$115                                                   00000B GR
+  0 A$Sprite$1150                                                  000432 GR
+  0 A$Sprite$1151                                                  000434 GR
+  0 A$Sprite$1152                                                  000435 GR
+  0 A$Sprite$1156                                                  000438 GR
+  0 A$Sprite$1157                                                  00043B GR
+  0 A$Sprite$1158                                                  00043C GR
+  0 A$Sprite$1159                                                  00043D GR
+  0 A$Sprite$116                                                   00000C GR
+  0 A$Sprite$1164                                                  00043F GR
+  0 A$Sprite$1165                                                  000440 GR
+  0 A$Sprite$1166                                                  000442 GR
+  0 A$Sprite$1167                                                  000443 GR
+  0 A$Sprite$1168                                                  000444 GR
+  0 A$Sprite$1169                                                  000445 GR
+  0 A$Sprite$117                                                   00000D GR
+  0 A$Sprite$1170                                                  000446 GR
+  0 A$Sprite$1171                                                  000447 GR
+  0 A$Sprite$1172                                                  000449 GR
+  0 A$Sprite$1173                                                  00044A GR
+  0 A$Sprite$1174                                                  00044B GR
+  0 A$Sprite$1175                                                  00044C GR
+  0 A$Sprite$1176                                                  00044D GR
+  0 A$Sprite$1177                                                  000450 GR
+  0 A$Sprite$1178                                                  000452 GR
+  0 A$Sprite$1179                                                  000453 GR
+  0 A$Sprite$118                                                   00000E GR
+  0 A$Sprite$1180                                                  000454 GR
+  0 A$Sprite$1181                                                  000455 GR
+  0 A$Sprite$1182                                                  000456 GR
+  0 A$Sprite$1183                                                  000457 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 4
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1184                                                  000458 GR
+  0 A$Sprite$1185                                                  000459 GR
+  0 A$Sprite$1186                                                  00045A GR
+  0 A$Sprite$1187                                                  00045B GR
+  0 A$Sprite$1188                                                  00045C GR
+  0 A$Sprite$1189                                                  00045E GR
+  0 A$Sprite$119                                                   00000F GR
+  0 A$Sprite$1190                                                  00045F GR
+  0 A$Sprite$1191                                                  000461 GR
+  0 A$Sprite$1192                                                  000462 GR
+  0 A$Sprite$1194                                                  000463 GR
+  0 A$Sprite$1195                                                  000466 GR
+  0 A$Sprite$1196                                                  000467 GR
+  0 A$Sprite$1197                                                  000468 GR
+  0 A$Sprite$1199                                                  000469 GR
+  0 A$Sprite$120                                                   000010 GR
+  0 A$Sprite$1200                                                  00046C GR
+  0 A$Sprite$1202                                                  00046E GR
+  0 A$Sprite$1203                                                  000470 GR
+  0 A$Sprite$1204                                                  000471 GR
+  0 A$Sprite$1205                                                  000473 GR
+  0 A$Sprite$1206                                                  000474 GR
+  0 A$Sprite$1207                                                  000476 GR
+  0 A$Sprite$1208                                                  000478 GR
+  0 A$Sprite$1209                                                  00047A GR
+  0 A$Sprite$121                                                   000013 GR
+  0 A$Sprite$1210                                                  00047C GR
+  0 A$Sprite$1211                                                  00047E GR
+  0 A$Sprite$1212                                                  00047F GR
+  0 A$Sprite$1213                                                  000480 GR
+  0 A$Sprite$1214                                                  000481 GR
+  0 A$Sprite$1216                                                  000483 GR
+  0 A$Sprite$1217                                                  000485 GR
+  0 A$Sprite$1218                                                  000487 GR
+  0 A$Sprite$1219                                                  000488 GR
+  0 A$Sprite$1220                                                  000489 GR
+  0 A$Sprite$1222                                                  00048A GR
+  0 A$Sprite$1223                                                  00048C GR
+  0 A$Sprite$1224                                                  00048D GR
+  0 A$Sprite$1225                                                  00048E GR
+  0 A$Sprite$1226                                                  00048F GR
+  0 A$Sprite$1227                                                  000490 GR
+  0 A$Sprite$1228                                                  000491 GR
+  0 A$Sprite$1229                                                  000492 GR
+  0 A$Sprite$1230                                                  000493 GR
+  0 A$Sprite$1231                                                  000495 GR
+  0 A$Sprite$1232                                                  000497 GR
+  0 A$Sprite$1233                                                  000498 GR
+  0 A$Sprite$1234                                                  00049A GR
+  0 A$Sprite$1235                                                  00049B GR
+  0 A$Sprite$1236                                                  00049C GR
+  0 A$Sprite$1237                                                  00049D GR
+  0 A$Sprite$1238                                                  00049E GR
+  0 A$Sprite$1242                                                  0004A1 GR
+  0 A$Sprite$1243                                                  0004A4 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 5
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1244                                                  0004A5 GR
+  0 A$Sprite$125                                                   000014 GR
+  0 A$Sprite$1252                                                  0004A6 GR
+  0 A$Sprite$1256                                                  0004A9 GR
+  0 A$Sprite$1257                                                  0004AC GR
+  0 A$Sprite$1258                                                  0004AD GR
+  0 A$Sprite$1259                                                  0004AE GR
+  0 A$Sprite$126                                                   000016 GR
+  0 A$Sprite$1263                                                  0004AF GR
+  0 A$Sprite$1264                                                  0004B2 GR
+  0 A$Sprite$1265                                                  0004B3 GR
+  0 A$Sprite$1266                                                  0004B4 GR
+  0 A$Sprite$1267                                                  0004B5 GR
+  0 A$Sprite$1268                                                  0004B6 GR
+  0 A$Sprite$127                                                   000017 GR
+  0 A$Sprite$1272                                                  0004B9 GR
+  0 A$Sprite$1273                                                  0004BC GR
+  0 A$Sprite$1274                                                  0004BE GR
+  0 A$Sprite$1275                                                  0004BF GR
+  0 A$Sprite$1276                                                  0004C0 GR
+  0 A$Sprite$1277                                                  0004C1 GR
+  0 A$Sprite$1278                                                  0004C2 GR
+  0 A$Sprite$1279                                                  0004C3 GR
+  0 A$Sprite$128                                                   000018 GR
+  0 A$Sprite$1280                                                  0004C4 GR
+  0 A$Sprite$1281                                                  0004C5 GR
+  0 A$Sprite$1282                                                  0004C6 GR
+  0 A$Sprite$1283                                                  0004C9 GR
+  0 A$Sprite$1284                                                  0004CB GR
+  0 A$Sprite$1289                                                  0004CE GR
+  0 A$Sprite$129                                                   000019 GR
+  0 A$Sprite$1290                                                  0004D0 GR
+  0 A$Sprite$1291                                                  0004D1 GR
+  0 A$Sprite$1292                                                  0004D2 GR
+  0 A$Sprite$1293                                                  0004D3 GR
+  0 A$Sprite$1294                                                  0004D6 GR
+  0 A$Sprite$1295                                                  0004D7 GR
+  0 A$Sprite$1296                                                  0004D8 GR
+  0 A$Sprite$1297                                                  0004D9 GR
+  0 A$Sprite$1298                                                  0004DA GR
+  0 A$Sprite$1299                                                  0004DC GR
+  0 A$Sprite$130                                                   00001C GR
+  0 A$Sprite$1300                                                  0004DD GR
+  0 A$Sprite$1301                                                  0004DE GR
+  0 A$Sprite$1302                                                  0004DF GR
+  0 A$Sprite$1303                                                  0004E0 GR
+  0 A$Sprite$1304                                                  0004E1 GR
+  0 A$Sprite$1305                                                  0004E2 GR
+  0 A$Sprite$1306                                                  0004E5 GR
+  0 A$Sprite$1307                                                  0004E6 GR
+  0 A$Sprite$1308                                                  0004E7 GR
+  0 A$Sprite$1309                                                  0004E8 GR
+  0 A$Sprite$131                                                   00001D GR
+  0 A$Sprite$1310                                                  0004E9 GR
+  0 A$Sprite$1311                                                  0004EA GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 6
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1312                                                  0004EB GR
+  0 A$Sprite$1313                                                  0004EE GR
+  0 A$Sprite$1314                                                  0004EF GR
+  0 A$Sprite$1315                                                  0004F0 GR
+  0 A$Sprite$1316                                                  0004F1 GR
+  0 A$Sprite$1317                                                  0004F2 GR
+  0 A$Sprite$1318                                                  0004F3 GR
+  0 A$Sprite$132                                                   00001E GR
+  0 A$Sprite$1322                                                  0004F5 GR
+  0 A$Sprite$1323                                                  0004F7 GR
+  0 A$Sprite$1324                                                  0004F8 GR
+  0 A$Sprite$1325                                                  0004F9 GR
+  0 A$Sprite$1326                                                  0004FA GR
+  0 A$Sprite$1327                                                  0004FD GR
+  0 A$Sprite$1328                                                  0004FE GR
+  0 A$Sprite$1329                                                  0004FF GR
+  0 A$Sprite$133                                                   00001F GR
+  0 A$Sprite$1330                                                  000500 GR
+  0 A$Sprite$1331                                                  000501 GR
+  0 A$Sprite$1332                                                  000502 GR
+  0 A$Sprite$1333                                                  000503 GR
+  0 A$Sprite$1334                                                  000505 GR
+  0 A$Sprite$1335                                                  000506 GR
+  0 A$Sprite$1336                                                  000507 GR
+  0 A$Sprite$1337                                                  000508 GR
+  0 A$Sprite$1338                                                  000509 GR
+  0 A$Sprite$1339                                                  00050A GR
+  0 A$Sprite$134                                                   000020 GR
+  0 A$Sprite$1340                                                  00050B GR
+  0 A$Sprite$1341                                                  00050C GR
+  0 A$Sprite$1342                                                  00050D GR
+  0 A$Sprite$1343                                                  00050E GR
+  0 A$Sprite$1344                                                  00050F GR
+  0 A$Sprite$1345                                                  000510 GR
+  0 A$Sprite$1346                                                  000511 GR
+  0 A$Sprite$1347                                                  000512 GR
+  0 A$Sprite$1348                                                  000513 GR
+  0 A$Sprite$1349                                                  000514 GR
+  0 A$Sprite$135                                                   000022 GR
+  0 A$Sprite$1350                                                  000515 GR
+  0 A$Sprite$1351                                                  000517 GR
+  0 A$Sprite$1352                                                  000518 GR
+  0 A$Sprite$1353                                                  000519 GR
+  0 A$Sprite$1354                                                  00051A GR
+  0 A$Sprite$1355                                                  00051C GR
+  0 A$Sprite$1356                                                  00051D GR
+  0 A$Sprite$1357                                                  00051E GR
+  0 A$Sprite$1358                                                  00051F GR
+  0 A$Sprite$1359                                                  000520 GR
+  0 A$Sprite$136                                                   000023 GR
+  0 A$Sprite$1360                                                  000523 GR
+  0 A$Sprite$1361                                                  000524 GR
+  0 A$Sprite$1362                                                  000525 GR
+  0 A$Sprite$1363                                                  000526 GR
+  0 A$Sprite$1364                                                  000528 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 7
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1365                                                  000529 GR
+  0 A$Sprite$1366                                                  00052A GR
+  0 A$Sprite$1367                                                  00052B GR
+  0 A$Sprite$1368                                                  00052D GR
+  0 A$Sprite$1369                                                  00052E GR
+  0 A$Sprite$1370                                                  00052F GR
+  0 A$Sprite$1371                                                  000530 GR
+  0 A$Sprite$1372                                                  000531 GR
+  0 A$Sprite$1373                                                  000532 GR
+  0 A$Sprite$1374                                                  000533 GR
+  0 A$Sprite$1375                                                  000534 GR
+  0 A$Sprite$1376                                                  000536 GR
+  0 A$Sprite$1377                                                  000537 GR
+  0 A$Sprite$1378                                                  000539 GR
+  0 A$Sprite$1379                                                  00053A GR
+  0 A$Sprite$1380                                                  00053B GR
+  0 A$Sprite$1381                                                  00053C GR
+  0 A$Sprite$1382                                                  00053D GR
+  0 A$Sprite$1383                                                  000540 GR
+  0 A$Sprite$1384                                                  000541 GR
+  0 A$Sprite$1385                                                  000542 GR
+  0 A$Sprite$1386                                                  000543 GR
+  0 A$Sprite$1387                                                  000545 GR
+  0 A$Sprite$1388                                                  000546 GR
+  0 A$Sprite$1389                                                  000547 GR
+  0 A$Sprite$139                                                   000024 GR
+  0 A$Sprite$1390                                                  000548 GR
+  0 A$Sprite$1391                                                  00054A GR
+  0 A$Sprite$1392                                                  00054B GR
+  0 A$Sprite$1393                                                  00054D GR
+  0 A$Sprite$1394                                                  00054E GR
+  0 A$Sprite$1395                                                  00054F GR
+  0 A$Sprite$1396                                                  000551 GR
+  0 A$Sprite$1397                                                  000552 GR
+  0 A$Sprite$1398                                                  000553 GR
+  0 A$Sprite$1399                                                  000554 GR
+  0 A$Sprite$1400                                                  000555 GR
+  0 A$Sprite$1401                                                  000556 GR
+  0 A$Sprite$1402                                                  000557 GR
+  0 A$Sprite$1407                                                  000559 GR
+  0 A$Sprite$1408                                                  00055C GR
+  0 A$Sprite$1409                                                  00055E GR
+  0 A$Sprite$1410                                                  00055F GR
+  0 A$Sprite$1411                                                  000561 GR
+  0 A$Sprite$1412                                                  000562 GR
+  0 A$Sprite$1413                                                  000563 GR
+  0 A$Sprite$1414                                                  000565 GR
+  0 A$Sprite$1419                                                  000568 GR
+  0 A$Sprite$142                                                   000025 GR
+  0 A$Sprite$1424                                                  00056A GR
+  0 A$Sprite$143                                                   000026 GR
+  0 A$Sprite$1434                                                  00056B GR
+  0 A$Sprite$1435                                                  00056D GR
+  0 A$Sprite$1439                                                  00056E GR
+  0 A$Sprite$144                                                   000027 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 8
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1440                                                  000570 GR
+  0 A$Sprite$1444                                                  000572 GR
+  0 A$Sprite$1445                                                  000573 GR
+  0 A$Sprite$1446                                                  000576 GR
+  0 A$Sprite$1447                                                  000577 GR
+  0 A$Sprite$1448                                                  000578 GR
+  0 A$Sprite$1449                                                  000579 GR
+  0 A$Sprite$145                                                   000028 GR
+  0 A$Sprite$1450                                                  00057A GR
+  0 A$Sprite$1451                                                  00057C GR
+  0 A$Sprite$1452                                                  00057D GR
+  0 A$Sprite$1453                                                  00057E GR
+  0 A$Sprite$1454                                                  00057F GR
+  0 A$Sprite$1455                                                  000581 GR
+  0 A$Sprite$1456                                                  000582 GR
+  0 A$Sprite$1457                                                  000583 GR
+  0 A$Sprite$1458                                                  000586 GR
+  0 A$Sprite$1459                                                  000587 GR
+  0 A$Sprite$146                                                   000029 GR
+  0 A$Sprite$1460                                                  000588 GR
+  0 A$Sprite$1461                                                  000589 GR
+  0 A$Sprite$1462                                                  00058A GR
+  0 A$Sprite$1463                                                  00058C GR
+  0 A$Sprite$1464                                                  00058D GR
+  0 A$Sprite$1465                                                  00058E GR
+  0 A$Sprite$1466                                                  00058F GR
+  0 A$Sprite$147                                                   00002C GR
+  0 A$Sprite$1470                                                  000591 GR
+  0 A$Sprite$1471                                                  000592 GR
+  0 A$Sprite$1472                                                  000593 GR
+  0 A$Sprite$1473                                                  000594 GR
+  0 A$Sprite$1474                                                  000595 GR
+  0 A$Sprite$1475                                                  000596 GR
+  0 A$Sprite$1479                                                  000597 GR
+  0 A$Sprite$148                                                   00002D GR
+  0 A$Sprite$1480                                                  000598 GR
+  0 A$Sprite$1481                                                  00059B GR
+  0 A$Sprite$1482                                                  00059C GR
+  0 A$Sprite$1483                                                  00059D GR
+  0 A$Sprite$1484                                                  00059E GR
+  0 A$Sprite$1485                                                  00059F GR
+  0 A$Sprite$1486                                                  0005A1 GR
+  0 A$Sprite$1487                                                  0005A2 GR
+  0 A$Sprite$1488                                                  0005A3 GR
+  0 A$Sprite$1489                                                  0005A4 GR
+  0 A$Sprite$149                                                   00002E GR
+  0 A$Sprite$1490                                                  0005A6 GR
+  0 A$Sprite$1494                                                  0005A7 GR
+  0 A$Sprite$1495                                                  0005AA GR
+  0 A$Sprite$1496                                                  0005AB GR
+  0 A$Sprite$1497                                                  0005AC GR
+  0 A$Sprite$1498                                                  0005AD GR
+  0 A$Sprite$1499                                                  0005AF GR
+  0 A$Sprite$150                                                   00002F GR
+  0 A$Sprite$1500                                                  0005B0 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 9
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1501                                                  0005B1 GR
+  0 A$Sprite$1502                                                  0005B2 GR
+  0 A$Sprite$1503                                                  0005B4 GR
+  0 A$Sprite$1507                                                  0005B5 GR
+  0 A$Sprite$1508                                                  0005B6 GR
+  0 A$Sprite$1509                                                  0005B7 GR
+  0 A$Sprite$151                                                   000030 GR
+  0 A$Sprite$1513                                                  0005BA GR
+  0 A$Sprite$1514                                                  0005BB GR
+  0 A$Sprite$1515                                                  0005BC GR
+  0 A$Sprite$1516                                                  0005BD GR
+  0 A$Sprite$1517                                                  0005BE GR
+  0 A$Sprite$1518                                                  0005C0 GR
+  0 A$Sprite$1519                                                  0005C2 GR
+  0 A$Sprite$152                                                   000032 GR
+  0 A$Sprite$1520                                                  0005C4 GR
+  0 A$Sprite$1521                                                  0005C6 GR
+  0 A$Sprite$1522                                                  0005C7 GR
+  0 A$Sprite$1524                                                  0005C9 GR
+  0 A$Sprite$1525                                                  0005CB GR
+  0 A$Sprite$1526                                                  0005CD GR
+  0 A$Sprite$1528                                                  0005CE GR
+  0 A$Sprite$1529                                                  0005D0 GR
+  0 A$Sprite$153                                                   000033 GR
+  0 A$Sprite$1530                                                  0005D1 GR
+  0 A$Sprite$1531                                                  0005D3 GR
+  0 A$Sprite$1535                                                  0005D4 GR
+  0 A$Sprite$1536                                                  0005D6 GR
+  0 A$Sprite$1537                                                  0005D7 GR
+  0 A$Sprite$1538                                                  0005D8 GR
+  0 A$Sprite$1539                                                  0005D9 GR
+  0 A$Sprite$154                                                   000035 GR
+  0 A$Sprite$1540                                                  0005DA GR
+  0 A$Sprite$1541                                                  0005DB GR
+  0 A$Sprite$1542                                                  0005DC GR
+  0 A$Sprite$1543                                                  0005DD GR
+  0 A$Sprite$1547                                                  0005DE GR
+  0 A$Sprite$1548                                                  0005E0 GR
+  0 A$Sprite$1549                                                  0005E1 GR
+  0 A$Sprite$155                                                   000036 GR
+  0 A$Sprite$1550                                                  0005E2 GR
+  0 A$Sprite$1554                                                  0005E4 GR
+  0 A$Sprite$1555                                                  0005E6 GR
+  0 A$Sprite$1556                                                  0005E7 GR
+  0 A$Sprite$1557                                                  0005E8 GR
+  0 A$Sprite$1558                                                  0005E9 GR
+  0 A$Sprite$1559                                                  0005EA GR
+  0 A$Sprite$156                                                   000037 GR
+  0 A$Sprite$1560                                                  0005EB GR
+  0 A$Sprite$1563                                                  0005EC GR
+  0 A$Sprite$1566                                                  0005EE GR
+  0 A$Sprite$1567                                                  0005EF GR
+  0 A$Sprite$1568                                                  0005F0 GR
+  0 A$Sprite$157                                                   000038 GR
+  0 A$Sprite$1576                                                  0005F1 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 10
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1577                                                  0005F2 GR
+  0 A$Sprite$1578                                                  0005F3 GR
+  0 A$Sprite$1579                                                  0005F5 GR
+  0 A$Sprite$158                                                   000039 GR
+  0 A$Sprite$1580                                                  0005F7 GR
+  0 A$Sprite$1581                                                  0005F9 GR
+  0 A$Sprite$1582                                                  0005FB GR
+  0 A$Sprite$1583                                                  0005FD GR
+  0 A$Sprite$1587                                                  0005FF GR
+  0 A$Sprite$1588                                                  000601 GR
+  0 A$Sprite$1589                                                  000602 GR
+  0 A$Sprite$159                                                   00003A GR
+  0 A$Sprite$1590                                                  000603 GR
+  0 A$Sprite$1591                                                  000604 GR
+  0 A$Sprite$1592                                                  000605 GR
+  0 A$Sprite$1593                                                  000606 GR
+  0 A$Sprite$1597                                                  000607 GR
+  0 A$Sprite$160                                                   00003B GR
+  0 A$Sprite$1600                                                  000608 GR
+  0 A$Sprite$1601                                                  000609 GR
+  0 A$Sprite$1602                                                  00060B GR
+  0 A$Sprite$1603                                                  00060D GR
+  0 A$Sprite$1604                                                  00060F GR
+  0 A$Sprite$1605                                                  000611 GR
+  0 A$Sprite$1606                                                  000613 GR
+  0 A$Sprite$1607                                                  000615 GR
+  0 A$Sprite$1608                                                  000616 GR
+  0 A$Sprite$1609                                                  000618 GR
+  0 A$Sprite$161                                                   00003C GR
+  0 A$Sprite$1613                                                  000619 GR
+  0 A$Sprite$1614                                                  00061A GR
+  0 A$Sprite$1615                                                  00061B GR
+  0 A$Sprite$1619                                                  00061E GR
+  0 A$Sprite$162                                                   00003D GR
+  0 A$Sprite$1620                                                  000621 GR
+  0 A$Sprite$1621                                                  000622 GR
+  0 A$Sprite$1622                                                  000623 GR
+  0 A$Sprite$1623                                                  000624 GR
+  0 A$Sprite$1624                                                  000625 GR
+  0 A$Sprite$1625                                                  000626 GR
+  0 A$Sprite$1629                                                  000629 GR
+  0 A$Sprite$163                                                   00003E GR
+  0 A$Sprite$1630                                                  00062B GR
+  0 A$Sprite$1631                                                  00062C GR
+  0 A$Sprite$1632                                                  00062D GR
+  0 A$Sprite$1633                                                  00062E GR
+  0 A$Sprite$1634                                                  00062F GR
+  0 A$Sprite$1635                                                  000631 GR
+  0 A$Sprite$1636                                                  000632 GR
+  0 A$Sprite$1637                                                  000633 GR
+  0 A$Sprite$1638                                                  000634 GR
+  0 A$Sprite$1642                                                  000635 GR
+  0 A$Sprite$1643                                                  000638 GR
+  0 A$Sprite$1644                                                  000639 GR
+  0 A$Sprite$1645                                                  00063B GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 11
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1649                                                  00063C GR
+  0 A$Sprite$1650                                                  00063E GR
+  0 A$Sprite$1651                                                  00063F GR
+  0 A$Sprite$1652                                                  000640 GR
+  0 A$Sprite$1653                                                  000643 GR
+  0 A$Sprite$1654                                                  000644 GR
+  0 A$Sprite$1655                                                  000645 GR
+  0 A$Sprite$1656                                                  000646 GR
+  0 A$Sprite$1657                                                  000647 GR
+  0 A$Sprite$1658                                                  000648 GR
+  0 A$Sprite$1659                                                  000649 GR
+  0 A$Sprite$1663                                                  00064B GR
+  0 A$Sprite$1664                                                  00064D GR
+  0 A$Sprite$1665                                                  00064E GR
+  0 A$Sprite$1666                                                  000650 GR
+  0 A$Sprite$167                                                   00003F GR
+  0 A$Sprite$1670                                                  000652 GR
+  0 A$Sprite$1671                                                  000654 GR
+  0 A$Sprite$1672                                                  000656 GR
+  0 A$Sprite$1677                                                  000658 GR
+  0 A$Sprite$1678                                                  00065A GR
+  0 A$Sprite$1679                                                  00065B GR
+  0 A$Sprite$1680                                                  00065C GR
+  0 A$Sprite$1681                                                  00065D GR
+  0 A$Sprite$1686                                                  00065F GR
+  0 A$Sprite$1687                                                  000661 GR
+  0 A$Sprite$1688                                                  000662 GR
+  0 A$Sprite$1689                                                  000664 GR
+  0 A$Sprite$1690                                                  000665 GR
+  0 A$Sprite$1691                                                  000666 GR
+  0 A$Sprite$1692                                                  000667 GR
+  0 A$Sprite$1693                                                  000669 GR
+  0 A$Sprite$1694                                                  00066A GR
+  0 A$Sprite$1695                                                  00066C GR
+  0 A$Sprite$1696                                                  00066D GR
+  0 A$Sprite$1697                                                  00066F GR
+  0 A$Sprite$1698                                                  000670 GR
+  0 A$Sprite$1699                                                  000672 GR
+  0 A$Sprite$1700                                                  000673 GR
+  0 A$Sprite$1701                                                  000675 GR
+  0 A$Sprite$1702                                                  000676 GR
+  0 A$Sprite$1703                                                  000678 GR
+  0 A$Sprite$1704                                                  000679 GR
+  0 A$Sprite$1705                                                  00067B GR
+  0 A$Sprite$1706                                                  00067C GR
+  0 A$Sprite$171                                                   000042 GR
+  0 A$Sprite$1711                                                  00067D GR
+  0 A$Sprite$1712                                                  00067F GR
+  0 A$Sprite$1713                                                  000680 GR
+  0 A$Sprite$1714                                                  000681 GR
+  0 A$Sprite$1715                                                  000682 GR
+  0 A$Sprite$1716                                                  000683 GR
+  0 A$Sprite$1717                                                  000684 GR
+  0 A$Sprite$1718                                                  000686 GR
+  0 A$Sprite$1719                                                  000688 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 12
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$172                                                   000044 GR
+  0 A$Sprite$1720                                                  000689 GR
+  0 A$Sprite$1721                                                  00068A GR
+  0 A$Sprite$1722                                                  00068B GR
+  0 A$Sprite$1723                                                  00068C GR
+  0 A$Sprite$1724                                                  00068D GR
+  0 A$Sprite$1725                                                  00068E GR
+  0 A$Sprite$1729                                                  00068F GR
+  0 A$Sprite$173                                                   000045 GR
+  0 A$Sprite$1730                                                  000690 GR
+  0 A$Sprite$1731                                                  000691 GR
+  0 A$Sprite$1732                                                  000694 GR
+  0 A$Sprite$1733                                                  000695 GR
+  0 A$Sprite$1734                                                  000696 GR
+  0 A$Sprite$1735                                                  000697 GR
+  0 A$Sprite$1736                                                  000698 GR
+  0 A$Sprite$1737                                                  000699 GR
+  0 A$Sprite$174                                                   000046 GR
+  0 A$Sprite$1741                                                  00069B GR
+  0 A$Sprite$1742                                                  00069D GR
+  0 A$Sprite$1746                                                  00069F GR
+  0 A$Sprite$1747                                                  0006A1 GR
+  0 A$Sprite$1748                                                  0006A3 GR
+  0 A$Sprite$175                                                   000047 GR
+  0 A$Sprite$1753                                                  0006A5 GR
+  0 A$Sprite$1754                                                  0006A7 GR
+  0 A$Sprite$1755                                                  0006A8 GR
+  0 A$Sprite$1756                                                  0006A9 GR
+  0 A$Sprite$176                                                   00004A GR
+  0 A$Sprite$1761                                                  0006AB GR
+  0 A$Sprite$1762                                                  0006AD GR
+  0 A$Sprite$1763                                                  0006AF GR
+  0 A$Sprite$1764                                                  0006B1 GR
+  0 A$Sprite$1765                                                  0006B3 GR
+  0 A$Sprite$1766                                                  0006B5 GR
+  0 A$Sprite$1767                                                  0006B7 GR
+  0 A$Sprite$1768                                                  0006B9 GR
+  0 A$Sprite$177                                                   00004B GR
+  0 A$Sprite$1773                                                  0006BA GR
+  0 A$Sprite$1774                                                  0006BD GR
+  0 A$Sprite$1775                                                  0006BE GR
+  0 A$Sprite$1776                                                  0006BF GR
+  0 A$Sprite$1777                                                  0006C2 GR
+  0 A$Sprite$178                                                   00004C GR
+  0 A$Sprite$1781                                                  0006C3 GR
+  0 A$Sprite$1782                                                  0006C5 GR
+  0 A$Sprite$1783                                                  0006C6 GR
+  0 A$Sprite$1784                                                  0006C8 GR
+  0 A$Sprite$1785                                                  0006CB GR
+  0 A$Sprite$1786                                                  0006CC GR
+  0 A$Sprite$1787                                                  0006CD GR
+  0 A$Sprite$1788                                                  0006CE GR
+  0 A$Sprite$1789                                                  0006D1 GR
+  0 A$Sprite$179                                                   00004D GR
+  0 A$Sprite$1790                                                  0006D3 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 13
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1791                                                  0006D4 GR
+  0 A$Sprite$1792                                                  0006D5 GR
+  0 A$Sprite$1793                                                  0006D6 GR
+  0 A$Sprite$1794                                                  0006D7 GR
+  0 A$Sprite$1795                                                  0006D8 GR
+  0 A$Sprite$1796                                                  0006D9 GR
+  0 A$Sprite$1797                                                  0006DB GR
+  0 A$Sprite$1798                                                  0006DC GR
+  0 A$Sprite$1799                                                  0006DD GR
+  0 A$Sprite$180                                                   00004F GR
+  0 A$Sprite$1800                                                  0006DE GR
+  0 A$Sprite$1801                                                  0006DF GR
+  0 A$Sprite$1802                                                  0006E0 GR
+  0 A$Sprite$1803                                                  0006E3 GR
+  0 A$Sprite$1804                                                  0006E4 GR
+  0 A$Sprite$1805                                                  0006E7 GR
+  0 A$Sprite$1806                                                  0006EA GR
+  0 A$Sprite$1807                                                  0006EB GR
+  0 A$Sprite$181                                                   000050 GR
+  0 A$Sprite$1811                                                  0006EE GR
+  0 A$Sprite$1815                                                  0006F0 GR
+  0 A$Sprite$1816                                                  0006F1 GR
+  0 A$Sprite$1817                                                  0006F2 GR
+  0 A$Sprite$1818                                                  0006F3 GR
+  0 A$Sprite$1820                                                  0006F4 GR
+  0 A$Sprite$1821                                                  0006F5 GR
+  0 A$Sprite$1822                                                  0006F6 GR
+  0 A$Sprite$1826                                                  0006F9 GR
+  0 A$Sprite$1827                                                  0006FC GR
+  0 A$Sprite$1830                                                  0006FD GR
+  0 A$Sprite$1831                                                  000700 GR
+  0 A$Sprite$1834                                                  000701 GR
+  0 A$Sprite$1835                                                  000702 GR
+  0 A$Sprite$1836                                                  000705 GR
+  0 A$Sprite$1837                                                  000707 GR
+  0 A$Sprite$1838                                                  000708 GR
+  0 A$Sprite$1839                                                  000709 GR
+  0 A$Sprite$1840                                                  00070A GR
+  0 A$Sprite$1844                                                  00070D GR
+  0 A$Sprite$1845                                                  00070F GR
+  0 A$Sprite$1846                                                  000710 GR
+  0 A$Sprite$1847                                                  000711 GR
+  0 A$Sprite$185                                                   000051 GR
+  0 A$Sprite$1851                                                  000713 GR
+  0 A$Sprite$1852                                                  000715 GR
+  0 A$Sprite$1853                                                  000716 GR
+  0 A$Sprite$1854                                                  000717 GR
+  0 A$Sprite$1855                                                  000718 GR
+  0 A$Sprite$1856                                                  00071A GR
+  0 A$Sprite$1858                                                  00071C GR
+  0 A$Sprite$1859                                                  00071E GR
+  0 A$Sprite$1860                                                  000720 GR
+  0 A$Sprite$1861                                                  000721 GR
+  0 A$Sprite$1862                                                  000723 GR
+  0 A$Sprite$1863                                                  000724 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 14
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1864                                                  000726 GR
+  0 A$Sprite$1865                                                  000728 GR
+  0 A$Sprite$1866                                                  000729 GR
+  0 A$Sprite$1867                                                  00072A GR
+  0 A$Sprite$1868                                                  00072B GR
+  0 A$Sprite$1869                                                  00072C GR
+  0 A$Sprite$1870                                                  00072E GR
+  0 A$Sprite$1871                                                  00072F GR
+  0 A$Sprite$1872                                                  000731 GR
+  0 A$Sprite$1873                                                  000732 GR
+  0 A$Sprite$1874                                                  000734 GR
+  0 A$Sprite$1875                                                  000736 GR
+  0 A$Sprite$1876                                                  000737 GR
+  0 A$Sprite$1877                                                  000738 GR
+  0 A$Sprite$1878                                                  000739 GR
+  0 A$Sprite$1879                                                  00073B GR
+  0 A$Sprite$1880                                                  00073C GR
+  0 A$Sprite$1881                                                  00073D GR
+  0 A$Sprite$1882                                                  00073E GR
+  0 A$Sprite$1883                                                  00073F GR
+  0 A$Sprite$1884                                                  000740 GR
+  0 A$Sprite$1885                                                  000741 GR
+  0 A$Sprite$1886                                                  000742 GR
+  0 A$Sprite$1887                                                  000743 GR
+  0 A$Sprite$1888                                                  000745 GR
+  0 A$Sprite$1889                                                  000746 GR
+  0 A$Sprite$1890                                                  000747 GR
+  0 A$Sprite$1891                                                  000749 GR
+  0 A$Sprite$1892                                                  00074A GR
+  0 A$Sprite$1893                                                  00074B GR
+  0 A$Sprite$1894                                                  00074C GR
+  0 A$Sprite$1895                                                  00074E GR
+  0 A$Sprite$1896                                                  00074F GR
+  0 A$Sprite$1897                                                  000750 GR
+  0 A$Sprite$1898                                                  000751 GR
+  0 A$Sprite$1899                                                  000752 GR
+  0 A$Sprite$190                                                   000053 GR
+  0 A$Sprite$1900                                                  000753 GR
+  0 A$Sprite$1905                                                  000755 GR
+  0 A$Sprite$1906                                                  000757 GR
+  0 A$Sprite$1907                                                  000758 GR
+  0 A$Sprite$1908                                                  000759 GR
+  0 A$Sprite$1909                                                  00075A GR
+  0 A$Sprite$1910                                                  00075B GR
+  0 A$Sprite$1911                                                  00075C GR
+  0 A$Sprite$1912                                                  00075D GR
+  0 A$Sprite$1913                                                  00075E GR
+  0 A$Sprite$1914                                                  00075F GR
+  0 A$Sprite$1915                                                  000761 GR
+  0 A$Sprite$1916                                                  000762 GR
+  0 A$Sprite$1917                                                  000763 GR
+  0 A$Sprite$1918                                                  000764 GR
+  0 A$Sprite$1919                                                  000766 GR
+  0 A$Sprite$1920                                                  000767 GR
+  0 A$Sprite$1922                                                  000769 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 15
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$1923                                                  00076B GR
+  0 A$Sprite$1924                                                  00076D GR
+  0 A$Sprite$1925                                                  00076E GR
+  0 A$Sprite$1926                                                  000770 GR
+  0 A$Sprite$1927                                                  000771 GR
+  0 A$Sprite$1928                                                  000773 GR
+  0 A$Sprite$1929                                                  000775 GR
+  0 A$Sprite$1930                                                  000776 GR
+  0 A$Sprite$1931                                                  000777 GR
+  0 A$Sprite$1932                                                  000778 GR
+  0 A$Sprite$1933                                                  00077A GR
+  0 A$Sprite$1934                                                  00077B GR
+  0 A$Sprite$1935                                                  00077C GR
+  0 A$Sprite$1936                                                  00077D GR
+  0 A$Sprite$1937                                                  00077E GR
+  0 A$Sprite$1942                                                  00077F GR
+  0 A$Sprite$1943                                                  000782 GR
+  0 A$Sprite$1944                                                  000783 GR
+  0 A$Sprite$1945                                                  000784 GR
+  0 A$Sprite$1946                                                  000785 GR
+  0 A$Sprite$1947                                                  000786 GR
+  0 A$Sprite$1948                                                  000788 GR
+  0 A$Sprite$1952                                                  000789 GR
+  0 A$Sprite$1956                                                  00078C GR
+  0 A$Sprite$1961                                                  00078E GR
+  0 A$Sprite$1962                                                  00078F GR
+  0 A$Sprite$1963                                                  000792 GR
+  0 A$Sprite$1964                                                  000795 GR
+  0 A$Sprite$1965                                                  000796 GR
+  0 A$Sprite$1966                                                  000799 GR
+  0 A$Sprite$1967                                                  00079A GR
+  0 A$Sprite$1968                                                  00079B GR
+  0 A$Sprite$1969                                                  00079E GR
+  0 A$Sprite$1970                                                  00079F GR
+  0 A$Sprite$1971                                                  0007A2 GR
+  0 A$Sprite$1976                                                  0007A5 GR
+  0 A$Sprite$1984                                                  0007A8 GR
+  0 A$Sprite$1985                                                  0007AA GR
+  0 A$Sprite$1986                                                  0007AB GR
+  0 A$Sprite$1987                                                  0007AC GR
+  0 A$Sprite$1988                                                  0007AD GR
+  0 A$Sprite$1989                                                  0007AE GR
+  0 A$Sprite$1990                                                  0007AF GR
+  0 A$Sprite$1991                                                  0007B0 GR
+  0 A$Sprite$1992                                                  0007B1 GR
+  0 A$Sprite$1993                                                  0007B2 GR
+  0 A$Sprite$1994                                                  0007B4 GR
+  0 A$Sprite$1995                                                  0007B5 GR
+  0 A$Sprite$1996                                                  0007B6 GR
+  0 A$Sprite$1997                                                  0007B7 GR
+  0 A$Sprite$1998                                                  0007B8 GR
+  0 A$Sprite$1999                                                  0007B9 GR
+  0 A$Sprite$200                                                   000054 GR
+  0 A$Sprite$2000                                                  0007BA GR
+  0 A$Sprite$2001                                                  0007BB GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 16
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2002                                                  0007BD GR
+  0 A$Sprite$2003                                                  0007BE GR
+  0 A$Sprite$2004                                                  0007BF GR
+  0 A$Sprite$2005                                                  0007C0 GR
+  0 A$Sprite$2006                                                  0007C1 GR
+  0 A$Sprite$2007                                                  0007C2 GR
+  0 A$Sprite$201                                                   000056 GR
+  0 A$Sprite$2015                                                  0007C3 GR
+  0 A$Sprite$2016                                                  0007C5 GR
+  0 A$Sprite$2017                                                  0007C6 GR
+  0 A$Sprite$2018                                                  0007C8 GR
+  0 A$Sprite$2019                                                  0007C9 GR
+  0 A$Sprite$202                                                   000057 GR
+  0 A$Sprite$2020                                                  0007CA GR
+  0 A$Sprite$2021                                                  0007CB GR
+  0 A$Sprite$2025                                                  0007CC GR
+  0 A$Sprite$2026                                                  0007CE GR
+  0 A$Sprite$2027                                                  0007CF GR
+  0 A$Sprite$2028                                                  0007D0 GR
+  0 A$Sprite$203                                                   000058 GR
+  0 A$Sprite$2032                                                  0007D3 GR
+  0 A$Sprite$2033                                                  0007D4 GR
+  0 A$Sprite$2034                                                  0007D5 GR
+  0 A$Sprite$2035                                                  0007D6 GR
+  0 A$Sprite$2036                                                  0007D7 GR
+  0 A$Sprite$2037                                                  0007D9 GR
+  0 A$Sprite$2038                                                  0007DB GR
+  0 A$Sprite$2039                                                  0007DD GR
+  0 A$Sprite$204                                                   00005A GR
+  0 A$Sprite$2040                                                  0007DF GR
+  0 A$Sprite$2041                                                  0007E0 GR
+  0 A$Sprite$2043                                                  0007E2 GR
+  0 A$Sprite$2044                                                  0007E4 GR
+  0 A$Sprite$2045                                                  0007E6 GR
+  0 A$Sprite$2047                                                  0007E7 GR
+  0 A$Sprite$2048                                                  0007E9 GR
+  0 A$Sprite$2049                                                  0007EA GR
+  0 A$Sprite$2050                                                  0007EC GR
+  0 A$Sprite$2054                                                  0007ED GR
+  0 A$Sprite$2055                                                  0007EF GR
+  0 A$Sprite$2056                                                  0007F0 GR
+  0 A$Sprite$2057                                                  0007F1 GR
+  0 A$Sprite$2058                                                  0007F2 GR
+  0 A$Sprite$2059                                                  0007F3 GR
+  0 A$Sprite$2060                                                  0007F5 GR
+  0 A$Sprite$2061                                                  0007F6 GR
+  0 A$Sprite$2062                                                  0007F7 GR
+  0 A$Sprite$2066                                                  0007F8 GR
+  0 A$Sprite$2067                                                  0007F9 GR
+  0 A$Sprite$2068                                                  0007FA GR
+  0 A$Sprite$2069                                                  0007FB GR
+  0 A$Sprite$2070                                                  0007FC GR
+  0 A$Sprite$2074                                                  0007FE GR
+  0 A$Sprite$2075                                                  0007FF GR
+  0 A$Sprite$2076                                                  000800 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 17
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2077                                                  000801 GR
+  0 A$Sprite$2078                                                  000802 GR
+  0 A$Sprite$2079                                                  000803 GR
+  0 A$Sprite$208                                                   00005B GR
+  0 A$Sprite$2080                                                  000804 GR
+  0 A$Sprite$2081                                                  000805 GR
+  0 A$Sprite$2082                                                  000807 GR
+  0 A$Sprite$2083                                                  000808 GR
+  0 A$Sprite$2084                                                  00080A GR
+  0 A$Sprite$2085                                                  00080B GR
+  0 A$Sprite$2086                                                  00080C GR
+  0 A$Sprite$2087                                                  00080D GR
+  0 A$Sprite$2088                                                  00080E GR
+  0 A$Sprite$2089                                                  00080F GR
+  0 A$Sprite$209                                                   00005C GR
+  0 A$Sprite$2090                                                  000810 GR
+  0 A$Sprite$2091                                                  000812 GR
+  0 A$Sprite$2092                                                  000813 GR
+  0 A$Sprite$2093                                                  000814 GR
+  0 A$Sprite$2094                                                  000815 GR
+  0 A$Sprite$2095                                                  000816 GR
+  0 A$Sprite$2096                                                  000817 GR
+  0 A$Sprite$2097                                                  000818 GR
+  0 A$Sprite$2098                                                  00081A GR
+  0 A$Sprite$2099                                                  00081B GR
+  0 A$Sprite$210                                                   00005E GR
+  0 A$Sprite$2100                                                  00081C GR
+  0 A$Sprite$2101                                                  00081D GR
+  0 A$Sprite$2102                                                  00081F GR
+  0 A$Sprite$2103                                                  000820 GR
+  0 A$Sprite$2104                                                  000821 GR
+  0 A$Sprite$2105                                                  000822 GR
+  0 A$Sprite$2106                                                  000823 GR
+  0 A$Sprite$211                                                   00005F GR
+  0 A$Sprite$2111                                                  000825 GR
+  0 A$Sprite$2112                                                  000827 GR
+  0 A$Sprite$2113                                                  000828 GR
+  0 A$Sprite$2114                                                  000829 GR
+  0 A$Sprite$2119                                                  00082A GR
+  0 A$Sprite$212                                                   000062 GR
+  0 A$Sprite$2120                                                  00082B GR
+  0 A$Sprite$2121                                                  00082C GR
+  0 A$Sprite$2122                                                  00082E GR
+  0 A$Sprite$2123                                                  000830 GR
+  0 A$Sprite$2124                                                  000832 GR
+  0 A$Sprite$2125                                                  000834 GR
+  0 A$Sprite$2126                                                  000836 GR
+  0 A$Sprite$213                                                   000063 GR
+  0 A$Sprite$2130                                                  000838 GR
+  0 A$Sprite$2131                                                  00083A GR
+  0 A$Sprite$2132                                                  00083B GR
+  0 A$Sprite$2133                                                  00083C GR
+  0 A$Sprite$2134                                                  00083D GR
+  0 A$Sprite$2135                                                  00083E GR
+  0 A$Sprite$2136                                                  00083F GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 18
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$214                                                   000064 GR
+  0 A$Sprite$2140                                                  000840 GR
+  0 A$Sprite$2143                                                  000841 GR
+  0 A$Sprite$2144                                                  000842 GR
+  0 A$Sprite$2145                                                  000844 GR
+  0 A$Sprite$2146                                                  000846 GR
+  0 A$Sprite$2147                                                  000848 GR
+  0 A$Sprite$2148                                                  00084A GR
+  0 A$Sprite$2149                                                  00084C GR
+  0 A$Sprite$215                                                   000065 GR
+  0 A$Sprite$2150                                                  00084E GR
+  0 A$Sprite$2151                                                  00084F GR
+  0 A$Sprite$2155                                                  000851 GR
+  0 A$Sprite$2156                                                  000852 GR
+  0 A$Sprite$2157                                                  000853 GR
+  0 A$Sprite$216                                                   000066 GR
+  0 A$Sprite$2161                                                  000856 GR
+  0 A$Sprite$2162                                                  000859 GR
+  0 A$Sprite$2163                                                  00085A GR
+  0 A$Sprite$2164                                                  00085B GR
+  0 A$Sprite$2165                                                  00085C GR
+  0 A$Sprite$2166                                                  00085D GR
+  0 A$Sprite$2167                                                  00085E GR
+  0 A$Sprite$217                                                   000068 GR
+  0 A$Sprite$2171                                                  000861 GR
+  0 A$Sprite$2172                                                  000863 GR
+  0 A$Sprite$2173                                                  000864 GR
+  0 A$Sprite$2174                                                  000865 GR
+  0 A$Sprite$2175                                                  000866 GR
+  0 A$Sprite$2176                                                  000867 GR
+  0 A$Sprite$2177                                                  000868 GR
+  0 A$Sprite$2178                                                  000869 GR
+  0 A$Sprite$2179                                                  00086A GR
+  0 A$Sprite$218                                                   000069 GR
+  0 A$Sprite$2183                                                  00086B GR
+  0 A$Sprite$2184                                                  00086E GR
+  0 A$Sprite$2185                                                  00086F GR
+  0 A$Sprite$2186                                                  000871 GR
+  0 A$Sprite$219                                                   00006A GR
+  0 A$Sprite$2190                                                  000872 GR
+  0 A$Sprite$2191                                                  000875 GR
+  0 A$Sprite$2192                                                  000876 GR
+  0 A$Sprite$2193                                                  000877 GR
+  0 A$Sprite$2194                                                  000878 GR
+  0 A$Sprite$2195                                                  000879 GR
+  0 A$Sprite$2196                                                  00087A GR
+  0 A$Sprite$220                                                   00006B GR
+  0 A$Sprite$2202                                                  00087C GR
+  0 A$Sprite$2205                                                  00087D GR
+  0 A$Sprite$2206                                                  00087F GR
+  0 A$Sprite$2210                                                  000881 GR
+  0 A$Sprite$2211                                                  000883 GR
+  0 A$Sprite$2212                                                  000885 GR
+  0 A$Sprite$2217                                                  000887 GR
+  0 A$Sprite$2218                                                  000889 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 19
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2219                                                  00088A GR
+  0 A$Sprite$2220                                                  00088B GR
+  0 A$Sprite$2225                                                  00088D GR
+  0 A$Sprite$2226                                                  00088E GR
+  0 A$Sprite$2227                                                  00088F GR
+  0 A$Sprite$2228                                                  000891 GR
+  0 A$Sprite$2229                                                  000893 GR
+  0 A$Sprite$2230                                                  000895 GR
+  0 A$Sprite$2231                                                  000897 GR
+  0 A$Sprite$2232                                                  000899 GR
+  0 A$Sprite$2233                                                  00089B GR
+  0 A$Sprite$2234                                                  00089D GR
+  0 A$Sprite$2239                                                  00089E GR
+  0 A$Sprite$224                                                   00006C GR
+  0 A$Sprite$2240                                                  0008A0 GR
+  0 A$Sprite$2241                                                  0008A1 GR
+  0 A$Sprite$2242                                                  0008A2 GR
+  0 A$Sprite$2243                                                  0008A3 GR
+  0 A$Sprite$2244                                                  0008A4 GR
+  0 A$Sprite$2247                                                  0008A5 GR
+  0 A$Sprite$225                                                   00006D GR
+  0 A$Sprite$2250                                                  0008A7 GR
+  0 A$Sprite$2251                                                  0008A8 GR
+  0 A$Sprite$2252                                                  0008A9 GR
+  0 A$Sprite$2253                                                  0008AA GR
+  0 A$Sprite$2254                                                  0008AD GR
+  0 A$Sprite$2255                                                  0008AE GR
+  0 A$Sprite$2256                                                  0008AF GR
+  0 A$Sprite$2257                                                  0008B0 GR
+  0 A$Sprite$2258                                                  0008B1 GR
+  0 A$Sprite$2259                                                  0008B2 GR
+  0 A$Sprite$226                                                   00006E GR
+  0 A$Sprite$2260                                                  0008B4 GR
+  0 A$Sprite$2261                                                  0008B5 GR
+  0 A$Sprite$2265                                                  0008B6 GR
+  0 A$Sprite$2266                                                  0008B7 GR
+  0 A$Sprite$2267                                                  0008B8 GR
+  0 A$Sprite$2268                                                  0008B9 GR
+  0 A$Sprite$2269                                                  0008BC GR
+  0 A$Sprite$227                                                   00006F GR
+  0 A$Sprite$2270                                                  0008BD GR
+  0 A$Sprite$2271                                                  0008BE GR
+  0 A$Sprite$2272                                                  0008BF GR
+  0 A$Sprite$2273                                                  0008C0 GR
+  0 A$Sprite$2274                                                  0008C1 GR
+  0 A$Sprite$2278                                                  0008C3 GR
+  0 A$Sprite$2279                                                  0008C5 GR
+  0 A$Sprite$228                                                   000071 GR
+  0 A$Sprite$2280                                                  0008C7 GR
+  0 A$Sprite$2284                                                  0008C9 GR
+  0 A$Sprite$2285                                                  0008CB GR
+  0 A$Sprite$229                                                   000072 GR
+  0 A$Sprite$2290                                                  0008CD GR
+  0 A$Sprite$2291                                                  0008CF GR
+  0 A$Sprite$2292                                                  0008D0 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 20
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2297                                                  0008D2 GR
+  0 A$Sprite$2298                                                  0008D4 GR
+  0 A$Sprite$2299                                                  0008D5 GR
+  0 A$Sprite$230                                                   000073 GR
+  0 A$Sprite$2300                                                  0008D6 GR
+  0 A$Sprite$2301                                                  0008D7 GR
+  0 A$Sprite$2302                                                  0008D9 GR
+  0 A$Sprite$2303                                                  0008DB GR
+  0 A$Sprite$2304                                                  0008DD GR
+  0 A$Sprite$2305                                                  0008DF GR
+  0 A$Sprite$2306                                                  0008E1 GR
+  0 A$Sprite$231                                                   000074 GR
+  0 A$Sprite$2311                                                  0008E3 GR
+  0 A$Sprite$2312                                                  0008E4 GR
+  0 A$Sprite$2313                                                  0008E7 GR
+  0 A$Sprite$2314                                                  0008E8 GR
+  0 A$Sprite$2315                                                  0008E9 GR
+  0 A$Sprite$2316                                                  0008EC GR
+  0 A$Sprite$2317                                                  0008ED GR
+  0 A$Sprite$232                                                   000075 GR
+  0 A$Sprite$2321                                                  0008EE GR
+  0 A$Sprite$2322                                                  0008F0 GR
+  0 A$Sprite$2323                                                  0008F1 GR
+  0 A$Sprite$2324                                                  0008F3 GR
+  0 A$Sprite$2325                                                  0008F4 GR
+  0 A$Sprite$2326                                                  0008F7 GR
+  0 A$Sprite$2327                                                  0008F8 GR
+  0 A$Sprite$2328                                                  0008F9 GR
+  0 A$Sprite$2329                                                  0008FA GR
+  0 A$Sprite$2330                                                  0008FD GR
+  0 A$Sprite$2331                                                  0008FE GR
+  0 A$Sprite$2332                                                  000900 GR
+  0 A$Sprite$2335                                                  000901 GR
+  0 A$Sprite$2338                                                  000903 GR
+  0 A$Sprite$2339                                                  000904 GR
+  0 A$Sprite$2340                                                  000905 GR
+  0 A$Sprite$2341                                                  000906 GR
+  0 A$Sprite$2342                                                  000909 GR
+  0 A$Sprite$2343                                                  00090A GR
+  0 A$Sprite$2344                                                  00090D GR
+  0 A$Sprite$2345                                                  000910 GR
+  0 A$Sprite$2346                                                  000911 GR
+  0 A$Sprite$2350                                                  000914 GR
+  0 A$Sprite$2351                                                  000915 GR
+  0 A$Sprite$2352                                                  000916 GR
+  0 A$Sprite$2353                                                  000918 GR
+  0 A$Sprite$2357                                                  000919 GR
+  0 A$Sprite$2358                                                  00091B GR
+  0 A$Sprite$2359                                                  00091D GR
+  0 A$Sprite$236                                                   000076 GR
+  0 A$Sprite$2360                                                  00091F GR
+  0 A$Sprite$2361                                                  000922 GR
+  0 A$Sprite$2362                                                  000924 GR
+  0 A$Sprite$2363                                                  000925 GR
+  0 A$Sprite$2364                                                  000926 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 21
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2365                                                  000927 GR
+  0 A$Sprite$2367                                                  000929 GR
+  0 A$Sprite$2368                                                  00092C GR
+  0 A$Sprite$2369                                                  00092E GR
+  0 A$Sprite$237                                                   000079 GR
+  0 A$Sprite$2370                                                  00092F GR
+  0 A$Sprite$2371                                                  000930 GR
+  0 A$Sprite$2373                                                  000931 GR
+  0 A$Sprite$2374                                                  000933 GR
+  0 A$Sprite$2375                                                  000934 GR
+  0 A$Sprite$2376                                                  000935 GR
+  0 A$Sprite$238                                                   00007B GR
+  0 A$Sprite$2381                                                  000936 GR
+  0 A$Sprite$2382                                                  000938 GR
+  0 A$Sprite$2383                                                  000939 GR
+  0 A$Sprite$2384                                                  00093A GR
+  0 A$Sprite$2388                                                  00093C GR
+  0 A$Sprite$2389                                                  00093F GR
+  0 A$Sprite$239                                                   00007C GR
+  0 A$Sprite$2392                                                  000940 GR
+  0 A$Sprite$2393                                                  000943 GR
+  0 A$Sprite$2396                                                  000944 GR
+  0 A$Sprite$2398                                                  000945 GR
+  0 A$Sprite$2399                                                  000947 GR
+  0 A$Sprite$240                                                   00007E GR
+  0 A$Sprite$2400                                                  000948 GR
+  0 A$Sprite$2401                                                  000949 GR
+  0 A$Sprite$2402                                                  00094A GR
+  0 A$Sprite$2406                                                  00094C GR
+  0 A$Sprite$2407                                                  00094E GR
+  0 A$Sprite$2408                                                  00094F GR
+  0 A$Sprite$241                                                   00007F GR
+  0 A$Sprite$2412                                                  000951 GR
+  0 A$Sprite$2413                                                  000953 GR
+  0 A$Sprite$2414                                                  000954 GR
+  0 A$Sprite$2415                                                  000955 GR
+  0 A$Sprite$2419                                                  000957 GR
+  0 A$Sprite$242                                                   000080 GR
+  0 A$Sprite$2420                                                  000958 GR
+  0 A$Sprite$2421                                                  000959 GR
+  0 A$Sprite$2422                                                  00095A GR
+  0 A$Sprite$2423                                                  00095B GR
+  0 A$Sprite$2424                                                  00095D GR
+  0 A$Sprite$2425                                                  00095E GR
+  0 A$Sprite$2426                                                  000960 GR
+  0 A$Sprite$2427                                                  000961 GR
+  0 A$Sprite$2428                                                  000963 GR
+  0 A$Sprite$2429                                                  000964 GR
+  0 A$Sprite$243                                                   000081 GR
+  0 A$Sprite$2430                                                  000965 GR
+  0 A$Sprite$2431                                                  000966 GR
+  0 A$Sprite$2432                                                  000967 GR
+  0 A$Sprite$2433                                                  000968 GR
+  0 A$Sprite$2434                                                  000969 GR
+  0 A$Sprite$2435                                                  00096A GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 22
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2436                                                  00096B GR
+  0 A$Sprite$2437                                                  00096D GR
+  0 A$Sprite$2438                                                  00096E GR
+  0 A$Sprite$2439                                                  00096F GR
+  0 A$Sprite$244                                                   000083 GR
+  0 A$Sprite$2440                                                  000970 GR
+  0 A$Sprite$2441                                                  000971 GR
+  0 A$Sprite$2442                                                  000972 GR
+  0 A$Sprite$2443                                                  000974 GR
+  0 A$Sprite$2444                                                  000975 GR
+  0 A$Sprite$2445                                                  000976 GR
+  0 A$Sprite$2446                                                  000977 GR
+  0 A$Sprite$2447                                                  000978 GR
+  0 A$Sprite$2448                                                  000979 GR
+  0 A$Sprite$2449                                                  00097A GR
+  0 A$Sprite$245                                                   000084 GR
+  0 A$Sprite$2454                                                  00097C GR
+  0 A$Sprite$2457                                                  00097D GR
+  0 A$Sprite$246                                                   000085 GR
+  0 A$Sprite$2460                                                  00097E GR
+  0 A$Sprite$2461                                                  00097F GR
+  0 A$Sprite$2462                                                  000980 GR
+  0 A$Sprite$2463                                                  000981 GR
+  0 A$Sprite$2464                                                  000982 GR
+  0 A$Sprite$2465                                                  000983 GR
+  0 A$Sprite$2466                                                  000984 GR
+  0 A$Sprite$2467                                                  000986 GR
+  0 A$Sprite$2468                                                  000987 GR
+  0 A$Sprite$2469                                                  000988 GR
+  0 A$Sprite$247                                                   000086 GR
+  0 A$Sprite$2470                                                  000989 GR
+  0 A$Sprite$2471                                                  00098A GR
+  0 A$Sprite$2472                                                  00098B GR
+  0 A$Sprite$2477                                                  00098C GR
+  0 A$Sprite$2478                                                  00098F GR
+  0 A$Sprite$2479                                                  000990 GR
+  0 A$Sprite$248                                                   000088 GR
+  0 A$Sprite$2480                                                  000991 GR
+  0 A$Sprite$2481                                                  000992 GR
+  0 A$Sprite$2482                                                  000993 GR
+  0 A$Sprite$2483                                                  000995 GR
+  0 A$Sprite$2487                                                  000996 GR
+  0 A$Sprite$249                                                   000089 GR
+  0 A$Sprite$2491                                                  000999 GR
+  0 A$Sprite$2496                                                  00099B GR
+  0 A$Sprite$2497                                                  00099D GR
+  0 A$Sprite$2498                                                  00099E GR
+  0 A$Sprite$2499                                                  0009A1 GR
+  0 A$Sprite$250                                                   00008A GR
+  0 A$Sprite$2500                                                  0009A2 GR
+  0 A$Sprite$2501                                                  0009A4 GR
+  0 A$Sprite$2502                                                  0009A5 GR
+  0 A$Sprite$2503                                                  0009A6 GR
+  0 A$Sprite$2508                                                  0009A8 GR
+  0 A$Sprite$251                                                   00008B GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 23
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2516                                                  0009AB GR
+  0 A$Sprite$2517                                                  0009AD GR
+  0 A$Sprite$2518                                                  0009AE GR
+  0 A$Sprite$2519                                                  0009AF GR
+  0 A$Sprite$252                                                   00008C GR
+  0 A$Sprite$2520                                                  0009B0 GR
+  0 A$Sprite$2521                                                  0009B1 GR
+  0 A$Sprite$2522                                                  0009B2 GR
+  0 A$Sprite$2523                                                  0009B3 GR
+  0 A$Sprite$2524                                                  0009B4 GR
+  0 A$Sprite$2525                                                  0009B5 GR
+  0 A$Sprite$2526                                                  0009B7 GR
+  0 A$Sprite$2527                                                  0009B8 GR
+  0 A$Sprite$2528                                                  0009B9 GR
+  0 A$Sprite$2529                                                  0009BA GR
+  0 A$Sprite$253                                                   00008D GR
+  0 A$Sprite$2530                                                  0009BB GR
+  0 A$Sprite$2531                                                  0009BC GR
+  0 A$Sprite$2532                                                  0009BD GR
+  0 A$Sprite$2533                                                  0009BE GR
+  0 A$Sprite$2534                                                  0009BF GR
+  0 A$Sprite$2535                                                  0009C0 GR
+  0 A$Sprite$2536                                                  0009C1 GR
+  0 A$Sprite$2537                                                  0009C2 GR
+  0 A$Sprite$2538                                                  0009C3 GR
+  0 A$Sprite$2539                                                  0009C4 GR
+  0 A$Sprite$2547                                                  0009C5 GR
+  0 A$Sprite$2548                                                  0009C7 GR
+  0 A$Sprite$2552                                                  0009C8 GR
+  0 A$Sprite$2553                                                  0009CA GR
+  0 A$Sprite$2554                                                  0009CB GR
+  0 A$Sprite$2555                                                  0009CC GR
+  0 A$Sprite$2565                                                  0009CD GR
+  0 A$Sprite$2566                                                  0009CF GR
+  0 A$Sprite$2567                                                  0009D1 GR
+  0 A$Sprite$2568                                                  0009D2 GR
+  0 A$Sprite$2569                                                  0009D3 GR
+  0 A$Sprite$257                                                   00008E GR
+  0 A$Sprite$2570                                                  0009D4 GR
+  0 A$Sprite$2571                                                  0009D6 GR
+  0 A$Sprite$2572                                                  0009D7 GR
+  0 A$Sprite$2576                                                  0009D8 GR
+  0 A$Sprite$2577                                                  0009D9 GR
+  0 A$Sprite$2578                                                  0009DA GR
+  0 A$Sprite$2579                                                  0009DB GR
+  0 A$Sprite$258                                                   000091 GR
+  0 A$Sprite$2580                                                  0009DC GR
+  0 A$Sprite$2581                                                  0009DD GR
+  0 A$Sprite$2582                                                  0009E0 GR
+  0 A$Sprite$2583                                                  0009E1 GR
+  0 A$Sprite$2584                                                  0009E2 GR
+  0 A$Sprite$2585                                                  0009E3 GR
+  0 A$Sprite$2586                                                  0009E4 GR
+  0 A$Sprite$2587                                                  0009E5 GR
+  0 A$Sprite$2588                                                  0009E6 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 24
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2589                                                  0009E8 GR
+  0 A$Sprite$259                                                   000092 GR
+  0 A$Sprite$2590                                                  0009E9 GR
+  0 A$Sprite$2591                                                  0009EA GR
+  0 A$Sprite$2592                                                  0009EB GR
+  0 A$Sprite$2593                                                  0009EC GR
+  0 A$Sprite$2594                                                  0009ED GR
+  0 A$Sprite$2595                                                  0009EE GR
+  0 A$Sprite$2596                                                  0009EF GR
+  0 A$Sprite$2597                                                  0009F2 GR
+  0 A$Sprite$2598                                                  0009F3 GR
+  0 A$Sprite$2599                                                  0009F4 GR
+  0 A$Sprite$260                                                   000093 GR
+  0 A$Sprite$2600                                                  0009F5 GR
+  0 A$Sprite$2601                                                  0009F6 GR
+  0 A$Sprite$2602                                                  0009F8 GR
+  0 A$Sprite$2603                                                  0009F9 GR
+  0 A$Sprite$2604                                                  0009FA GR
+  0 A$Sprite$2605                                                  0009FB GR
+  0 A$Sprite$2606                                                  0009FC GR
+  0 A$Sprite$2607                                                  0009FD GR
+  0 A$Sprite$2608                                                  0009FE GR
+  0 A$Sprite$2609                                                  0009FF GR
+  0 A$Sprite$261                                                   000094 GR
+  0 A$Sprite$2610                                                  000A00 GR
+  0 A$Sprite$2611                                                  000A01 GR
+  0 A$Sprite$2615                                                  000A02 GR
+  0 A$Sprite$2616                                                  000A05 GR
+  0 A$Sprite$2617                                                  000A06 GR
+  0 A$Sprite$2618                                                  000A08 GR
+  0 A$Sprite$2619                                                  000A09 GR
+  0 A$Sprite$262                                                   000096 GR
+  0 A$Sprite$2620                                                  000A0B GR
+  0 A$Sprite$2621                                                  000A0C GR
+  0 A$Sprite$2625                                                  000A0E GR
+  0 A$Sprite$2626                                                  000A0F GR
+  0 A$Sprite$263                                                   000097 GR
+  0 A$Sprite$2631                                                  000A12 GR
+  0 A$Sprite$2632                                                  000A14 GR
+  0 A$Sprite$2636                                                  000A15 GR
+  0 A$Sprite$2637                                                  000A17 GR
+  0 A$Sprite$2638                                                  000A18 GR
+  0 A$Sprite$2639                                                  000A19 GR
+  0 A$Sprite$264                                                   000098 GR
+  0 A$Sprite$2640                                                  000A1A GR
+  0 A$Sprite$2641                                                  000A1D GR
+  0 A$Sprite$2642                                                  000A1E GR
+  0 A$Sprite$2643                                                  000A1F GR
+  0 A$Sprite$2644                                                  000A20 GR
+  0 A$Sprite$2645                                                  000A21 GR
+  0 A$Sprite$2646                                                  000A22 GR
+  0 A$Sprite$2647                                                  000A23 GR
+  0 A$Sprite$2648                                                  000A25 GR
+  0 A$Sprite$2649                                                  000A26 GR
+  0 A$Sprite$265                                                   000099 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 25
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2650                                                  000A27 GR
+  0 A$Sprite$2651                                                  000A28 GR
+  0 A$Sprite$2652                                                  000A29 GR
+  0 A$Sprite$2653                                                  000A2A GR
+  0 A$Sprite$2654                                                  000A2B GR
+  0 A$Sprite$2655                                                  000A2C GR
+  0 A$Sprite$2656                                                  000A2F GR
+  0 A$Sprite$2657                                                  000A30 GR
+  0 A$Sprite$2658                                                  000A31 GR
+  0 A$Sprite$2659                                                  000A32 GR
+  0 A$Sprite$266                                                   00009B GR
+  0 A$Sprite$2660                                                  000A33 GR
+  0 A$Sprite$2661                                                  000A35 GR
+  0 A$Sprite$2662                                                  000A36 GR
+  0 A$Sprite$2663                                                  000A37 GR
+  0 A$Sprite$2664                                                  000A38 GR
+  0 A$Sprite$2665                                                  000A39 GR
+  0 A$Sprite$2666                                                  000A3A GR
+  0 A$Sprite$2667                                                  000A3B GR
+  0 A$Sprite$2668                                                  000A3C GR
+  0 A$Sprite$2669                                                  000A3D GR
+  0 A$Sprite$267                                                   00009C GR
+  0 A$Sprite$2670                                                  000A3E GR
+  0 A$Sprite$2671                                                  000A3F GR
+  0 A$Sprite$2672                                                  000A40 GR
+  0 A$Sprite$2676                                                  000A41 GR
+  0 A$Sprite$2677                                                  000A42 GR
+  0 A$Sprite$2678                                                  000A43 GR
+  0 A$Sprite$2679                                                  000A44 GR
+  0 A$Sprite$268                                                   00009F GR
+  0 A$Sprite$2680                                                  000A45 GR
+  0 A$Sprite$2681                                                  000A46 GR
+  0 A$Sprite$2682                                                  000A49 GR
+  0 A$Sprite$2683                                                  000A4A GR
+  0 A$Sprite$2684                                                  000A4B GR
+  0 A$Sprite$2685                                                  000A4C GR
+  0 A$Sprite$2686                                                  000A4E GR
+  0 A$Sprite$2687                                                  000A4F GR
+  0 A$Sprite$2688                                                  000A51 GR
+  0 A$Sprite$2689                                                  000A52 GR
+  0 A$Sprite$269                                                   0000A0 GR
+  0 A$Sprite$2693                                                  000A54 GR
+  0 A$Sprite$2694                                                  000A55 GR
+  0 A$Sprite$2699                                                  000A57 GR
+  0 A$Sprite$270                                                   0000A2 GR
+  0 A$Sprite$2700                                                  000A59 GR
+  0 A$Sprite$2701                                                  000A5A GR
+  0 A$Sprite$2702                                                  000A5B GR
+  0 A$Sprite$2703                                                  000A5C GR
+  0 A$Sprite$2704                                                  000A5D GR
+  0 A$Sprite$2705                                                  000A5E GR
+  0 A$Sprite$2706                                                  000A60 GR
+  0 A$Sprite$2707                                                  000A61 GR
+  0 A$Sprite$2708                                                  000A62 GR
+  0 A$Sprite$2709                                                  000A63 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 26
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$271                                                   0000A3 GR
+  0 A$Sprite$2710                                                  000A66 GR
+  0 A$Sprite$2711                                                  000A67 GR
+  0 A$Sprite$2712                                                  000A68 GR
+  0 A$Sprite$2713                                                  000A69 GR
+  0 A$Sprite$2714                                                  000A6A GR
+  0 A$Sprite$2717                                                  000A6C GR
+  0 A$Sprite$2718                                                  000A6D GR
+  0 A$Sprite$2719                                                  000A6E GR
+  0 A$Sprite$272                                                   0000A4 GR
+  0 A$Sprite$2720                                                  000A70 GR
+  0 A$Sprite$2724                                                  000A72 GR
+  0 A$Sprite$2725                                                  000A74 GR
+  0 A$Sprite$2726                                                  000A75 GR
+  0 A$Sprite$2727                                                  000A76 GR
+  0 A$Sprite$2728                                                  000A77 GR
+  0 A$Sprite$2729                                                  000A7A GR
+  0 A$Sprite$273                                                   0000A5 GR
+  0 A$Sprite$2730                                                  000A7B GR
+  0 A$Sprite$2731                                                  000A7C GR
+  0 A$Sprite$2732                                                  000A7D GR
+  0 A$Sprite$2733                                                  000A7E GR
+  0 A$Sprite$2734                                                  000A80 GR
+  0 A$Sprite$2735                                                  000A81 GR
+  0 A$Sprite$2736                                                  000A82 GR
+  0 A$Sprite$2737                                                  000A83 GR
+  0 A$Sprite$2738                                                  000A85 GR
+  0 A$Sprite$274                                                   0000A6 GR
+  0 A$Sprite$2743                                                  000A87 GR
+  0 A$Sprite$2744                                                  000A88 GR
+  0 A$Sprite$2749                                                  000A8A GR
+  0 A$Sprite$275                                                   0000A8 GR
+  0 A$Sprite$2750                                                  000A8C GR
+  0 A$Sprite$2754                                                  000A8D GR
+  0 A$Sprite$2755                                                  000A8E GR
+  0 A$Sprite$2756                                                  000A8F GR
+  0 A$Sprite$2757                                                  000A90 GR
+  0 A$Sprite$2758                                                  000A91 GR
+  0 A$Sprite$2759                                                  000A93 GR
+  0 A$Sprite$276                                                   0000A9 GR
+  0 A$Sprite$2760                                                  000A94 GR
+  0 A$Sprite$2761                                                  000A95 GR
+  0 A$Sprite$2762                                                  000A96 GR
+  0 A$Sprite$2763                                                  000A99 GR
+  0 A$Sprite$2764                                                  000A9A GR
+  0 A$Sprite$2765                                                  000A9B GR
+  0 A$Sprite$2766                                                  000A9C GR
+  0 A$Sprite$2767                                                  000A9D GR
+  0 A$Sprite$277                                                   0000AA GR
+  0 A$Sprite$2770                                                  000A9F GR
+  0 A$Sprite$2771                                                  000AA0 GR
+  0 A$Sprite$2772                                                  000AA1 GR
+  0 A$Sprite$2773                                                  000AA3 GR
+  0 A$Sprite$2777                                                  000AA5 GR
+  0 A$Sprite$2778                                                  000AA7 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 27
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$2779                                                  000AA8 GR
+  0 A$Sprite$278                                                   0000AB GR
+  0 A$Sprite$2780                                                  000AA9 GR
+  0 A$Sprite$2781                                                  000AAA GR
+  0 A$Sprite$2782                                                  000AAD GR
+  0 A$Sprite$2783                                                  000AAE GR
+  0 A$Sprite$2784                                                  000AAF GR
+  0 A$Sprite$2785                                                  000AB0 GR
+  0 A$Sprite$2786                                                  000AB1 GR
+  0 A$Sprite$2787                                                  000AB3 GR
+  0 A$Sprite$2788                                                  000AB4 GR
+  0 A$Sprite$2789                                                  000AB5 GR
+  0 A$Sprite$279                                                   0000AC GR
+  0 A$Sprite$2790                                                  000AB6 GR
+  0 A$Sprite$2791                                                  000AB8 GR
+  0 A$Sprite$2796                                                  000ABA GR
+  0 A$Sprite$2797                                                  000ABB GR
+  0 A$Sprite$280                                                   0000AD GR
+  0 A$Sprite$2802                                                  000ABD GR
+  0 A$Sprite$2807                                                  000ABF GR
+  0 A$Sprite$2812                                                  000AC1 GR
+  0 A$Sprite$284                                                   0000AE GR
+  0 A$Sprite$285                                                   0000B1 GR
+  0 A$Sprite$286                                                   0000B2 GR
+  0 A$Sprite$290                                                   0000B4 GR
+  0 A$Sprite$291                                                   0000B7 GR
+  0 A$Sprite$292                                                   0000B8 GR
+  0 A$Sprite$293                                                   0000B9 GR
+  0 A$Sprite$294                                                   0000BA GR
+  0 A$Sprite$298                                                   0000BB GR
+  0 A$Sprite$299                                                   0000BC GR
+  0 A$Sprite$300                                                   0000BD GR
+  0 A$Sprite$301                                                   0000BE GR
+  0 A$Sprite$302                                                   0000BF GR
+  0 A$Sprite$303                                                   0000C2 GR
+  0 A$Sprite$307                                                   0000C3 GR
+  0 A$Sprite$308                                                   0000C6 GR
+  0 A$Sprite$309                                                   0000C7 GR
+  0 A$Sprite$313                                                   0000C9 GR
+  0 A$Sprite$314                                                   0000CC GR
+  0 A$Sprite$315                                                   0000CD GR
+  0 A$Sprite$316                                                   0000CE GR
+  0 A$Sprite$317                                                   0000CF GR
+  0 A$Sprite$321                                                   0000D0 GR
+  0 A$Sprite$322                                                   0000D3 GR
+  0 A$Sprite$323                                                   0000D4 GR
+  0 A$Sprite$324                                                   0000D5 GR
+  0 A$Sprite$325                                                   0000D6 GR
+  0 A$Sprite$329                                                   0000D7 GR
+  0 A$Sprite$330                                                   0000D9 GR
+  0 A$Sprite$331                                                   0000DA GR
+  0 A$Sprite$332                                                   0000DB GR
+  0 A$Sprite$333                                                   0000DC GR
+  0 A$Sprite$334                                                   0000DD GR
+  0 A$Sprite$335                                                   0000DE GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 28
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$336                                                   0000DF GR
+  0 A$Sprite$337                                                   0000E0 GR
+  0 A$Sprite$338                                                   0000E3 GR
+  0 A$Sprite$339                                                   0000E4 GR
+  0 A$Sprite$343                                                   0000E5 GR
+  0 A$Sprite$344                                                   0000E8 GR
+  0 A$Sprite$345                                                   0000E9 GR
+  0 A$Sprite$346                                                   0000EA GR
+  0 A$Sprite$347                                                   0000EB GR
+  0 A$Sprite$348                                                   0000ED GR
+  0 A$Sprite$349                                                   0000EE GR
+  0 A$Sprite$350                                                   0000EF GR
+  0 A$Sprite$351                                                   0000F0 GR
+  0 A$Sprite$352                                                   0000F2 GR
+  0 A$Sprite$353                                                   0000F3 GR
+  0 A$Sprite$354                                                   0000F4 GR
+  0 A$Sprite$355                                                   0000F5 GR
+  0 A$Sprite$356                                                   0000F6 GR
+  0 A$Sprite$357                                                   0000F7 GR
+  0 A$Sprite$358                                                   0000F8 GR
+  0 A$Sprite$359                                                   0000F9 GR
+  0 A$Sprite$360                                                   0000FA GR
+  0 A$Sprite$361                                                   0000FB GR
+  0 A$Sprite$365                                                   0000FC GR
+  0 A$Sprite$366                                                   0000FF GR
+  0 A$Sprite$367                                                   000100 GR
+  0 A$Sprite$368                                                   000101 GR
+  0 A$Sprite$369                                                   000102 GR
+  0 A$Sprite$370                                                   000103 GR
+  0 A$Sprite$371                                                   000104 GR
+  0 A$Sprite$372                                                   000105 GR
+  0 A$Sprite$373                                                   000106 GR
+  0 A$Sprite$377                                                   000107 GR
+  0 A$Sprite$381                                                   00010A GR
+  0 A$Sprite$386                                                   00010C GR
+  0 A$Sprite$396                                                   00010D GR
+  0 A$Sprite$397                                                   00010F GR
+  0 A$Sprite$398                                                   000111 GR
+  0 A$Sprite$399                                                   000112 GR
+  0 A$Sprite$403                                                   000113 GR
+  0 A$Sprite$404                                                   000114 GR
+  0 A$Sprite$405                                                   000115 GR
+  0 A$Sprite$406                                                   000116 GR
+  0 A$Sprite$407                                                   000117 GR
+  0 A$Sprite$408                                                   000118 GR
+  0 A$Sprite$409                                                   00011B GR
+  0 A$Sprite$410                                                   00011C GR
+  0 A$Sprite$411                                                   00011D GR
+  0 A$Sprite$412                                                   00011E GR
+  0 A$Sprite$413                                                   00011F GR
+  0 A$Sprite$414                                                   000120 GR
+  0 A$Sprite$415                                                   000121 GR
+  0 A$Sprite$416                                                   000122 GR
+  0 A$Sprite$419                                                   000123 GR
+  0 A$Sprite$420                                                   000124 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 29
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$421                                                   000125 GR
+  0 A$Sprite$424                                                   000126 GR
+  0 A$Sprite$425                                                   000127 GR
+  0 A$Sprite$426                                                   000128 GR
+  0 A$Sprite$427                                                   00012A GR
+  0 A$Sprite$428                                                   00012B GR
+  0 A$Sprite$429                                                   00012C GR
+  0 A$Sprite$434                                                   00012E GR
+  0 A$Sprite$435                                                   00012F GR
+  0 A$Sprite$436                                                   000130 GR
+  0 A$Sprite$437                                                   000131 GR
+  0 A$Sprite$438                                                   000132 GR
+  0 A$Sprite$442                                                   000133 GR
+  0 A$Sprite$443                                                   000134 GR
+  0 A$Sprite$444                                                   000135 GR
+  0 A$Sprite$445                                                   000137 GR
+  0 A$Sprite$446                                                   000138 GR
+  0 A$Sprite$447                                                   000139 GR
+  0 A$Sprite$448                                                   00013A GR
+  0 A$Sprite$452                                                   00013D GR
+  0 A$Sprite$453                                                   00013F GR
+  0 A$Sprite$454                                                   000140 GR
+  0 A$Sprite$455                                                   000141 GR
+  0 A$Sprite$456                                                   000142 GR
+  0 A$Sprite$457                                                   000145 GR
+  0 A$Sprite$458                                                   000146 GR
+  0 A$Sprite$459                                                   000147 GR
+  0 A$Sprite$460                                                   000148 GR
+  0 A$Sprite$461                                                   000149 GR
+  0 A$Sprite$465                                                   00014A GR
+  0 A$Sprite$466                                                   00014C GR
+  0 A$Sprite$467                                                   00014D GR
+  0 A$Sprite$468                                                   00014E GR
+  0 A$Sprite$469                                                   00014F GR
+  0 A$Sprite$470                                                   000152 GR
+  0 A$Sprite$471                                                   000153 GR
+  0 A$Sprite$472                                                   000154 GR
+  0 A$Sprite$473                                                   000155 GR
+  0 A$Sprite$474                                                   000156 GR
+  0 A$Sprite$478                                                   000157 GR
+  0 A$Sprite$479                                                   000159 GR
+  0 A$Sprite$480                                                   00015A GR
+  0 A$Sprite$481                                                   00015B GR
+  0 A$Sprite$482                                                   00015C GR
+  0 A$Sprite$483                                                   00015F GR
+  0 A$Sprite$484                                                   000160 GR
+  0 A$Sprite$485                                                   000161 GR
+  0 A$Sprite$486                                                   000162 GR
+  0 A$Sprite$487                                                   000164 GR
+  0 A$Sprite$488                                                   000165 GR
+  0 A$Sprite$493                                                   000166 GR
+  0 A$Sprite$494                                                   000168 GR
+  0 A$Sprite$495                                                   000169 GR
+  0 A$Sprite$496                                                   00016A GR
+  0 A$Sprite$506                                                   00016B GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 30
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$510                                                   00016D GR
+  0 A$Sprite$511                                                   000170 GR
+  0 A$Sprite$512                                                   000172 GR
+  0 A$Sprite$513                                                   000173 GR
+  0 A$Sprite$514                                                   000176 GR
+  0 A$Sprite$515                                                   000178 GR
+  0 A$Sprite$516                                                   000179 GR
+  0 A$Sprite$517                                                   00017A GR
+  0 A$Sprite$518                                                   00017B GR
+  0 A$Sprite$519                                                   00017C GR
+  0 A$Sprite$520                                                   00017F GR
+  0 A$Sprite$521                                                   000180 GR
+  0 A$Sprite$522                                                   000181 GR
+  0 A$Sprite$523                                                   000182 GR
+  0 A$Sprite$527                                                   000185 GR
+  0 A$Sprite$528                                                   000187 GR
+  0 A$Sprite$529                                                   000188 GR
+  0 A$Sprite$530                                                   000189 GR
+  0 A$Sprite$531                                                   00018A GR
+  0 A$Sprite$532                                                   00018D GR
+  0 A$Sprite$533                                                   00018E GR
+  0 A$Sprite$534                                                   00018F GR
+  0 A$Sprite$535                                                   000190 GR
+  0 A$Sprite$536                                                   000191 GR
+  0 A$Sprite$537                                                   000193 GR
+  0 A$Sprite$538                                                   000194 GR
+  0 A$Sprite$539                                                   000195 GR
+  0 A$Sprite$540                                                   000196 GR
+  0 A$Sprite$541                                                   000197 GR
+  0 A$Sprite$542                                                   000198 GR
+  0 A$Sprite$543                                                   000199 GR
+  0 A$Sprite$544                                                   00019C GR
+  0 A$Sprite$545                                                   00019D GR
+  0 A$Sprite$546                                                   00019E GR
+  0 A$Sprite$547                                                   00019F GR
+  0 A$Sprite$548                                                   0001A0 GR
+  0 A$Sprite$549                                                   0001A1 GR
+  0 A$Sprite$550                                                   0001A4 GR
+  0 A$Sprite$551                                                   0001A5 GR
+  0 A$Sprite$552                                                   0001A6 GR
+  0 A$Sprite$554                                                   0001A8 GR
+  0 A$Sprite$556                                                   0001A9 GR
+  0 A$Sprite$557                                                   0001AA GR
+  0 A$Sprite$558                                                   0001AC GR
+  0 A$Sprite$559                                                   0001AE GR
+  0 A$Sprite$560                                                   0001AF GR
+  0 A$Sprite$564                                                   0001B0 GR
+  0 A$Sprite$565                                                   0001B3 GR
+  0 A$Sprite$566                                                   0001B4 GR
+  0 A$Sprite$567                                                   0001B5 GR
+  0 A$Sprite$571                                                   0001B6 GR
+  0 A$Sprite$572                                                   0001B9 GR
+  0 A$Sprite$573                                                   0001BA GR
+  0 A$Sprite$574                                                   0001BB GR
+  0 A$Sprite$575                                                   0001BD GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 31
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$576                                                   0001BE GR
+  0 A$Sprite$580                                                   0001C1 GR
+  0 A$Sprite$581                                                   0001C4 GR
+  0 A$Sprite$582                                                   0001C5 GR
+  0 A$Sprite$583                                                   0001C6 GR
+  0 A$Sprite$587                                                   0001C7 GR
+  0 A$Sprite$588                                                   0001CA GR
+  0 A$Sprite$589                                                   0001CB GR
+  0 A$Sprite$590                                                   0001CC GR
+  0 A$Sprite$594                                                   0001CD GR
+  0 A$Sprite$595                                                   0001D0 GR
+  0 A$Sprite$596                                                   0001D1 GR
+  0 A$Sprite$597                                                   0001D2 GR
+  0 A$Sprite$601                                                   0001D3 GR
+  0 A$Sprite$602                                                   0001D4 GR
+  0 A$Sprite$603                                                   0001D6 GR
+  0 A$Sprite$604                                                   0001D7 GR
+  0 A$Sprite$605                                                   0001DA GR
+  0 A$Sprite$606                                                   0001DB GR
+  0 A$Sprite$607                                                   0001DC GR
+  0 A$Sprite$609                                                   0001DD GR
+  0 A$Sprite$612                                                   0001DE GR
+  0 A$Sprite$613                                                   0001DF GR
+  0 A$Sprite$614                                                   0001E1 GR
+  0 A$Sprite$615                                                   0001E2 GR
+  0 A$Sprite$616                                                   0001E3 GR
+  0 A$Sprite$620                                                   0001E5 GR
+  0 A$Sprite$621                                                   0001E6 GR
+  0 A$Sprite$626                                                   0001E7 GR
+  0 A$Sprite$627                                                   0001EA GR
+  0 A$Sprite$628                                                   0001EB GR
+  0 A$Sprite$629                                                   0001EC GR
+  4 A$Sprite$63                                                    000000 GR
+  0 A$Sprite$633                                                   0001ED GR
+  0 A$Sprite$634                                                   0001F0 GR
+  0 A$Sprite$635                                                   0001F1 GR
+  0 A$Sprite$636                                                   0001F2 GR
+  0 A$Sprite$638                                                   0001F3 GR
+  4 A$Sprite$64                                                    000002 GR
+  0 A$Sprite$641                                                   0001F4 GR
+  0 A$Sprite$642                                                   0001F5 GR
+  0 A$Sprite$643                                                   0001F7 GR
+  0 A$Sprite$644                                                   0001F8 GR
+  0 A$Sprite$645                                                   0001F9 GR
+  0 A$Sprite$646                                                   0001FB GR
+  0 A$Sprite$647                                                   0001FC GR
+  0 A$Sprite$648                                                   0001FD GR
+  0 A$Sprite$649                                                   0001FF GR
+  4 A$Sprite$65                                                    000003 GR
+  0 A$Sprite$650                                                   000200 GR
+  0 A$Sprite$651                                                   000201 GR
+  0 A$Sprite$652                                                   000202 GR
+  0 A$Sprite$653                                                   000203 GR
+  0 A$Sprite$654                                                   000205 GR
+  0 A$Sprite$658                                                   000206 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 32
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$659                                                   000207 GR
+  4 A$Sprite$66                                                    000004 GR
+  0 A$Sprite$660                                                   000208 GR
+  0 A$Sprite$661                                                   000209 GR
+  0 A$Sprite$662                                                   00020C GR
+  0 A$Sprite$666                                                   00020D GR
+  0 A$Sprite$667                                                   000210 GR
+  0 A$Sprite$668                                                   000211 GR
+  0 A$Sprite$669                                                   000212 GR
+  4 A$Sprite$67                                                    000005 GR
+  0 A$Sprite$673                                                   000213 GR
+  0 A$Sprite$674                                                   000216 GR
+  0 A$Sprite$675                                                   000217 GR
+  0 A$Sprite$676                                                   000218 GR
+  0 A$Sprite$677                                                   000219 GR
+  0 A$Sprite$678                                                   00021B GR
+  0 A$Sprite$679                                                   00021C GR
+  4 A$Sprite$68                                                    000006 GR
+  0 A$Sprite$680                                                   00021D GR
+  0 A$Sprite$681                                                   00021E GR
+  0 A$Sprite$682                                                   000220 GR
+  0 A$Sprite$683                                                   000221 GR
+  0 A$Sprite$684                                                   000222 GR
+  0 A$Sprite$685                                                   000223 GR
+  0 A$Sprite$686                                                   000224 GR
+  0 A$Sprite$687                                                   000225 GR
+  0 A$Sprite$688                                                   000226 GR
+  0 A$Sprite$689                                                   000227 GR
+  4 A$Sprite$69                                                    000007 GR
+  0 A$Sprite$690                                                   00022A GR
+  0 A$Sprite$691                                                   00022B GR
+  0 A$Sprite$692                                                   00022C GR
+  0 A$Sprite$693                                                   00022D GR
+  0 A$Sprite$694                                                   00022E GR
+  0 A$Sprite$695                                                   000230 GR
+  0 A$Sprite$696                                                   000231 GR
+  0 A$Sprite$697                                                   000233 GR
+  0 A$Sprite$698                                                   000234 GR
+  0 A$Sprite$699                                                   000235 GR
+  4 A$Sprite$70                                                    000008 GR
+  0 A$Sprite$700                                                   000236 GR
+  0 A$Sprite$701                                                   000237 GR
+  0 A$Sprite$702                                                   000238 GR
+  0 A$Sprite$703                                                   00023A GR
+  0 A$Sprite$704                                                   00023B GR
+  0 A$Sprite$705                                                   00023C GR
+  0 A$Sprite$706                                                   00023D GR
+  0 A$Sprite$707                                                   00023E GR
+  0 A$Sprite$708                                                   00023F GR
+  4 A$Sprite$71                                                    000009 GR
+  0 A$Sprite$712                                                   000240 GR
+  0 A$Sprite$716                                                   000243 GR
+  0 A$Sprite$717                                                   000246 GR
+  0 A$Sprite$718                                                   000247 GR
+  0 A$Sprite$719                                                   000248 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 33
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  4 A$Sprite$72                                                    00000A GR
+  0 A$Sprite$723                                                   000249 GR
+  0 A$Sprite$724                                                   00024C GR
+  0 A$Sprite$728                                                   00024D GR
+  0 A$Sprite$729                                                   00024E GR
+  4 A$Sprite$73                                                    00000B GR
+  0 A$Sprite$730                                                   000250 GR
+  0 A$Sprite$735                                                   000251 GR
+  0 A$Sprite$736                                                   000254 GR
+  0 A$Sprite$737                                                   000256 GR
+  0 A$Sprite$738                                                   000257 GR
+  0 A$Sprite$739                                                   00025A GR
+  4 A$Sprite$74                                                    00000D GR
+  0 A$Sprite$743                                                   00025C GR
+  0 A$Sprite$744                                                   00025D GR
+  0 A$Sprite$745                                                   00025E GR
+  0 A$Sprite$746                                                   00025F GR
+  0 A$Sprite$747                                                   000260 GR
+  0 A$Sprite$748                                                   000263 GR
+  0 A$Sprite$749                                                   000264 GR
+  4 A$Sprite$75                                                    00000E GR
+  0 A$Sprite$750                                                   000265 GR
+  0 A$Sprite$751                                                   000266 GR
+  0 A$Sprite$752                                                   000267 GR
+  0 A$Sprite$753                                                   00026A GR
+  0 A$Sprite$754                                                   00026C GR
+  0 A$Sprite$755                                                   00026D GR
+  0 A$Sprite$756                                                   000270 GR
+  0 A$Sprite$757                                                   000272 GR
+  0 A$Sprite$758                                                   000273 GR
+  0 A$Sprite$759                                                   000274 GR
+  4 A$Sprite$76                                                    000011 GR
+  0 A$Sprite$760                                                   000275 GR
+  0 A$Sprite$761                                                   000276 GR
+  0 A$Sprite$762                                                   000277 GR
+  0 A$Sprite$763                                                   000278 GR
+  0 A$Sprite$764                                                   000279 GR
+  0 A$Sprite$765                                                   00027A GR
+  0 A$Sprite$766                                                   00027B GR
+  0 A$Sprite$767                                                   00027D GR
+  0 A$Sprite$768                                                   00027E GR
+  4 A$Sprite$77                                                    000012 GR
+  0 A$Sprite$772                                                   00027F GR
+  0 A$Sprite$773                                                   000281 GR
+  0 A$Sprite$774                                                   000282 GR
+  0 A$Sprite$775                                                   000283 GR
+  0 A$Sprite$776                                                   000284 GR
+  0 A$Sprite$777                                                   000287 GR
+  0 A$Sprite$778                                                   000288 GR
+  0 A$Sprite$779                                                   000289 GR
+  0 A$Sprite$780                                                   00028A GR
+  0 A$Sprite$781                                                   00028B GR
+  0 A$Sprite$782                                                   00028E GR
+  0 A$Sprite$783                                                   000290 GR
+  0 A$Sprite$784                                                   000291 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 34
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$785                                                   000294 GR
+  0 A$Sprite$786                                                   000296 GR
+  0 A$Sprite$787                                                   000297 GR
+  0 A$Sprite$788                                                   000298 GR
+  0 A$Sprite$789                                                   000299 GR
+  4 A$Sprite$79                                                    000015 GR
+  0 A$Sprite$790                                                   00029A GR
+  0 A$Sprite$791                                                   00029B GR
+  0 A$Sprite$792                                                   00029C GR
+  0 A$Sprite$793                                                   00029D GR
+  0 A$Sprite$794                                                   00029E GR
+  0 A$Sprite$795                                                   00029F GR
+  0 A$Sprite$796                                                   0002A1 GR
+  4 A$Sprite$80                                                    000016 GR
+  0 A$Sprite$800                                                   0002A2 GR
+  0 A$Sprite$801                                                   0002A3 GR
+  0 A$Sprite$802                                                   0002A4 GR
+  0 A$Sprite$803                                                   0002A5 GR
+  0 A$Sprite$804                                                   0002A6 GR
+  0 A$Sprite$805                                                   0002A7 GR
+  0 A$Sprite$806                                                   0002A8 GR
+  0 A$Sprite$807                                                   0002AB GR
+  0 A$Sprite$808                                                   0002AC GR
+  0 A$Sprite$809                                                   0002AD GR
+  4 A$Sprite$81                                                    000017 GR
+  0 A$Sprite$810                                                   0002AE GR
+  0 A$Sprite$811                                                   0002AF GR
+  0 A$Sprite$812                                                   0002B1 GR
+  0 A$Sprite$813                                                   0002B2 GR
+  0 A$Sprite$814                                                   0002B4 GR
+  0 A$Sprite$815                                                   0002B7 GR
+  0 A$Sprite$816                                                   0002B9 GR
+  0 A$Sprite$817                                                   0002BA GR
+  0 A$Sprite$818                                                   0002BB GR
+  0 A$Sprite$819                                                   0002BC GR
+  4 A$Sprite$82                                                    000018 GR
+  0 A$Sprite$820                                                   0002BF GR
+  0 A$Sprite$821                                                   0002C0 GR
+  0 A$Sprite$822                                                   0002C1 GR
+  0 A$Sprite$823                                                   0002C2 GR
+  0 A$Sprite$824                                                   0002C3 GR
+  0 A$Sprite$825                                                   0002C5 GR
+  0 A$Sprite$826                                                   0002C6 GR
+  0 A$Sprite$827                                                   0002C8 GR
+  4 A$Sprite$83                                                    000019 GR
+  0 A$Sprite$831                                                   0002CB GR
+  0 A$Sprite$832                                                   0002CD GR
+  0 A$Sprite$833                                                   0002CE GR
+  0 A$Sprite$834                                                   0002CF GR
+  0 A$Sprite$835                                                   0002D0 GR
+  0 A$Sprite$836                                                   0002D3 GR
+  0 A$Sprite$837                                                   0002D4 GR
+  0 A$Sprite$838                                                   0002D5 GR
+  0 A$Sprite$839                                                   0002D6 GR
+  4 A$Sprite$84                                                    00001A GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 35
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$840                                                   0002D8 GR
+  0 A$Sprite$841                                                   0002D9 GR
+  0 A$Sprite$842                                                   0002DA GR
+  0 A$Sprite$843                                                   0002DB GR
+  0 A$Sprite$844                                                   0002DD GR
+  0 A$Sprite$848                                                   0002DE GR
+  0 A$Sprite$849                                                   0002E0 GR
+  4 A$Sprite$85                                                    00001C GR
+  0 A$Sprite$850                                                   0002E1 GR
+  0 A$Sprite$851                                                   0002E2 GR
+  0 A$Sprite$852                                                   0002E3 GR
+  0 A$Sprite$853                                                   0002E6 GR
+  0 A$Sprite$854                                                   0002E7 GR
+  0 A$Sprite$855                                                   0002E8 GR
+  0 A$Sprite$859                                                   0002E9 GR
+  0 A$Sprite$860                                                   0002EC GR
+  0 A$Sprite$861                                                   0002EE GR
+  0 A$Sprite$865                                                   0002EF GR
+  0 A$Sprite$866                                                   0002F1 GR
+  0 A$Sprite$867                                                   0002F2 GR
+  0 A$Sprite$868                                                   0002F3 GR
+  0 A$Sprite$869                                                   0002F4 GR
+  0 A$Sprite$870                                                   0002F5 GR
+  0 A$Sprite$871                                                   0002F6 GR
+  0 A$Sprite$872                                                   0002F7 GR
+  0 A$Sprite$873                                                   0002F8 GR
+  0 A$Sprite$874                                                   0002FB GR
+  0 A$Sprite$875                                                   0002FC GR
+  0 A$Sprite$879                                                   0002FD GR
+  0 A$Sprite$880                                                   000300 GR
+  0 A$Sprite$881                                                   000302 GR
+  0 A$Sprite$882                                                   000303 GR
+  0 A$Sprite$883                                                   000306 GR
+  0 A$Sprite$887                                                   000308 GR
+  0 A$Sprite$888                                                   000309 GR
+  0 A$Sprite$889                                                   00030A GR
+  0 A$Sprite$890                                                   00030B GR
+  0 A$Sprite$891                                                   00030C GR
+  0 A$Sprite$892                                                   00030F GR
+  0 A$Sprite$893                                                   000310 GR
+  0 A$Sprite$894                                                   000311 GR
+  0 A$Sprite$895                                                   000312 GR
+  0 A$Sprite$896                                                   000313 GR
+  0 A$Sprite$897                                                   000315 GR
+  0 A$Sprite$901                                                   000316 GR
+  0 A$Sprite$902                                                   000319 GR
+  0 A$Sprite$906                                                   00031B GR
+  0 A$Sprite$907                                                   00031C GR
+  0 A$Sprite$908                                                   00031D GR
+  0 A$Sprite$909                                                   00031F GR
+  0 A$Sprite$910                                                   000320 GR
+  0 A$Sprite$911                                                   000322 GR
+  0 A$Sprite$915                                                   000323 GR
+  0 A$Sprite$916                                                   000325 GR
+  0 A$Sprite$917                                                   000326 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 36
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$918                                                   000327 GR
+  0 A$Sprite$919                                                   000328 GR
+  0 A$Sprite$920                                                   00032B GR
+  0 A$Sprite$921                                                   00032C GR
+  0 A$Sprite$922                                                   00032D GR
+  0 A$Sprite$923                                                   00032E GR
+  0 A$Sprite$924                                                   000330 GR
+  0 A$Sprite$925                                                   000331 GR
+  0 A$Sprite$926                                                   000332 GR
+  0 A$Sprite$927                                                   000333 GR
+  0 A$Sprite$928                                                   000335 GR
+  0 A$Sprite$932                                                   000336 GR
+  0 A$Sprite$933                                                   000338 GR
+  0 A$Sprite$934                                                   000339 GR
+  0 A$Sprite$935                                                   00033A GR
+  0 A$Sprite$936                                                   00033B GR
+  0 A$Sprite$937                                                   00033E GR
+  0 A$Sprite$938                                                   00033F GR
+  0 A$Sprite$939                                                   000340 GR
+  0 A$Sprite$940                                                   000341 GR
+  0 A$Sprite$941                                                   000343 GR
+  0 A$Sprite$942                                                   000344 GR
+  0 A$Sprite$943                                                   000345 GR
+  0 A$Sprite$944                                                   000346 GR
+  0 A$Sprite$945                                                   000348 GR
+  0 A$Sprite$949                                                   000349 GR
+  0 A$Sprite$950                                                   00034B GR
+  0 A$Sprite$951                                                   00034C GR
+  0 A$Sprite$952                                                   00034D GR
+  0 A$Sprite$956                                                   00034F GR
+  0 A$Sprite$957                                                   000351 GR
+  0 A$Sprite$958                                                   000352 GR
+  0 A$Sprite$959                                                   000353 GR
+  0 A$Sprite$960                                                   000354 GR
+  0 A$Sprite$961                                                   000357 GR
+  0 A$Sprite$962                                                   000358 GR
+  0 A$Sprite$963                                                   000359 GR
+  0 A$Sprite$967                                                   00035A GR
+  0 A$Sprite$968                                                   00035C GR
+  0 A$Sprite$969                                                   00035D GR
+  0 A$Sprite$970                                                   00035E GR
+  0 A$Sprite$974                                                   000360 GR
+  0 A$Sprite$975                                                   000362 GR
+  0 A$Sprite$976                                                   000363 GR
+  0 A$Sprite$977                                                   000364 GR
+  0 A$Sprite$978                                                   000365 GR
+  0 A$Sprite$979                                                   000368 GR
+  0 A$Sprite$980                                                   000369 GR
+  0 A$Sprite$981                                                   00036A GR
+  0 A$Sprite$985                                                   00036B GR
+  0 A$Sprite$986                                                   00036D GR
+  0 A$Sprite$987                                                   00036E GR
+  0 A$Sprite$988                                                   000370 GR
+  0 A$Sprite$989                                                   000373 GR
+  0 A$Sprite$990                                                   000375 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 37
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$Sprite$991                                                   000376 GR
+  0 A$Sprite$992                                                   000378 GR
+  0 A$Sprite$993                                                   00037B GR
+  0 A$Sprite$998                                                   00037E GR
+  0 A$Sprite$999                                                   000380 GR
+  0 C$Sprite.c$10$1_0$179                                       =  000009 GR
+  0 C$Sprite.c$100$3_0$189                                      =  0001D3 GR
+  0 C$Sprite.c$101$4_0$190                                      =  0001E5 GR
+  0 C$Sprite.c$104$3_0$189                                      =  0001ED GR
+  0 C$Sprite.c$105$3_0$189                                      =  000206 GR
+  0 C$Sprite.c$106$1_0$187                                      =  000323 GR
+  0 C$Sprite.c$106$3_0$189                                      =  000213 GR
+  0 C$Sprite.c$107$3_0$189                                      =  000240 GR
+  0 C$Sprite.c$108$3_0$189                                      =  00024D GR
+  0 C$Sprite.c$11$1_0$179                                       =  000014 GR
+  0 C$Sprite.c$112$1_0$187                                      =  00025C GR
+  0 C$Sprite.c$113$1_0$187                                      =  00027F GR
+  0 C$Sprite.c$115$1_0$187                                      =  0002A2 GR
+  0 C$Sprite.c$116$2_0$191                                      =  0002CB GR
+  0 C$Sprite.c$117$2_0$191                                      =  0002DE GR
+  0 C$Sprite.c$118$1_0$187                                      =  000316 GR
+  0 C$Sprite.c$118$2_0$191                                      =  0002E9 GR
+  0 C$Sprite.c$119$2_0$191                                      =  0002EF GR
+  0 C$Sprite.c$12$1_0$179                                       =  00003F GR
+  0 C$Sprite.c$120$2_0$191                                      =  00036B GR
+  0 C$Sprite.c$122$1_0$187                                      =  000336 GR
+  0 C$Sprite.c$122$3_0$192                                      =  00037E GR
+  0 C$Sprite.c$122$5_0$197                                      =  0003AC GR
+  0 C$Sprite.c$123$1_0$187                                      =  00034F GR
+  0 C$Sprite.c$123$3_0$192                                      =  0003B4 GR
+  0 C$Sprite.c$123$5_0$200                                      =  0003FC GR
+  0 C$Sprite.c$124$1_0$187                                      =  000360 GR
+  0 C$Sprite.c$124$3_0$192                                      =  000404 GR
+  0 C$Sprite.c$124$5_0$203                                      =  000438 GR
+  0 C$Sprite.c$125$3_0$192                                      =  00043F GR
+  0 C$Sprite.c$125$5_0$206                                      =  0004A1 GR
+  0 C$Sprite.c$126$2_0$191                                      =  0004A6 GR
+  0 C$Sprite.c$127$2_0$191                                      =  0004A6 GR
+  0 C$Sprite.c$13$1_0$179                                       =  000042 GR
+  0 C$Sprite.c$130$1_0$187                                      =  0004AF GR
+  0 C$Sprite.c$131$3_0$193                                      =  0004B9 GR
+  0 C$Sprite.c$135$1_0$187                                      =  0004CE GR
+  0 C$Sprite.c$136$1_0$187                                      =  0004F5 GR
+  0 C$Sprite.c$138$3_0$195                                      =  000559 GR
+  0 C$Sprite.c$14$1_0$179                                       =  000053 GR
+  0 C$Sprite.c$141$1_0$187                                      =  00056A GR
+  0 C$Sprite.c$144$1_0$209                                      =  00056B GR
+  0 C$Sprite.c$145$2_0$209                                      =  00056E GR
+  0 C$Sprite.c$151$1_0$209                                      =  0005B5 GR
+  0 C$Sprite.c$152$2_0$210                                      =  0005DE GR
+  0 C$Sprite.c$153$1_0$209                                      =  0005D4 GR
+  0 C$Sprite.c$153$3_0$211                                      =  0005E4 GR
+  0 C$Sprite.c$155$3_0$212                                      =  0005F1 GR
+  0 C$Sprite.c$159$2_0$210                                      =  0005F1 GR
+  0 C$Sprite.c$16$1_0$181                                       =  000054 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 38
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 C$Sprite.c$160$1_0$209                                      =  000591 GR
+  0 C$Sprite.c$160$2_0$210                                      =  0005FF GR
+  0 C$Sprite.c$161$2_0$210                                      =  000607 GR
+  0 C$Sprite.c$162$2_0$210                                      =  000619 GR
+  0 C$Sprite.c$167$2_0$210                                      =  00061E GR
+  0 C$Sprite.c$17$1_0$181                                       =  00005B GR
+  0 C$Sprite.c$172$1_0$209                                      =  0007ED GR
+  0 C$Sprite.c$172$2_0$210                                      =  00063C GR
+  0 C$Sprite.c$173$3_0$215                                      =  00064B GR
+  0 C$Sprite.c$174$3_0$215                                      =  000652 GR
+  0 C$Sprite.c$176$1_0$209                                      =  000635 GR
+  0 C$Sprite.c$176$3_0$215                                      =  000658 GR
+  0 C$Sprite.c$178$3_0$216                                      =  00065F GR
+  0 C$Sprite.c$182$1_0$209                                      =  0005A7 GR
+  0 C$Sprite.c$182$2_0$210                                      =  00067D GR
+  0 C$Sprite.c$183$2_0$210                                      =  00068F GR
+  0 C$Sprite.c$184$3_0$217                                      =  00069B GR
+  0 C$Sprite.c$185$3_0$217                                      =  00069F GR
+  0 C$Sprite.c$187$3_0$217                                      =  0006A5 GR
+  0 C$Sprite.c$189$3_0$218                                      =  0006AB GR
+  0 C$Sprite.c$19$1_0$181                                       =  00006C GR
+  0 C$Sprite.c$192$2_0$210                                      =  0006BA GR
+  0 C$Sprite.c$193$2_0$210                                      =  0006C3 GR
+  0 C$Sprite.c$194$2_0$210                                      =  0006EE GR
+  0 C$Sprite.c$195$3_0$219                                      =  00078E GR
+  0 C$Sprite.c$195$4_0$220                                      =  0006F0 GR
+  0 C$Sprite.c$196$4_0$220                                      =  0006F9 GR
+  0 C$Sprite.c$197$5_0$221                                      =  00070D GR
+  0 C$Sprite.c$198$6_0$222                                      =  000713 GR
+  0 C$Sprite.c$20$1_0$181                                       =  000076 GR
+  0 C$Sprite.c$200$6_0$223                                      =  000755 GR
+  0 C$Sprite.c$203$5_0$221                                      =  00077F GR
+  0 C$Sprite.c$204$5_0$221                                      =  000789 GR
+  0 C$Sprite.c$205$5_0$221                                      =  00078C GR
+  0 C$Sprite.c$208$2_0$210                                      =  0007A5 GR
+  0 C$Sprite.c$211$1_0$209                                      =  0007A8 GR
+  0 C$Sprite.c$212$1_0$209                                      =  0007A8 GR
+  0 C$Sprite.c$213$1_0$209                                      =  0007C3 GR
+  0 C$Sprite.c$215$1_0$209                                      =  0007CC GR
+  0 C$Sprite.c$216$2_0$224                                      =  0007F8 GR
+  0 C$Sprite.c$217$3_0$225                                      =  0007FE GR
+  0 C$Sprite.c$219$3_0$226                                      =  000825 GR
+  0 C$Sprite.c$22$1_0$181                                       =  00008E GR
+  0 C$Sprite.c$223$2_0$224                                      =  00082A GR
+  0 C$Sprite.c$224$1_0$209                                      =  0007C3 GR
+  0 C$Sprite.c$224$2_0$224                                      =  000838 GR
+  0 C$Sprite.c$225$2_0$224                                      =  000840 GR
+  0 C$Sprite.c$226$2_0$224                                      =  000851 GR
+  0 C$Sprite.c$231$2_0$224                                      =  000856 GR
+  0 C$Sprite.c$236$2_0$224                                      =  000872 GR
+  0 C$Sprite.c$237$3_0$229                                      =  00087C GR
+  0 C$Sprite.c$238$3_0$229                                      =  000881 GR
+  0 C$Sprite.c$240$1_0$209                                      =  00086B GR
+  0 C$Sprite.c$240$3_0$229                                      =  000887 GR
+  0 C$Sprite.c$242$3_0$230                                      =  00088D GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 39
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 C$Sprite.c$246$2_0$224                                      =  00089E GR
+  0 C$Sprite.c$247$2_0$224                                      =  0008B6 GR
+  0 C$Sprite.c$248$3_0$231                                      =  0008C3 GR
+  0 C$Sprite.c$249$3_0$231                                      =  0008C9 GR
+  0 C$Sprite.c$251$3_0$231                                      =  0008CD GR
+  0 C$Sprite.c$253$3_0$232                                      =  0008D2 GR
+  0 C$Sprite.c$256$2_0$224                                      =  0008E3 GR
+  0 C$Sprite.c$257$2_0$224                                      =  0008EE GR
+  0 C$Sprite.c$258$2_0$224                                      =  000914 GR
+  0 C$Sprite.c$259$2_0$224                                      =  000919 GR
+  0 C$Sprite.c$26$1_0$181                                       =  0000AE GR
+  0 C$Sprite.c$260$1_0$209                                      =  000936 GR
+  0 C$Sprite.c$260$3_0$233                                      =  00099B GR
+  0 C$Sprite.c$261$4_0$234                                      =  00093C GR
+  0 C$Sprite.c$262$5_0$235                                      =  000951 GR
+  0 C$Sprite.c$263$1_0$209                                      =  00094C GR
+  0 C$Sprite.c$263$6_0$236                                      =  000957 GR
+  0 C$Sprite.c$265$6_0$237                                      =  00097C GR
+  0 C$Sprite.c$268$5_0$235                                      =  00098C GR
+  0 C$Sprite.c$269$5_0$235                                      =  000996 GR
+  0 C$Sprite.c$270$5_0$235                                      =  000999 GR
+  0 C$Sprite.c$273$2_0$224                                      =  0009A8 GR
+  0 C$Sprite.c$276$1_0$209                                      =  0009AB GR
+  0 C$Sprite.c$277$1_0$209                                      =  0009AB GR
+  0 C$Sprite.c$278$1_0$209                                      =  0009C5 GR
+  0 C$Sprite.c$28$1_0$181                                       =  0000B4 GR
+  0 C$Sprite.c$280$1_0$209                                      =  0009C5 GR
+  0 C$Sprite.c$281$1_0$209                                      =  0009C8 GR
+  0 C$Sprite.c$283$1_0$239                                      =  0009CD GR
+  0 C$Sprite.c$287$1_0$239                                      =  0009D8 GR
+  0 C$Sprite.c$288$1_0$239                                      =  000A02 GR
+  0 C$Sprite.c$289$1_0$239                                      =  000A0E GR
+  0 C$Sprite.c$291$1_0$239                                      =  000A12 GR
+  0 C$Sprite.c$293$1_0$239                                      =  000A15 GR
+  0 C$Sprite.c$294$1_0$239                                      =  000A41 GR
+  0 C$Sprite.c$295$1_0$239                                      =  000A54 GR
+  0 C$Sprite.c$297$1_0$239                                      =  000A57 GR
+  0 C$Sprite.c$298$1_0$239                                      =  000A72 GR
+  0 C$Sprite.c$299$2_0$240                                      =  000A87 GR
+  0 C$Sprite.c$30$1_0$181                                       =  0000BB GR
+  0 C$Sprite.c$302$1_0$239                                      =  000A8A GR
+  0 C$Sprite.c$303$1_0$239                                      =  000A8D GR
+  0 C$Sprite.c$304$1_0$239                                      =  000AA5 GR
+  0 C$Sprite.c$305$2_0$241                                      =  000ABA GR
+  0 C$Sprite.c$308$1_0$239                                      =  000ABD GR
+  0 C$Sprite.c$309$1_0$239                                      =  000AC1 GR
+  0 C$Sprite.c$32$1_0$181                                       =  0000C3 GR
+  0 C$Sprite.c$34$1_0$181                                       =  0000C9 GR
+  0 C$Sprite.c$35$1_0$181                                       =  0000D0 GR
+  0 C$Sprite.c$37$1_0$181                                       =  0000D7 GR
+  0 C$Sprite.c$38$1_0$181                                       =  0000E5 GR
+  0 C$Sprite.c$39$1_0$181                                       =  0000FC GR
+  0 C$Sprite.c$40$1_0$181                                       =  000107 GR
+  0 C$Sprite.c$41$1_0$181                                       =  00010C GR
+  0 C$Sprite.c$43$1_0$183                                       =  00010D GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 40
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 C$Sprite.c$44$1_0$183                                       =  000113 GR
+  0 C$Sprite.c$45$2_0$184                                       =  00012E GR
+  0 C$Sprite.c$46$2_0$184                                       =  000133 GR
+  0 C$Sprite.c$47$2_0$184                                       =  00013D GR
+  0 C$Sprite.c$48$2_0$184                                       =  00014A GR
+  0 C$Sprite.c$49$2_0$184                                       =  000157 GR
+  0 C$Sprite.c$51$1_0$183                                       =  000166 GR
+  4 C$Sprite.c$53$1_0$186                                       =  000000 GR
+  0 C$Sprite.c$8$0_0$179                                        =  000000 GR
+  4 C$Sprite.c$80$1_0$186                                       =  000000 GR
+  4 C$Sprite.c$81$1_0$186                                       =  00001D GR
+  0 C$Sprite.c$88$1_0$187                                       =  00016B GR
+  0 C$Sprite.c$96$1_0$187                                       =  0004A9 GR
+  0 C$Sprite.c$97$1_0$187                                       =  000249 GR
+  0 C$Sprite.c$98$2_0$188                                       =  0001B6 GR
+  0 C$Sprite.c$99$1_0$187                                       =  0001CD GR
+  0 C$Sprite.c$99$3_0$189                                       =  0001C1 GR
+  0 G$CheckCollision$0$0                                        =  0009CD GR
+  0 G$DrawSprite$0$0                                            =  00016B GR
+  0 G$InitSprite$0$0                                            =  000054 GR
+  0 G$SetFrame$0$0                                              =  000000 GR
+  0 G$SetSpriteAnim$0$0                                         =  00010D GR
+  0 G$TranslateSprite$0$0                                       =  00056B GR
+  1 G$tile_coll$0_0$0                                           =  000000 GR
+  4 G$update_attr$0$0                                           =  000000 GR
+  0 XG$CheckCollision$0$0                                       =  000AC1 GR
+  0 XG$DrawSprite$0$0                                           =  00056A GR
+  0 XG$InitSprite$0$0                                           =  00010C GR
+  0 XG$SetFrame$0$0                                             =  000053 GR
+  0 _CheckCollision                                                0009CD GR
+  0 _DrawSprite                                                    00016B GR
+  0 _InitSprite                                                    000054 GR
+    _LCDC_REG                                                      ****** GX
+    _PopBank                                                       ****** GX
+    _PushBank                                                      ****** GX
+  0 _SetFrame                                                      000000 GR
+  0 _SetSpriteAnim                                                 00010D GR
+    _SpriteManagerRemove                                           ****** GX
+    _THIS                                                          ****** GX
+    _THIS_IDX                                                      ****** GX
+  0 _TranslateSprite                                               00056B GR
+    ___current_base_prop                                           ****** GX
+    ___current_base_tile                                           ****** GX
+    ___current_metasprite                                          ****** GX
+    ___move_metasprite                                             ****** GX
+    ___move_metasprite_hflip                                       ****** GX
+    ___move_metasprite_hvflip                                      ****** GX
+    ___move_metasprite_vflip                                       ****** GX
+    ___render_shadow_OAM                                           ****** GX
+    __mulint                                                       ****** GX
+    _delta_time                                                    ****** GX
+    _next_oam_idx                                                  ****** GX
+    _scroll_bank                                                   ****** GX
+    _scroll_collisions                                             ****** GX
+    _scroll_collisions_down                                        ****** GX
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 41
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    _scroll_h                                                      ****** GX
+    _scroll_map                                                    ****** GX
+    _scroll_tiles_h                                                ****** GX
+    _scroll_tiles_w                                                ****** GX
+    _scroll_w                                                      ****** GX
+    _scroll_x                                                      ****** GX
+    _scroll_y                                                      ****** GX
+    _spriteDataBanks                                               ****** GX
+    _spriteDatas                                                   ****** GX
+    _spriteIdxs                                                    ****** GX
+  1 _tile_coll                                                     000000 GR
+  4 _update_attr                                                   000000 GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 42
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size    AC2   flags    0
+   1 _DATA                                      size      2   flags    0
+   2 _INITIALIZED                               size      0   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size     1D   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _INITIALIZER                               size      0   flags    0
+   8 _CABS                                      size      0   flags    8
+

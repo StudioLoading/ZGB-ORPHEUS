@@ -1,0 +1,180 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Sound
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _hUGE_mute_channel
+                                     12 	.globl _FX_ADDRESS
+                                     13 	.globl _FX_REG_SIZES
+                                     14 	.globl _PlayFx
+                                     15 ;--------------------------------------------------------
+                                     16 ; special function registers
+                                     17 ;--------------------------------------------------------
+                                     18 ;--------------------------------------------------------
+                                     19 ; ram data
+                                     20 ;--------------------------------------------------------
+                                     21 	.area _DATA
+                                     22 ;--------------------------------------------------------
+                                     23 ; ram data
+                                     24 ;--------------------------------------------------------
+                                     25 	.area _INITIALIZED
+                                     26 ;--------------------------------------------------------
+                                     27 ; absolute external ram data
+                                     28 ;--------------------------------------------------------
+                                     29 	.area _DABS (ABS)
+                                     30 ;--------------------------------------------------------
+                                     31 ; global & static initialisations
+                                     32 ;--------------------------------------------------------
+                                     33 	.area _HOME
+                                     34 	.area _GSINIT
+                                     35 	.area _GSFINAL
+                                     36 	.area _GSINIT
+                                     37 ;--------------------------------------------------------
+                                     38 ; Home
+                                     39 ;--------------------------------------------------------
+                                     40 	.area _HOME
+                                     41 	.area _HOME
+                                     42 ;--------------------------------------------------------
+                                     43 ; code
+                                     44 ;--------------------------------------------------------
+                                     45 	.area _CODE
+                           000000    46 	G$PlayFx$0$0	= .
+                                     47 	.globl	G$PlayFx$0$0
+                           000000    48 	C$Sound.c$13$0_0$144	= .
+                                     49 	.globl	C$Sound.c$13$0_0$144
+                                     50 ;C:/ZGB-2023.0/common/src/Sound.c:13: void PlayFx(SOUND_CHANNEL channel, UINT8 mute_frames, ...) {
+                                     51 ;	---------------------------------
+                                     52 ; Function PlayFx
+                                     53 ; ---------------------------------
+      000000                         54 _PlayFx::
+      000000 E8 FA            [16]   55 	add	sp, #-6
+                           000002    56 	C$Sound.c$15$1_0$144	= .
+                                     57 	.globl	C$Sound.c$15$1_0$144
+                                     58 ;C:/ZGB-2023.0/common/src/Sound.c:15: REG_PTR reg = (REG_PTR)FX_ADDRESS[channel];
+      000002 01r6Er00         [12]   59 	ld	bc, #_FX_ADDRESS+0
+      000005 F8 08            [12]   60 	ldhl	sp,	#8
+      000007 6E               [ 8]   61 	ld	l, (hl)
+      000008 26 00            [ 8]   62 	ld	h, #0x00
+      00000A 29               [ 8]   63 	add	hl, hl
+      00000B 09               [ 8]   64 	add	hl, bc
+      00000C 2A               [ 8]   65 	ld	a, (hl+)
+      00000D 4F               [ 4]   66 	ld	c, a
+      00000E 46               [ 8]   67 	ld	b, (hl)
+                           00000F    68 	C$Sound.c$18$1_0$144	= .
+                                     69 	.globl	C$Sound.c$18$1_0$144
+                                     70 ;C:/ZGB-2023.0/common/src/Sound.c:18: if(channel != CHANNEL_5) {
+      00000F F8 08            [12]   71 	ldhl	sp,	#8
+      000011 7E               [ 8]   72 	ld	a, (hl)
+      000012 D6 04            [ 8]   73 	sub	a, #0x04
+      000014 28 11            [12]   74 	jr	Z, 00104$
+                           000016    75 	C$Sound.c$19$2_0$145	= .
+                                     76 	.globl	C$Sound.c$19$2_0$145
+                                     77 ;C:/ZGB-2023.0/common/src/Sound.c:19: MUTE_CHANNEL(channel);
+      000016 21r01r00         [12]   78 	ld	hl, #_last_music + 1
+      000019 3A               [ 8]   79 	ld	a, (hl-)
+      00001A B6               [ 8]   80 	or	a, (hl)
+      00001B 28 0A            [12]   81 	jr	Z, 00104$
+      00001D C5               [16]   82 	push	bc
+      00001E 1E 01            [ 8]   83 	ld	e, #0x01
+      000020 F8 0A            [12]   84 	ldhl	sp,	#10
+      000022 7E               [ 8]   85 	ld	a, (hl)
+      000023 CDr00r00         [24]   86 	call	_hUGE_mute_channel
+      000026 C1               [12]   87 	pop	bc
+      000027                         88 00104$:
+                           000027    89 	C$Sound.c$21$1_0$144	= .
+                                     90 	.globl	C$Sound.c$21$1_0$144
+                                     91 ;C:/ZGB-2023.0/common/src/Sound.c:21: music_mute_frames = mute_frames;
+      000027 F8 09            [12]   92 	ldhl	sp,	#9
+      000029 7E               [ 8]   93 	ld	a, (hl)
+      00002A EAr00r00         [16]   94 	ld	(#_music_mute_frames),a
+                           00002D    95 	C$Sound.c$23$1_0$144	= .
+                                     96 	.globl	C$Sound.c$23$1_0$144
+                                     97 ;C:/ZGB-2023.0/common/src/Sound.c:23: va_start(list, mute_frames);
+      00002D F8 0A            [12]   98 	ldhl	sp,#10
+      00002F 5D               [ 4]   99 	ld	e, l
+      000030 54               [ 4]  100 	ld	d, h
+      000031 33               [ 8]  101 	inc	sp
+      000032 33               [ 8]  102 	inc	sp
+      000033 D5               [16]  103 	push	de
+                           000034   104 	C$Sound.c$24$2_0$146	= .
+                                    105 	.globl	C$Sound.c$24$2_0$146
+                                    106 ;C:/ZGB-2023.0/common/src/Sound.c:24: for(i = 0; i < FX_REG_SIZES[channel]; ++i, ++reg) {
+      000034 11r69r00         [12]  107 	ld	de, #_FX_REG_SIZES
+      000037 F8 08            [12]  108 	ldhl	sp,	#8
+      000039 6E               [ 8]  109 	ld	l, (hl)
+      00003A 26 00            [ 8]  110 	ld	h, #0x00
+      00003C 19               [ 8]  111 	add	hl, de
+      00003D E5               [16]  112 	push	hl
+      00003E 7D               [ 4]  113 	ld	a, l
+      00003F F8 04            [12]  114 	ldhl	sp,	#4
+      000041 77               [ 8]  115 	ld	(hl), a
+      000042 E1               [12]  116 	pop	hl
+      000043 7C               [ 4]  117 	ld	a, h
+      000044 F8 03            [12]  118 	ldhl	sp,	#3
+      000046 22               [ 8]  119 	ld	(hl+), a
+      000047 23               [ 8]  120 	inc	hl
+      000048 36 00            [12]  121 	ld	(hl), #0x00
+      00004A                        122 00107$:
+      00004A F8 02            [12]  123 	ldhl	sp,#2
+      00004C 2A               [ 8]  124 	ld	a, (hl+)
+      00004D 5F               [ 4]  125 	ld	e, a
+      00004E 2A               [ 8]  126 	ld	a, (hl+)
+      00004F 57               [ 4]  127 	ld	d, a
+      000050 1A               [ 8]  128 	ld	a, (de)
+      000051 22               [ 8]  129 	ld	(hl+), a
+      000052 3A               [ 8]  130 	ld	a, (hl-)
+      000053 96               [ 8]  131 	sub	a, (hl)
+      000054 30 10            [12]  132 	jr	NC, 00109$
+                           000056   133 	C$Sound.c$25$3_0$147	= .
+                                    134 	.globl	C$Sound.c$25$3_0$147
+                                    135 ;C:/ZGB-2023.0/common/src/Sound.c:25: *reg = va_arg(list, INT16);
+                           000056   136 	C$Sound.c$24$2_0$146	= .
+                                    137 	.globl	C$Sound.c$24$2_0$146
+                                    138 ;C:/ZGB-2023.0/common/src/Sound.c:24: for(i = 0; i < FX_REG_SIZES[channel]; ++i, ++reg) {
+      000056 23               [ 8]  139 	inc	hl
+      000057 D1               [12]  140 	pop	de
+      000058 D5               [16]  141 	push	de
+      000059 13               [ 8]  142 	inc	de
+      00005A 13               [ 8]  143 	inc	de
+      00005B 33               [ 8]  144 	inc	sp
+      00005C 33               [ 8]  145 	inc	sp
+      00005D D5               [16]  146 	push	de
+      00005E 1B               [ 8]  147 	dec	de
+      00005F 1B               [ 8]  148 	dec	de
+      000060 1A               [ 8]  149 	ld	a, (de)
+      000061 02               [ 8]  150 	ld	(bc), a
+      000062 34               [12]  151 	inc	(hl)
+      000063 03               [ 8]  152 	inc	bc
+      000064 18 E4            [12]  153 	jr	00107$
+      000066                        154 00109$:
+                           000066   155 	C$Sound.c$28$2_0$144	= .
+                                    156 	.globl	C$Sound.c$28$2_0$144
+                                    157 ;C:/ZGB-2023.0/common/src/Sound.c:28: }
+      000066 E8 06            [16]  158 	add	sp, #6
+                           000068   159 	C$Sound.c$28$2_0$144	= .
+                                    160 	.globl	C$Sound.c$28$2_0$144
+                           000068   161 	XG$PlayFx$0$0	= .
+                                    162 	.globl	XG$PlayFx$0$0
+      000068 C9               [16]  163 	ret
+                           000069   164 G$FX_REG_SIZES$0_0$0 == .
+      000069                        165 _FX_REG_SIZES:
+      000069 05                     166 	.db #0x05	; 5
+      00006A 04                     167 	.db #0x04	; 4
+      00006B 05                     168 	.db #0x05	; 5
+      00006C 04                     169 	.db #0x04	; 4
+      00006D 03                     170 	.db #0x03	; 3
+                           00006E   171 G$FX_ADDRESS$0_0$0 == .
+      00006E                        172 _FX_ADDRESS:
+      00006E 10 FF                  173 	.dw #0xff10
+      000070 16 FF                  174 	.dw #0xff16
+      000072 1A FF                  175 	.dw #0xff1a
+      000074 20 FF                  176 	.dw #0xff20
+      000076 24 FF                  177 	.dw #0xff24
+                                    178 	.area _CODE
+                                    179 	.area _INITIALIZER
+                                    180 	.area _CABS (ABS)

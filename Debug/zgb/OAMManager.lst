@@ -1,0 +1,313 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module OAMManager
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _memset
+                                     12 	.globl _oam_end
+                                     13 	.globl _oam1
+                                     14 	.globl _oam0
+                                     15 	.globl _oam
+                                     16 	.globl _next_oam_idx
+                                     17 	.globl _oam_mirror
+                                     18 	.globl _SwapOAMs
+                                     19 	.globl _ClearOAMs
+                                     20 ;--------------------------------------------------------
+                                     21 ; special function registers
+                                     22 ;--------------------------------------------------------
+                                     23 ;--------------------------------------------------------
+                                     24 ; ram data
+                                     25 ;--------------------------------------------------------
+                                     26 	.area _DATA
+                           00DF00    27 G$oam_mirror$0_0$0 == 0xdf00
+                           00DF00    28 _oam_mirror	=	0xdf00
+                                     29 ;--------------------------------------------------------
+                                     30 ; ram data
+                                     31 ;--------------------------------------------------------
+                                     32 	.area _INITIALIZED
+                           000000    33 G$next_oam_idx$0_0$0==.
+      000000                         34 _next_oam_idx::
+      000000                         35 	.ds 1
+                           000001    36 G$oam$0_0$0==.
+      000001                         37 _oam::
+      000001                         38 	.ds 2
+                           000003    39 G$oam0$0_0$0==.
+      000003                         40 _oam0::
+      000003                         41 	.ds 2
+                           000005    42 G$oam1$0_0$0==.
+      000005                         43 _oam1::
+      000005                         44 	.ds 2
+                           000007    45 G$oam_end$0_0$0==.
+      000007                         46 _oam_end::
+      000007                         47 	.ds 2
+                                     48 ;--------------------------------------------------------
+                                     49 ; absolute external ram data
+                                     50 ;--------------------------------------------------------
+                                     51 	.area _DABS (ABS)
+                                     52 ;--------------------------------------------------------
+                                     53 ; global & static initialisations
+                                     54 ;--------------------------------------------------------
+                                     55 	.area _HOME
+                                     56 	.area _GSINIT
+                                     57 	.area _GSFINAL
+                                     58 	.area _GSINIT
+                                     59 ;--------------------------------------------------------
+                                     60 ; Home
+                                     61 ;--------------------------------------------------------
+                                     62 	.area _HOME
+                                     63 	.area _HOME
+                                     64 ;--------------------------------------------------------
+                                     65 ; code
+                                     66 ;--------------------------------------------------------
+                                     67 	.area _CODE
+                           000000    68 	G$SwapOAMs$0$0	= .
+                                     69 	.globl	G$SwapOAMs$0$0
+                           000000    70 	C$OAMManager.c$21$0_0$184	= .
+                                     71 	.globl	C$OAMManager.c$21$0_0$184
+                                     72 ;C:/ZGB-2023.0/common/src/OAMManager.c:21: void SwapOAMs() {
+                                     73 ;	---------------------------------
+                                     74 ; Function SwapOAMs
+                                     75 ; ---------------------------------
+      000000                         76 _SwapOAMs::
+                           000000    77 	C$OAMManager.c$23$1_0$184	= .
+                                     78 	.globl	C$OAMManager.c$23$1_0$184
+                                     79 ;C:/ZGB-2023.0/common/src/OAMManager.c:23: oam += (next_oam_idx << 2);
+      000000 21r00r00         [12]   80 	ld	hl, #_next_oam_idx
+      000003 6E               [ 8]   81 	ld	l, (hl)
+                                     82 ;	spillPairReg hl
+                                     83 ;	spillPairReg hl
+      000004 26 00            [ 8]   84 	ld	h, #0x00
+                                     85 ;	spillPairReg hl
+                                     86 ;	spillPairReg hl
+      000006 29               [ 8]   87 	add	hl, hl
+      000007 29               [ 8]   88 	add	hl, hl
+      000008 4D               [ 4]   89 	ld	c, l
+      000009 44               [ 4]   90 	ld	b, h
+      00000A 21r01r00         [12]   91 	ld	hl, #_oam
+      00000D 7E               [ 8]   92 	ld	a, (hl)
+      00000E 81               [ 4]   93 	add	a, c
+      00000F 22               [ 8]   94 	ld	(hl+), a
+      000010 7E               [ 8]   95 	ld	a, (hl)
+      000011 88               [ 4]   96 	adc	a, b
+                           000012    97 	C$OAMManager.c$24$2_0$185	= .
+                                     98 	.globl	C$OAMManager.c$24$2_0$185
+                                     99 ;C:/ZGB-2023.0/common/src/OAMManager.c:24: UINT8* tmp = oam;
+      000012 32               [ 8]  100 	ld	(hl-), a
+      000013 2A               [ 8]  101 	ld	a, (hl+)
+      000014 4F               [ 4]  102 	ld	c, a
+      000015 46               [ 8]  103 	ld	b, (hl)
+                           000016   104 	C$OAMManager.c$25$1_1$185	= .
+                                    105 	.globl	C$OAMManager.c$25$1_1$185
+                                    106 ;C:/ZGB-2023.0/common/src/OAMManager.c:25: while(oam < oam_end) { //TODO: check if memset is faster
+      000016                        107 00101$:
+      000016 11r01r00         [12]  108 	ld	de, #_oam
+      000019 21r07r00         [12]  109 	ld	hl, #_oam_end
+      00001C 1A               [ 8]  110 	ld	a, (de)
+      00001D 13               [ 8]  111 	inc	de
+      00001E 96               [ 8]  112 	sub	a, (hl)
+      00001F 23               [ 8]  113 	inc	hl
+      000020 1A               [ 8]  114 	ld	a, (de)
+      000021 9E               [ 8]  115 	sbc	a, (hl)
+      000022 30 13            [12]  116 	jr	NC, 00103$
+                           000024   117 	C$OAMManager.c$26$2_1$186	= .
+                                    118 	.globl	C$OAMManager.c$26$2_1$186
+                                    119 ;C:/ZGB-2023.0/common/src/OAMManager.c:26: *oam = 0;
+      000024 21r01r00         [12]  120 	ld	hl, #_oam
+      000027 2A               [ 8]  121 	ld	a, (hl+)
+      000028 5F               [ 4]  122 	ld	e, a
+                           000029   123 	C$OAMManager.c$27$2_1$186	= .
+                                    124 	.globl	C$OAMManager.c$27$2_1$186
+                                    125 ;C:/ZGB-2023.0/common/src/OAMManager.c:27: oam += 4;
+      000029 3A               [ 8]  126 	ld	a, (hl-)
+      00002A 57               [ 4]  127 	ld	d, a
+      00002B AF               [ 4]  128 	xor	a, a
+      00002C 12               [ 8]  129 	ld	(de), a
+      00002D 7E               [ 8]  130 	ld	a, (hl)
+      00002E C6 04            [ 8]  131 	add	a, #0x04
+      000030 22               [ 8]  132 	ld	(hl+), a
+      000031 7E               [ 8]  133 	ld	a, (hl)
+      000032 CE 00            [ 8]  134 	adc	a, #0x00
+      000034 77               [ 8]  135 	ld	(hl), a
+      000035 18 DF            [12]  136 	jr	00101$
+      000037                        137 00103$:
+                           000037   138 	C$OAMManager.c$30$1_1$185	= .
+                                    139 	.globl	C$OAMManager.c$30$1_1$185
+                                    140 ;C:/ZGB-2023.0/common/src/OAMManager.c:30: if((0xFF00 & (UINT16)oam) == 0xC000) {
+      000037 21r01r00         [12]  141 	ld	hl, #_oam
+      00003A 2A               [ 8]  142 	ld	a, (hl+)
+      00003B 5E               [ 8]  143 	ld	e, (hl)
+      00003C 16 00            [ 8]  144 	ld	d, #0x00
+      00003E 7A               [ 4]  145 	ld	a, d
+      00003F B7               [ 4]  146 	or	a, a
+      000040 20 24            [12]  147 	jr	NZ, 00105$
+      000042 7B               [ 4]  148 	ld	a, e
+      000043 D6 C0            [ 8]  149 	sub	a, #0xc0
+      000045 20 1F            [12]  150 	jr	NZ, 00105$
+                                    151 ;c:\zgb-2023.0\env\gbdk\include\gb\gb.h:1784: _shadow_OAM_base = (uint8_t)((uint16_t)address >> 8);
+      000047 3E C0            [ 8]  152 	ld	a, #0xc0
+      000049 E0r00            [12]  153 	ldh	(__shadow_OAM_base + 0), a
+                           00004B   154 	C$OAMManager.c$32$2_1$187	= .
+                                    155 	.globl	C$OAMManager.c$32$2_1$187
+                                    156 ;C:/ZGB-2023.0/common/src/OAMManager.c:32: oam0 = tmp;
+      00004B 21r03r00         [12]  157 	ld	hl, #_oam0
+      00004E 79               [ 4]  158 	ld	a, c
+      00004F 22               [ 8]  159 	ld	(hl+), a
+      000050 70               [ 8]  160 	ld	(hl), b
+                           000051   161 	C$OAMManager.c$33$2_1$187	= .
+                                    162 	.globl	C$OAMManager.c$33$2_1$187
+                                    163 ;C:/ZGB-2023.0/common/src/OAMManager.c:33: oam = (UINT8*)OAM_MIRROR_ADDRESS;
+      000051 21r01r00         [12]  164 	ld	hl, #_oam
+      000054 AF               [ 4]  165 	xor	a, a
+      000055 22               [ 8]  166 	ld	(hl+), a
+      000056 36 DF            [12]  167 	ld	(hl), #0xdf
+                           000058   168 	C$OAMManager.c$34$2_1$187	= .
+                                    169 	.globl	C$OAMManager.c$34$2_1$187
+                                    170 ;C:/ZGB-2023.0/common/src/OAMManager.c:34: oam_end = oam1;
+      000058 FAr05r00         [16]  171 	ld	a, (#_oam1)
+      00005B EAr07r00         [16]  172 	ld	(#_oam_end),a
+      00005E FAr06r00         [16]  173 	ld	a, (#_oam1 + 1)
+      000061 EAr08r00         [16]  174 	ld	(#_oam_end + 1),a
+      000064 18 1D            [12]  175 	jr	00106$
+      000066                        176 00105$:
+                                    177 ;c:\zgb-2023.0\env\gbdk\include\gb\gb.h:1784: _shadow_OAM_base = (uint8_t)((uint16_t)address >> 8);
+      000066 3E DF            [ 8]  178 	ld	a, #0xdf
+      000068 E0r00            [12]  179 	ldh	(__shadow_OAM_base + 0), a
+                           00006A   180 	C$OAMManager.c$37$2_1$188	= .
+                                    181 	.globl	C$OAMManager.c$37$2_1$188
+                                    182 ;C:/ZGB-2023.0/common/src/OAMManager.c:37: oam1 = tmp;
+      00006A 21r05r00         [12]  183 	ld	hl, #_oam1
+      00006D 79               [ 4]  184 	ld	a, c
+      00006E 22               [ 8]  185 	ld	(hl+), a
+      00006F 70               [ 8]  186 	ld	(hl), b
+                           000070   187 	C$OAMManager.c$38$2_1$188	= .
+                                    188 	.globl	C$OAMManager.c$38$2_1$188
+                                    189 ;C:/ZGB-2023.0/common/src/OAMManager.c:38: oam = (UINT8*)0xC000;
+      000070 21r01r00         [12]  190 	ld	hl, #_oam
+      000073 AF               [ 4]  191 	xor	a, a
+      000074 22               [ 8]  192 	ld	(hl+), a
+      000075 36 C0            [12]  193 	ld	(hl), #0xc0
+                           000077   194 	C$OAMManager.c$39$2_1$188	= .
+                                    195 	.globl	C$OAMManager.c$39$2_1$188
+                                    196 ;C:/ZGB-2023.0/common/src/OAMManager.c:39: oam_end = oam0;
+      000077 FAr03r00         [16]  197 	ld	a, (#_oam0)
+      00007A EAr07r00         [16]  198 	ld	(#_oam_end),a
+      00007D FAr04r00         [16]  199 	ld	a, (#_oam0 + 1)
+      000080 EAr08r00         [16]  200 	ld	(#_oam_end + 1),a
+      000083                        201 00106$:
+                           000083   202 	C$OAMManager.c$41$1_1$185	= .
+                                    203 	.globl	C$OAMManager.c$41$1_1$185
+                                    204 ;C:/ZGB-2023.0/common/src/OAMManager.c:41: __render_shadow_OAM = ((UWORD)oam) >> 8;
+      000083 21r01r00         [12]  205 	ld	hl, #_oam
+      000086 2A               [ 8]  206 	ld	a, (hl+)
+      000087 4E               [ 8]  207 	ld	c, (hl)
+      000088 21r00r00         [12]  208 	ld	hl, #___render_shadow_OAM
+      00008B 71               [ 8]  209 	ld	(hl), c
+                           00008C   210 	C$OAMManager.c$42$1_1$185	= .
+                                    211 	.globl	C$OAMManager.c$42$1_1$185
+                                    212 ;C:/ZGB-2023.0/common/src/OAMManager.c:42: next_oam_idx = 0;
+      00008C 21r00r00         [12]  213 	ld	hl, #_next_oam_idx
+      00008F 36 00            [12]  214 	ld	(hl), #0x00
+                           000091   215 	C$OAMManager.c$44$1_1$185	= .
+                                    216 	.globl	C$OAMManager.c$44$1_1$185
+                                    217 ;C:/ZGB-2023.0/common/src/OAMManager.c:44: scroll_x_vblank = scroll_x;
+      000091 FAr00r00         [16]  218 	ld	a, (#_scroll_x)
+      000094 EAr00r00         [16]  219 	ld	(#_scroll_x_vblank),a
+                           000097   220 	C$OAMManager.c$45$1_1$185	= .
+                                    221 	.globl	C$OAMManager.c$45$1_1$185
+                                    222 ;C:/ZGB-2023.0/common/src/OAMManager.c:45: scroll_y_vblank = scroll_y;
+      000097 FAr00r00         [16]  223 	ld	a, (#_scroll_y)
+      00009A EAr00r00         [16]  224 	ld	(#_scroll_y_vblank),a
+                           00009D   225 	C$OAMManager.c$46$1_1$184	= .
+                                    226 	.globl	C$OAMManager.c$46$1_1$184
+                                    227 ;C:/ZGB-2023.0/common/src/OAMManager.c:46: }
+                           00009D   228 	C$OAMManager.c$46$1_1$184	= .
+                                    229 	.globl	C$OAMManager.c$46$1_1$184
+                           00009D   230 	XG$SwapOAMs$0$0	= .
+                                    231 	.globl	XG$SwapOAMs$0$0
+      00009D C9               [16]  232 	ret
+                           00009E   233 	G$ClearOAMs$0$0	= .
+                                    234 	.globl	G$ClearOAMs$0$0
+                           00009E   235 	C$OAMManager.c$48$1_1$195	= .
+                                    236 	.globl	C$OAMManager.c$48$1_1$195
+                                    237 ;C:/ZGB-2023.0/common/src/OAMManager.c:48: void ClearOAMs() {
+                                    238 ;	---------------------------------
+                                    239 ; Function ClearOAMs
+                                    240 ; ---------------------------------
+      00009E                        241 _ClearOAMs::
+                           00009E   242 	C$OAMManager.c$49$1_0$195	= .
+                                    243 	.globl	C$OAMManager.c$49$1_0$195
+                                    244 ;C:/ZGB-2023.0/common/src/OAMManager.c:49: oam0 = (UINT8*)0xC000;
+      00009E 21r03r00         [12]  245 	ld	hl, #_oam0
+      0000A1 AF               [ 4]  246 	xor	a, a
+      0000A2 22               [ 8]  247 	ld	(hl+), a
+      0000A3 36 C0            [12]  248 	ld	(hl), #0xc0
+                           0000A5   249 	C$OAMManager.c$50$1_0$195	= .
+                                    250 	.globl	C$OAMManager.c$50$1_0$195
+                                    251 ;C:/ZGB-2023.0/common/src/OAMManager.c:50: oam1 = (UINT8*)OAM_MIRROR_ADDRESS;
+      0000A5 21r05r00         [12]  252 	ld	hl, #_oam1
+      0000A8 AF               [ 4]  253 	xor	a, a
+      0000A9 22               [ 8]  254 	ld	(hl+), a
+      0000AA 36 DF            [12]  255 	ld	(hl), #0xdf
+                           0000AC   256 	C$OAMManager.c$51$1_0$195	= .
+                                    257 	.globl	C$OAMManager.c$51$1_0$195
+                                    258 ;C:/ZGB-2023.0/common/src/OAMManager.c:51: memset(oam0, 0, sizeof(oam_mirror));
+      0000AC AF               [ 4]  259 	xor	a, a
+      0000AD A7               [ 4]  260 	and	a
+      0000AE F5               [16]  261 	push	af
+      0000AF 11 00 00         [12]  262 	ld	de, #0x0000
+      0000B2 D5               [16]  263 	push	de
+      0000B3 11 00 C0         [12]  264 	ld	de, #0xc000
+      0000B6 D5               [16]  265 	push	de
+      0000B7 CDr00r00         [24]  266 	call	_memset
+      0000BA E8 06            [16]  267 	add	sp, #6
+                           0000BC   268 	C$OAMManager.c$52$1_0$195	= .
+                                    269 	.globl	C$OAMManager.c$52$1_0$195
+                                    270 ;C:/ZGB-2023.0/common/src/OAMManager.c:52: memset(oam1, 0, sizeof(oam_mirror));
+      0000BC 21r05r00         [12]  271 	ld	hl, #_oam1
+      0000BF 2A               [ 8]  272 	ld	a, (hl+)
+      0000C0 4F               [ 4]  273 	ld	c, a
+      0000C1 46               [ 8]  274 	ld	b, (hl)
+      0000C2 AF               [ 4]  275 	xor	a, a
+      0000C3 A7               [ 4]  276 	and	a
+      0000C4 F5               [16]  277 	push	af
+      0000C5 11 00 00         [12]  278 	ld	de, #0x0000
+      0000C8 D5               [16]  279 	push	de
+      0000C9 C5               [16]  280 	push	bc
+      0000CA CDr00r00         [24]  281 	call	_memset
+      0000CD E8 06            [16]  282 	add	sp, #6
+                           0000CF   283 	C$OAMManager.c$53$1_0$195	= .
+                                    284 	.globl	C$OAMManager.c$53$1_0$195
+                                    285 ;C:/ZGB-2023.0/common/src/OAMManager.c:53: next_oam_idx = 0;
+      0000CF 21r00r00         [12]  286 	ld	hl, #_next_oam_idx
+      0000D2 36 00            [12]  287 	ld	(hl), #0x00
+                           0000D4   288 	C$OAMManager.c$54$1_0$195	= .
+                                    289 	.globl	C$OAMManager.c$54$1_0$195
+                                    290 ;C:/ZGB-2023.0/common/src/OAMManager.c:54: }
+                           0000D4   291 	C$OAMManager.c$54$1_0$195	= .
+                                    292 	.globl	C$OAMManager.c$54$1_0$195
+                           0000D4   293 	XG$ClearOAMs$0$0	= .
+                                    294 	.globl	XG$ClearOAMs$0$0
+      0000D4 C9               [16]  295 	ret
+                                    296 	.area _CODE
+                                    297 	.area _INITIALIZER
+                           000000   298 FOAMManager$__xinit_next_oam_idx$0_0$0 == .
+      000000                        299 __xinit__next_oam_idx:
+      000000 00                     300 	.db #0x00	; 0
+                           000001   301 FOAMManager$__xinit_oam$0_0$0 == .
+      000001                        302 __xinit__oam:
+      000001 00 C0                  303 	.dw #0xc000
+                           000003   304 FOAMManager$__xinit_oam0$0_0$0 == .
+      000003                        305 __xinit__oam0:
+      000003 00 C0                  306 	.dw #0xc000
+                           000005   307 FOAMManager$__xinit_oam1$0_0$0 == .
+      000005                        308 __xinit__oam1:
+      000005 00 DF                  309 	.dw #0xdf00
+                           000007   310 FOAMManager$__xinit_oam_end$0_0$0 == .
+      000007                        311 __xinit__oam_end:
+      000007 00 C0                  312 	.dw #0xc000
+                                    313 	.area _CABS (ABS)

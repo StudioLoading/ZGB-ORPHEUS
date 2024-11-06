@@ -1,0 +1,130 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module ZGBMain
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _GetTileReplacement
+                                     12 	.globl _next_state
+                                     13 ;--------------------------------------------------------
+                                     14 ; special function registers
+                                     15 ;--------------------------------------------------------
+                                     16 ;--------------------------------------------------------
+                                     17 ; ram data
+                                     18 ;--------------------------------------------------------
+                                     19 	.area _DATA
+                                     20 ;--------------------------------------------------------
+                                     21 ; ram data
+                                     22 ;--------------------------------------------------------
+                                     23 	.area _INITIALIZED
+                           000000    24 G$next_state$0_0$0==.
+      000000                         25 _next_state::
+      000000                         26 	.ds 1
+                                     27 ;--------------------------------------------------------
+                                     28 ; absolute external ram data
+                                     29 ;--------------------------------------------------------
+                                     30 	.area _DABS (ABS)
+                                     31 ;--------------------------------------------------------
+                                     32 ; global & static initialisations
+                                     33 ;--------------------------------------------------------
+                                     34 	.area _HOME
+                                     35 	.area _GSINIT
+                                     36 	.area _GSFINAL
+                                     37 	.area _GSINIT
+                                     38 ;--------------------------------------------------------
+                                     39 ; Home
+                                     40 ;--------------------------------------------------------
+                                     41 	.area _HOME
+                                     42 	.area _HOME
+                                     43 ;--------------------------------------------------------
+                                     44 ; code
+                                     45 ;--------------------------------------------------------
+                                     46 	.area _CODE
+                           000000    47 	G$GetTileReplacement$0$0	= .
+                                     48 	.globl	G$GetTileReplacement$0$0
+                           000000    49 	C$ZGBMain.c$6$0_0$160	= .
+                                     50 	.globl	C$ZGBMain.c$6$0_0$160
+                                     51 ;ZGBMain.c:6: UINT8 GetTileReplacement(UINT8* tile_ptr, UINT8* tile) {
+                                     52 ;	---------------------------------
+                                     53 ; Function GetTileReplacement
+                                     54 ; ---------------------------------
+      000000                         55 _GetTileReplacement::
+      000000 E8 FD            [16]   56 	add	sp, #-3
+      000002 F8 01            [12]   57 	ldhl	sp,	#1
+      000004 7B               [ 4]   58 	ld	a, e
+      000005 22               [ 8]   59 	ld	(hl+), a
+      000006 72               [ 8]   60 	ld	(hl), d
+                           000007    61 	C$ZGBMain.c$7$1_0$160	= .
+                                     62 	.globl	C$ZGBMain.c$7$1_0$160
+                                     63 ;ZGBMain.c:7: if(current_state == StateGame) {
+      000007 FAr00r00         [16]   64 	ld	a, (#_current_state)
+      00000A B7               [ 4]   65 	or	a, a
+      00000B 20 26            [12]   66 	jr	NZ, 00104$
+                           00000D    67 	C$ZGBMain.c$8$2_0$161	= .
+                                     68 	.globl	C$ZGBMain.c$8$2_0$161
+                                     69 ;ZGBMain.c:8: if(U_LESS_THAN(255 - (UINT16)*tile_ptr, N_SPRITE_TYPES)) {
+      00000D F8 01            [12]   70 	ldhl	sp,#1
+      00000F 2A               [ 8]   71 	ld	a, (hl+)
+      000010 5F               [ 4]   72 	ld	e, a
+      000011 3A               [ 8]   73 	ld	a, (hl-)
+      000012 2B               [ 8]   74 	dec	hl
+      000013 57               [ 4]   75 	ld	d, a
+      000014 1A               [ 8]   76 	ld	a, (de)
+      000015 77               [ 8]   77 	ld	(hl), a
+      000016 5E               [ 8]   78 	ld	e, (hl)
+      000017 16 00            [ 8]   79 	ld	d, #0x00
+      000019 3E FC            [ 8]   80 	ld	a, #0xfc
+      00001B 93               [ 4]   81 	sub	a, e
+      00001C 9F               [ 4]   82 	sbc	a, a
+      00001D 92               [ 4]   83 	sub	a, d
+      00001E 07               [ 4]   84 	rlca
+      00001F 30 0E            [12]   85 	jr	NC, 00102$
+                           000021    86 	C$ZGBMain.c$9$3_0$162	= .
+                                     87 	.globl	C$ZGBMain.c$9$3_0$162
+                                     88 ;ZGBMain.c:9: *tile = 0;
+      000021 AF               [ 4]   89 	xor	a, a
+      000022 02               [ 8]   90 	ld	(bc), a
+                           000023    91 	C$ZGBMain.c$10$3_0$162	= .
+                                     92 	.globl	C$ZGBMain.c$10$3_0$162
+                                     93 ;ZGBMain.c:10: return 255 - (UINT16)*tile_ptr;
+      000023 F8 01            [12]   94 	ldhl	sp,#1
+      000025 2A               [ 8]   95 	ld	a, (hl+)
+      000026 5F               [ 4]   96 	ld	e, a
+      000027 56               [ 8]   97 	ld	d, (hl)
+      000028 1A               [ 8]   98 	ld	a, (de)
+      000029 4F               [ 4]   99 	ld	c, a
+      00002A 3E FF            [ 8]  100 	ld	a, #0xff
+      00002C 91               [ 4]  101 	sub	a, c
+      00002D 18 06            [12]  102 	jr	00105$
+      00002F                        103 00102$:
+                           00002F   104 	C$ZGBMain.c$13$2_0$161	= .
+                                    105 	.globl	C$ZGBMain.c$13$2_0$161
+                                    106 ;ZGBMain.c:13: *tile = *tile_ptr;
+      00002F F8 00            [12]  107 	ldhl	sp,	#0
+      000031 7E               [ 8]  108 	ld	a, (hl)
+      000032 02               [ 8]  109 	ld	(bc), a
+      000033                        110 00104$:
+                           000033   111 	C$ZGBMain.c$16$1_0$160	= .
+                                    112 	.globl	C$ZGBMain.c$16$1_0$160
+                                    113 ;ZGBMain.c:16: return 255u;
+      000033 3E FF            [ 8]  114 	ld	a, #0xff
+      000035                        115 00105$:
+                           000035   116 	C$ZGBMain.c$17$1_0$160	= .
+                                    117 	.globl	C$ZGBMain.c$17$1_0$160
+                                    118 ;ZGBMain.c:17: }
+      000035 E8 03            [16]  119 	add	sp, #3
+                           000037   120 	C$ZGBMain.c$17$1_0$160	= .
+                                    121 	.globl	C$ZGBMain.c$17$1_0$160
+                           000037   122 	XG$GetTileReplacement$0$0	= .
+                                    123 	.globl	XG$GetTileReplacement$0$0
+      000037 C9               [16]  124 	ret
+                                    125 	.area _CODE
+                                    126 	.area _INITIALIZER
+                           000000   127 FZGBMain$__xinit_next_state$0_0$0 == .
+      000000                        128 __xinit__next_state:
+      000000 00                     129 	.db #0x00	; 0
+                                    130 	.area _CABS (ABS)

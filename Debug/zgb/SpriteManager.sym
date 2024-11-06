@@ -1,0 +1,1140 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  002710 L
+    .__.ABS.                                                    =  000000 G
+    .__.CPU.                                                    =  000000 L
+    .__.H$L.                                                    =  000000 L
+  0 A$SpriteManager$1000                                           000394 GR
+  0 A$SpriteManager$1001                                           000396 GR
+  0 A$SpriteManager$1002                                           000397 GR
+  0 A$SpriteManager$1003                                           000398 GR
+  0 A$SpriteManager$1004                                           000399 GR
+  0 A$SpriteManager$1005                                           00039B GR
+  0 A$SpriteManager$1006                                           00039D GR
+  0 A$SpriteManager$1007                                           00039E GR
+  0 A$SpriteManager$1011                                           00039F GR
+  0 A$SpriteManager$1012                                           0003A0 GR
+  0 A$SpriteManager$1013                                           0003A2 GR
+  0 A$SpriteManager$1014                                           0003A3 GR
+  0 A$SpriteManager$1015                                           0003A4 GR
+  0 A$SpriteManager$1019                                           0003A7 GR
+  0 A$SpriteManager$1024                                           0003A9 GR
+  0 A$SpriteManager$1025                                           0003AA GR
+  0 A$SpriteManager$1026                                           0003AB GR
+  0 A$SpriteManager$1031                                           0003AD GR
+  0 A$SpriteManager$1036                                           0003AF GR
+  0 A$SpriteManager$1046                                           0003B0 GR
+  0 A$SpriteManager$1047                                           0003B1 GR
+  0 A$SpriteManager$1051                                           0003B2 GR
+  0 A$SpriteManager$1052                                           0003B5 GR
+  0 A$SpriteManager$1053                                           0003B6 GR
+  0 A$SpriteManager$1055                                           0003B9 GR
+  0 A$SpriteManager$1056                                           0003BC GR
+  0 A$SpriteManager$1057                                           0003BD GR
+  0 A$SpriteManager$1058                                           0003BE GR
+  0 A$SpriteManager$1059                                           0003BF GR
+  0 A$SpriteManager$1063                                           0003C2 GR
+  0 A$SpriteManager$1064                                           0003C3 GR
+  0 A$SpriteManager$1065                                           0003C5 GR
+  0 A$SpriteManager$1066                                           0003C8 GR
+  0 A$SpriteManager$1067                                           0003C9 GR
+  0 A$SpriteManager$1068                                           0003CA GR
+  0 A$SpriteManager$1069                                           0003CB GR
+  0 A$SpriteManager$1070                                           0003CC GR
+  0 A$SpriteManager$1071                                           0003CD GR
+  0 A$SpriteManager$1072                                           0003CE GR
+  0 A$SpriteManager$1073                                           0003CF GR
+  0 A$SpriteManager$1076                                           0003D1 GR
+  0 A$SpriteManager$1077                                           0003D2 GR
+  0 A$SpriteManager$1078                                           0003D3 GR
+  0 A$SpriteManager$1079                                           0003D6 GR
+  0 A$SpriteManager$1080                                           0003D7 GR
+  0 A$SpriteManager$1081                                           0003D8 GR
+  0 A$SpriteManager$1082                                           0003D9 GR
+  0 A$SpriteManager$1083                                           0003DA GR
+  0 A$SpriteManager$1084                                           0003DD GR
+  0 A$SpriteManager$1085                                           0003DE GR
+  0 A$SpriteManager$1086                                           0003DF GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$1087                                           0003E0 GR
+  0 A$SpriteManager$1091                                           0003E1 GR
+  0 A$SpriteManager$1092                                           0003E4 GR
+  0 A$SpriteManager$1093                                           0003E5 GR
+  0 A$SpriteManager$1094                                           0003E6 GR
+  0 A$SpriteManager$1095                                           0003E7 GR
+  0 A$SpriteManager$1096                                           0003EA GR
+  0 A$SpriteManager$1097                                           0003EB GR
+  0 A$SpriteManager$1098                                           0003EC GR
+  0 A$SpriteManager$1099                                           0003ED GR
+  0 A$SpriteManager$1103                                           0003EF GR
+  0 A$SpriteManager$1104                                           0003F2 GR
+  0 A$SpriteManager$1105                                           0003F3 GR
+  0 A$SpriteManager$1106                                           0003F5 GR
+  0 A$SpriteManager$1107                                           0003F6 GR
+  0 A$SpriteManager$1109                                           0003F7 GR
+  0 A$SpriteManager$1110                                           0003FA GR
+  0 A$SpriteManager$1111                                           0003FB GR
+  0 A$SpriteManager$1112                                           0003FC GR
+  0 A$SpriteManager$1113                                           0003FD GR
+  0 A$SpriteManager$1114                                           0003FE GR
+  0 A$SpriteManager$1115                                           0003FF GR
+  0 A$SpriteManager$1116                                           000400 GR
+  0 A$SpriteManager$1120                                           000401 GR
+  0 A$SpriteManager$1121                                           000404 GR
+  0 A$SpriteManager$1122                                           000407 GR
+  0 A$SpriteManager$1126                                           00040A GR
+  0 A$SpriteManager$1127                                           00040D GR
+  0 A$SpriteManager$1128                                           00040E GR
+  0 A$SpriteManager$1129                                           00040F GR
+  0 A$SpriteManager$1130                                           000410 GR
+  0 A$SpriteManager$1131                                           000413 GR
+  0 A$SpriteManager$1132                                           000414 GR
+  0 A$SpriteManager$1133                                           000415 GR
+  0 A$SpriteManager$1134                                           000418 GR
+  0 A$SpriteManager$1135                                           00041A GR
+  0 A$SpriteManager$1136                                           00041B GR
+  0 A$SpriteManager$1137                                           00041C GR
+  0 A$SpriteManager$1138                                           00041D GR
+  0 A$SpriteManager$1139                                           00041E GR
+  0 A$SpriteManager$114                                            000000 GR
+  0 A$SpriteManager$1140                                           000421 GR
+  0 A$SpriteManager$1144                                           000422 GR
+  0 A$SpriteManager$1145                                           000425 GR
+  0 A$SpriteManager$1146                                           000426 GR
+  0 A$SpriteManager$1147                                           000427 GR
+  0 A$SpriteManager$1148                                           000428 GR
+  0 A$SpriteManager$1149                                           00042B GR
+  0 A$SpriteManager$1150                                           00042C GR
+  0 A$SpriteManager$1152                                           00042D GR
+  0 A$SpriteManager$1155                                           00042F GR
+  0 A$SpriteManager$1156                                           000430 GR
+  0 A$SpriteManager$1157                                           000433 GR
+  0 A$SpriteManager$1158                                           000434 GR
+  0 A$SpriteManager$1159                                           000435 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 3
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$1161                                           000436 GR
+  0 A$SpriteManager$1164                                           000437 GR
+  0 A$SpriteManager$1168                                           00043A GR
+  0 A$SpriteManager$1173                                           00043D GR
+  0 A$SpriteManager$1174                                           000440 GR
+  0 A$SpriteManager$1175                                           000441 GR
+  0 A$SpriteManager$118                                            000002 GR
+  0 A$SpriteManager$1180                                           000444 GR
+  0 A$SpriteManager$1181                                           000447 GR
+  0 A$SpriteManager$1185                                           000449 GR
+  0 A$SpriteManager$1186                                           00044A GR
+  0 A$SpriteManager$119                                            000005 GR
+  0 A$SpriteManager$1191                                           00044B GR
+  0 A$SpriteManager$120                                            000007 GR
+  0 A$SpriteManager$1204                                           00044C GR
+  0 A$SpriteManager$1205                                           00044E GR
+  0 A$SpriteManager$1206                                           00044F GR
+  0 A$SpriteManager$1207                                           000452 GR
+  0 A$SpriteManager$121                                            000008 GR
+  0 A$SpriteManager$1215                                           000455 GR
+  0 A$SpriteManager$122                                            000009 GR
+  0 A$SpriteManager$1225                                           000456 GR
+  0 A$SpriteManager$1226                                           000457 GR
+  0 A$SpriteManager$1230                                           000458 GR
+  0 A$SpriteManager$1231                                           00045B GR
+  0 A$SpriteManager$1232                                           00045D GR
+  0 A$SpriteManager$1233                                           000460 GR
+  0 A$SpriteManager$1236                                           000461 GR
+  0 A$SpriteManager$1239                                           000463 GR
+  0 A$SpriteManager$1240                                           000464 GR
+  0 A$SpriteManager$1241                                           000467 GR
+  0 A$SpriteManager$1242                                           000468 GR
+  0 A$SpriteManager$1243                                           000469 GR
+  0 A$SpriteManager$1244                                           00046A GR
+  0 A$SpriteManager$1245                                           00046B GR
+  0 A$SpriteManager$1246                                           00046E GR
+  0 A$SpriteManager$1247                                           00046F GR
+  0 A$SpriteManager$1248                                           000470 GR
+  0 A$SpriteManager$1249                                           000471 GR
+  0 A$SpriteManager$1251                                           000472 GR
+  0 A$SpriteManager$1252                                           000475 GR
+  0 A$SpriteManager$1253                                           000476 GR
+  0 A$SpriteManager$1254                                           000479 GR
+  0 A$SpriteManager$1255                                           00047A GR
+  0 A$SpriteManager$1259                                           00047D GR
+  0 A$SpriteManager$126                                            00000A GR
+  0 A$SpriteManager$1260                                           000480 GR
+  0 A$SpriteManager$1261                                           000482 GR
+  0 A$SpriteManager$1262                                           000483 GR
+  0 A$SpriteManager$1263                                           000486 GR
+  0 A$SpriteManager$1264                                           000488 GR
+  0 A$SpriteManager$1265                                           000489 GR
+  0 A$SpriteManager$1266                                           00048A GR
+  0 A$SpriteManager$1267                                           00048B GR
+  0 A$SpriteManager$1268                                           00048E GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 4
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$1269                                           00048F GR
+  0 A$SpriteManager$1270                                           000490 GR
+  0 A$SpriteManager$1271                                           000491 GR
+  0 A$SpriteManager$1272                                           000492 GR
+  0 A$SpriteManager$1273                                           000493 GR
+  0 A$SpriteManager$1277                                           000495 GR
+  0 A$SpriteManager$1278                                           000496 GR
+  0 A$SpriteManager$1279                                           000497 GR
+  0 A$SpriteManager$1280                                           00049A GR
+  0 A$SpriteManager$1281                                           00049B GR
+  0 A$SpriteManager$1282                                           00049C GR
+  0 A$SpriteManager$1283                                           00049D GR
+  0 A$SpriteManager$1284                                           00049E GR
+  0 A$SpriteManager$1285                                           00049F GR
+  0 A$SpriteManager$1286                                           0004A2 GR
+  0 A$SpriteManager$1287                                           0004A4 GR
+  0 A$SpriteManager$1288                                           0004A5 GR
+  0 A$SpriteManager$1289                                           0004A6 GR
+  0 A$SpriteManager$1290                                           0004A7 GR
+  0 A$SpriteManager$1291                                           0004A8 GR
+  0 A$SpriteManager$1292                                           0004AB GR
+  0 A$SpriteManager$1296                                           0004AC GR
+  0 A$SpriteManager$1297                                           0004AF GR
+  0 A$SpriteManager$1298                                           0004B0 GR
+  0 A$SpriteManager$1299                                           0004B1 GR
+  0 A$SpriteManager$130                                            00000D GR
+  0 A$SpriteManager$1300                                           0004B2 GR
+  0 A$SpriteManager$1301                                           0004B5 GR
+  0 A$SpriteManager$1302                                           0004B6 GR
+  0 A$SpriteManager$1304                                           0004B7 GR
+  0 A$SpriteManager$1307                                           0004B9 GR
+  0 A$SpriteManager$1308                                           0004BA GR
+  0 A$SpriteManager$1309                                           0004BD GR
+  0 A$SpriteManager$131                                            00000F GR
+  0 A$SpriteManager$1310                                           0004BE GR
+  0 A$SpriteManager$1311                                           0004BF GR
+  0 A$SpriteManager$1312                                           0004C0 GR
+  0 A$SpriteManager$1314                                           0004C1 GR
+  0 A$SpriteManager$1317                                           0004C2 GR
+  0 A$SpriteManager$1321                                           0004C5 GR
+  0 A$SpriteManager$1322                                           0004C8 GR
+  0 A$SpriteManager$1323                                           0004CB GR
+  0 A$SpriteManager$1324                                           0004CC GR
+  0 A$SpriteManager$1325                                           0004CE GR
+  0 A$SpriteManager$1326                                           0004D1 GR
+  0 A$SpriteManager$1327                                           0004D4 GR
+  0 A$SpriteManager$1328                                           0004D5 GR
+  0 A$SpriteManager$133                                            000010 GR
+  0 A$SpriteManager$1332                                           0004D7 GR
+  0 A$SpriteManager$1337                                           0004DA GR
+  0 A$SpriteManager$134                                            000013 GR
+  0 A$SpriteManager$1342                                           0004DD GR
+  0 A$SpriteManager$1343                                           0004E0 GR
+  0 A$SpriteManager$1344                                           0004E1 GR
+  0 A$SpriteManager$1345                                           0004E2 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 5
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$1346                                           0004E3 GR
+  0 A$SpriteManager$1347                                           0004E6 GR
+  0 A$SpriteManager$1348                                           0004E8 GR
+  0 A$SpriteManager$1349                                           0004E9 GR
+  0 A$SpriteManager$135                                            000014 GR
+  0 A$SpriteManager$1351                                           0004EA GR
+  0 A$SpriteManager$1354                                           0004EC GR
+  0 A$SpriteManager$1355                                           0004ED GR
+  0 A$SpriteManager$1356                                           0004F0 GR
+  0 A$SpriteManager$1357                                           0004F1 GR
+  0 A$SpriteManager$1358                                           0004F2 GR
+  0 A$SpriteManager$1359                                           0004F3 GR
+  0 A$SpriteManager$136                                            000015 GR
+  0 A$SpriteManager$1360                                           0004F4 GR
+  0 A$SpriteManager$1361                                           0004F7 GR
+  0 A$SpriteManager$1362                                           0004F8 GR
+  0 A$SpriteManager$1363                                           0004F9 GR
+  0 A$SpriteManager$1364                                           0004FA GR
+  0 A$SpriteManager$1365                                           0004FB GR
+  0 A$SpriteManager$137                                            000016 GR
+  0 A$SpriteManager$1370                                           0004FE GR
+  0 A$SpriteManager$1374                                           000501 GR
+  0 A$SpriteManager$1375                                           000504 GR
+  0 A$SpriteManager$1376                                           000505 GR
+  0 A$SpriteManager$1377                                           000506 GR
+  0 A$SpriteManager$1381                                           000508 GR
+  0 A$SpriteManager$1382                                           000509 GR
+  0 A$SpriteManager$1383                                           00050A GR
+  0 A$SpriteManager$1388                                           00050D GR
+  0 A$SpriteManager$1389                                           00050E GR
+  0 A$SpriteManager$1394                                           00050F GR
+  0 A$SpriteManager$141                                            000018 GR
+  0 A$SpriteManager$142                                            000019 GR
+  0 A$SpriteManager$143                                            00001A GR
+  0 A$SpriteManager$144                                            00001B GR
+  0 A$SpriteManager$145                                            00001C GR
+  0 A$SpriteManager$146                                            00001D GR
+  0 A$SpriteManager$147                                            00001E GR
+  0 A$SpriteManager$148                                            000021 GR
+  0 A$SpriteManager$149                                            000022 GR
+  0 A$SpriteManager$151                                            000023 GR
+  0 A$SpriteManager$154                                            000025 GR
+  0 A$SpriteManager$155                                            000026 GR
+  0 A$SpriteManager$156                                            000029 GR
+  0 A$SpriteManager$157                                            00002A GR
+  0 A$SpriteManager$158                                            00002B GR
+  0 A$SpriteManager$159                                            00002C GR
+  0 A$SpriteManager$160                                            00002D GR
+  0 A$SpriteManager$161                                            000030 GR
+  0 A$SpriteManager$162                                            000031 GR
+  0 A$SpriteManager$163                                            000032 GR
+  0 A$SpriteManager$164                                            000033 GR
+  0 A$SpriteManager$168                                            000034 GR
+  0 A$SpriteManager$169                                            000037 GR
+  0 A$SpriteManager$170                                            000038 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 6
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$171                                            000039 GR
+  0 A$SpriteManager$172                                            00003A GR
+  0 A$SpriteManager$173                                            00003D GR
+  0 A$SpriteManager$174                                            00003E GR
+  0 A$SpriteManager$175                                            00003F GR
+  0 A$SpriteManager$176                                            000042 GR
+  0 A$SpriteManager$177                                            000044 GR
+  0 A$SpriteManager$178                                            000045 GR
+  0 A$SpriteManager$179                                            000046 GR
+  0 A$SpriteManager$180                                            000047 GR
+  0 A$SpriteManager$181                                            000048 GR
+  0 A$SpriteManager$182                                            000049 GR
+  0 A$SpriteManager$183                                            00004C GR
+  0 A$SpriteManager$184                                            00004D GR
+  0 A$SpriteManager$188                                            00004E GR
+  0 A$SpriteManager$189                                            000051 GR
+  0 A$SpriteManager$190                                            000052 GR
+  0 A$SpriteManager$191                                            000053 GR
+  0 A$SpriteManager$192                                            000054 GR
+  0 A$SpriteManager$193                                            000057 GR
+  0 A$SpriteManager$194                                            000058 GR
+  0 A$SpriteManager$196                                            000059 GR
+  0 A$SpriteManager$199                                            00005B GR
+  0 A$SpriteManager$200                                            00005C GR
+  0 A$SpriteManager$201                                            00005F GR
+  0 A$SpriteManager$202                                            000060 GR
+  0 A$SpriteManager$203                                            000061 GR
+  0 A$SpriteManager$204                                            000062 GR
+  0 A$SpriteManager$206                                            000063 GR
+  0 A$SpriteManager$207                                            000064 GR
+  0 A$SpriteManager$210                                            000065 GR
+  0 A$SpriteManager$211                                            000068 GR
+  0 A$SpriteManager$212                                            00006B GR
+  0 A$SpriteManager$216                                            00006C GR
+  0 A$SpriteManager$217                                            00006D GR
+  0 A$SpriteManager$222                                            00006F GR
+  0 A$SpriteManager$223                                            000072 GR
+  0 A$SpriteManager$224                                            000074 GR
+  0 A$SpriteManager$225                                            000075 GR
+  0 A$SpriteManager$229                                            000077 GR
+  0 A$SpriteManager$230                                            000079 GR
+  0 A$SpriteManager$235                                            00007B GR
+  0 A$SpriteManager$236                                            00007D GR
+  0 A$SpriteManager$237                                            00007E GR
+  0 A$SpriteManager$238                                            000080 GR
+  0 A$SpriteManager$239                                            000081 GR
+  0 A$SpriteManager$240                                            000083 GR
+  0 A$SpriteManager$241                                            000084 GR
+  0 A$SpriteManager$242                                            000087 GR
+  0 A$SpriteManager$243                                            000088 GR
+  0 A$SpriteManager$244                                            000089 GR
+  0 A$SpriteManager$245                                            00008A GR
+  0 A$SpriteManager$246                                            00008B GR
+  0 A$SpriteManager$247                                            00008D GR
+  0 A$SpriteManager$248                                            00008E GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 7
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$249                                            000090 GR
+  0 A$SpriteManager$250                                            000091 GR
+  0 A$SpriteManager$251                                            000092 GR
+  0 A$SpriteManager$252                                            000093 GR
+  0 A$SpriteManager$253                                            000094 GR
+  0 A$SpriteManager$254                                            000095 GR
+  0 A$SpriteManager$255                                            000096 GR
+  0 A$SpriteManager$256                                            000097 GR
+  0 A$SpriteManager$257                                            000098 GR
+  0 A$SpriteManager$258                                            000099 GR
+  0 A$SpriteManager$259                                            00009C GR
+  0 A$SpriteManager$260                                            00009D GR
+  0 A$SpriteManager$261                                            00009E GR
+  0 A$SpriteManager$262                                            00009F GR
+  0 A$SpriteManager$263                                            0000A0 GR
+  0 A$SpriteManager$264                                            0000A1 GR
+  0 A$SpriteManager$265                                            0000A2 GR
+  0 A$SpriteManager$266                                            0000A3 GR
+  0 A$SpriteManager$270                                            0000A4 GR
+  0 A$SpriteManager$271                                            0000A7 GR
+  0 A$SpriteManager$272                                            0000A8 GR
+  0 A$SpriteManager$273                                            0000AA GR
+  0 A$SpriteManager$274                                            0000AB GR
+  0 A$SpriteManager$276                                            0000AC GR
+  0 A$SpriteManager$277                                            0000AF GR
+  0 A$SpriteManager$278                                            0000B0 GR
+  0 A$SpriteManager$279                                            0000B1 GR
+  0 A$SpriteManager$280                                            0000B2 GR
+  0 A$SpriteManager$281                                            0000B4 GR
+  0 A$SpriteManager$282                                            0000B5 GR
+  0 A$SpriteManager$286                                            0000B6 GR
+  0 A$SpriteManager$287                                            0000B7 GR
+  0 A$SpriteManager$288                                            0000B8 GR
+  0 A$SpriteManager$289                                            0000BA GR
+  0 A$SpriteManager$293                                            0000BC GR
+  0 A$SpriteManager$297                                            0000BF GR
+  0 A$SpriteManager$298                                            0000C2 GR
+  0 A$SpriteManager$299                                            0000C3 GR
+  0 A$SpriteManager$300                                            0000C4 GR
+  0 A$SpriteManager$301                                            0000C5 GR
+  0 A$SpriteManager$302                                            0000C8 GR
+  0 A$SpriteManager$303                                            0000C9 GR
+  0 A$SpriteManager$304                                            0000CC GR
+  0 A$SpriteManager$308                                            0000CE GR
+  0 A$SpriteManager$309                                            0000D1 GR
+  0 A$SpriteManager$313                                            0000D3 GR
+  0 A$SpriteManager$314                                            0000D6 GR
+  0 A$SpriteManager$318                                            0000D8 GR
+  0 A$SpriteManager$323                                            0000DA GR
+  0 A$SpriteManager$333                                            0000DB GR
+  0 A$SpriteManager$334                                            0000DD GR
+  0 A$SpriteManager$335                                            0000DF GR
+  0 A$SpriteManager$339                                            0000E0 GR
+  0 A$SpriteManager$340                                            0000E3 GR
+  0 A$SpriteManager$341                                            0000E4 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 8
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$342                                            0000E6 GR
+  0 A$SpriteManager$343                                            0000E7 GR
+  0 A$SpriteManager$344                                            0000E8 GR
+  0 A$SpriteManager$345                                            0000E9 GR
+  0 A$SpriteManager$346                                            0000EA GR
+  0 A$SpriteManager$347                                            0000EC GR
+  0 A$SpriteManager$348                                            0000EF GR
+  0 A$SpriteManager$349                                            0000F2 GR
+  0 A$SpriteManager$350                                            0000F3 GR
+  0 A$SpriteManager$351                                            0000F5 GR
+  0 A$SpriteManager$352                                            0000F6 GR
+  0 A$SpriteManager$353                                            0000F8 GR
+  0 A$SpriteManager$354                                            0000F9 GR
+  0 A$SpriteManager$355                                            0000FB GR
+  0 A$SpriteManager$356                                            0000FD GR
+  0 A$SpriteManager$357                                            0000FF GR
+  0 A$SpriteManager$358                                            000101 GR
+  0 A$SpriteManager$359                                            000103 GR
+  0 A$SpriteManager$360                                            000104 GR
+  0 A$SpriteManager$362                                            000106 GR
+  0 A$SpriteManager$363                                            000108 GR
+  0 A$SpriteManager$364                                            00010A GR
+  0 A$SpriteManager$369                                            00010B GR
+  0 A$SpriteManager$373                                            00010E GR
+  0 A$SpriteManager$374                                            000111 GR
+  0 A$SpriteManager$375                                            000113 GR
+  0 A$SpriteManager$376                                            000114 GR
+  0 A$SpriteManager$377                                            000116 GR
+  0 A$SpriteManager$378                                            000117 GR
+  0 A$SpriteManager$379                                            000118 GR
+  0 A$SpriteManager$380                                            000119 GR
+  0 A$SpriteManager$381                                            00011A GR
+  0 A$SpriteManager$382                                            00011B GR
+  0 A$SpriteManager$383                                            00011C GR
+  0 A$SpriteManager$384                                            00011D GR
+  0 A$SpriteManager$385                                            000120 GR
+  0 A$SpriteManager$386                                            000121 GR
+  0 A$SpriteManager$390                                            000122 GR
+  0 A$SpriteManager$391                                            000124 GR
+  0 A$SpriteManager$392                                            000125 GR
+  0 A$SpriteManager$393                                            000127 GR
+  0 A$SpriteManager$394                                            000128 GR
+  0 A$SpriteManager$395                                            00012B GR
+  0 A$SpriteManager$396                                            00012C GR
+  0 A$SpriteManager$397                                            00012D GR
+  0 A$SpriteManager$398                                            00012E GR
+  0 A$SpriteManager$399                                            00012F GR
+  0 A$SpriteManager$400                                            000131 GR
+  0 A$SpriteManager$401                                            000132 GR
+  0 A$SpriteManager$402                                            000133 GR
+  0 A$SpriteManager$403                                            000134 GR
+  0 A$SpriteManager$407                                            000135 GR
+  0 A$SpriteManager$408                                            000137 GR
+  0 A$SpriteManager$409                                            000138 GR
+  0 A$SpriteManager$410                                            000139 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 9
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$411                                            00013A GR
+  0 A$SpriteManager$412                                            00013B GR
+  0 A$SpriteManager$413                                            00013C GR
+  0 A$SpriteManager$414                                            00013D GR
+  0 A$SpriteManager$415                                            00013F GR
+  0 A$SpriteManager$419                                            000140 GR
+  0 A$SpriteManager$420                                            000141 GR
+  0 A$SpriteManager$421                                            000142 GR
+  0 A$SpriteManager$422                                            000144 GR
+  0 A$SpriteManager$423                                            000147 GR
+  0 A$SpriteManager$424                                            000148 GR
+  0 A$SpriteManager$425                                            000149 GR
+  0 A$SpriteManager$426                                            00014A GR
+  0 A$SpriteManager$427                                            00014C GR
+  0 A$SpriteManager$428                                            00014D GR
+  0 A$SpriteManager$429                                            00014E GR
+  0 A$SpriteManager$430                                            00014F GR
+  0 A$SpriteManager$431                                            000150 GR
+  0 A$SpriteManager$432                                            000151 GR
+  0 A$SpriteManager$433                                            000152 GR
+  0 A$SpriteManager$434                                            000153 GR
+  0 A$SpriteManager$435                                            000154 GR
+  0 A$SpriteManager$436                                            000157 GR
+  0 A$SpriteManager$437                                            000158 GR
+  0 A$SpriteManager$441                                            000159 GR
+  0 A$SpriteManager$442                                            00015A GR
+  0 A$SpriteManager$446                                            00015B GR
+  0 A$SpriteManager$447                                            00015C GR
+  0 A$SpriteManager$448                                            00015E GR
+  0 A$SpriteManager$449                                            00015F GR
+  0 A$SpriteManager$450                                            000160 GR
+  0 A$SpriteManager$451                                            000162 GR
+  0 A$SpriteManager$455                                            000163 GR
+  0 A$SpriteManager$456                                            000164 GR
+  0 A$SpriteManager$457                                            000165 GR
+  0 A$SpriteManager$458                                            000166 GR
+  0 A$SpriteManager$459                                            000168 GR
+  0 A$SpriteManager$460                                            00016B GR
+  0 A$SpriteManager$461                                            00016C GR
+  0 A$SpriteManager$462                                            00016D GR
+  0 A$SpriteManager$463                                            00016E GR
+  0 A$SpriteManager$464                                            00016F GR
+  0 A$SpriteManager$465                                            000170 GR
+  0 A$SpriteManager$466                                            000171 GR
+  0 A$SpriteManager$467                                            000172 GR
+  0 A$SpriteManager$468                                            000175 GR
+  0 A$SpriteManager$469                                            000177 GR
+  0 A$SpriteManager$470                                            000178 GR
+  0 A$SpriteManager$471                                            000179 GR
+  0 A$SpriteManager$475                                            00017A GR
+  0 A$SpriteManager$476                                            00017B GR
+  0 A$SpriteManager$477                                            00017C GR
+  0 A$SpriteManager$478                                            00017D GR
+  0 A$SpriteManager$482                                            00017E GR
+  0 A$SpriteManager$483                                            00017F GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 10
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$484                                            000180 GR
+  0 A$SpriteManager$485                                            000181 GR
+  0 A$SpriteManager$486                                            000182 GR
+  0 A$SpriteManager$487                                            000183 GR
+  0 A$SpriteManager$488                                            000184 GR
+  0 A$SpriteManager$489                                            000185 GR
+  0 A$SpriteManager$490                                            000186 GR
+  0 A$SpriteManager$491                                            000187 GR
+  0 A$SpriteManager$492                                            000188 GR
+  0 A$SpriteManager$493                                            000189 GR
+  0 A$SpriteManager$497                                            00018A GR
+  0 A$SpriteManager$498                                            00018C GR
+  0 A$SpriteManager$499                                            00018D GR
+  0 A$SpriteManager$500                                            00018E GR
+  0 A$SpriteManager$501                                            000190 GR
+  0 A$SpriteManager$502                                            000191 GR
+  0 A$SpriteManager$503                                            000192 GR
+  0 A$SpriteManager$504                                            000193 GR
+  0 A$SpriteManager$505                                            000194 GR
+  0 A$SpriteManager$506                                            000195 GR
+  0 A$SpriteManager$507                                            000196 GR
+  0 A$SpriteManager$511                                            000198 GR
+  0 A$SpriteManager$512                                            00019A GR
+  0 A$SpriteManager$513                                            00019B GR
+  0 A$SpriteManager$514                                            00019C GR
+  0 A$SpriteManager$515                                            00019D GR
+  0 A$SpriteManager$516                                            00019E GR
+  0 A$SpriteManager$517                                            0001A0 GR
+  0 A$SpriteManager$518                                            0001A1 GR
+  0 A$SpriteManager$519                                            0001A2 GR
+  0 A$SpriteManager$520                                            0001A3 GR
+  0 A$SpriteManager$521                                            0001A5 GR
+  0 A$SpriteManager$522                                            0001A6 GR
+  0 A$SpriteManager$523                                            0001A7 GR
+  0 A$SpriteManager$524                                            0001A8 GR
+  0 A$SpriteManager$525                                            0001AB GR
+  0 A$SpriteManager$526                                            0001AD GR
+  0 A$SpriteManager$531                                            0001AF GR
+  0 A$SpriteManager$532                                            0001B1 GR
+  0 A$SpriteManager$533                                            0001B2 GR
+  0 A$SpriteManager$534                                            0001B4 GR
+  0 A$SpriteManager$535                                            0001B5 GR
+  0 A$SpriteManager$536                                            0001B7 GR
+  0 A$SpriteManager$537                                            0001B8 GR
+  0 A$SpriteManager$538                                            0001B9 GR
+  0 A$SpriteManager$539                                            0001BA GR
+  0 A$SpriteManager$540                                            0001BB GR
+  0 A$SpriteManager$541                                            0001BC GR
+  0 A$SpriteManager$542                                            0001BD GR
+  0 A$SpriteManager$543                                            0001BF GR
+  0 A$SpriteManager$544                                            0001C0 GR
+  0 A$SpriteManager$545                                            0001C1 GR
+  0 A$SpriteManager$546                                            0001C2 GR
+  0 A$SpriteManager$547                                            0001C5 GR
+  0 A$SpriteManager$551                                            0001C7 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 11
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$552                                            0001C8 GR
+  0 A$SpriteManager$553                                            0001C9 GR
+  0 A$SpriteManager$554                                            0001CA GR
+  0 A$SpriteManager$555                                            0001CC GR
+  0 A$SpriteManager$556                                            0001CD GR
+  0 A$SpriteManager$557                                            0001CE GR
+  0 A$SpriteManager$558                                            0001CF GR
+  0 A$SpriteManager$559                                            0001D0 GR
+  0 A$SpriteManager$560                                            0001D2 GR
+  0 A$SpriteManager$561                                            0001D3 GR
+  0 A$SpriteManager$562                                            0001D4 GR
+  0 A$SpriteManager$563                                            0001D5 GR
+  0 A$SpriteManager$564                                            0001D7 GR
+  0 A$SpriteManager$565                                            0001D8 GR
+  0 A$SpriteManager$566                                            0001D9 GR
+  0 A$SpriteManager$567                                            0001DA GR
+  0 A$SpriteManager$568                                            0001DB GR
+  0 A$SpriteManager$569                                            0001DC GR
+  0 A$SpriteManager$570                                            0001DD GR
+  0 A$SpriteManager$571                                            0001DE GR
+  0 A$SpriteManager$572                                            0001DF GR
+  0 A$SpriteManager$573                                            0001E0 GR
+  0 A$SpriteManager$574                                            0001E1 GR
+  0 A$SpriteManager$575                                            0001E3 GR
+  0 A$SpriteManager$576                                            0001E5 GR
+  0 A$SpriteManager$577                                            0001E7 GR
+  0 A$SpriteManager$578                                            0001E9 GR
+  0 A$SpriteManager$579                                            0001EB GR
+  0 A$SpriteManager$580                                            0001ED GR
+  0 A$SpriteManager$581                                            0001EF GR
+  0 A$SpriteManager$582                                            0001F1 GR
+  0 A$SpriteManager$583                                            0001F3 GR
+  0 A$SpriteManager$584                                            0001F4 GR
+  0 A$SpriteManager$585                                            0001F5 GR
+  0 A$SpriteManager$586                                            0001F6 GR
+  0 A$SpriteManager$587                                            0001F7 GR
+  0 A$SpriteManager$588                                            0001F8 GR
+  0 A$SpriteManager$589                                            0001FA GR
+  0 A$SpriteManager$590                                            0001FB GR
+  0 A$SpriteManager$591                                            0001FD GR
+  0 A$SpriteManager$592                                            0001FE GR
+  0 A$SpriteManager$593                                            000201 GR
+  0 A$SpriteManager$598                                            000203 GR
+  0 A$SpriteManager$603                                            000206 GR
+  0 A$SpriteManager$608                                            000208 GR
+  0 A$SpriteManager$618                                            000209 GR
+  0 A$SpriteManager$619                                            00020B GR
+  0 A$SpriteManager$620                                            00020D GR
+  0 A$SpriteManager$621                                            00020E GR
+  0 A$SpriteManager$622                                            00020F GR
+  0 A$SpriteManager$623                                            000210 GR
+  0 A$SpriteManager$627                                            000211 GR
+  0 A$SpriteManager$628                                            000212 GR
+  0 A$SpriteManager$629                                            000213 GR
+  0 A$SpriteManager$630                                            000214 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 12
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$634                                            000217 GR
+  0 A$SpriteManager$635                                            00021A GR
+  0 A$SpriteManager$636                                            00021B GR
+  0 A$SpriteManager$637                                            00021C GR
+  0 A$SpriteManager$638                                            00021D GR
+  0 A$SpriteManager$639                                            00021E GR
+  0 A$SpriteManager$640                                            000220 GR
+  0 A$SpriteManager$641                                            000221 GR
+  0 A$SpriteManager$642                                            000224 GR
+  0 A$SpriteManager$643                                            000225 GR
+  0 A$SpriteManager$644                                            000226 GR
+  0 A$SpriteManager$645                                            000227 GR
+  0 A$SpriteManager$646                                            000228 GR
+  0 A$SpriteManager$647                                            000229 GR
+  0 A$SpriteManager$648                                            00022A GR
+  0 A$SpriteManager$649                                            00022B GR
+  0 A$SpriteManager$653                                            00022C GR
+  0 A$SpriteManager$654                                            00022F GR
+  0 A$SpriteManager$655                                            000231 GR
+  0 A$SpriteManager$656                                            000232 GR
+  0 A$SpriteManager$657                                            000234 GR
+  0 A$SpriteManager$658                                            000235 GR
+  0 A$SpriteManager$659                                            000236 GR
+  0 A$SpriteManager$660                                            000237 GR
+  0 A$SpriteManager$661                                            000238 GR
+  0 A$SpriteManager$662                                            000239 GR
+  0 A$SpriteManager$663                                            00023A GR
+  0 A$SpriteManager$667                                            00023B GR
+  0 A$SpriteManager$668                                            00023E GR
+  0 A$SpriteManager$669                                            00023F GR
+  0 A$SpriteManager$670                                            000240 GR
+  0 A$SpriteManager$671                                            000241 GR
+  0 A$SpriteManager$672                                            000242 GR
+  0 A$SpriteManager$673                                            000243 GR
+  0 A$SpriteManager$674                                            000244 GR
+  0 A$SpriteManager$675                                            000246 GR
+  0 A$SpriteManager$676                                            000247 GR
+  0 A$SpriteManager$680                                            000248 GR
+  0 A$SpriteManager$681                                            00024B GR
+  0 A$SpriteManager$682                                            00024C GR
+  0 A$SpriteManager$686                                            00024E GR
+  0 A$SpriteManager$687                                            000251 GR
+  0 A$SpriteManager$688                                            000252 GR
+  0 A$SpriteManager$689                                            000254 GR
+  0 A$SpriteManager$690                                            000255 GR
+  0 A$SpriteManager$694                                            000257 GR
+  0 A$SpriteManager$695                                            00025A GR
+  0 A$SpriteManager$696                                            00025B GR
+  0 A$SpriteManager$697                                            00025D GR
+  0 A$SpriteManager$698                                            00025E GR
+  0 A$SpriteManager$702                                            000260 GR
+  0 A$SpriteManager$703                                            000263 GR
+  0 A$SpriteManager$704                                            000264 GR
+  0 A$SpriteManager$708                                            000266 GR
+  0 A$SpriteManager$709                                            000267 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 13
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$710                                            000269 GR
+  0 A$SpriteManager$711                                            00026A GR
+  0 A$SpriteManager$712                                            00026D GR
+  0 A$SpriteManager$713                                            000270 GR
+  0 A$SpriteManager$717                                            000271 GR
+  0 A$SpriteManager$718                                            000272 GR
+  0 A$SpriteManager$719                                            000274 GR
+  0 A$SpriteManager$720                                            000275 GR
+  0 A$SpriteManager$721                                            000276 GR
+  0 A$SpriteManager$722                                            000277 GR
+  0 A$SpriteManager$723                                            00027A GR
+  0 A$SpriteManager$727                                            00027B GR
+  0 A$SpriteManager$728                                            00027E GR
+  0 A$SpriteManager$729                                            00027F GR
+  0 A$SpriteManager$730                                            000280 GR
+  0 A$SpriteManager$731                                            000281 GR
+  0 A$SpriteManager$732                                            000283 GR
+  0 A$SpriteManager$733                                            000284 GR
+  0 A$SpriteManager$734                                            000285 GR
+  0 A$SpriteManager$735                                            000286 GR
+  0 A$SpriteManager$736                                            000287 GR
+  0 A$SpriteManager$740                                            000288 GR
+  0 A$SpriteManager$741                                            00028B GR
+  0 A$SpriteManager$742                                            00028C GR
+  0 A$SpriteManager$743                                            00028D GR
+  0 A$SpriteManager$744                                            00028E GR
+  0 A$SpriteManager$745                                            000290 GR
+  0 A$SpriteManager$746                                            000291 GR
+  0 A$SpriteManager$747                                            000292 GR
+  0 A$SpriteManager$748                                            000293 GR
+  0 A$SpriteManager$749                                            000294 GR
+  0 A$SpriteManager$753                                            000295 GR
+  0 A$SpriteManager$754                                            000298 GR
+  0 A$SpriteManager$755                                            000299 GR
+  0 A$SpriteManager$756                                            00029A GR
+  0 A$SpriteManager$757                                            00029B GR
+  0 A$SpriteManager$758                                            00029D GR
+  0 A$SpriteManager$759                                            00029E GR
+  0 A$SpriteManager$760                                            00029F GR
+  0 A$SpriteManager$761                                            0002A0 GR
+  0 A$SpriteManager$762                                            0002A2 GR
+  0 A$SpriteManager$763                                            0002A3 GR
+  0 A$SpriteManager$764                                            0002A5 GR
+  0 A$SpriteManager$765                                            0002A6 GR
+  0 A$SpriteManager$766                                            0002A7 GR
+  0 A$SpriteManager$767                                            0002A8 GR
+  0 A$SpriteManager$768                                            0002AA GR
+  0 A$SpriteManager$769                                            0002AC GR
+  0 A$SpriteManager$770                                            0002AE GR
+  0 A$SpriteManager$771                                            0002B0 GR
+  0 A$SpriteManager$772                                            0002B2 GR
+  0 A$SpriteManager$773                                            0002B4 GR
+  0 A$SpriteManager$774                                            0002B6 GR
+  0 A$SpriteManager$775                                            0002B7 GR
+  0 A$SpriteManager$776                                            0002B8 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 14
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$777                                            0002BA GR
+  0 A$SpriteManager$778                                            0002BD GR
+  0 A$SpriteManager$779                                            0002BE GR
+  0 A$SpriteManager$780                                            0002BF GR
+  0 A$SpriteManager$781                                            0002C1 GR
+  0 A$SpriteManager$782                                            0002C3 GR
+  0 A$SpriteManager$783                                            0002C4 GR
+  0 A$SpriteManager$784                                            0002C5 GR
+  0 A$SpriteManager$785                                            0002C6 GR
+  0 A$SpriteManager$786                                            0002C7 GR
+  0 A$SpriteManager$787                                            0002C8 GR
+  0 A$SpriteManager$788                                            0002C9 GR
+  0 A$SpriteManager$789                                            0002CA GR
+  0 A$SpriteManager$790                                            0002CC GR
+  0 A$SpriteManager$791                                            0002CE GR
+  0 A$SpriteManager$792                                            0002D0 GR
+  0 A$SpriteManager$793                                            0002D2 GR
+  0 A$SpriteManager$794                                            0002D4 GR
+  0 A$SpriteManager$795                                            0002D6 GR
+  0 A$SpriteManager$796                                            0002D8 GR
+  0 A$SpriteManager$797                                            0002D9 GR
+  0 A$SpriteManager$798                                            0002DA GR
+  0 A$SpriteManager$799                                            0002DB GR
+  0 A$SpriteManager$800                                            0002DC GR
+  0 A$SpriteManager$801                                            0002DE GR
+  0 A$SpriteManager$802                                            0002DF GR
+  0 A$SpriteManager$803                                            0002E0 GR
+  0 A$SpriteManager$804                                            0002E1 GR
+  0 A$SpriteManager$805                                            0002E3 GR
+  0 A$SpriteManager$806                                            0002E4 GR
+  0 A$SpriteManager$807                                            0002E5 GR
+  0 A$SpriteManager$808                                            0002E6 GR
+  0 A$SpriteManager$809                                            0002E7 GR
+  0 A$SpriteManager$813                                            0002E8 GR
+  0 A$SpriteManager$814                                            0002EB GR
+  0 A$SpriteManager$815                                            0002EE GR
+  0 A$SpriteManager$816                                            0002F1 GR
+  0 A$SpriteManager$820                                            0002F4 GR
+  0 A$SpriteManager$821                                            0002F7 GR
+  0 A$SpriteManager$822                                            0002F9 GR
+  0 A$SpriteManager$826                                            0002FA GR
+  0 A$SpriteManager$827                                            0002FD GR
+  0 A$SpriteManager$828                                            0002FE GR
+  0 A$SpriteManager$829                                            0002FF GR
+  0 A$SpriteManager$833                                            000300 GR
+  0 A$SpriteManager$834                                            000303 GR
+  0 A$SpriteManager$835                                            000304 GR
+  0 A$SpriteManager$839                                            000307 GR
+  0 A$SpriteManager$840                                            000308 GR
+  0 A$SpriteManager$841                                            000309 GR
+  0 A$SpriteManager$842                                            00030A GR
+  0 A$SpriteManager$843                                            00030C GR
+  0 A$SpriteManager$844                                            00030D GR
+  0 A$SpriteManager$845                                            00030F GR
+  0 A$SpriteManager$846                                            000311 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 15
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$847                                            000312 GR
+  0 A$SpriteManager$848                                            000313 GR
+  0 A$SpriteManager$849                                            000314 GR
+  0 A$SpriteManager$850                                            000315 GR
+  0 A$SpriteManager$851                                            000316 GR
+  0 A$SpriteManager$852                                            000319 GR
+  0 A$SpriteManager$853                                            00031A GR
+  0 A$SpriteManager$857                                            00031B GR
+  0 A$SpriteManager$858                                            00031C GR
+  0 A$SpriteManager$859                                            00031D GR
+  0 A$SpriteManager$860                                            00031E GR
+  0 A$SpriteManager$863                                            000320 GR
+  0 A$SpriteManager$864                                            000321 GR
+  0 A$SpriteManager$865                                            000322 GR
+  0 A$SpriteManager$866                                            000325 GR
+  0 A$SpriteManager$867                                            000326 GR
+  0 A$SpriteManager$868                                            000327 GR
+  0 A$SpriteManager$870                                            000328 GR
+  0 A$SpriteManager$873                                            000329 GR
+  0 A$SpriteManager$874                                            00032A GR
+  0 A$SpriteManager$875                                            00032D GR
+  0 A$SpriteManager$876                                            000330 GR
+  0 A$SpriteManager$880                                            000331 GR
+  0 A$SpriteManager$881                                            000334 GR
+  0 A$SpriteManager$882                                            000337 GR
+  0 A$SpriteManager$883                                            00033A GR
+  0 A$SpriteManager$887                                            00033D GR
+  0 A$SpriteManager$888                                            00033F GR
+  0 A$SpriteManager$889                                            000340 GR
+  0 A$SpriteManager$896                                            000343 GR
+  0 A$SpriteManager$897                                            000345 GR
+  0 A$SpriteManager$898                                            000346 GR
+  0 A$SpriteManager$899                                            000347 GR
+  0 A$SpriteManager$912                                            000348 GR
+  0 A$SpriteManager$913                                            00034B GR
+  0 A$SpriteManager$917                                            00034D GR
+  0 A$SpriteManager$918                                            000350 GR
+  0 A$SpriteManager$919                                            000351 GR
+  0 A$SpriteManager$920                                            000352 GR
+  0 A$SpriteManager$921                                            000353 GR
+  0 A$SpriteManager$922                                            000354 GR
+  0 A$SpriteManager$923                                            000355 GR
+  0 A$SpriteManager$924                                            000358 GR
+  0 A$SpriteManager$925                                            000359 GR
+  0 A$SpriteManager$927                                            00035A GR
+  0 A$SpriteManager$930                                            00035C GR
+  0 A$SpriteManager$931                                            00035D GR
+  0 A$SpriteManager$932                                            00035E GR
+  0 A$SpriteManager$933                                            00035F GR
+  0 A$SpriteManager$934                                            000360 GR
+  0 A$SpriteManager$935                                            000361 GR
+  0 A$SpriteManager$936                                            000364 GR
+  0 A$SpriteManager$937                                            000365 GR
+  0 A$SpriteManager$945                                            000367 GR
+  0 A$SpriteManager$955                                            000368 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 16
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 A$SpriteManager$956                                            00036A GR
+  0 A$SpriteManager$957                                            00036C GR
+  0 A$SpriteManager$958                                            00036D GR
+  0 A$SpriteManager$959                                            00036E GR
+  0 A$SpriteManager$963                                            00036F GR
+  0 A$SpriteManager$965                                            000372 GR
+  0 A$SpriteManager$966                                            000375 GR
+  0 A$SpriteManager$971                                            000376 GR
+  0 A$SpriteManager$972                                            000377 GR
+  0 A$SpriteManager$973                                            000378 GR
+  0 A$SpriteManager$974                                            00037A GR
+  0 A$SpriteManager$975                                            00037B GR
+  0 A$SpriteManager$976                                            00037C GR
+  0 A$SpriteManager$977                                            00037D GR
+  0 A$SpriteManager$978                                            00037E GR
+  0 A$SpriteManager$979                                            00037F GR
+  0 A$SpriteManager$980                                            000382 GR
+  0 A$SpriteManager$981                                            000383 GR
+  0 A$SpriteManager$983                                            000384 GR
+  0 A$SpriteManager$986                                            000386 GR
+  0 A$SpriteManager$987                                            000387 GR
+  0 A$SpriteManager$988                                            00038A GR
+  0 A$SpriteManager$989                                            00038B GR
+  0 A$SpriteManager$990                                            00038C GR
+  0 A$SpriteManager$991                                            00038D GR
+  0 A$SpriteManager$992                                            00038E GR
+  0 A$SpriteManager$993                                            000390 GR
+  0 A$SpriteManager$994                                            000391 GR
+  0 A$SpriteManager$995                                            000392 GR
+  0 A$SpriteManager$996                                            000393 GR
+  0 C$SpriteManager.c$100$1_0$202                               =  000211 GR
+  0 C$SpriteManager.c$102$1_0$202                               =  000217 GR
+  0 C$SpriteManager.c$103$1_0$202                               =  00022C GR
+  0 C$SpriteManager.c$104$1_0$202                               =  00023B GR
+  0 C$SpriteManager.c$105$1_0$202                               =  000248 GR
+  0 C$SpriteManager.c$106$1_0$202                               =  00024E GR
+  0 C$SpriteManager.c$107$1_0$202                               =  000257 GR
+  0 C$SpriteManager.c$108$1_0$202                               =  000260 GR
+  0 C$SpriteManager.c$110$1_0$202                               =  000266 GR
+  0 C$SpriteManager.c$112$1_0$202                               =  000271 GR
+  0 C$SpriteManager.c$113$1_0$202                               =  00027B GR
+  0 C$SpriteManager.c$114$1_0$202                               =  000288 GR
+  0 C$SpriteManager.c$115$1_0$202                               =  000295 GR
+  0 C$SpriteManager.c$118$1_0$202                               =  0002E8 GR
+  0 C$SpriteManager.c$119$1_0$202                               =  0002F4 GR
+  0 C$SpriteManager.c$120$1_0$202                               =  0002FA GR
+  0 C$SpriteManager.c$121$1_0$202                               =  000300 GR
+  0 C$SpriteManager.c$122$1_0$202                               =  000307 GR
+  0 C$SpriteManager.c$123$1_0$202                               =  00031B GR
+  0 C$SpriteManager.c$126$1_0$202                               =  000331 GR
+  0 C$SpriteManager.c$127$1_0$202                               =  00033D GR
+  0 C$SpriteManager.c$128$1_0$202                               =  000343 GR
+  0 C$SpriteManager.c$129$1_0$202                               =  000343 GR
+  0 C$SpriteManager.c$131$1_0$204                               =  000348 GR
+  0 C$SpriteManager.c$132$1_0$204                               =  000348 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 17
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 C$SpriteManager.c$133$1_0$204                               =  00034D GR
+  0 C$SpriteManager.c$134$1_0$204                               =  000367 GR
+  0 C$SpriteManager.c$136$1_0$207                               =  000368 GR
+  0 C$SpriteManager.c$139$2_0$207                               =  0003A9 GR
+  0 C$SpriteManager.c$140$3_0$208                               =  000376 GR
+  0 C$SpriteManager.c$141$3_0$208                               =  000394 GR
+  0 C$SpriteManager.c$142$4_0$209                               =  00039F GR
+  0 C$SpriteManager.c$143$4_0$209                               =  0003A7 GR
+  0 C$SpriteManager.c$146$2_0$207                               =  0003AF GR
+  0 C$SpriteManager.c$148$2_0$210                               =  0003B0 GR
+  0 C$SpriteManager.c$150$2_0$211                               =  00043D GR
+  0 C$SpriteManager.c$151$3_0$212                               =  0003C2 GR
+  0 C$SpriteManager.c$152$3_0$212                               =  0003E1 GR
+  0 C$SpriteManager.c$153$4_0$213                               =  0003EF GR
+  0 C$SpriteManager.c$154$4_0$213                               =  000401 GR
+  0 C$SpriteManager.c$156$4_0$213                               =  00040A GR
+  0 C$SpriteManager.c$157$4_0$213                               =  000422 GR
+  0 C$SpriteManager.c$158$4_0$213                               =  00043A GR
+  0 C$SpriteManager.c$161$1_0$210                               =  000444 GR
+  0 C$SpriteManager.c$162$1_0$210                               =  00044B GR
+  0 C$SpriteManager.c$164$1_0$215                               =  00044C GR
+  0 C$SpriteManager.c$174$1_0$215                               =  00044C GR
+  0 C$SpriteManager.c$175$1_0$215                               =  000455 GR
+  0 C$SpriteManager.c$182$1_0$216                               =  000456 GR
+  0 C$SpriteManager.c$183$2_0$217                               =  0004DD GR
+  0 C$SpriteManager.c$184$1_0$216                               =  00047D GR
+  0 C$SpriteManager.c$186$4_0$219                               =  000495 GR
+  0 C$SpriteManager.c$188$4_0$219                               =  0004AC GR
+  0 C$SpriteManager.c$190$4_0$219                               =  0004C5 GR
+  0 C$SpriteManager.c$191$4_0$219                               =  0004D7 GR
+  0 C$SpriteManager.c$193$4_0$219                               =  0004DA GR
+  0 C$SpriteManager.c$197$1_0$216                               =  0004FE GR
+  0 C$SpriteManager.c$199$1_0$216                               =  000501 GR
+  0 C$SpriteManager.c$200$2_0$220                               =  000508 GR
+  0 C$SpriteManager.c$202$1_0$216                               =  00050F GR
+  0 C$SpriteManager.c$22$0_0$190                                =  000000 GR
+  0 C$SpriteManager.c$25$1_0$190                                =  000002 GR
+  0 C$SpriteManager.c$26$1_0$190                                =  00000A GR
+  0 C$SpriteManager.c$29$2_0$191                                =  00006C GR
+  0 C$SpriteManager.c$29$3_0$192                                =  00000D GR
+  0 C$SpriteManager.c$30$3_0$192                                =  000018 GR
+  0 C$SpriteManager.c$31$3_0$192                                =  000034 GR
+  0 C$SpriteManager.c$32$3_0$192                                =  00004E GR
+  0 C$SpriteManager.c$37$1_0$190                                =  00006F GR
+  0 C$SpriteManager.c$38$2_0$193                                =  0000B6 GR
+  0 C$SpriteManager.c$38$3_0$194                                =  000077 GR
+  0 C$SpriteManager.c$39$3_0$194                                =  00007B GR
+  0 C$SpriteManager.c$40$3_0$194                                =  0000A4 GR
+  0 C$SpriteManager.c$42$1_0$190                                =  0000BC GR
+  0 C$SpriteManager.c$44$1_0$190                                =  0000BF GR
+  0 C$SpriteManager.c$47$1_0$190                                =  0000CE GR
+  0 C$SpriteManager.c$48$1_0$190                                =  0000D3 GR
+  0 C$SpriteManager.c$49$1_0$190                                =  0000DA GR
+  0 C$SpriteManager.c$52$1_0$196                                =  0000DB GR
+  0 C$SpriteManager.c$56$1_0$196                                =  0000E0 GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 18
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 C$SpriteManager.c$57$1_0$196                                =  00010B GR
+  0 C$SpriteManager.c$59$1_0$196                                =  00010E GR
+  0 C$SpriteManager.c$61$1_1$197                                =  000122 GR
+  0 C$SpriteManager.c$62$1_1$197                                =  000135 GR
+  0 C$SpriteManager.c$65$1_1$197                                =  000140 GR
+  0 C$SpriteManager.c$66$1_1$197                                =  000159 GR
+  0 C$SpriteManager.c$67$1_2$198                                =  00015B GR
+  0 C$SpriteManager.c$68$1_2$198                                =  00018A GR
+  0 C$SpriteManager.c$69$1_2$196                                =  00017A GR
+  0 C$SpriteManager.c$69$2_2$199                                =  000198 GR
+  0 C$SpriteManager.c$71$1_2$196                                =  00017E GR
+  0 C$SpriteManager.c$71$2_2$200                                =  0001AF GR
+  0 C$SpriteManager.c$72$2_2$200                                =  0001C7 GR
+  0 C$SpriteManager.c$91$1_2$198                                =  000203 GR
+  0 C$SpriteManager.c$92$1_2$196                                =  000208 GR
+  0 C$SpriteManager.c$95$1_2$202                                =  000209 GR
+  7 FSpriteManager$__xinit_THIS$0_0$0                           =  00001B GR
+  7 FSpriteManager$__xinit_THIS_IDX$0_0$0                       =  00001A GR
+  7 FSpriteManager$__xinit_last_sprite_loaded$0_0$0             =  000017 GR
+  7 FSpriteManager$__xinit_last_sprite_pal_loaded$0_0$0         =  000019 GR
+  7 FSpriteManager$__xinit_sprite_manager_sprites_pool$0_0$0    =  000000 GR
+  7 FSpriteManager$__xinit_sprite_manager_updatables$0_0$0      =  000002 GR
+  0 G$SetBank$0$0                                               =  00044C GR
+  0 G$SpriteManagerAdd$0$0                                      =  000209 GR
+  0 G$SpriteManagerFlushRemove$0$0                              =  0003B0 GR
+  0 G$SpriteManagerLoad$0$0                                     =  0000DB GR
+  0 G$SpriteManagerRemove$0$0                                   =  000348 GR
+  0 G$SpriteManagerRemoveSprite$0$0                             =  000368 GR
+  0 G$SpriteManagerReset$0$0                                    =  000000 GR
+  0 G$SpriteManagerUpdate$0$0                                   =  000456 GR
+  2 G$THIS$0_0$0                                                =  00001B GR
+  2 G$THIS_IDX$0_0$0                                            =  00001A GR
+  1 G$cachedSprite$0_0$0                                        =  0002F9 GR
+  2 G$last_sprite_loaded$0_0$0                                  =  000017 GR
+  2 G$last_sprite_pal_loaded$0_0$0                              =  000019 GR
+  1 G$sprite_manager_removal_check$0_0$0                        =  0002F8 GR
+  1 G$sprite_manager_sprites$0_0$0                              =  0002BC GR
+  1 G$sprite_manager_sprites_mem$0_0$0                          =  000000 GR
+  2 G$sprite_manager_sprites_pool$0_0$0                         =  000000 GR
+  1 G$sprite_manager_sprites_poolSTACK$0_0$0                    =  0002E4 GR
+  2 G$sprite_manager_updatables$0_0$0                           =  000002 GR
+  0 XG$SetBank$0$0                                              =  000455 GR
+  0 XG$SpriteManagerFlushRemove$0$0                             =  00044B GR
+  0 XG$SpriteManagerLoad$0$0                                    =  000208 GR
+  0 XG$SpriteManagerRemove$0$0                                  =  000367 GR
+  0 XG$SpriteManagerRemoveSprite$0$0                            =  0003AF GR
+  0 XG$SpriteManagerReset$0$0                                   =  0000DA GR
+  0 XG$SpriteManagerUpdate$0$0                                  =  00050F GR
+    _ClearOAMs                                                     ****** GX
+    _DrawSprite                                                    ****** GX
+    _InitSprite                                                    ****** GX
+    _PopBank                                                       ****** GX
+    _PushBank                                                      ****** GX
+    _RefreshScroll                                                 ****** GX
+  0 _SetBank                                                       00044C GR
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 19
+Hexadecimal [24-Bits]
+
+Symbol Table
+
+  0 _SpriteManagerAdd                                              000209 GR
+  0 _SpriteManagerFlushRemove                                      0003B0 GR
+  0 _SpriteManagerLoad                                             0000DB GR
+  0 _SpriteManagerRemove                                           000348 GR
+  0 _SpriteManagerRemoveSprite                                     000368 GR
+  0 _SpriteManagerReset                                            000000 GR
+  0 _SpriteManagerUpdate                                           000456 GR
+    _SwapOAMs                                                      ****** GX
+  2 _THIS                                                          00001B GR
+  2 _THIS_IDX                                                      00001A GR
+    _VectorAdd                                                     ****** GX
+    _VectorRemovePos                                               ****** GX
+    ___sdcc_call_hl                                                ****** GX
+    __current_bank                                                 ****** GX
+  7 __xinit__THIS                                                  00001B R
+  7 __xinit__THIS_IDX                                              00001A R
+  7 __xinit__last_sprite_loaded                                    000017 R
+  7 __xinit__last_sprite_pal_loaded                                000019 R
+  7 __xinit__sprite_manager_sprites_pool                           000000 R
+  7 __xinit__sprite_manager_updatables                             000002 R
+  1 _cachedSprite                                                  0002F9 GR
+  2 _last_sprite_loaded                                            000017 GR
+  2 _last_sprite_pal_loaded                                        000019 GR
+    _memset                                                        ****** GX
+    _scroll_target                                                 ****** GX
+    _set_sprite_data                                               ****** GX
+    _spriteBanks                                                   ****** GX
+    _spriteDataBanks                                               ****** GX
+    _spriteDatas                                                   ****** GX
+    _spriteDestroyFuncs                                            ****** GX
+    _spriteIdxs                                                    ****** GX
+    _spriteStartFuncs                                              ****** GX
+    _spriteUpdateFuncs                                             ****** GX
+  1 _sprite_manager_removal_check                                  0002F8 GR
+  1 _sprite_manager_sprites                                        0002BC GR
+  1 _sprite_manager_sprites_mem                                    000000 GR
+  2 _sprite_manager_sprites_pool                                   000000 GR
+  1 _sprite_manager_sprites_poolSTACK                              0002E4 GR
+  2 _sprite_manager_updatables                                     000002 GR
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                 Page 20
+Hexadecimal [24-Bits]
+
+Area Table
+
+   0 _CODE                                      size    510   flags    0
+   1 _DATA                                      size    2FB   flags    0
+   2 _INITIALIZED                               size     1D   flags    0
+   3 _DABS                                      size      0   flags    8
+   4 _HOME                                      size      0   flags    0
+   5 _GSINIT                                    size      0   flags    0
+   6 _GSFINAL                                   size      0   flags    0
+   7 _INITIALIZER                               size     1D   flags    0
+   8 _CABS                                      size      0   flags    8
+

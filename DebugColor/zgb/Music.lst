@@ -1,0 +1,274 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14228 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module Music
+                                      6 	.optsdcc -msm83
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _hUGE_mute_channel
+                                     12 	.globl _hUGE_dosound
+                                     13 	.globl _hUGE_init
+                                     14 	.globl _stop_music_on_new_state
+                                     15 	.globl _last_music
+                                     16 	.globl _hUGE_paused
+                                     17 	.globl _hUGE_current_track_bank
+                                     18 	.globl _hUGE_current_track
+                                     19 	.globl _MusicCallback
+                                     20 	.globl _hUGE_mute
+                                     21 	.globl ___PlayMusic
+                                     22 ;--------------------------------------------------------
+                                     23 ; special function registers
+                                     24 ;--------------------------------------------------------
+                                     25 ;--------------------------------------------------------
+                                     26 ; ram data
+                                     27 ;--------------------------------------------------------
+                                     28 	.area _DATA
+                           000000    29 G$hUGE_current_track$0_0$0==.
+      000000                         30 _hUGE_current_track::
+      000000                         31 	.ds 2
+                           000002    32 G$hUGE_current_track_bank$0_0$0==.
+      000002                         33 _hUGE_current_track_bank::
+      000002                         34 	.ds 1
+                                     35 ;--------------------------------------------------------
+                                     36 ; ram data
+                                     37 ;--------------------------------------------------------
+                                     38 	.area _INITIALIZED
+                           000000    39 G$hUGE_paused$0_0$0==.
+      000000                         40 _hUGE_paused::
+      000000                         41 	.ds 1
+                           000001    42 G$last_music$0_0$0==.
+      000001                         43 _last_music::
+      000001                         44 	.ds 2
+                           000003    45 G$stop_music_on_new_state$0_0$0==.
+      000003                         46 _stop_music_on_new_state::
+      000003                         47 	.ds 1
+                                     48 ;--------------------------------------------------------
+                                     49 ; absolute external ram data
+                                     50 ;--------------------------------------------------------
+                                     51 	.area _DABS (ABS)
+                                     52 ;--------------------------------------------------------
+                                     53 ; global & static initialisations
+                                     54 ;--------------------------------------------------------
+                                     55 	.area _HOME
+                                     56 	.area _GSINIT
+                                     57 	.area _GSFINAL
+                                     58 	.area _GSINIT
+                                     59 ;--------------------------------------------------------
+                                     60 ; Home
+                                     61 ;--------------------------------------------------------
+                                     62 	.area _HOME
+                           000000    63 	G$MusicCallback$0$0	= .
+                                     64 	.globl	G$MusicCallback$0$0
+                           000000    65 	C$Music.c$8$0_0$142	= .
+                                     66 	.globl	C$Music.c$8$0_0$142
+                                     67 ;C:/ZGB-2023.0/common/src/Music.c:8: void MusicCallback() __nonbanked {
+                                     68 ;	---------------------------------
+                                     69 ; Function MusicCallback
+                                     70 ; ---------------------------------
+      000000                         71 _MusicCallback::
+                           000000    72 	C$Music.c$9$1_0$142	= .
+                                     73 	.globl	C$Music.c$9$1_0$142
+                                     74 ;C:/ZGB-2023.0/common/src/Music.c:9: if (hUGE_paused) 
+      000000 FAr00r00         [16]   75 	ld	a, (#_hUGE_paused)
+      000003 B7               [ 4]   76 	or	a, a
+                           000004    77 	C$Music.c$10$1_0$142	= .
+                                     78 	.globl	C$Music.c$10$1_0$142
+                                     79 ;C:/ZGB-2023.0/common/src/Music.c:10: return;
+      000004 C0               [20]   80 	ret	NZ
+                           000005    81 	C$Music.c$12$2_0$143	= .
+                                     82 	.globl	C$Music.c$12$2_0$143
+                                     83 ;C:/ZGB-2023.0/common/src/Music.c:12: UBYTE __save = _current_bank;
+      000005 F0r00            [12]   84 	ldh	a, (__current_bank + 0)
+      000007 4F               [ 4]   85 	ld	c, a
+                           000008    86 	C$Music.c$13$1_1$142	= .
+                                     87 	.globl	C$Music.c$13$1_1$142
+                                     88 ;C:/ZGB-2023.0/common/src/Music.c:13: SWITCH_ROM_MBC1(hUGE_current_track_bank);
+      000008 FAr02r00         [16]   89 	ld	a, (#_hUGE_current_track_bank)
+      00000B E0r00            [12]   90 	ldh	(__current_bank + 0), a
+      00000D EAr00r00         [16]   91 	ld	(#_rROMB0),a
+                           000010    92 	C$Music.c$14$1_1$143	= .
+                                     93 	.globl	C$Music.c$14$1_1$143
+                                     94 ;C:/ZGB-2023.0/common/src/Music.c:14: hUGE_dosound();
+      000010 C5               [16]   95 	push	bc
+      000011 CDr00r00         [24]   96 	call	_hUGE_dosound
+      000014 C1               [12]   97 	pop	bc
+                           000015    98 	C$Music.c$15$1_1$143	= .
+                                     99 	.globl	C$Music.c$15$1_1$143
+                                    100 ;C:/ZGB-2023.0/common/src/Music.c:15: SWITCH_ROM_MBC1(__save);
+      000015 79               [ 4]  101 	ld	a, c
+      000016 E0r00            [12]  102 	ldh	(__current_bank + 0), a
+      000018 21r00r00         [12]  103 	ld	hl, #_rROMB0
+      00001B 71               [ 8]  104 	ld	(hl), c
+                           00001C   105 	C$Music.c$16$1_1$142	= .
+                                    106 	.globl	C$Music.c$16$1_1$142
+                                    107 ;C:/ZGB-2023.0/common/src/Music.c:16: }
+                           00001C   108 	C$Music.c$16$1_1$142	= .
+                                    109 	.globl	C$Music.c$16$1_1$142
+                           00001C   110 	XG$MusicCallback$0$0	= .
+                                    111 	.globl	XG$MusicCallback$0$0
+      00001C C9               [16]  112 	ret
+                                    113 	.area _HOME
+                                    114 ;--------------------------------------------------------
+                                    115 ; code
+                                    116 ;--------------------------------------------------------
+                                    117 	.area _CODE
+                           000000   118 	G$hUGE_mute$0$0	= .
+                                    119 	.globl	G$hUGE_mute$0$0
+                           000000   120 	C$Music.c$18$1_1$145	= .
+                                    121 	.globl	C$Music.c$18$1_1$145
+                                    122 ;C:/ZGB-2023.0/common/src/Music.c:18: void hUGE_mute(UBYTE mute) {
+                                    123 ;	---------------------------------
+                                    124 ; Function hUGE_mute
+                                    125 ; ---------------------------------
+      000000                        126 _hUGE_mute::
+      000000 4F               [ 4]  127 	ld	c, a
+                           000001   128 	C$Music.c$19$1_0$145	= .
+                                    129 	.globl	C$Music.c$19$1_0$145
+                                    130 ;C:/ZGB-2023.0/common/src/Music.c:19: hUGE_mute_channel(HT_CH1, mute);
+      000001 AF               [ 4]  131 	xor	a, a
+      000002 B9               [ 4]  132 	cp	a, c
+      000003 17               [ 4]  133 	rla
+      000004 5F               [ 4]  134 	ld	e, a
+      000005 D5               [16]  135 	push	de
+      000006 AF               [ 4]  136 	xor	a, a
+      000007 CDr00r00         [24]  137 	call	_hUGE_mute_channel
+      00000A D1               [12]  138 	pop	de
+                           00000B   139 	C$Music.c$20$1_0$145	= .
+                                    140 	.globl	C$Music.c$20$1_0$145
+                                    141 ;C:/ZGB-2023.0/common/src/Music.c:20: hUGE_mute_channel(HT_CH2, mute);
+      00000B D5               [16]  142 	push	de
+      00000C 3E 01            [ 8]  143 	ld	a, #0x01
+      00000E CDr00r00         [24]  144 	call	_hUGE_mute_channel
+      000011 D1               [12]  145 	pop	de
+                           000012   146 	C$Music.c$21$1_0$145	= .
+                                    147 	.globl	C$Music.c$21$1_0$145
+                                    148 ;C:/ZGB-2023.0/common/src/Music.c:21: hUGE_mute_channel(HT_CH3, mute);
+      000012 D5               [16]  149 	push	de
+      000013 3E 02            [ 8]  150 	ld	a, #0x02
+      000015 CDr00r00         [24]  151 	call	_hUGE_mute_channel
+      000018 D1               [12]  152 	pop	de
+                           000019   153 	C$Music.c$22$1_0$145	= .
+                                    154 	.globl	C$Music.c$22$1_0$145
+                                    155 ;C:/ZGB-2023.0/common/src/Music.c:22: hUGE_mute_channel(HT_CH4, mute);
+      000019 3E 03            [ 8]  156 	ld	a, #0x03
+                           00001B   157 	C$Music.c$23$1_0$145	= .
+                                    158 	.globl	C$Music.c$23$1_0$145
+                                    159 ;C:/ZGB-2023.0/common/src/Music.c:23: }
+                           00001B   160 	C$Music.c$23$1_0$145	= .
+                                    161 	.globl	C$Music.c$23$1_0$145
+                           00001B   162 	XG$hUGE_mute$0$0	= .
+                                    163 	.globl	XG$hUGE_mute$0$0
+      00001B C3r00r00         [16]  164 	jp	_hUGE_mute_channel
+                           00001E   165 	G$__PlayMusic$0$0	= .
+                                    166 	.globl	G$__PlayMusic$0$0
+                           00001E   167 	C$Music.c$40$1_0$147	= .
+                                    168 	.globl	C$Music.c$40$1_0$147
+                                    169 ;C:/ZGB-2023.0/common/src/Music.c:40: void __PlayMusic(void* music, unsigned char bank, unsigned char loop) {
+                                    170 ;	---------------------------------
+                                    171 ; Function __PlayMusic
+                                    172 ; ---------------------------------
+      00001E                        173 ___PlayMusic::
+      00001E 4F               [ 4]  174 	ld	c, a
+                           00001F   175 	C$Music.c$42$1_0$147	= .
+                                    176 	.globl	C$Music.c$42$1_0$147
+                                    177 ;C:/ZGB-2023.0/common/src/Music.c:42: if(music != last_music) {
+      00001F 21r01r00         [12]  178 	ld	hl, #_last_music
+      000022 7E               [ 8]  179 	ld	a, (hl)
+      000023 93               [ 4]  180 	sub	a, e
+      000024 20 05            [12]  181 	jr	NZ, 00112$
+      000026 23               [ 8]  182 	inc	hl
+      000027 7E               [ 8]  183 	ld	a, (hl)
+      000028 92               [ 4]  184 	sub	a, d
+      000029 28 41            [12]  185 	jr	Z, 00103$
+      00002B                        186 00112$:
+                           00002B   187 	C$Music.c$43$2_0$148	= .
+                                    188 	.globl	C$Music.c$43$2_0$148
+                                    189 ;C:/ZGB-2023.0/common/src/Music.c:43: last_music = music;
+      00002B 21r01r00         [12]  190 	ld	hl, #_last_music
+      00002E 7B               [ 4]  191 	ld	a, e
+      00002F 22               [ 8]  192 	ld	(hl+), a
+      000030 72               [ 8]  193 	ld	(hl), d
+                           000031   194 	C$Music.c$50$2_0$148	= .
+                                    195 	.globl	C$Music.c$50$2_0$148
+                                    196 ;C:/ZGB-2023.0/common/src/Music.c:50: NR52_REG = 0x80;
+      000031 3E 80            [ 8]  197 	ld	a, #0x80
+      000033 E0r00            [12]  198 	ldh	(_NR52_REG + 0), a
+                           000035   199 	C$Music.c$51$2_0$148	= .
+                                    200 	.globl	C$Music.c$51$2_0$148
+                                    201 ;C:/ZGB-2023.0/common/src/Music.c:51: NR51_REG = 0xFF;
+      000035 3E FF            [ 8]  202 	ld	a, #0xff
+      000037 E0r00            [12]  203 	ldh	(_NR51_REG + 0), a
+                           000039   204 	C$Music.c$52$2_0$148	= .
+                                    205 	.globl	C$Music.c$52$2_0$148
+                                    206 ;C:/ZGB-2023.0/common/src/Music.c:52: NR50_REG = 0x77;
+      000039 3E 77            [ 8]  207 	ld	a, #0x77
+      00003B E0r00            [12]  208 	ldh	(_NR50_REG + 0), a
+                           00003D   209 	C$Music.c$54$2_0$148	= .
+                                    210 	.globl	C$Music.c$54$2_0$148
+                                    211 ;C:/ZGB-2023.0/common/src/Music.c:54: hUGE_paused = 1;
+      00003D 21r00r00         [12]  212 	ld	hl, #_hUGE_paused
+      000040 36 01            [12]  213 	ld	(hl), #0x01
+                           000042   214 	C$Music.c$55$2_0$148	= .
+                                    215 	.globl	C$Music.c$55$2_0$148
+                                    216 ;C:/ZGB-2023.0/common/src/Music.c:55: hUGE_current_track = music; hUGE_current_track_bank = bank;
+      000042 21r00r00         [12]  217 	ld	hl, #_hUGE_current_track
+      000045 73               [ 8]  218 	ld	(hl), e
+      000046 23               [ 8]  219 	inc	hl
+      000047 72               [ 8]  220 	ld	(hl), d
+      000048 21r02r00         [12]  221 	ld	hl, #_hUGE_current_track_bank
+      00004B 71               [ 8]  222 	ld	(hl), c
+                           00004C   223 	C$Music.c$56$3_0$149	= .
+                                    224 	.globl	C$Music.c$56$3_0$149
+                                    225 ;C:/ZGB-2023.0/common/src/Music.c:56: UBYTE __save = _current_bank;
+      00004C F0r00            [12]  226 	ldh	a, (__current_bank + 0)
+      00004E 4F               [ 4]  227 	ld	c, a
+                           00004F   228 	C$Music.c$57$1_0$147	= .
+                                    229 	.globl	C$Music.c$57$1_0$147
+                                    230 ;C:/ZGB-2023.0/common/src/Music.c:57: SWITCH_ROM_MBC1(hUGE_current_track_bank);
+      00004F 7E               [ 8]  231 	ld	a, (hl)
+      000050 E0r00            [12]  232 	ldh	(__current_bank + 0), a
+      000052 EAr00r00         [16]  233 	ld	(#_rROMB0),a
+                           000055   234 	C$Music.c$58$2_1$149	= .
+                                    235 	.globl	C$Music.c$58$2_1$149
+                                    236 ;C:/ZGB-2023.0/common/src/Music.c:58: hUGE_init(hUGE_current_track);
+      000055 C5               [16]  237 	push	bc
+      000056 21r00r00         [12]  238 	ld	hl, #_hUGE_current_track
+      000059 2A               [ 8]  239 	ld	a, (hl+)
+      00005A 5F               [ 4]  240 	ld	e, a
+      00005B 56               [ 8]  241 	ld	d, (hl)
+      00005C CDr00r00         [24]  242 	call	_hUGE_init
+      00005F C1               [12]  243 	pop	bc
+                           000060   244 	C$Music.c$59$2_1$149	= .
+                                    245 	.globl	C$Music.c$59$2_1$149
+                                    246 ;C:/ZGB-2023.0/common/src/Music.c:59: SWITCH_ROM_MBC1(__save);
+      000060 79               [ 4]  247 	ld	a, c
+      000061 E0r00            [12]  248 	ldh	(__current_bank + 0), a
+      000063 21r00r00         [12]  249 	ld	hl, #_rROMB0
+      000066 71               [ 8]  250 	ld	(hl), c
+                           000067   251 	C$Music.c$60$2_1$149	= .
+                                    252 	.globl	C$Music.c$60$2_1$149
+                                    253 ;C:/ZGB-2023.0/common/src/Music.c:60: hUGE_paused = 0;
+      000067 21r00r00         [12]  254 	ld	hl, #_hUGE_paused
+      00006A 36 00            [12]  255 	ld	(hl), #0x00
+      00006C                        256 00103$:
+                           00006C   257 	C$Music.c$63$1_0$147	= .
+                                    258 	.globl	C$Music.c$63$1_0$147
+                                    259 ;C:/ZGB-2023.0/common/src/Music.c:63: }
+      00006C E1               [12]  260 	pop	hl
+      00006D 33               [ 8]  261 	inc	sp
+      00006E E9               [ 4]  262 	jp	(hl)
+                                    263 	.area _CODE
+                                    264 	.area _INITIALIZER
+                           000000   265 FMusic$__xinit_hUGE_paused$0_0$0 == .
+      000000                        266 __xinit__hUGE_paused:
+      000000 01                     267 	.db #0x01	;  1
+                           000001   268 FMusic$__xinit_last_music$0_0$0 == .
+      000001                        269 __xinit__last_music:
+      000001 00 00                  270 	.dw #0x0000
+                           000003   271 FMusic$__xinit_stop_music_on_new_state$0_0$0 == .
+      000003                        272 __xinit__stop_music_on_new_state:
+      000003 01                     273 	.db #0x01	; 1
+                                    274 	.area _CABS (ABS)
