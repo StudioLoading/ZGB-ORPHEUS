@@ -19,7 +19,7 @@ IMPORT_TILES(font);
 
 const UINT8 coll_tiles_intro[] = {4u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23u, 24u, 25u, 32u, 33u, 34u, 35u, 36u, 40u, 41u, 51u, 53u, 60u, 61u, 62u, 63u, 64u, 65u, 
 82u, 87u, 88u, 89u, 90u, 91u, 92u, 93u, 94u, 95u, 96u, 105u, 106u,
-108u, 109u, 112u, 113u, 
+108u, 109u,
 //here the hit tiles
 120, 121, 122, 123, 124, 125, 126, 127,
 0};
@@ -49,6 +49,7 @@ void START() {
 		struct ItemInfo* heart_data = (struct ItemInfo*) s_item_heart->custom_data; 
 		heart_data->item_type = HEART;
 		heart_data->i_configured = 1;
+		Sprite* lyre = SpriteManagerAdd(SpriteLyre, ((UINT16) 7u << 3), ((UINT16) 43u << 3) + 4);
 		//ENEMIES
 		/*
 		Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 28u << 3), ((UINT16) 60u << 3));

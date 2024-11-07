@@ -10,6 +10,7 @@
 #include "SpriteManager.h"
 
 #include "custom_datas.h"
+#include "Dialog.h"
 
 #define POWER_MAX 40
 #define COUNTDOWN_SKIP_ATTRACT 1
@@ -58,12 +59,15 @@ extern UINT8 move_camera_right;
 extern SONG song_selection;
 extern UINT8 tutorial_go;
 extern UINT8 in_dialog;
+extern UINT8 has_lyre;
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
 void orpheus_hit() BANKED;
 void orpheus_recharge() BANKED;
 void orpheus_pickup(Sprite* itemsprite) BANKED;
+extern void init_write_dialog(UINT8 nlines) BANKED;
+extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 
 
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_type) BANKED;
@@ -150,8 +154,12 @@ void UPDATE() {
     //ATTACK MANAGEMENT J_ATK
         if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != ATTACK){
 			if (KEY_TICKED(J_ATK)) { //countdown == orpheus_power_max && ){
-				orpheus_state_before = orpheus_info->ow_state;
-				new_state = ATTACK;
+                if(has_lyre){
+                    orpheus_state_before = orpheus_info->ow_state;
+                    new_state = ATTACK;
+                }else{
+			        init_write_dialog(prepare_dialog(MISSING_LYRE));
+                }
 			}
         }
     orhpeus_change_state(new_state);
@@ -239,6 +247,7 @@ void UPDATE() {
             }
             if(CheckCollision(THIS, iospr)) {
                 switch(iospr->type){
+                    case SpriteLyre:
                     case SpriteItem:
                         orpheus_pickup(iospr);
                     break;
@@ -282,8 +291,6 @@ void orpheus_update_position() BANKED{
         if(orpheus_info->tile_collision >= 120u && orpheus_info->tile_collision <= 127) {
             orhpeus_change_state(HIT);
         }
-        //THIS->y--;
-        //THIS->y++;
     }
 }
 
@@ -395,6 +402,11 @@ void orpheus_hit() BANKED{
 
 void orpheus_pickup(Sprite* itemsprite) BANKED{
     switch(itemsprite->type){
+        case SpriteLyre:
+            init_write_dialog(prepare_dialog(FOUND_LYRE));
+            SpriteManagerRemoveSprite(itemsprite);
+            orhpeus_change_state(IDLE_DOWN);
+        break;
         case SpriteItem:
             struct ItemInfo* i_data = (struct ItemInfo*) itemsprite->custom_data;
             if(i_data->i_configured == 2){

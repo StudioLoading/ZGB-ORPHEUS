@@ -30,6 +30,7 @@ UINT8 counter_char = 0u;
 UINT8 wait_char = MAX_WAIT_CHAR;
 UINT8 writing_line = 1u;
 UINT8 n_lines = 0u;
+UINT8 has_lyre = 0u;
 extern struct OrpheusInfo* orpheus_info;
 extern INT8 a_walk_counter_x;
 extern INT8 a_walk_counter_y;
@@ -105,7 +106,7 @@ void level_common_update_play() BANKED{
 			return;
 		}
 	// select button
-		if(KEY_TICKED(J_SELECT)){
+		if(KEY_TICKED(J_SELECT) && has_lyre){
 			song_selection++;
 			if(song_selection == 3){
 				song_selection = ATTRACT;
@@ -180,58 +181,76 @@ void UpdateHUD() BANKED{
 			}
 		}
 	//WEAPON
-		switch(song_selection){
-			case ATTRACT:
-				UPDATE_HUD_TILE(7,1,5);
-				UPDATE_HUD_TILE(7,2,6);
-				UPDATE_HUD_TILE(8,1,7);
-				UPDATE_HUD_TILE(8,2,8);
+		if(has_lyre){
+			switch(song_selection){
+				case ATTRACT:
+					UPDATE_HUD_TILE(7,1,5);
+					UPDATE_HUD_TILE(7,2,6);
+					UPDATE_HUD_TILE(8,1,7);
+					UPDATE_HUD_TILE(8,2,8);
 
-				UPDATE_HUD_TILE(9,1,17);
-				UPDATE_HUD_TILE(9,2,18);
-				UPDATE_HUD_TILE(10,1,19);
-				UPDATE_HUD_TILE(10,2,20);
+					UPDATE_HUD_TILE(9,1,17);
+					UPDATE_HUD_TILE(9,2,18);
+					UPDATE_HUD_TILE(10,1,19);
+					UPDATE_HUD_TILE(10,2,20);
 
-				UPDATE_HUD_TILE(11,1,21);
-				UPDATE_HUD_TILE(11,2,22);
-				UPDATE_HUD_TILE(12,1,23);
-				UPDATE_HUD_TILE(12,2,24);
-			break;
-			case SLEEP:
-				UPDATE_HUD_TILE(7,1,9);
-				UPDATE_HUD_TILE(7,2,10);
-				UPDATE_HUD_TILE(8,1,11);
-				UPDATE_HUD_TILE(8,2,12);
+					UPDATE_HUD_TILE(11,1,21);
+					UPDATE_HUD_TILE(11,2,22);
+					UPDATE_HUD_TILE(12,1,23);
+					UPDATE_HUD_TILE(12,2,24);
+				break;
+				case SLEEP:
+					UPDATE_HUD_TILE(7,1,9);
+					UPDATE_HUD_TILE(7,2,10);
+					UPDATE_HUD_TILE(8,1,11);
+					UPDATE_HUD_TILE(8,2,12);
 
-				UPDATE_HUD_TILE(9,1,13);
-				UPDATE_HUD_TILE(9,2,14);
-				UPDATE_HUD_TILE(10,1,15);
-				UPDATE_HUD_TILE(10,2,16);
-				
-				UPDATE_HUD_TILE(11,1,21);
-				UPDATE_HUD_TILE(11,2,22);
-				UPDATE_HUD_TILE(12,1,23);
-				UPDATE_HUD_TILE(12,2,24);
-			break;
-			case REPEL:
-				UPDATE_HUD_TILE(7,1,9);
-				UPDATE_HUD_TILE(7,2,10);
-				UPDATE_HUD_TILE(8,1,11);
-				UPDATE_HUD_TILE(8,2,12);
+					UPDATE_HUD_TILE(9,1,13);
+					UPDATE_HUD_TILE(9,2,14);
+					UPDATE_HUD_TILE(10,1,15);
+					UPDATE_HUD_TILE(10,2,16);
+					
+					UPDATE_HUD_TILE(11,1,21);
+					UPDATE_HUD_TILE(11,2,22);
+					UPDATE_HUD_TILE(12,1,23);
+					UPDATE_HUD_TILE(12,2,24);
+				break;
+				case REPEL:
+					UPDATE_HUD_TILE(7,1,9);
+					UPDATE_HUD_TILE(7,2,10);
+					UPDATE_HUD_TILE(8,1,11);
+					UPDATE_HUD_TILE(8,2,12);
 
-				UPDATE_HUD_TILE(9,1,17);
-				UPDATE_HUD_TILE(9,2,18);
-				UPDATE_HUD_TILE(10,1,19);
-				UPDATE_HUD_TILE(10,2,20);
+					UPDATE_HUD_TILE(9,1,17);
+					UPDATE_HUD_TILE(9,2,18);
+					UPDATE_HUD_TILE(10,1,19);
+					UPDATE_HUD_TILE(10,2,20);
 
-				UPDATE_HUD_TILE(11,1,48);
-				UPDATE_HUD_TILE(11,2,49);
-				UPDATE_HUD_TILE(12,1,50);
-				UPDATE_HUD_TILE(12,2,51);
-			break;
+					UPDATE_HUD_TILE(11,1,48);
+					UPDATE_HUD_TILE(11,2,49);
+					UPDATE_HUD_TILE(12,1,50);
+					UPDATE_HUD_TILE(12,2,51);
+				break;
+			}
+		}else{//non ho la lira, annerisco
+			UPDATE_HUD_TILE(7,1,25);
+			UPDATE_HUD_TILE(7,2,26);
+			UPDATE_HUD_TILE(8,1,27);
+			UPDATE_HUD_TILE(8,2,28);
+
+			UPDATE_HUD_TILE(9,1,25);
+			UPDATE_HUD_TILE(9,2,26);
+			UPDATE_HUD_TILE(10,1,27);
+			UPDATE_HUD_TILE(10,2,28);
+
+			UPDATE_HUD_TILE(11,1,25);
+			UPDATE_HUD_TILE(11,2,26);
+			UPDATE_HUD_TILE(12,1,27);
+			UPDATE_HUD_TILE(12,2,28);
 		}
 	//BAR
-		if(countdown < orpheus_power_max){
+		//if(countdown < orpheus_power_max || has_lyre == 0){
+		if(countdown == 0 || has_lyre == 0){
 			UPDATE_HUD_TILE(14,1,45);
 			UPDATE_HUD_TILE(14,2,46);
 			UPDATE_HUD_TILE(15,1,45);
@@ -243,42 +262,44 @@ void UpdateHUD() BANKED{
 			UPDATE_HUD_TILE(18,1,45);
 			UPDATE_HUD_TILE(18,2,46);
 		}
-		//countdown orpheus_power_max
-		// 5 pezzi
-		// ogni pezzo divisibile per 8
-		UINT8 countdown_unita = countdown >> 3;
-		UINT8 resto = 0u;
-		if(countdown < 8){
-			resto = countdown;
-		}else{
-			resto = countdown%8;
-		}
-		if(countdown_unita < 1){
-			fill_bar_idx(0, resto << 1);
-		}else if(countdown_unita < 2){
-			fill_bar_idx(0, 16);
-			fill_bar_idx(1, resto << 1);
-		}else if(countdown_unita < 3){
-			fill_bar_idx(0, 16);
-			fill_bar_idx(1, 16);
-			fill_bar_idx(2, resto << 1);
-		}else if(countdown_unita < 4){
-			fill_bar_idx(0, 16);
-			fill_bar_idx(1, 16);
-			fill_bar_idx(2, 16);
-			fill_bar_idx(3, resto << 1);
-		}else if(countdown_unita < 5){
-			fill_bar_idx(0, 16);
-			fill_bar_idx(1, 16);
-			fill_bar_idx(2, 16);
-			fill_bar_idx(3, 16);
-			fill_bar_idx(4, resto << 1);
-		}else{
-			fill_bar_idx(0, 16);
-			fill_bar_idx(1, 16);
-			fill_bar_idx(2, 16);
-			fill_bar_idx(3, 16);
-			fill_bar_idx(4, 16);
+		if(has_lyre){
+			//countdown orpheus_power_max
+			// 5 pezzi
+			// ogni pezzo divisibile per 8
+			UINT8 countdown_unita = countdown >> 3;
+			UINT8 resto = 0u;
+			if(countdown < 8){
+				resto = countdown;
+			}else{
+				resto = countdown%8;
+			}
+			if(countdown_unita < 1){
+				fill_bar_idx(0, resto << 1);
+			}else if(countdown_unita < 2){
+				fill_bar_idx(0, 16);
+				fill_bar_idx(1, resto << 1);
+			}else if(countdown_unita < 3){
+				fill_bar_idx(0, 16);
+				fill_bar_idx(1, 16);
+				fill_bar_idx(2, resto << 1);
+			}else if(countdown_unita < 4){
+				fill_bar_idx(0, 16);
+				fill_bar_idx(1, 16);
+				fill_bar_idx(2, 16);
+				fill_bar_idx(3, resto << 1);
+			}else if(countdown_unita < 5){
+				fill_bar_idx(0, 16);
+				fill_bar_idx(1, 16);
+				fill_bar_idx(2, 16);
+				fill_bar_idx(3, 16);
+				fill_bar_idx(4, resto << 1);
+			}else{
+				fill_bar_idx(0, 16);
+				fill_bar_idx(1, 16);
+				fill_bar_idx(2, 16);
+				fill_bar_idx(3, 16);
+				fill_bar_idx(4, 16);
+			}
 		}
 }
 
@@ -293,24 +314,39 @@ void init_write_dialog(UINT8 nlines) BANKED{
 
 void write_dialog() BANKED{	
     if(KEY_RELEASED(J_UP)){init_write_dialog(n_lines);}
-    if(dialog_ready == 0u){
-		dialog_ready = 1;
-		print_target = PRINT_WIN;
-        PRINT(0, 0, EMPTY_STRING_20);
-        PRINT(0, 1, EMPTY_STRING_20);
-        PRINT(0, 2, EMPTY_STRING_20);
-	}
-	if(dialog_ready == 1){
+    switch(dialog_ready){
+		case 0u:
+		{
+			dialog_ready = 1;
+			print_target = PRINT_WIN;
+			PRINT(0, 0, EMPTY_STRING_20);
+			PRINT(0, 1, EMPTY_STRING_20);
+			PRINT(0, 2, EMPTY_STRING_20);
+		}
+		break;
+		case 1:
+		{
         if(KEY_PRESSED(J_ATK) || KEY_PRESSED(J_INT) || KEY_PRESSED(J_DOWN)){
             wait_char = 1u;
         }
         wait_char--;
         if(wait_char == 0u){//mostra lettera successiva
-            show_next_character();
+            if(writing_line <= n_lines){
+				show_next_character();
+			}else{
+				if(KEY_RELEASED(J_UP)){
+					init_write_dialog(n_lines);
+				}else if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
+					dialog_ready = 2u;
+				}
+			}
         }
-    }else if(dialog_ready == 2u){
-		redraw_hud = 1;
-		in_dialog = 0u;
+		}
+		break;
+		case 2u:
+			redraw_hud = 1;
+			in_dialog = 0u;
+		break;
 	}
 }
 
@@ -330,16 +366,9 @@ void show_next_character() BANKED{
 			PRINT(0, 2, EMPTY_STRING_20);
         }
     }
-	if(writing_line > n_lines){
-		if(KEY_RELEASED(J_UP)){
-			init_write_dialog(n_lines);
-		}else if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
-			dialog_ready = 2u;
-		}
-	}
 }
 
 void fill_bar_idx(UINT8 i, UINT8 r) BANKED{
-		UPDATE_HUD_TILE(14+i,1,45-r);
-		UPDATE_HUD_TILE(14+i,2,46-r);
+	UPDATE_HUD_TILE(14+i,1,45-r);
+	UPDATE_HUD_TILE(14+i,2,46-r);
 }

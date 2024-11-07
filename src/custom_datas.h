@@ -49,6 +49,7 @@ typedef enum{
 }SONG;
 
 typedef enum{
+	LYRE,
 	HEART
 }ITEMTYPE;
 

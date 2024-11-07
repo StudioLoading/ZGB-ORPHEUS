@@ -1,4 +1,6 @@
 typedef enum{
-	FIRSTEVER
+	FIRSTEVER,
+    MISSING_LYRE,
+    FOUND_LYRE
 }WHOSTALKING;
 

@@ -32,22 +32,37 @@ unsigned char d22[22];
 unsigned char d23[22];
 unsigned char EMPTY_STRING_20[] = "                    ";
 
+extern UINT8 has_lyre;
+
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 unsigned char get_char(UINT8 arg_writing_line, UINT8 arg_counter_char) BANKED;
 
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
         case FIRSTEVER:
-            memcpy(d1, "THIS IS THE TEST FOR", 22);
-            memcpy(d2, "A THREE LINES DIAL  ", 22);
-            memcpy(d3, "OG. LET'S SEE       ", 22);
-            memcpy(d4, "WHAT IF I ADD MORE  ", 22);
-            memcpy(d5, "THAN THREE LINES?   ", 22);
-            memcpy(d6, "IS IT COMPOFTABLE?  ", 22);
-            memcpy(d7, "NUMBERS?0123456789  ", 22);
+            memcpy(d1, "THIS IS THE TEST FOR", 21);
+            memcpy(d2, "A THREE LINES DIAL  ", 21);
+            memcpy(d3, "OG. LET'S SEE       ", 21);
+            memcpy(d4, "WHAT IF I ADD MORE  ", 21);
+            memcpy(d5, "THAN THREE LINES?   ", 21);
+            memcpy(d6, "IS IT COMPOFTABLE?  ", 21);
+            memcpy(d7, "NUMBERS?0123456789  ", 21);
             memcpy(d8, EMPTY_STRING_20, 22);
-            memcpy(d9, "EMPTY LINE ABOVE    ", 22);
+            memcpy(d9, "EMPTY LINE ABOVE    ", 21);
             return 9u;
+        break;
+        case MISSING_LYRE:
+            memcpy(d1, "I HAVE NOT MY INSTRU", 21);
+            memcpy(d2, "MENT TO PLAY SONGS. ", 21);
+            memcpy(d3, EMPTY_STRING_20, 21);
+            return 3u;
+        break;
+        case FOUND_LYRE:
+            has_lyre = 1u;
+            memcpy(d1, "HERE'S MY LYRE! NOW ", 21);
+            memcpy(d2, "I CAN PLAY MY SONGS!", 21);
+            memcpy(d3, EMPTY_STRING_20, 21);
+            return 3u;
         break;
     }
     return 0u;
