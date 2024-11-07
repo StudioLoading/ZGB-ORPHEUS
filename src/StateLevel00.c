@@ -44,12 +44,13 @@ void START() {
 	level_common_start();
 	//SPRITES
 		s_orpheus = SpriteManagerAdd(SpriteOrpheus, ((UINT16) 28u << 3) - 4u, ((UINT16) 79u << 3));
-		scroll_target->y = s_orpheus->y;
+		scroll_target->y = s_orpheus->y - 16u;
 		Sprite* s_item_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 27u << 3), ((UINT16) 84u << 3));
 		struct ItemInfo* heart_data = (struct ItemInfo*) s_item_heart->custom_data; 
 		heart_data->item_type = HEART;
 		heart_data->i_configured = 1;
-		Sprite* lyre = SpriteManagerAdd(SpriteLyre, ((UINT16) 7u << 3), ((UINT16) 43u << 3) + 4);
+		Sprite* lyre = SpriteManagerAdd(SpriteLyre, ((UINT16) 7u << 3), ((UINT16) 39u << 3) +1);
+		Sprite* s_block = SpriteManagerAdd(SpriteBlock, ((UINT16) 30u << 3), ((UINT16) 23u << 3) + 6u);
 		//ENEMIES
 		/*
 		Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 28u << 3), ((UINT16) 60u << 3));
@@ -62,16 +63,16 @@ void START() {
         INIT_HUD(hudmap);
 	//TUTORIAL INIT OPRHEUS MOVEMENT
 		if(tutorial_go == 0){
-			a_walk_counter_y = -120;
+			a_walk_counter_y = -108;
 		}
 }
 
 void UPDATE() {
 	if(tutorial_go == 0){
-		scroll_target->y = s_orpheus->y;
+		scroll_target->y = s_orpheus->y - 16u;
 		if(s_orpheus->y <= ((UINT16) 66u << 3)){
 			s_orpheus->y = (UINT16) 66u << 3;
-			scroll_target->y = (UINT16) 67u << 3;
+			scroll_target->y = (UINT16) 64u << 3;
 			tutorial_go = 1;
 			//show first dialog
 			init_write_dialog(prepare_dialog(FIRSTEVER));

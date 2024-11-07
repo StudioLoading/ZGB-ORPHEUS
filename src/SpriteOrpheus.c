@@ -50,6 +50,7 @@ INT8 countdown = 0;
 UINT8 countdown_step = 0;
 INT8 countdown_verso = 0;
 INT8 countdown_step_currentmax = 0; //cambia a seconda della canzone suonata
+Sprite* s_block = 0;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -263,6 +264,44 @@ void UPDATE() {
                             orhpeus_change_state(HIT);
                         }
                     break;
+                    case SpriteBlock:{
+                        INT8 deltax = THIS->x - iospr->x;
+                        INT8 deltay = THIS->y - iospr->y;
+                        if(THIS->x > iospr->x){
+                            if(orpheus_info->vx < 0 && deltay > -8 && deltay < 8){
+                                orpheus_info->vx = 0;
+                                THIS->x++;
+                                if(KEY_PRESSED(J_INT)){
+                                    TranslateSprite(iospr, -1 << delta_time, 0);
+                                }
+                            }
+                        }else if(THIS->x < iospr->x){
+                            if(orpheus_info->vx > 0 && deltay > -8 && deltay < 8){
+                                orpheus_info->vx = 0;
+                                THIS->x--;
+                                if(KEY_PRESSED(J_INT)){
+                                    TranslateSprite(iospr, 1 << delta_time, 0);
+                                }
+                            }
+                        }
+                        if(THIS->y < iospr->y){
+                            if(orpheus_info->vy > 0 && deltax > -8 && deltax < 8){
+                                orpheus_info->vy = 0;
+                                THIS->y--;
+                                if(KEY_PRESSED(J_INT)){
+                                    TranslateSprite(iospr, 0, 1 << delta_time);
+                                }
+                            }
+                        }else if(THIS->y > iospr->y){
+                            if(orpheus_info->vy < 0 && deltay > 6){
+                                orpheus_info->vy = 0;
+                                THIS->y++;
+                                if(KEY_PRESSED(J_INT)){
+                                    TranslateSprite(iospr, 0, -1 << delta_time);
+                                }
+                            }
+                        }
+                    }break;                    
                 }
             }
         }
@@ -403,9 +442,14 @@ void orpheus_hit() BANKED{
 void orpheus_pickup(Sprite* itemsprite) BANKED{
     switch(itemsprite->type){
         case SpriteLyre:
-            init_write_dialog(prepare_dialog(FOUND_LYRE));
-            SpriteManagerRemoveSprite(itemsprite);
-            orhpeus_change_state(IDLE_DOWN);
+            if(KEY_TICKED(J_INT)){
+                init_write_dialog(prepare_dialog(FOUND_LYRE));
+                SpriteManagerRemoveSprite(itemsprite);
+                orhpeus_change_state(IDLE_DOWN);
+            }
+            if(KEY_TICKED(J_ATK)){
+                init_write_dialog(prepare_dialog(PRESS_INTERACT));
+            }
         break;
         case SpriteItem:
             struct ItemInfo* i_data = (struct ItemInfo*) itemsprite->custom_data;

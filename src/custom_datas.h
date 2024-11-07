@@ -50,7 +50,8 @@ typedef enum{
 
 typedef enum{
 	LYRE,
-	HEART
+	HEART,
+	BLOCK
 }ITEMTYPE;
 
 struct ItemInfo{

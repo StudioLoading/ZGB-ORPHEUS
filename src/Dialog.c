@@ -64,6 +64,12 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d3, EMPTY_STRING_20, 21);
             return 3u;
         break;
+        case PRESS_INTERACT:
+            memcpy(d1, "PRESS THE INTERACT  ", 21);
+            memcpy(d2, "BUTTON TO GET THE   ", 21);
+            memcpy(d3, "LYRE!               ", 21);
+            return 3u;
+        break;
     }
     return 0u;
 }

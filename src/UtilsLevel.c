@@ -62,6 +62,10 @@ void level_common_start() BANKED{
 	//SPRITES
 		if(tutorial_go == 0){
 			scroll_target = SpriteManagerAdd(SpriteCamera, ((UINT16) 30u << 3), ((UINT16) 64u << 3));
+			print_target = PRINT_WIN;
+			PRINT(0, 0, EMPTY_STRING_20);
+			PRINT(0, 1, EMPTY_STRING_20);
+			PRINT(0, 2, EMPTY_STRING_20);
 		}else{
 			redraw_hud = 1;
 		}
@@ -313,7 +317,7 @@ void init_write_dialog(UINT8 nlines) BANKED{
 }
 
 void write_dialog() BANKED{	
-    if(KEY_RELEASED(J_UP)){init_write_dialog(n_lines);}
+    if(KEY_TICKED(J_UP)){init_write_dialog(n_lines);}
     switch(dialog_ready){
 		case 0u:
 		{
@@ -334,7 +338,7 @@ void write_dialog() BANKED{
             if(writing_line <= n_lines){
 				show_next_character();
 			}else{
-				if(KEY_RELEASED(J_UP)){
+				if(KEY_TICKED(J_UP)){
 					init_write_dialog(n_lines);
 				}else if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
 					dialog_ready = 2u;
