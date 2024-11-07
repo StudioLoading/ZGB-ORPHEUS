@@ -57,6 +57,7 @@ extern UINT8 move_camera_left;
 extern UINT8 move_camera_right;
 extern SONG song_selection;
 extern UINT8 tutorial_go;
+extern UINT8 in_dialog;
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
@@ -68,6 +69,8 @@ void orpheus_pickup(Sprite* itemsprite) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_type) BANKED;
 
 void START() {
+    THIS->lim_x = 100;
+    THIS->lim_y = 100;
     SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
     orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
     orpheus_info->vx = 0;
@@ -132,7 +135,7 @@ void UPDATE() {
                 return;
         }
     //MOVEMENTS
-        if(tutorial_go == 0){ return;}
+        if(tutorial_go == 0 || in_dialog){ return;}
         new_state = orpheus_info->ow_state;
         if((orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10) && orpheus_info->ow_state != ATTACK){
             if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}

@@ -13,6 +13,7 @@
 #include "custom_datas.h"
 
 #define V_CAMERA 2
+#define MAX_WAIT_CHAR 4
 
 Sprite* s_camera;
 Sprite* s_orpheus;
@@ -24,7 +25,11 @@ UINT8 move_camera_left = 0u;
 UINT8 move_camera_right = 0u;
 UINT16 move_camera_desty = 0u;
 UINT16 move_camera_destx = 0u;
-
+UINT8 dialog_ready = 0u;
+UINT8 counter_char = 0u;
+UINT8 wait_char = MAX_WAIT_CHAR;
+UINT8 writing_line = 1u;
+UINT8 n_lines = 0u;
 extern struct OrpheusInfo* orpheus_info;
 extern INT8 a_walk_counter_x;
 extern INT8 a_walk_counter_y;
@@ -33,14 +38,21 @@ extern INT8 orpheus_hp;
 extern INT8 countdown;
 extern INT8 orpheus_power_max;
 extern UINT8 tutorial_go;
+extern UINT8 J_INT;
+extern UINT8 J_ATK;
+extern UINT8 in_dialog;
+extern unsigned char EMPTY_STRING_20[];
 
 void level_common_start() BANKED;
 void level_common_update_play() BANKED;
 void move_camera() BANKED;
 void UpdateHUD() BANKED;
 void fill_bar_idx(UINT8 i, UINT8 r) BANKED;
+void show_next_character() BANKED;
+void init_write_dialog(UINT8 nlines) BANKED;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
+extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 
 void level_common_start() BANKED{
 	//SCROLL LIMITS
@@ -49,9 +61,10 @@ void level_common_start() BANKED{
 	//SPRITES
 		if(tutorial_go == 0){
 			scroll_target = SpriteManagerAdd(SpriteCamera, ((UINT16) 30u << 3), ((UINT16) 64u << 3));
+		}else{
+			redraw_hud = 1;
 		}
 	//VARS
-		redraw_hud = 1;
 		move_camera_up = 0u;
 		move_camera_desty = 0u;
 		move_camera_destx = 0u;
@@ -139,8 +152,24 @@ void move_camera() BANKED{
 
 void UpdateHUD() BANKED{
 	redraw_hud = 0;
-	//HP
+	//STRUCTURE
 		INT8 idx = 0;
+		for(idx = 0; idx <= 19; idx++){
+			UPDATE_HUD_TILE(idx,0,0);
+		}
+		UPDATE_HUD_TILE(0,1,52);
+		UPDATE_HUD_TILE(0,2,53);
+		UPDATE_HUD_TILE(5,1,47);
+		UPDATE_HUD_TILE(5,2,54);
+		UPDATE_HUD_TILE(6,1,0);
+		UPDATE_HUD_TILE(6,2,0);
+		UPDATE_HUD_TILE(13,1,25);
+		UPDATE_HUD_TILE(13,2,26);
+		UPDATE_HUD_TILE(19,1,27);
+		UPDATE_HUD_TILE(19,2,28);
+
+	//HP
+		idx = 0;
 		for(idx = 1; idx <= orpheus_hp_max; idx++){
 			if(idx <= orpheus_hp){
 				UPDATE_HUD_TILE(idx,1,1);
@@ -251,6 +280,63 @@ void UpdateHUD() BANKED{
 			fill_bar_idx(3, 16);
 			fill_bar_idx(4, 16);
 		}
+}
+
+void init_write_dialog(UINT8 nlines) BANKED{	
+    wait_char = MAX_WAIT_CHAR;
+	dialog_ready = 0u; 
+    writing_line = 1u;
+    counter_char = 0u;
+	n_lines = nlines;
+	in_dialog = 1u;
+}
+
+void write_dialog() BANKED{	
+    if(KEY_RELEASED(J_UP)){init_write_dialog(n_lines);}
+    if(dialog_ready == 0u){
+		dialog_ready = 1;
+		print_target = PRINT_WIN;
+        PRINT(0, 0, EMPTY_STRING_20);
+        PRINT(0, 1, EMPTY_STRING_20);
+        PRINT(0, 2, EMPTY_STRING_20);
+	}
+	if(dialog_ready == 1){
+        if(KEY_PRESSED(J_ATK) || KEY_PRESSED(J_INT) || KEY_PRESSED(J_DOWN)){
+            wait_char = 1u;
+        }
+        wait_char--;
+        if(wait_char == 0u){//mostra lettera successiva
+            show_next_character();
+        }
+    }else if(dialog_ready == 2u){
+		redraw_hud = 1;
+		in_dialog = 0u;
+	}
+}
+
+void show_next_character() BANKED{
+    unsigned char to_print[2] = " ";
+	to_print[0] = get_char(writing_line, counter_char);
+    UINT8 writing_line_on_video = (writing_line-1)%3;
+    PRINT(counter_char, writing_line_on_video, to_print);
+    wait_char = MAX_WAIT_CHAR;
+    counter_char++;
+    if(counter_char == 21u){
+        counter_char = 0u;
+        writing_line++;
+        if((writing_line-1)%3 == 0 && writing_line < n_lines){
+			PRINT(0, 0, EMPTY_STRING_20);
+			PRINT(0, 1, EMPTY_STRING_20);
+			PRINT(0, 2, EMPTY_STRING_20);
+        }
+    }
+	if(writing_line > n_lines){
+		if(KEY_RELEASED(J_UP)){
+			init_write_dialog(n_lines);
+		}else if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
+			dialog_ready = 2u;
+		}
+	}
 }
 
 void fill_bar_idx(UINT8 i, UINT8 r) BANKED{
