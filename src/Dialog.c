@@ -32,23 +32,21 @@ unsigned char d22[22];
 unsigned char d23[22];
 unsigned char EMPTY_STRING_20[] = "                    ";
 
-extern UINT8 has_lyre;
-
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 unsigned char get_char(UINT8 arg_writing_line, UINT8 arg_counter_char) BANKED;
 
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
         case FIRSTEVER:
-            memcpy(d1, "THIS IS THE TEST FOR", 21);
-            memcpy(d2, "A THREE LINES DIAL  ", 21);
-            memcpy(d3, "OG. LET'S SEE       ", 21);
-            memcpy(d4, "WHAT IF I ADD MORE  ", 21);
-            memcpy(d5, "THAN THREE LINES?   ", 21);
-            memcpy(d6, "IS IT COMPOFTABLE?  ", 21);
-            memcpy(d7, "NUMBERS?0123456789  ", 21);
-            memcpy(d8, EMPTY_STRING_20, 22);
-            memcpy(d9, "EMPTY LINE ABOVE    ", 21);
+            memcpy(d1, "THE GATES OF THE    ", 21);
+            memcpy(d2, "HADES ARE NOT FAR...", 21);
+            memcpy(d3, "I NEED TO FIND MY   ", 21);
+            memcpy(d4, "LYRE FIRST! I THINK ", 21);
+            memcpy(d5, "MY MOTHER CALLIOPE  ", 21);
+            memcpy(d6, "SENT IT AROUND HERE.", 21);
+            memcpy(d7, EMPTY_STRING_20, 21);
+            memcpy(d8, "   ...LET'S GO!     ", 21);
+            memcpy(d9, EMPTY_STRING_20, 21);
             return 9u;
         break;
         case MISSING_LYRE:
@@ -57,18 +55,41 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d3, EMPTY_STRING_20, 21);
             return 3u;
         break;
-        case FOUND_LYRE:
-            has_lyre = 1u;
-            memcpy(d1, "HERE'S MY LYRE! NOW ", 21);
-            memcpy(d2, "I CAN PLAY MY SONGS!", 21);
-            memcpy(d3, EMPTY_STRING_20, 21);
+        case MISSING_LYRE_FEEL_WEAK:
+            memcpy(d1, "I CAN'T PROCEDE, I  ", 21);
+            memcpy(d2, "NEED TO FIND MY LYRE", 21);
+            memcpy(d3, "BEFORE!             ", 21);
             return 3u;
+        break;
+        case FOUND_LYRE:
+            memcpy(d1, "GREAT! WITH MY LYRE ", 21);
+            memcpy(d2, "I CAN PLAY DIFFERENT", 21);
+            memcpy(d3, "SONGS TO SCARE,     ", 21);
+            memcpy(d4, "ATTRACT OR REPEL MY ", 21);
+            memcpy(d5, "ENEMIES.            ", 21);
+            memcpy(d6, EMPTY_STRING_20, 21);
+            return 6u;
         break;
         case PRESS_INTERACT:
             memcpy(d1, "PRESS THE INTERACT  ", 21);
             memcpy(d2, "BUTTON TO GET THE   ", 21);
             memcpy(d3, "LYRE!               ", 21);
             return 3u;
+        break;
+        case TUTORIAL_BLOCKS:
+            memcpy(d1, "NOW I AM ABLE TO    ", 21);
+            memcpy(d2, "PUSH HEAVY BLOCKS   ", 21);
+            memcpy(d3, "(PRESS INTERACT BTN)", 21);
+            return 3u;
+        break;
+        case HADES_ENTRANCE:
+            memcpy(d1, "HERE I AM... THE    ", 21);
+            memcpy(d2, "GATES OF THE HADES! ", 21);
+            memcpy(d3, "I WILL SAVE YOU,    ", 21);
+            memcpy(d4, "EURYDICE! NO MATTER ", 21);
+            memcpy(d5, "HOW MANY CHALLENGES ", 21);
+            memcpy(d6, "MAY I FACE!         ", 21);
+            return 6u;
         break;
     }
     return 0u;

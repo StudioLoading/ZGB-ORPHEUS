@@ -16,7 +16,9 @@
 			"spritemanager.h": "c",
 			"sprite.h": "c",
 			"print.h": "c",
-			"sgb.h": "c"
+			"sgb.h": "c",
+			"bankmanager.h": "c",
+			"string.h": "c"
 		}
 	}
 }

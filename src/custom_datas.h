@@ -51,11 +51,23 @@ typedef enum{
 typedef enum{
 	LYRE,
 	HEART,
-	BLOCK
+	BLOCK,
+	BLOCK_FIXED,
+	BUTTON
 }ITEMTYPE;
 
 struct ItemInfo{
 	ITEMTYPE item_type;
 	UINT8 i_configured;
+	INT8 counter_x;
+	INT8 counter_y;
+	INT8 counter_verso;//1 o -1
 };
+
+typedef enum{
+	TUTORIAL,
+	HADES_ZERO,
+	HADES_ONE,
+}MACROMAP;
+
 #endif

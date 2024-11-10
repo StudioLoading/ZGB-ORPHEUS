@@ -3,11 +3,13 @@
 #include "SGB.h"
 #include "BankManager.h"
 #include "ZGBMain.h"
+#include "Fade.h"
 #include "Keys.h"
 #include "Scroll.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "string.h"
+#include "Palette.h"
 #include "Print.h"
 
 #include "custom_datas.h"
@@ -31,6 +33,18 @@ UINT8 wait_char = MAX_WAIT_CHAR;
 UINT8 writing_line = 1u;
 UINT8 n_lines = 0u;
 UINT8 has_lyre = 0u;
+UINT8 button_pressed = 0u;
+MACROMAP current_map = TUTORIAL;
+MACROMAP next_map = HADES_ZERO;
+MACROMAP prev_map = TUTORIAL;
+UINT16 orpheus_nextmap_spawnx = ((UINT16) 29u << 3);
+UINT16 orpheus_nextmap_spawny = ((UINT16) 7u << 3);
+UINT16 orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
+UINT16 orpheus_prevmap_spawny = ((UINT16) 7u << 3);
+UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
+UINT16 orpheus_spawny = ((UINT16) 79u << 3);
+UINT16 camera_spawnx = ((UINT16) 30u << 3);
+UINT16 camera_spawny = ((UINT16) 64u << 3);
 extern struct OrpheusInfo* orpheus_info;
 extern INT8 a_walk_counter_x;
 extern INT8 a_walk_counter_y;
@@ -51,17 +65,20 @@ void UpdateHUD() BANKED;
 void fill_bar_idx(UINT8 i, UINT8 r) BANKED;
 void show_next_character() BANKED;
 void init_write_dialog(UINT8 nlines) BANKED;
+void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+void go_to_next_map() BANKED;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
+
 
 void level_common_start() BANKED{
 	//SCROLL LIMITS
         scroll_top_movement_limit = 72u;
         scroll_bottom_movement_limit = 72u;
 	//SPRITES
+		scroll_target = SpriteManagerAdd(SpriteCamera, camera_spawnx, camera_spawny);
 		if(tutorial_go == 0){
-			scroll_target = SpriteManagerAdd(SpriteCamera, ((UINT16) 30u << 3), ((UINT16) 64u << 3));
 			print_target = PRINT_WIN;
 			PRINT(0, 0, EMPTY_STRING_20);
 			PRINT(0, 1, EMPTY_STRING_20);
@@ -121,6 +138,19 @@ void level_common_update_play() BANKED{
 		if(redraw_hud != 0){
 			UpdateHUD();
 		}
+	// log
+    /*
+	switch(orpheus_info->ow_state){
+        case WALK_RIGHT:{
+			if(KEY_PRESSED(J_INT)){
+				PRINT(0,0,"WALKING RIGHT JINT");
+			}else{
+				PRINT(0,0,"WALKING RIGHT      ");
+			}
+		}break;
+        default: PRINT(0,0,"OTHER               ");
+    }
+	*/
 }
 
 void move_camera() BANKED{
@@ -307,7 +337,7 @@ void UpdateHUD() BANKED{
 		}
 }
 
-void init_write_dialog(UINT8 nlines) BANKED{	
+void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
 	dialog_ready = 0u; 
     writing_line = 1u;
@@ -375,4 +405,54 @@ void show_next_character() BANKED{
 void fill_bar_idx(UINT8 i, UINT8 r) BANKED{
 	UPDATE_HUD_TILE(14+i,1,45-r);
 	UPDATE_HUD_TILE(14+i,2,46-r);
+}
+
+void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
+    set_bkg_tile_xy(x, y, t);
+    set_bkg_tile_xy(x, y+1, t+1);
+    set_bkg_tile_xy(x+1, y, t+2);
+    set_bkg_tile_xy(x+1, y+1, t+3);
+	if(button_pressed == 0){
+		button_pressed = 1;
+	}else if(button_pressed == 1){
+		button_pressed = 0;
+	}
+}
+
+void go_to_next_map() BANKED{
+	orpheus_spawnx = orpheus_nextmap_spawnx;
+	orpheus_spawny = orpheus_nextmap_spawny;
+	UINT8 next_state = StateLevel00;
+	switch(next_map){
+		case HADES_ZERO: //TODO respawn tutorial
+			current_map = next_map;
+			next_map = HADES_ZERO; //HADES_ONE
+			prev_map = TUTORIAL;
+			a_walk_counter_x = 0;
+			a_walk_counter_y = 0;
+			orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
+			orpheus_prevmap_spawny = ((UINT16) 7u << 3);
+			camera_spawnx = ((UINT16) 30u << 3); //TODO cambiarle
+			camera_spawny = ((UINT16) 10u << 3);//TODO cambiarle
+			//orpheus_nextmap_spawnx = ;
+			//orpheus_nextmap_spawny = ;
+			next_state = StateLevel00;
+		break;
+	}
+	SetState(next_state);
+}
+void go_to_prev_map() BANKED{
+	orpheus_spawnx = orpheus_prevmap_spawnx;
+	orpheus_spawny = orpheus_prevmap_spawny;
+	UINT8 next_state = StateLevel00;
+	switch(prev_map){
+		case TUTORIAL:
+			current_map = prev_map;
+			next_map = HADES_ZERO;
+			prev_map = TUTORIAL;
+			camera_spawnx = (UINT16) 30u << 3;
+			camera_spawny = (UINT16) 10u << 3;
+		break;
+	}
+	SetState(next_state);
 }

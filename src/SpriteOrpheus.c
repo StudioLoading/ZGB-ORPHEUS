@@ -50,7 +50,7 @@ INT8 countdown = 0;
 UINT8 countdown_step = 0;
 INT8 countdown_verso = 0;
 INT8 countdown_step_currentmax = 0; //cambia a seconda della canzone suonata
-Sprite* s_block = 0;
+UINT8 colliding_block = 0u;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -69,7 +69,8 @@ void orpheus_recharge() BANKED;
 void orpheus_pickup(Sprite* itemsprite) BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
-
+extern void go_to_next_map() BANKED;
+extern void go_to_prev_map() BANKED;
 
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_type) BANKED;
 
@@ -98,9 +99,11 @@ void START() {
     orpheus_power_max = POWER_MAX;
 	countdown = orpheus_power_max;
     countdown_verso = 0;
+    orhpeus_change_state(IDLE_DOWN);
 }
 
 void UPDATE() {
+    colliding_block = 0u;
     //CAMERA MOVEMENT ON CHANGING MAP
         if(a_walk_counter_y < 0){
             a_walk_counter_y++;
@@ -140,6 +143,14 @@ void UPDATE() {
                 return;
         }
     //MOVEMENTS
+        if(in_dialog == 1){
+            switch(orpheus_info->ow_state){
+                case WALK_UP: orhpeus_change_state(IDLE_UP); break;
+                case WALK_DOWN: orhpeus_change_state(IDLE_DOWN); break;
+                case WALK_LEFT: orhpeus_change_state(IDLE_LEFT); break;
+                case WALK_RIGHT: orhpeus_change_state(IDLE_RIGHT); break;
+            }
+        }
         if(tutorial_go == 0 || in_dialog){ return;}
         new_state = orpheus_info->ow_state;
         if((orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10) && orpheus_info->ow_state != ATTACK){
@@ -265,40 +276,61 @@ void UPDATE() {
                         }
                     break;
                     case SpriteBlock:{
+                        if(has_lyre == 0 && KEY_PRESSED(J_INT)){
+                            init_write_dialog(prepare_dialog(MISSING_LYRE_FEEL_WEAK));
+                            return;
+                        }
                         INT8 deltax = THIS->x - iospr->x;
                         INT8 deltay = THIS->y - iospr->y;
-                        if(THIS->x > iospr->x){
-                            if(orpheus_info->vx < 0 && deltay > -8 && deltay < 8){
-                                orpheus_info->vx = 0;
+                        struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
+                        if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){
+                            block_data->counter_verso = -1;                            
+                            if(KEY_PRESSED(J_INT)){
+                                block_data->counter_x++;
+                            }else if(KEY_RELEASED(J_INT)){
+                                block_data->counter_x = 0;
+                                block_data->counter_y = 0;
+                            }
+                            if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
                                 THIS->x++;
-                                if(KEY_PRESSED(J_INT)){
-                                    TranslateSprite(iospr, -1 << delta_time, 0);
-                                }
+                                colliding_block = 1u;
                             }
-                        }else if(THIS->x < iospr->x){
-                            if(orpheus_info->vx > 0 && deltay > -8 && deltay < 8){
-                                orpheus_info->vx = 0;
+                        }else if(THIS->x < iospr->x && orpheus_info->ow_state == WALK_RIGHT){
+                            block_data->counter_verso = 1;
+                            if(KEY_PRESSED(J_INT)){
+                                block_data->counter_x++;
+                            }else if(KEY_RELEASED(J_INT)){
+                                block_data->counter_x = 0;
+                                block_data->counter_y = 0;
+                            }
+                            if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
                                 THIS->x--;
-                                if(KEY_PRESSED(J_INT)){
-                                    TranslateSprite(iospr, 1 << delta_time, 0);
-                                }
-                            }
+                                colliding_block = 1u;
+                            }   
                         }
-                        if(THIS->y < iospr->y){
-                            if(orpheus_info->vy > 0 && deltax > -8 && deltax < 8){
-                                orpheus_info->vy = 0;
-                                THIS->y--;
-                                if(KEY_PRESSED(J_INT)){
-                                    TranslateSprite(iospr, 0, 1 << delta_time);
-                                }
+                        if(THIS->y < iospr->y && orpheus_info->ow_state == WALK_DOWN){
+                            block_data->counter_verso = 1;
+                            if(KEY_PRESSED(J_INT)){
+                                block_data->counter_y++;
+                            }else if(KEY_RELEASED(J_INT)){
+                                block_data->counter_x = 0;
+                                block_data->counter_y = 0;
                             }
-                        }else if(THIS->y > iospr->y){
+                            if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
+                                THIS->y--;
+                                colliding_block = 1u;
+                            }
+                        }else if(THIS->y > iospr->y && orpheus_info->ow_state == WALK_UP){
+                            block_data->counter_verso = -1;
+                            if(KEY_PRESSED(J_INT)){
+                                block_data->counter_y++;
+                            }else if(KEY_RELEASED(J_INT)){
+                                block_data->counter_x = 0;
+                                block_data->counter_y = 0;
+                            }
                             if(orpheus_info->vy < 0 && deltay > 6){
-                                orpheus_info->vy = 0;
                                 THIS->y++;
-                                if(KEY_PRESSED(J_INT)){
-                                    TranslateSprite(iospr, 0, -1 << delta_time);
-                                }
+                                colliding_block = 1u;
                             }
                         }
                     }break;                    
@@ -324,11 +356,21 @@ void orpheus_recharge() BANKED{
 }
 
 void orpheus_update_position() BANKED{
+    if(colliding_block == 1){
+        orpheus_info->vx = 0;
+        orpheus_info->vy = 0;
+    }
     orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);
     if(orpheus_info->tile_collision){
         //CHECK COLLISION WITH DAMAGE TILES
-        if(orpheus_info->tile_collision >= 120u && orpheus_info->tile_collision <= 127) {
-            orhpeus_change_state(HIT);
+        switch(orpheus_info->tile_collision){
+            case 38u: //spini
+                orhpeus_change_state(HIT);
+            break;
+            case 72u:
+            case 119u:
+                go_to_next_map();
+            break;
         }
     }
 }
@@ -443,6 +485,7 @@ void orpheus_pickup(Sprite* itemsprite) BANKED{
     switch(itemsprite->type){
         case SpriteLyre:
             if(KEY_TICKED(J_INT)){
+                has_lyre = 1u;
                 init_write_dialog(prepare_dialog(FOUND_LYRE));
                 SpriteManagerRemoveSprite(itemsprite);
                 orhpeus_change_state(IDLE_DOWN);
