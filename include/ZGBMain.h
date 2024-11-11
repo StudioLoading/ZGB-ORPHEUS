@@ -3,6 +3,7 @@
 
 #define STATES \
 _STATE(StateLevel00)\
+_STATE(StateLevel01)\
 STATE_DEF_END
 
 /*_SPRITE_DMG(SpritePlayer, player)\ */

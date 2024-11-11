@@ -1,9 +1,14 @@
-- PAUSE - salvare lo stato della macro-area da qualche parte e ricaricarlo dopo che esco dalla pausa e torno in-game;
-- FADE OUT IN BLACK
-    posso farlo a mano andando a pistolare le palette, muovendo progressivamente i colori in nero dal DARKER al LIGHTER tutto valorizzandoli a DARKER
+- MAPPA 2
+- inerzia di 1 px di movimento
 - COSA FACCIAMO QUANDO ORPHEUS PERDE TUTTI I CUORI?
     schermata dedicata o animazione
     ritorno all'inizio della macroarea
+
+
+POST DEMO
+- PAUSE - salvare lo stato della macro-area da qualche parte e ricaricarlo dopo che esco dalla pausa e torno in-game;
+- FADE OUT IN BLACK
+    posso farlo a mano andando a pistolare le palette, muovendo progressivamente i colori in nero dal DARKER al LIGHTER tutto valorizzandoli a DARKER
 - SCHERMATA DI SCELTA TASTI: J_A e J_B devon essere J_ATK J_INT
 
 
@@ -11,3 +16,74 @@
 - PIPELINE DI SPRITESHEET
     pare che png2asset faccia lavoro sporco a partire da file .png
     sto chiedendo su Discord come fa a portarsi dietro la paletta corretta, ma secondo me è meglio proseguire coi gbtd e gbmb
+
+
+    
+GENERAZIONE QR CODE DA POWERSHELL
+New-QRCodeURI -URI 'https://www.kickstarter.com/projects/studioloading/flying-arrows-2-gameboy-game-save-bolognanerd' -Width 15 -OutPath 'C:\Users\checc\GB\ARROWS2\BOX\QR-URL.png'
+New-QRCodeURI -URI 'https://x.com/StudioLoading1' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-twitter.png'
+New-QRCodeURI -URI 'https://www.instagram.com/studioloading/' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-instagram.png'
+New-QRCodeURI -URI 'https://www.kickstarter.com/profile/studioloading/created' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-kickstarter.png'
+New-QRCodeURI -URI 'https://studioloading.itch.io/' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-itchio.png'
+New-QRCodeURI -URI 'https://discord.gg/hEXVuvC3' -Width 15 -OutPath 'C:\Users\checc\BN\QR-DISCORD-URL-QR.PNG'
+New-QRCodeURI -URI 'https://paypal.me/frabacche' -Width 16 -OutPath 'C:\Users\checc\ARROWS2\COTOLETTA8BIT\QR-PAYPAL-URL-QR.PNG'
+New-QRCodeURI -URI 'https://discord.gg/RYPAPk4GpB' -Width 16 -OutPath 'C:\Users\checc\M5S\QR-DISCORD-REGGIO-URL-QR.PNG'
+New-QRCodeURI -URI 'https://meet.google.com/bth-sgjr-ohd' -Width 8 -OutPath 'C:\Users\checc\M5S\QR-DISCORD-URL-QR.PNG'
+New-QRCodeURI -URI 'https://discord.gg/QYkKEMJmY2' -Width 16 -OutPath 'C:\Users\checc\M5S\QR-DISCORD-INFINITO-QR.PNG'
+New-QRCodeURI -URI 'https://bolognanerd.it/corsi/' -Width 16 -OutPath 'C:\Users\checc\BN\QR-CORSI.PNG'
+New-QRCodeURI -URI 'https://www.youtube.com/@bolognanerd/streams' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT.PNG'
+Link alla videochiamata: https://meet.google.com/bth-sgjr-ohd
+
+ZGB HACKS:
+Sprite.h
+#define CUSTOM_DATA_SIZE 8
+#define CUSTOM_DATA_SIZE 10
+C:\Users\checc\GB\ZGB-2023.0\common\src\MakefileCommon
+toxa mi ha detto di fare le modifiche sotto, i #BINFLAGS sono le righe originali
+Dice che è perché la mia rom è più di mezzo mega. La mia rom è un MBC5 non più un MBC1 come era FA1
+ifeq ($(wildcard savegame.c), )
+	#No savegame, mbc1
+	#BINFLAGS += -yt 1
+	BINFLAGS += -yt 0x19
+else
+	#Savegame
+	#BINFLAGS += -yt 3 -ya 1
+	BINFLAGS += -yt 0x1B -ya 1
+	CFLAGS += -DUSE_SAVEGAME
+endif
+
+
+HUGETRACKER
+Silenziare una canzone mettendola in loop cieco
+The hUGETracker paste format is compatible with...
+ModPlug Tracker  XM - che il path inizi così
+|...00...E00|...00...E00|...00...E00|...00...E00
+|...00...B03|...00...000|...00...000|...00...000
+dove B03 quel 03 è il numero di path corrente 01-09-0a-...
+
+
+PAD2 sulla SNES, prendere spunto da:
+	- https://github.com/gbdk-2020/gbdk-2020/blob/develop/gbdk-lib/examples/gb/sgb_pong/sgb_pong.c
+	- https://github.com/gbdk-2020/gbdk-2020/blob/develop/gbdk-lib/examples/gb/sgb_multiplayer/sgb_multiplayer.c  
+
+PNG2MAP
+cd C:\ZGB-2023.0\tools\png2map\
+png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\maphades00.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\maphades00.gbm
+
+GBM TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
+cd C:\Users\checc\GB\ZGB-2023.0\tools\png2gbtiles
+png2gbtiles C:\Users\checc\GB\ZGB-2023.0\ZGB-FA2\res\oweast.gbm -png -c -pal=mypal.pal C:\Users\checc\GB\ZGB-2023.0\tools\png2gbtiles\oweast.png
+
+maypal.pal file di testo contenente solo le seguenti
+#C6D783
+#8DCD53
+#2D632F
+#11380F
+ovviamente palette del Paint.NET con cui ho fatto il png contiene gli stessi codici, senza # e con FF iniziali per azzerare opacità
+png 160x144
+
+
+ROMUSAGE
+C:\GB\ZGBNEW\tools\romusage-main\bin\romusage.exe C:\GB\ZGBNEW\ZGB-template-master\Debug\ARROWS_Debug.noi -g
+
+DISCORD MARKDOWN: ```c ```

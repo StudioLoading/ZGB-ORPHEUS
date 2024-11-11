@@ -37,14 +37,17 @@ UINT8 button_pressed = 0u;
 MACROMAP current_map = TUTORIAL;
 MACROMAP next_map = HADES_ZERO;
 MACROMAP prev_map = TUTORIAL;
-UINT16 orpheus_nextmap_spawnx = ((UINT16) 29u << 3);
-UINT16 orpheus_nextmap_spawny = ((UINT16) 7u << 3);
+UINT16 orpheus_nextmap_spawnx = ((UINT16) 9u << 3);
+UINT16 orpheus_nextmap_spawny = ((UINT16) 13u << 3);
 UINT16 orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
 UINT16 orpheus_prevmap_spawny = ((UINT16) 7u << 3);
 UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
 UINT16 orpheus_spawny = ((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) 30u << 3);
 UINT16 camera_spawny = ((UINT16) 64u << 3);
+UINT16 camera_prev_spawnx = ((UINT16) 30u << 3);
+UINT16 camera_prev_spawny = ((UINT16) 64u << 3);
+UINT8 in_dialog = 0u;
 extern struct OrpheusInfo* orpheus_info;
 extern INT8 a_walk_counter_x;
 extern INT8 a_walk_counter_y;
@@ -55,7 +58,6 @@ extern INT8 orpheus_power_max;
 extern UINT8 tutorial_go;
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
-extern UINT8 in_dialog;
 extern unsigned char EMPTY_STRING_20[];
 
 void level_common_start() BANKED;
@@ -66,6 +68,7 @@ void fill_bar_idx(UINT8 i, UINT8 r) BANKED;
 void show_next_character() BANKED;
 void init_write_dialog(UINT8 nlines) BANKED;
 void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void go_to_next_map() BANKED;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
@@ -408,10 +411,7 @@ void fill_bar_idx(UINT8 i, UINT8 r) BANKED{
 }
 
 void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
-    set_bkg_tile_xy(x, y, t);
-    set_bkg_tile_xy(x, y+1, t+1);
-    set_bkg_tile_xy(x+1, y, t+2);
-    set_bkg_tile_xy(x+1, y+1, t+3);
+    draw_button(x, y, t);
 	if(button_pressed == 0){
 		button_pressed = 1;
 	}else if(button_pressed == 1){
@@ -419,24 +419,34 @@ void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
 	}
 }
 
+void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
+    set_bkg_tile_xy(x, y, t);
+    set_bkg_tile_xy(x, y+1, t+1);
+    set_bkg_tile_xy(x+1, y, t+2);
+    set_bkg_tile_xy(x+1, y+1, t+3);
+}
+
 void go_to_next_map() BANKED{
 	orpheus_spawnx = orpheus_nextmap_spawnx;
 	orpheus_spawny = orpheus_nextmap_spawny;
 	UINT8 next_state = StateLevel00;
 	switch(next_map){
-		case HADES_ZERO: //TODO respawn tutorial
+		case HADES_ZERO:
 			current_map = next_map;
-			next_map = HADES_ZERO; //HADES_ONE
+			next_map = HADES_ONE; //HADES_ONE
 			prev_map = TUTORIAL;
 			a_walk_counter_x = 0;
 			a_walk_counter_y = 0;
-			orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
+			camera_spawnx = ((UINT16) 10u << 3);
+			camera_spawny = ((UINT16) 9u << 3) + 4;
+			orpheus_prevmap_spawnx = ((UINT16) 29u << 3) + 4;
 			orpheus_prevmap_spawny = ((UINT16) 7u << 3);
-			camera_spawnx = ((UINT16) 30u << 3); //TODO cambiarle
-			camera_spawny = ((UINT16) 10u << 3);//TODO cambiarle
-			//orpheus_nextmap_spawnx = ;
-			//orpheus_nextmap_spawny = ;
-			next_state = StateLevel00;
+			camera_prev_spawnx = ((UINT16) 30u << 3); //TODO cambiarle
+			camera_prev_spawny = ((UINT16) 10u << 3);//TODO cambiarle
+			//orpheus_nextmap_spawnx = ((UINT16) 9u << 3);;
+			//orpheus_nextmap_spawny = ((UINT16) 13u << 3);;
+			a_walk_counter_y = -4;
+			next_state = StateLevel01;
 		break;
 	}
 	SetState(next_state);

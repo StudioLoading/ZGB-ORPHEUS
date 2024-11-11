@@ -53,11 +53,12 @@ typedef enum{
 	HEART,
 	BLOCK,
 	BLOCK_FIXED,
-	BUTTON
-}ITEMTYPE;
+	BUTTON,
+	DOOR
+}ITEM_TYPE;
 
 struct ItemInfo{
-	ITEMTYPE item_type;
+	ITEM_TYPE item_type;
 	UINT8 i_configured;
 	INT8 counter_x;
 	INT8 counter_y;
@@ -69,5 +70,19 @@ typedef enum{
 	HADES_ZERO,
 	HADES_ONE,
 }MACROMAP;
+
+struct LoadedItem{
+	ITEM_TYPE item_type;
+	UINT16 pos_x;
+	UINT16 pos_y;
+	struct ItemInfo iinfo;
+};
+
+struct LoadedEnemy{
+	ENEMY_TYPE item_type;
+	UINT16 posx;
+	UINT16 posy;
+	struct EnemyInfo einfo;
+};
 
 #endif

@@ -363,13 +363,25 @@ void orpheus_update_position() BANKED{
     orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);
     if(orpheus_info->tile_collision){
         //CHECK COLLISION WITH DAMAGE TILES
-        switch(orpheus_info->tile_collision){
-            case 38u: //spini
-                orhpeus_change_state(HIT);
+        switch(current_state){
+            case StateLevel00:
+                switch(orpheus_info->tile_collision){
+                    case 38u: //spini
+                        orhpeus_change_state(HIT);
+                    break;
+                    case 11u:
+                    case 12u:
+                        go_to_next_map();
+                    break;
+                }
             break;
-            case 72u:
-            case 119u:
-                go_to_next_map();
+            case StateLevel01:
+                switch(orpheus_info->tile_collision){
+                    case 72u:
+                    case 73u:
+                        go_to_prev_map();
+                    break;
+                }
             break;
         }
     }
