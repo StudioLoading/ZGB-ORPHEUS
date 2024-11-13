@@ -1,5 +1,6 @@
-- MAPPA 2
+- direzione in cui Orpheus deve ricomparire
 - inerzia di 1 px di movimento
+- faccio sparire orpheus mezzo secondo prima del cambio state
 - COSA FACCIAMO QUANDO ORPHEUS PERDE TUTTI I CUORI?
     schermata dedicata o animazione
     ritorno all'inizio della macroarea
@@ -68,7 +69,7 @@ PAD2 sulla SNES, prendere spunto da:
 
 PNG2MAP
 cd C:\ZGB-2023.0\tools\png2map\
-png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\maphades00.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\maphades00.gbm
+png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\maphades001.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\maphades001.gbm
 
 GBM TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
 cd C:\Users\checc\GB\ZGB-2023.0\tools\png2gbtiles

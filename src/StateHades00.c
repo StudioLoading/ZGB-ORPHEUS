@@ -14,16 +14,19 @@
 
 
 IMPORT_MAP(maphades000);
+IMPORT_MAP(maphades001);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
 
-const UINT8 coll_t_hades000[] = {1,2,3,4,5,6,7,8,9,10,13,14,15,
- 20,21,26,27,32,33,38,51,64,65,66,67,68,70,71,72,73,74,
+
+const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
 //here the hit tiles
-//exit
-11,12,
+//prev
+6,7,8,2,
+//next
+44,45,46,
 0};
-const UINT8 coll_s_hades000[] = {0};
+const UINT8 coll_s_hades001[] = {0};
 
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
@@ -39,6 +42,7 @@ extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;
 extern UINT8 has_lyre;
 extern UINT8 tutorial_go;
+extern UINT8 current_map;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -72,7 +76,14 @@ void START() {
 		e_configure(e_enemy, SKELETON);
 		*/
 	//INITSCROLL
-		InitScroll(BANK(maphades000), &maphades000, coll_t_hades000, coll_s_hades000);
+		switch(current_map){
+			case HADES_ZERO: 
+				InitScroll(BANK(maphades000), &maphades000, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_ONE: 
+				InitScroll(BANK(maphades001), &maphades001, coll_t_hades001, coll_s_hades001);
+			break;
+		}
 	//HUD
         INIT_FONT(font, PRINT_BKG);
         INIT_HUD(hudmap);

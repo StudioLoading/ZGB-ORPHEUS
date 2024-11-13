@@ -2,8 +2,8 @@
 #define ZGBMAIN_H
 
 #define STATES \
-_STATE(StateLevel00)\
-_STATE(StateLevel01)\
+_STATE(StateTutorial)\
+_STATE(StateHades00)\
 STATE_DEF_END
 
 /*_SPRITE_DMG(SpritePlayer, player)\ */

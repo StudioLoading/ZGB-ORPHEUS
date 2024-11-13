@@ -69,6 +69,7 @@ typedef enum{
 	TUTORIAL,
 	HADES_ZERO,
 	HADES_ONE,
+	HADES_TWO,
 }MACROMAP;
 
 struct LoadedItem{

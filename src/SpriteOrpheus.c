@@ -77,12 +77,17 @@ extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_spr
 void START() {
     THIS->lim_x = 100;
     THIS->lim_y = 100;
-    SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
+    SetSpriteAnim(THIS, a_orpheus_idledown, 8u);
+    orhpeus_change_state(IDLE_DOWN);
+    if(tutorial_go == 0){
+        SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
+        orhpeus_change_state(WALK_UP);
+    }
     orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
     orpheus_info->vx = 0;
     orpheus_info->vy = 0;
     orpheus_info->tile_collision = 0u;
-    orpheus_info->ow_state = GENERIC_IDLE;
+    orpheus_info->ow_state = IDLE_DOWN;
     orpheus_info->charming = 0;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -99,7 +104,6 @@ void START() {
     orpheus_power_max = POWER_MAX;
 	countdown = orpheus_power_max;
     countdown_verso = 0;
-    orhpeus_change_state(IDLE_DOWN);
 }
 
 void UPDATE() {
@@ -364,7 +368,7 @@ void orpheus_update_position() BANKED{
     if(orpheus_info->tile_collision){
         //CHECK COLLISION WITH DAMAGE TILES
         switch(current_state){
-            case StateLevel00:
+            case StateTutorial:
                 switch(orpheus_info->tile_collision){
                     case 38u: //spini
                         orhpeus_change_state(HIT);
@@ -375,11 +379,18 @@ void orpheus_update_position() BANKED{
                     break;
                 }
             break;
-            case StateLevel01:
+            case StateHades00:
                 switch(orpheus_info->tile_collision){
-                    case 72u:
-                    case 73u:
+                    case 2u:
+                    case 6u:
+                    case 7u:
+                    case 8u:
                         go_to_prev_map();
+                    break;
+                    case 44u:
+                    case 45u:
+                    case 46u:
+                        go_to_next_map();
                     break;
                 }
             break;
@@ -388,9 +399,9 @@ void orpheus_update_position() BANKED{
 }
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED{
-    if(orpheus_info->ow_state == new_state){
+    /*if(orpheus_info->ow_state == new_state){
         return;
-    };
+    };*/
     switch(new_state){
         case IDLE_DOWN:
             orpheus_info->vy = 0;

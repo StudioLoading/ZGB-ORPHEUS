@@ -120,7 +120,7 @@ void UPDATE() {
 				tutorial_block_interact = 1u;
 			}
 		}
-		if(s_orpheus->y < ((UINT16) 10u << 3)){
+		if(s_orpheus->y < ((UINT16) 8u << 3)){
 			if(tutorial_hades_entrance == 0 && button_pressed == 1){
 				init_write_dialog(prepare_dialog(HADES_ENTRANCE));
 				tutorial_hades_entrance = 1u;
