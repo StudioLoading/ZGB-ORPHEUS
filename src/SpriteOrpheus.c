@@ -51,6 +51,7 @@ UINT8 countdown_step = 0;
 INT8 countdown_verso = 0;
 INT8 countdown_step_currentmax = 0; //cambia a seconda della canzone suonata
 UINT8 colliding_block = 0u;
+INT8 orpheus_starting_up = 0u;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -61,6 +62,8 @@ extern SONG song_selection;
 extern UINT8 tutorial_go;
 extern UINT8 in_dialog;
 extern UINT8 has_lyre;
+extern MACROMAP prev_map;
+extern UINT8 current_map;
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
@@ -78,10 +81,11 @@ void START() {
     THIS->lim_x = 100;
     THIS->lim_y = 100;
     SetSpriteAnim(THIS, a_orpheus_idledown, 8u);
+    new_state = GENERIC_IDLE;
     orhpeus_change_state(IDLE_DOWN);
-    if(tutorial_go == 0){
+    if(tutorial_go == 0 || (current_map == HADES_ZERO && THIS->y > 50u)){
         SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
-        orhpeus_change_state(WALK_UP);
+        orhpeus_change_state(IDLE_UP);
     }
     orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
     orpheus_info->vx = 0;
@@ -104,9 +108,14 @@ void START() {
     orpheus_power_max = POWER_MAX;
 	countdown = orpheus_power_max;
     countdown_verso = 0;
+    orpheus_starting_up = 40;
 }
 
 void UPDATE() {
+    if(orpheus_starting_up > 0){
+        orpheus_starting_up--;
+        return;
+    }
     colliding_block = 0u;
     //CAMERA MOVEMENT ON CHANGING MAP
         if(a_walk_counter_y < 0){
@@ -149,7 +158,8 @@ void UPDATE() {
     //MOVEMENTS
         if(in_dialog == 1){
             switch(orpheus_info->ow_state){
-                case WALK_UP: orhpeus_change_state(IDLE_UP); break;
+                case WALK_UP:
+                    orhpeus_change_state(IDLE_UP); break;
                 case WALK_DOWN: orhpeus_change_state(IDLE_DOWN); break;
                 case WALK_LEFT: orhpeus_change_state(IDLE_LEFT); break;
                 case WALK_RIGHT: orhpeus_change_state(IDLE_RIGHT); break;
@@ -163,7 +173,8 @@ void UPDATE() {
             else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
             else if(KEY_PRESSED(J_RIGHT)){new_state = WALK_RIGHT;}
             else if(KEY_RELEASED(J_DOWN)){new_state = IDLE_DOWN;}
-            else if(KEY_RELEASED(J_UP)){new_state = IDLE_UP;}
+            else if(KEY_RELEASED(J_UP)){
+                new_state = IDLE_UP;}
             else if(KEY_RELEASED(J_LEFT)){new_state = IDLE_LEFT;}
             else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
         }
@@ -280,10 +291,6 @@ void UPDATE() {
                         }
                     break;
                     case SpriteBlock:{
-                        if(has_lyre == 0 && KEY_PRESSED(J_INT)){
-                            init_write_dialog(prepare_dialog(MISSING_LYRE_FEEL_WEAK));
-                            return;
-                        }
                         INT8 deltax = THIS->x - iospr->x;
                         INT8 deltay = THIS->y - iospr->y;
                         struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
@@ -398,11 +405,11 @@ void orpheus_update_position() BANKED{
     }
 }
 
-void orhpeus_change_state(SPRITE_STATES new_state) BANKED{
-    /*if(orpheus_info->ow_state == new_state){
+void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
+    if(orpheus_info->ow_state == arg_new_state){
         return;
-    };*/
-    switch(new_state){
+    };
+    switch(arg_new_state){
         case IDLE_DOWN:
             orpheus_info->vy = 0;
             orpheus_info->vx = 0;
@@ -492,7 +499,7 @@ void orhpeus_change_state(SPRITE_STATES new_state) BANKED{
             countdown_step = countdown_step_currentmax;
         break;
     }
-    orpheus_info->ow_state = new_state;
+    orpheus_info->ow_state = arg_new_state;
 }
 
 void orpheus_hit() BANKED{

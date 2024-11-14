@@ -32,12 +32,12 @@ UINT8 counter_char = 0u;
 UINT8 wait_char = MAX_WAIT_CHAR;
 UINT8 writing_line = 1u;
 UINT8 n_lines = 0u;
-UINT8 has_lyre = 0u;
+UINT8 has_lyre = 0u;//TODO mettere a zero quando si comincia da tutorial
 UINT8 button_pressed = 0u;
 MACROMAP current_map = TUTORIAL;
 MACROMAP next_map = HADES_ZERO;
 MACROMAP prev_map = TUTORIAL;
-UINT16 orpheus_nextmap_spawnx = ((UINT16) 10u << 3);
+UINT16 orpheus_nextmap_spawnx = ((UINT16) 9u << 3) + 4u;
 UINT16 orpheus_nextmap_spawny = ((UINT16) 15u << 3);
 UINT16 orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
 UINT16 orpheus_prevmap_spawny = ((UINT16) 7u << 3);
@@ -50,6 +50,8 @@ UINT16 camera_prev_spawny = ((UINT16) 64u << 3);
 UINT16 camera_next_spawnx = ((UINT16) 10u << 3);
 UINT16 camera_next_spawny = ((UINT16) 11u << 3) + 4u;
 UINT8 in_dialog = 0u;
+UINT8 init_block_button = 0u;
+
 extern struct OrpheusInfo* orpheus_info;
 extern INT8 a_walk_counter_x;
 extern INT8 a_walk_counter_y;
@@ -98,6 +100,7 @@ void level_common_start() BANKED{
 		move_camera_destx = 0u;
 		move_camera_down = 0u;
 		move_camera_left = 0u;
+		init_block_button = 0;
 }
 
 void level_common_update_play() BANKED{
@@ -450,8 +453,10 @@ void go_to_next_map() BANKED{
 			orpheus_nextmap_spawny = ((UINT16) 4u << 3);
 			camera_next_spawnx = ((UINT16) 10u << 3);
 			camera_next_spawny = ((UINT16) 11u << 3) + 4u;
-			orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
+			orpheus_prevmap_spawnx = ((UINT16) 29u << 3) + 4u;
 			orpheus_prevmap_spawny = ((UINT16) 6u << 3);
+			orpheus_spawnx = ((UINT16) 10u << 3);
+			orpheus_spawny = ((UINT16) 15u << 3);
 			//a_walk_counter_y = -8;
 			next_state = StateHades00;
 		break;

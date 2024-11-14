@@ -55,12 +55,6 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d3, EMPTY_STRING_20, 21);
             return 3u;
         break;
-        case MISSING_LYRE_FEEL_WEAK:
-            memcpy(d1, "I CAN'T PROCEDE, I  ", 21);
-            memcpy(d2, "NEED TO FIND MY LYRE", 21);
-            memcpy(d3, "BEFORE!             ", 21);
-            return 3u;
-        break;
         case FOUND_LYRE:
             memcpy(d1, "GREAT! WITH MY LYRE ", 21);
             memcpy(d2, "I CAN PLAY DIFFERENT", 21);
@@ -77,9 +71,9 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             return 3u;
         break;
         case TUTORIAL_BLOCKS:
-            memcpy(d1, "NOW I AM ABLE TO    ", 21);
-            memcpy(d2, "PUSH HEAVY BLOCKS   ", 21);
-            memcpy(d3, "(PRESS INTERACT BTN)", 21);
+            memcpy(d1, "I AM ABLE TO PUSH   ", 21);
+            memcpy(d2, "HEAVY BLOCKS  (PRESS", 21);
+            memcpy(d3, "INTERACT BUTTON)    ", 21);
             return 3u;
         break;
         case HADES_ENTRANCE:
