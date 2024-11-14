@@ -1,5 +1,7 @@
-- direzione in cui Orpheus deve ricomparire
-- inerzia di 1 px di movimento
+-  go_to_next_map() 
+	l'azzeramento dei due flag subito dentro sto metodo deve avvenire se il go to next
+	è fatta da una mappa corrente che è la massima mappa esplorata
+	necessario nuova variabile per memorizzare la mappa più avanti esplorata
 - faccio sparire orpheus mezzo secondo prima del cambio state
 - COSA FACCIAMO QUANDO ORPHEUS PERDE TUTTI I CUORI?
     schermata dedicata o animazione

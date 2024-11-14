@@ -51,10 +51,12 @@ typedef enum{
 typedef enum{
 	LYRE,
 	HEART,
+	KEY,
 	BLOCK,
 	BLOCK_FIXED,
 	BUTTON,
-	DOOR
+	DOOR,
+	DOOR_KEY
 }ITEM_TYPE;
 
 struct ItemInfo{

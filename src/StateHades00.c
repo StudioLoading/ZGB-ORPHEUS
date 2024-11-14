@@ -15,11 +15,13 @@
 
 IMPORT_MAP(maphades000);
 IMPORT_MAP(maphades001);
+IMPORT_MAP(maphades002);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
 
 
 const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
+75,76,77,
 //here the hit tiles
 //prev
 6,7,8,2,
@@ -35,6 +37,7 @@ extern UINT8 init_block_button;
 extern Sprite* s_block_00;
 extern Sprite* s_block_01;
 extern Sprite* s_door;
+extern Sprite* s_key;
 extern Sprite* s_orpheus;
 extern INT8 a_walk_counter_y;
 extern UINT8 button_pressed;
@@ -42,6 +45,7 @@ extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;
 extern UINT8 tutorial_go;
 extern UINT8 current_map;
+extern UINT8 orpheus_haskey;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -58,7 +62,7 @@ void START() {
 		s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 		if(button_pressed == 0){
 			switch(current_map){
-				case HADES_ONE:
+				case HADES_ONE:{
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 5u << 3), ((UINT16) 8u << 3) + 3u);
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
@@ -67,7 +71,19 @@ void START() {
 					struct ItemInfo* door_data = (struct ItemInfo*) s_door->custom_data;
 					door_data->item_type = DOOR;
 					door_data->i_configured = 1u;
-				break;
+				}break;
+				case HADES_TWO:{
+					s_door = SpriteManagerAdd(SpriteBlock, ((UINT16) 4u << 3) + 5u, ((UINT16) 12u << 3) + 1u);
+					struct ItemInfo* door_data = (struct ItemInfo*) s_door->custom_data;
+					door_data->item_type = DOOR_KEY;
+					door_data->i_configured = 1u;
+					if(orpheus_haskey == 0){
+						s_key = SpriteManagerAdd(SpriteItem, ((UINT16) 17u << 3), ((UINT16) 15u << 3) - 3u);
+						struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
+						key_data->item_type = KEY;
+						key_data->i_configured = 1u;
+					}
+				}break;
 			}
 		}
 		//ENEMIES
@@ -83,9 +99,12 @@ void START() {
 			case HADES_ONE: 
 				InitScroll(BANK(maphades001), &maphades001, coll_t_hades001, coll_s_hades001);
 			break;
+			case HADES_TWO: 
+				InitScroll(BANK(maphades002), &maphades002, coll_t_hades001, coll_s_hades001);
+			break;
 		}
 	//HUD
-        INIT_FONT(font, PRINT_BKG);
+        INIT_FONT(font, PRINT_WIN);
         INIT_HUD(hudmap);
 	//VARS
 }

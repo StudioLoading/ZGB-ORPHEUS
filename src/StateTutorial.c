@@ -31,6 +31,7 @@ UINT8 tutorial_go = 0u;
 Sprite* s_block_00 = 0;
 Sprite* s_block_01 = 0;
 Sprite* s_door = 0;
+Sprite* s_key = 0;
 UINT8 tutorial_hades_entrance = 0u;
 UINT8 tutorial_get_lyre = 0u;
 extern UINT8 in_dialog;
@@ -98,7 +99,7 @@ void UPDATE() {
 	}
 	//DIALOGS INTERRUPTS
 		if(s_orpheus->y < ((UINT16) 29u << 3) && has_lyre == 0){
-			s_orpheus->y -= 4u;
+			s_orpheus->y += 4u;
 			init_write_dialog(prepare_dialog(MISSING_LYRE));
 		}
 		if(s_orpheus->y < ((UINT16) 8u << 3)){

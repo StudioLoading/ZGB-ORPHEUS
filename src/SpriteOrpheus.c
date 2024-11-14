@@ -20,15 +20,16 @@
 UINT8 J_INT=J_A;//0x10;
 UINT8 J_ATK=J_B;//0x20;
 
-const UINT8 a_orpheus_idleup[] = {1, 5};
+const UINT8 a_orpheus_idleup[] = {1, 4};
 const UINT8 a_orpheus_idledown[] = {2, 2, 3};
 const UINT8 a_orpheus_idleh[] = {4, 10,10,10,9};
-const UINT8 a_orpheus_walk_up[] = {2, 5, 6};
-const UINT8 a_orpheus_walk_down[] = {2, 2, 3};
+const UINT8 a_orpheus_walk_up[] = {4, 4,5,4,6};
+const UINT8 a_orpheus_walk_down[] = {4, 1,2,1,3};
 const UINT8 a_orpheus_walk_h[] = {4, 9, 10, 9, 8};
 const UINT8 a_orpheus_hit_down[] = {2, 0, 2};
 const UINT8 a_orpheus_hit_up[] = {2, 0, 5};
 const UINT8 a_orpheus_hit_h[] = {2, 0, 9};
+const UINT8 a_orpheus_push[] = {3, 7, 11,11};
 
 struct OrpheusInfo* orpheus_info;
 SPRITE_STATES new_state = 0;
@@ -66,6 +67,7 @@ extern UINT8 in_dialog;
 extern UINT8 has_lyre;
 extern MACROMAP prev_map;
 extern UINT8 current_map;
+extern UINT8 orpheus_haskey;
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
@@ -330,9 +332,14 @@ void UPDATE() {
                         }
                     break;
                     case SpriteBlock:{
+                        struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
+                        if(block_data->item_type == DOOR_KEY && orpheus_haskey == 1u){
+                            SpriteManagerRemoveSprite(iospr); 
+			                redraw_hud = 1;
+                            return;
+                        }
                         INT8 deltax = THIS->x - iospr->x;
                         INT8 deltay = THIS->y - iospr->y;
-                        struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
                         if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){
                             block_data->counter_verso = -1;                            
                             if(KEY_PRESSED(J_INT)){
@@ -489,7 +496,7 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
             inertia_y = 1;
             orpheus_info->vx = 0;
             orpheus_info->vy = -1;
-            SetSpriteAnim(THIS, a_orpheus_walk_up, 8u);
+            SetSpriteAnim(THIS, a_orpheus_walk_up, 12u);
         break;
         case WALK_LEFT:
             inertia_x = 1;
@@ -584,6 +591,11 @@ void orpheus_pickup(Sprite* itemsprite) BANKED{
                             orpheus_hp++;
                             redraw_hud = 1;
                         }
+                        SpriteManagerRemoveSprite(itemsprite);
+                    break;
+                    case KEY:
+                        orpheus_haskey = 1u;
+                        redraw_hud = 1;
                         SpriteManagerRemoveSprite(itemsprite);
                     break;
                 }

@@ -8,7 +8,8 @@
 #include "custom_datas.h"
 
 
-const UINT8 i_heart[] = {2, 0,1};
+const UINT8 i_heart[] = {6, 0,1,1,1,1,1};
+const UINT8 i_key[] = {6, 0,2,2,2,2,2};
 
 void START() {
     THIS->lim_x = 1000;
@@ -23,6 +24,7 @@ void UPDATE() {
         case 1u:
             switch(i_data->item_type){
                 case HEART: SetSpriteAnim(THIS, i_heart, 24u); break;
+                case KEY: SetSpriteAnim(THIS, i_key, 24u); break;
             }
             i_data->i_configured = 2;
         break;

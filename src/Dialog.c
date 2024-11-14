@@ -50,9 +50,9 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             return 9u;
         break;
         case MISSING_LYRE:
-            memcpy(d1, "I HAVE NOT MY INSTRU", 21);
-            memcpy(d2, "MENT TO PLAY SONGS. ", 21);
-            memcpy(d3, EMPTY_STRING_20, 21);
+            memcpy(d1, "I CAN'T PROCEED, I  ", 21);
+            memcpy(d2, "NEED TO FIND MY LYRE", 21);
+            memcpy(d3, "FIRST!              ", 21);
             return 3u;
         break;
         case FOUND_LYRE:
