@@ -52,6 +52,8 @@ INT8 countdown_verso = 0;
 INT8 countdown_step_currentmax = 0; //cambia a seconda della canzone suonata
 UINT8 colliding_block = 0u;
 INT8 orpheus_starting_up = 0u;
+UINT8 inertia_x = 0u;
+UINT8 inertia_y = 0u;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -109,6 +111,8 @@ void START() {
 	countdown = orpheus_power_max;
     countdown_verso = 0;
     orpheus_starting_up = 40;
+    inertia_x = 0u;
+    inertia_y = 0u;
 }
 
 void UPDATE() {
@@ -193,13 +197,46 @@ void UPDATE() {
     //BEHAVE
         switch(new_state){
             case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
+                if(inertia_x > 31){
+                    inertia_x = 0;
+                    if(new_state == IDLE_LEFT){
+                        orpheus_info->vx = -1;
+                    }else if(new_state == IDLE_RIGHT){
+                        orpheus_info->vx = 1;
+                    }
+                }else{
+                    inertia_x = 0;
+                    if(orpheus_info->vx != 0){orpheus_info->vx = 0;}
+                } 
+                if(inertia_y > 31){
+                    inertia_y = 0;
+                    if(new_state == IDLE_DOWN){
+                        orpheus_info->vy = 1;
+                    }else if(new_state == IDLE_UP){
+                        orpheus_info->vy = -1;
+                    }
+                }else{
+                    inertia_y = 0;
+                    if(orpheus_info->vy != 0){orpheus_info->vy = 0;}
+                } 
+                if(orpheus_info->vx || orpheus_info->vy){//solo per inerzia
+                    orpheus_update_position();
+                }
                 orpheus_recharge();
             break;
             case WALK_DOWN: case WALK_UP:
             case WALK_LEFT: case WALK_RIGHT:
+                if(orpheus_info->vx != 0 && inertia_x > 0 && inertia_x < 32){
+                    inertia_x++;
+                }
+                if(orpheus_info->vy != 0 && inertia_y > 0 && inertia_y < 32){
+                    inertia_y++;
+                }
                 orpheus_update_position();
             break;
             case HIT:
+                if(inertia_x > 0){inertia_x = 0;}
+                if(inertia_y > 0){inertia_y = 0;}
                 hit_frameskip--;
                 if(hit_frameskip == 0){
                     hit_frameskip_max++;
@@ -254,6 +291,8 @@ void UPDATE() {
                 }
             break;
             case ATTACK:
+                if(inertia_x > 0){inertia_x = 0;}
+                if(inertia_y > 0){inertia_y = 0;}
                 orpheus_wait--;
                 if(orpheus_wait <= 1){
                     orhpeus_change_state(orpheus_state_before);
@@ -411,44 +450,56 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
     };
     switch(arg_new_state){
         case IDLE_DOWN:
-            orpheus_info->vy = 0;
-            orpheus_info->vx = 0;
+            if(inertia_x == 0){
+                orpheus_info->vx = 0;
+                orpheus_info->vy = 0;
+            }
             SetSpriteAnim(THIS, a_orpheus_idledown, 4u);
         break;
         case IDLE_UP:
-            orpheus_info->vy = 0;
-            orpheus_info->vx = 0;
+            if(inertia_x == 0){
+                orpheus_info->vx = 0;
+                orpheus_info->vy = 0;
+            }
             SetSpriteAnim(THIS, a_orpheus_idleup, 4u);
         break;
         case IDLE_LEFT:
-            orpheus_info->vy = 0;
-            orpheus_info->vx = 0;
+            if(inertia_x == 0){
+                orpheus_info->vx = 0;
+                orpheus_info->vy = 0;
+            }
             SetSpriteAnim(THIS, a_orpheus_idleh, 4u);
             THIS->mirror = V_MIRROR;
         break;
         case IDLE_RIGHT:
-            orpheus_info->vx = 0;
-            orpheus_info->vy = 0;
+            if(inertia_x == 0){
+                orpheus_info->vx = 0;
+                orpheus_info->vy = 0;
+            }
             SetSpriteAnim(THIS, a_orpheus_idleh, 4u);
             THIS->mirror = NO_MIRROR;
         break;
         case WALK_DOWN:
+            inertia_y = 1;
             orpheus_info->vx = 0;
             orpheus_info->vy = 1;
             SetSpriteAnim(THIS, a_orpheus_walk_down, 12u);
         break;
         case WALK_UP:
+            inertia_y = 1;
             orpheus_info->vx = 0;
             orpheus_info->vy = -1;
             SetSpriteAnim(THIS, a_orpheus_walk_up, 8u);
         break;
         case WALK_LEFT:
+            inertia_x = 1;
             orpheus_info->vx = -1;
             orpheus_info->vy = 0;
             SetSpriteAnim(THIS, a_orpheus_walk_h, 12u);
             THIS->mirror = V_MIRROR;
         break;
         case WALK_RIGHT:
+            inertia_x = 1;
             orpheus_info->vx = 1;
             orpheus_info->vy = 0;
             SetSpriteAnim(THIS, a_orpheus_walk_h, 12u);
