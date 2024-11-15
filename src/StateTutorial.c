@@ -19,7 +19,7 @@ IMPORT_TILES(font);
 
 const UINT8 coll_tiles_intro[] = {4u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23u, 24u, 25u, 32u, 33u, 34u, 35u, 36u, 40u, 41u, 51u, 53u, 60u, 61u, 62u, 63u, 64u, 65u, 80u,
 82u, 87u, 88u, 89u, 90u, 91u, 92u, 93u, 94u, 95u, 96u, 106u,
-108u, 109u, 110, 111, 114u,
+108u, 109u, 110, 111, 114u,115u,
 //here the hit tiles
 38u,
 //exit

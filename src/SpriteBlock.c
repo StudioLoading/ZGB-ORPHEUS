@@ -53,7 +53,7 @@ void UPDATE() {
                 i_data->counter_y = 0;
             }
             if(vx != 0 || vy != 0){
-                UINT8 block_tile_coll = TranslateSprite(THIS, vx << delta_time, vy << delta_time);
+                TranslateSprite(THIS, vx << delta_time, vy << delta_time);
             }
         break;
         case 3u: // STOP REASONING

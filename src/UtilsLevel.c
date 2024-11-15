@@ -17,6 +17,26 @@
 #define V_CAMERA 2
 #define MAX_WAIT_CHAR 4
 
+#define SPAWNX_CAMERA_TUTORIAL 30
+#define SPAWNY_CAMERA_TUTORIAL 11
+#define SPAWNX_HADES_TUTORIAL 10
+#define SPAWNY_HADES_TUTORIAL 11
+
+#define SPAWNX_TUTORIAL 29
+#define SPAWNY_TUTORIAL 7
+#define SPAWNX_HADES000_IN 10
+#define SPAWNY_HADES000_IN 15
+#define SPAWNX_HADES000_OUT 10
+#define SPAWNY_HADES000_OUT 4
+#define SPAWNX_HADES001_IN 4
+#define SPAWNY_HADES001_IN 4
+#define SPAWNX_HADES001_OUT 16
+#define SPAWNY_HADES001_OUT 13
+#define SPAWNX_HADES002_IN 8
+#define SPAWNY_HADES002_IN 3
+#define SPAWNX_HADES002_OUT 4
+#define SPAWNY_HADES002_OUT 12
+
 Sprite* s_camera;
 Sprite* s_orpheus;
 UINT8 redraw_hud = 0;
@@ -33,23 +53,17 @@ UINT8 wait_char = MAX_WAIT_CHAR;
 UINT8 writing_line = 1u;
 UINT8 n_lines = 0u;
 UINT8 has_lyre = 0u;//TODO 0
+MACROMAP solved_map = TUTORIAL;
 MACROMAP current_map = TUTORIAL; //TODO TUTORIAL
 MACROMAP next_map = HADES_ZERO; //TODO HADES_ZERO
 MACROMAP prev_map = TUTORIAL; //TODO TUTORIAL
+MACROMAP max_map = TUTORIAL; //TODO TUTORIAL
 UINT8 button_pressed = 0u;
 UINT8 orpheus_haskey = 0u;
-UINT16 orpheus_nextmap_spawnx = ((UINT16) 9u << 3) + 4u;
-UINT16 orpheus_nextmap_spawny = ((UINT16) 15u << 3);
-UINT16 orpheus_prevmap_spawnx = ((UINT16) 29u << 3);
-UINT16 orpheus_prevmap_spawny = ((UINT16) 7u << 3);
 UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
 UINT16 orpheus_spawny = ((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) 30u << 3);
 UINT16 camera_spawny = ((UINT16) 64u << 3);
-UINT16 camera_prev_spawnx = ((UINT16) 30u << 3);
-UINT16 camera_prev_spawny = ((UINT16) 64u << 3);
-UINT16 camera_next_spawnx = ((UINT16) 10u << 3);
-UINT16 camera_next_spawny = ((UINT16) 11u << 3) + 4u;
 UINT8 in_dialog = 0u;
 UINT8 init_block_button = 0u;
 
@@ -428,6 +442,7 @@ void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
     draw_button(x, y, t);
 	if(button_pressed == 0){
 		button_pressed = 1;
+		solved_map = current_map;
 	}else if(button_pressed == 1){
 		button_pressed = 0;
 	}
@@ -441,52 +456,42 @@ void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
 }
 
 void go_to_next_map() BANKED{
-	button_pressed = 0;   
-	orpheus_haskey = 0;
-	orpheus_prevmap_spawnx = orpheus_spawnx;
-	orpheus_prevmap_spawny = orpheus_spawny;
-	orpheus_spawnx = orpheus_nextmap_spawnx;
-	orpheus_spawny = orpheus_nextmap_spawny;
-	camera_prev_spawnx = camera_spawnx;
-	camera_prev_spawny = camera_spawny;
-	camera_spawnx = camera_next_spawnx;
-	camera_spawny = camera_next_spawny;
+	SpriteManagerRemoveSprite(s_orpheus);
+	if(next_map > max_map){
+		max_map = next_map;
+		if(solved_map < next_map){
+			button_pressed = 0;
+			orpheus_haskey = 0;
+		}
+	}
 	UINT8 next_state = StateTutorial;
 	a_walk_counter_x = 0;
 	a_walk_counter_y = 0;
 	current_map = next_map;
 	switch(next_map){
 		case HADES_ZERO:
-			next_map = HADES_ONE;
 			prev_map = TUTORIAL;
-			orpheus_nextmap_spawnx = ((UINT16) 4u << 3);
-			orpheus_nextmap_spawny = ((UINT16) 4u << 3);
-			camera_next_spawnx = ((UINT16) 10u << 3);
-			camera_next_spawny = ((UINT16) 11u << 3) + 4u;
-			orpheus_prevmap_spawnx = ((UINT16) 29u << 3) + 4u;
-			orpheus_prevmap_spawny = ((UINT16) 6u << 3);
-			orpheus_spawnx = ((UINT16) 10u << 3);
-			orpheus_spawny = ((UINT16) 15u << 3);
+			next_map = HADES_ONE;
+			camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3);
+			camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES000_IN << 3);
 			//a_walk_counter_y = -8;
 			next_state = StateHades00;
 		break;
 		case HADES_ONE:
-			next_map = HADES_TWO;
 			prev_map = HADES_ZERO;
-			orpheus_nextmap_spawnx = ((UINT16) 7u << 3) + 4u;//TODO
-			orpheus_nextmap_spawny = ((UINT16) 3u << 3) + 2u;//TODO
-			camera_next_spawnx = ((UINT16) 10u << 3);
-			camera_next_spawny = ((UINT16) 11u << 3) + 4u;
+			next_map = HADES_TWO;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES001_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES001_IN << 3) + 2u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
 		case HADES_TWO:
-			next_map = HADES_TWO; //TODO
 			prev_map = HADES_ONE;
-			orpheus_nextmap_spawnx = ((UINT16) 7u << 3) + 4u;//TODO
-			orpheus_nextmap_spawny = ((UINT16) 3u << 3) + 2u;//TODO
-			camera_next_spawnx = ((UINT16) 10u << 3);
-			camera_next_spawny = ((UINT16) 11u << 3) + 4u;
+			next_map = HADES_TWO; //TODO
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES002_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
@@ -495,46 +500,41 @@ void go_to_next_map() BANKED{
 }
 
 void go_to_prev_map() BANKED{
-	button_pressed = 1;
-	camera_next_spawnx = camera_spawnx;
-	camera_next_spawny = camera_spawny;
-	camera_spawnx = camera_prev_spawnx;
-	camera_spawny = camera_prev_spawny;
-	orpheus_nextmap_spawnx = orpheus_spawnx;
-	orpheus_nextmap_spawny = orpheus_spawny;
+	SpriteManagerRemoveSprite(s_orpheus);
 	current_map = prev_map;
 	UINT8 next_state = StateTutorial;
 	a_walk_counter_x = 0;
 	a_walk_counter_y = 0;
 	switch(prev_map){
 		case TUTORIAL:
-			next_map = HADES_ZERO;
 			prev_map = TUTORIAL;
-			orpheus_spawnx = orpheus_prevmap_spawnx;
-			orpheus_spawny = orpheus_prevmap_spawny;
-			camera_spawnx = ((UINT16) 30u << 3);
-			camera_spawny = ((UINT16) 11u << 3);
+			next_map = HADES_ZERO;
+			orpheus_spawnx = ((UINT16) SPAWNX_TUTORIAL << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_TUTORIAL << 3);
+			camera_spawnx = ((UINT16) SPAWNX_CAMERA_TUTORIAL << 3);
+			camera_spawny = ((UINT16) SPAWNY_CAMERA_TUTORIAL << 3) + 6u;
 		break;
 		case HADES_ZERO:
-			next_map = HADES_ONE;
 			prev_map = TUTORIAL;
-			orpheus_spawnx = ((UINT16) 10u << 3);
-			orpheus_spawny = ((UINT16) 4u << 3);
-			camera_prev_spawnx = ((UINT16) 10u << 3);
-			camera_prev_spawny = ((UINT16) 11u << 3) + 4;
-			orpheus_prevmap_spawnx = ((UINT16) 29u << 3) + 4;
-			orpheus_prevmap_spawny = ((UINT16) 7u << 3);
+			next_map = HADES_ONE;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_OUT << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES000_OUT << 3);
+			camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3);
+			camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4;
 			next_state = StateHades00;
 		break;
 		case HADES_ONE:
-			next_map = HADES_TWO;
 			prev_map = HADES_ZERO;
-			orpheus_spawnx = ((UINT16) 15u << 3) + 4u;
-			orpheus_spawny = ((UINT16) 13u << 3) + 2u;
-			camera_prev_spawnx = ((UINT16) 10u << 3);
-			camera_prev_spawny = ((UINT16) 11u << 3) + 4;
-			orpheus_prevmap_spawnx = ((UINT16) 9u << 3) + 4;
-			orpheus_prevmap_spawny = ((UINT16) 3u << 3);
+			next_map = HADES_TWO;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES001_OUT << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES001_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_TWO:
+			prev_map = HADES_ONE;
+			next_map = HADES_THREE;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES002_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 	}

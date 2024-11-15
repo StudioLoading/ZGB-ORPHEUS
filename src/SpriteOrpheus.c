@@ -68,6 +68,7 @@ extern UINT8 has_lyre;
 extern MACROMAP prev_map;
 extern UINT8 current_map;
 extern UINT8 orpheus_haskey;
+extern MACROMAP solved_map;
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
@@ -334,7 +335,8 @@ void UPDATE() {
                     case SpriteBlock:{
                         struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
                         if(block_data->item_type == DOOR_KEY && orpheus_haskey == 1u){
-                            SpriteManagerRemoveSprite(iospr); 
+                            SpriteManagerRemoveSprite(iospr);
+                            solved_map = current_map;
 			                redraw_hud = 1;
                             return;
                         }

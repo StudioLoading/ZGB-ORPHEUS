@@ -1,8 +1,6 @@
--  go_to_next_map() 
-	l'azzeramento dei due flag subito dentro sto metodo deve avvenire se il go to next
-	è fatta da una mappa corrente che è la massima mappa esplorata
-	necessario nuova variabile per memorizzare la mappa più avanti esplorata
 - faccio sparire orpheus mezzo secondo prima del cambio state
+- masso e bottone map4
+- map 8 e 9 e password e caronte
 - COSA FACCIAMO QUANDO ORPHEUS PERDE TUTTI I CUORI?
     schermata dedicata o animazione
     ritorno all'inizio della macroarea

@@ -46,6 +46,8 @@ extern UINT16 orpheus_spawny;
 extern UINT8 tutorial_go;
 extern UINT8 current_map;
 extern UINT8 orpheus_haskey;
+extern MACROMAP max_map;
+extern MACROMAP solved_map;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -60,14 +62,14 @@ void START() {
 	level_common_start();
 	//SPRITES
 		s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
-		if(button_pressed == 0){
+		if(solved_map < current_map){
 			switch(current_map){
 				case HADES_ONE:{
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 5u << 3), ((UINT16) 8u << 3) + 3u);
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
 					block00_data->i_configured = 1u;
-					s_door = SpriteManagerAdd(SpriteBlock, ((UINT16) 15u << 3) + 5u, ((UINT16) 13u << 3) + 3u);
+					s_door = SpriteManagerAdd(SpriteBlock, ((UINT16) 15u << 3) + 5u, ((UINT16) 13u << 3) + 2u);
 					struct ItemInfo* door_data = (struct ItemInfo*) s_door->custom_data;
 					door_data->item_type = DOOR;
 					door_data->i_configured = 1u;
@@ -77,7 +79,7 @@ void START() {
 					struct ItemInfo* door_data = (struct ItemInfo*) s_door->custom_data;
 					door_data->item_type = DOOR_KEY;
 					door_data->i_configured = 1u;
-					if(orpheus_haskey == 0){
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
 						s_key = SpriteManagerAdd(SpriteItem, ((UINT16) 17u << 3), ((UINT16) 15u << 3) - 3u);
 						struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
 						key_data->item_type = KEY;
@@ -128,7 +130,7 @@ void UPDATE() {
 	//BLOCK MANAGEMENT
 		if(current_map == HADES_ONE){
 			if(init_block_button == 0){
-				if(button_pressed == 1){
+				if(button_pressed == 1 || solved_map >= current_map){
 					draw_button(1u, 15u, 71u);
 				}else{
 					s_block_01->x = (UINT16) 3u << 3;
