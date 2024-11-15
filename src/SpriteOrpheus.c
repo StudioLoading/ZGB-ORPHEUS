@@ -338,6 +338,7 @@ void UPDATE() {
                             SpriteManagerRemoveSprite(iospr);
                             solved_map = current_map;
 			                redraw_hud = 1;
+                            orpheus_haskey = 0;
                             return;
                         }
                         INT8 deltax = THIS->x - iospr->x;
