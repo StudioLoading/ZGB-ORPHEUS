@@ -13,9 +13,11 @@
 #include "Print.h"
 
 #include "custom_datas.h"
+#include "UtilAnim.h"
 
 #define V_CAMERA 2
 #define MAX_WAIT_CHAR 4
+#define ANIM_COUNTER_MAX 32
 
 #define SPAWNX_CAMERA_TUTORIAL 30
 #define SPAWNY_CAMERA_TUTORIAL 11
@@ -34,8 +36,12 @@
 #define SPAWNY_HADES001_OUT 13
 #define SPAWNX_HADES002_IN 8
 #define SPAWNY_HADES002_IN 3
-#define SPAWNX_HADES002_OUT 4
+#define SPAWNX_HADES002_OUT 5
 #define SPAWNY_HADES002_OUT 12
+#define SPAWNX_HADES003_IN 4
+#define SPAWNY_HADES003_IN 4
+#define SPAWNX_HADES003_OUT 4
+#define SPAWNY_HADES003_OUT 15
 
 Sprite* s_camera;
 Sprite* s_orpheus;
@@ -52,21 +58,22 @@ UINT8 counter_char = 0u;
 UINT8 wait_char = MAX_WAIT_CHAR;
 UINT8 writing_line = 1u;
 UINT8 n_lines = 0u;
-UINT8 has_lyre = 0u;//TODO 0
-MACROMAP solved_map = TUTORIAL;
-MACROMAP current_map = TUTORIAL; //TODO TUTORIAL
-MACROMAP next_map = HADES_ZERO; //TODO HADES_ZERO
-MACROMAP prev_map = TUTORIAL; //TODO TUTORIAL
-MACROMAP max_map = TUTORIAL; //TODO TUTORIAL
 UINT8 button_pressed = 0u;
 UINT8 orpheus_haskey = 0u;
-UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
-UINT16 orpheus_spawny = ((UINT16) 79u << 3);
-UINT16 camera_spawnx = ((UINT16) 30u << 3);
-UINT16 camera_spawny = ((UINT16) 64u << 3);
 UINT8 in_dialog = 0u;
 UINT8 init_block_button = 0u;
+UINT8 anim_counter = 0u;
 
+extern UINT8 has_lyre;
+extern UINT16 orpheus_spawnx;/// = ((UINT16) 28u << 3) - 4u;
+extern UINT16 orpheus_spawny;// = ((UINT16) 79u << 3);
+extern UINT16 camera_spawnx;// = ((UINT16) 30u << 3);
+extern UINT16 camera_spawny;// = ((UINT16) 64u << 3);
+extern MACROMAP solved_map;
+extern MACROMAP current_map;
+extern MACROMAP next_map;
+extern MACROMAP prev_map;
+extern MACROMAP max_map;
 extern struct OrpheusInfo* orpheus_info;
 extern INT8 a_walk_counter_x;
 extern INT8 a_walk_counter_y;
@@ -151,7 +158,7 @@ void level_common_update_play() BANKED{
 			return;
 		}
 	// select button
-		if(KEY_TICKED(J_SELECT) && has_lyre){
+		if(KEY_TICKED(J_SELECT) && has_lyre && orpheus_info->charming == 0){
 			song_selection++;
 			if(song_selection == 3){
 				song_selection = ATTRACT;
@@ -161,6 +168,21 @@ void level_common_update_play() BANKED{
 	// update HUD
 		if(redraw_hud != 0){
 			UpdateHUD();
+		}
+	// tiles animation
+		anim_counter++;
+		if(anim_counter >= ANIM_COUNTER_MAX){
+			anim_counter = 0u;
+		}
+		switch(anim_counter){
+			case 0u: Anim_0();
+			break;
+			case 8u: Anim_1();
+			break;
+			case 16u: Anim_2();
+			break;
+			case 24u: Anim_3();
+			break;
 		}
 	// log
     /*
@@ -489,9 +511,17 @@ void go_to_next_map() BANKED{
 		break;
 		case HADES_TWO:
 			prev_map = HADES_ONE;
-			next_map = HADES_TWO; //TODO
+			next_map = HADES_THREE;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES002_IN << 3) + 4u;
+			new_state = IDLE_DOWN;
+			next_state = StateHades00;
+		break;
+		case HADES_THREE:
+			prev_map = HADES_TWO;
+			next_map = HADES_THREE;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES003_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES003_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
@@ -533,8 +563,15 @@ void go_to_prev_map() BANKED{
 		case HADES_TWO:
 			prev_map = HADES_ONE;
 			next_map = HADES_THREE;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES002_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_OUT << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES002_OUT << 3) + 4u;
+			next_state = StateHades00;
+		break;
+		case HADES_THREE:
+			prev_map = HADES_TWO;
+			next_map = HADES_FOUR;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES003_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES003_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 	}

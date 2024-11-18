@@ -27,13 +27,14 @@ const UINT8 coll_tiles_intro[] = {4u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23
 0};
 const UINT8 coll_surface_intro[] = {1u, 66u, 67u,69u,70u, 97u, 98u, 0};
 
-UINT8 tutorial_go = 0u;
 Sprite* s_block_00 = 0;
 Sprite* s_block_01 = 0;
 Sprite* s_door = 0;
 Sprite* s_key = 0;
-UINT8 tutorial_hades_entrance = 0u;
-UINT8 tutorial_get_lyre = 0u;
+
+extern UINT8 tutorial_go;
+extern UINT8 tutorial_hades_entrance;
+extern UINT8 tutorial_get_lyre;
 extern UINT8 in_dialog;
 extern Sprite* s_orpheus;
 extern INT8 a_walk_counter_y;

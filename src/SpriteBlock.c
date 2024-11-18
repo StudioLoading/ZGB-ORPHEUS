@@ -11,6 +11,7 @@
 #define COUNTER_MAX 8
 
 const UINT8 a_block[] = {1, 0};
+const UINT8 a_door_enemy[] = {1, 1};
 const UINT8 a_door[] = {1, 2};
 const UINT8 a_door_key[] = {1, 3};
 
@@ -39,6 +40,7 @@ void UPDATE() {
                 case BLOCK: SetSpriteAnim(THIS, a_block, 1u); i_data->i_configured = 2; break;
                 case DOOR:  SetSpriteAnim(THIS, a_door, 1u); i_data->i_configured = 3; break;
                 case DOOR_KEY:  SetSpriteAnim(THIS, a_door_key, 1u); i_data->i_configured = 3; break;
+                case DOOR_ENEMY:  SetSpriteAnim(THIS, a_door_enemy, 1u); i_data->i_configured = 3; break;
             }
         break;
         case 2u:// PUSHABLE BLOCK

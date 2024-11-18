@@ -18,6 +18,7 @@
 extern Sprite* s_orpheus;
 extern UINT8 orpheus_attack_cooldown;
 extern SONG song_selection;
+extern MACROMAP current_map;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
@@ -79,6 +80,9 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                 break;
             }
         break;
+        case DIE:
+            SpriteManagerRemoveSprite(s_enemy);
+        break;
     }
     switch(e_data->e_state){
         case GENERIC_IDLE: 
@@ -113,15 +117,15 @@ void e_management(Sprite* s_enemy) BANKED{
             }else{s_enemy->mirror = NO_MIRROR;}
         //CALCULATE PUSH/PULL VX;VY, ENEMY AS ORIGIN OF AXIS
             UINT16 delta_x = 0;
-            e_data->vx = 2;
-            e_data->vy = 2;
+            e_data->vx = 1;
+            e_data->vy = 1;
             if(s_orpheus->x < s_enemy->x){
-                e_data->vx = -2;
+                e_data->vx = -1;
                 delta_x = s_enemy->x - s_orpheus->x;
             }else{delta_x = s_orpheus->x - s_enemy->x;}
             UINT16 delta_y = 0;
             if(s_orpheus->y < s_enemy->y){
-                e_data->vy = -2;
+                e_data->vy = -1;
                 delta_y = s_enemy->y - s_orpheus->y;
             }else{
                 delta_y = s_orpheus->y - s_enemy->y;
@@ -129,7 +133,8 @@ void e_management(Sprite* s_enemy) BANKED{
             if((delta_x << 1) < delta_y){
                 e_data->vy = e_data->vy*2;
                 e_data->vx = 0;
-            }else if((delta_y <<1) < delta_x){
+            }
+            if((delta_y <<1) < delta_x){
                 e_data->vx = e_data->vx*2;
                 e_data->vy = 0;
             }
@@ -175,6 +180,12 @@ void e_management(Sprite* s_enemy) BANKED{
             case WALK_LEFT:
             case WALK_RIGHT:
             case HIT:
+                UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+				if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
+                    if(e_data->e_state != HIT){
+                        e_turn(s_enemy, e_sprite_type);
+                    }else{e_destroy(s_enemy, e_sprite_type);}
+				}
                 e_data->tile_collision = TranslateSprite(THIS, e_data->vx, e_data->vy);
                 if(e_data->tile_collision){
                     e_check_tile_collision(s_enemy, e_sprite_type);
@@ -186,9 +197,7 @@ void e_management(Sprite* s_enemy) BANKED{
 
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
-    if(e_data->tile_collision){
-        e_turn(s_enemy, e_sprite_type);
-    }
+    e_turn(s_enemy, e_sprite_type);
 }
 
 void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{

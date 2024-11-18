@@ -25,7 +25,9 @@ const UINT8 a_orpheus_idledown[] = {2, 2, 3};
 const UINT8 a_orpheus_idleh[] = {4, 10,10,10,9};
 const UINT8 a_orpheus_walk_up[] = {4, 4,5,4,6};
 const UINT8 a_orpheus_walk_down[] = {4, 1,2,1,3};
+const UINT8 a_orpheus_walk_down_push[] = {2, 12,13};
 const UINT8 a_orpheus_walk_h[] = {4, 9, 10, 9, 8};
+const UINT8 a_orpheus_walk_h_push[] = {2, 7,11};
 const UINT8 a_orpheus_hit_down[] = {2, 0, 2};
 const UINT8 a_orpheus_hit_up[] = {2, 0, 5};
 const UINT8 a_orpheus_hit_h[] = {2, 0, 9};
@@ -66,7 +68,7 @@ extern UINT8 tutorial_go;
 extern UINT8 in_dialog;
 extern UINT8 has_lyre;
 extern MACROMAP prev_map;
-extern UINT8 current_map;
+extern MACROMAP current_map;
 extern UINT8 orpheus_haskey;
 extern MACROMAP solved_map;
 
@@ -171,23 +173,23 @@ void UPDATE() {
                 case WALK_LEFT: orhpeus_change_state(IDLE_LEFT); break;
                 case WALK_RIGHT: orhpeus_change_state(IDLE_RIGHT); break;
             }
+            return;
         }
-        if(tutorial_go == 0 || in_dialog){ return;}
+        if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if((orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10) && orpheus_info->ow_state != ATTACK){
+        if(orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10){
             if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
             else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
             else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
             else if(KEY_PRESSED(J_RIGHT)){new_state = WALK_RIGHT;}
             else if(KEY_RELEASED(J_DOWN)){new_state = IDLE_DOWN;}
-            else if(KEY_RELEASED(J_UP)){
-                new_state = IDLE_UP;}
+            else if(KEY_RELEASED(J_UP)){new_state = IDLE_UP;}
             else if(KEY_RELEASED(J_LEFT)){new_state = IDLE_LEFT;}
             else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
         }
     //ATTACK MANAGEMENT J_ATK
         if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != ATTACK){
-			if (KEY_TICKED(J_ATK)) { //countdown == orpheus_power_max && ){
+			if(KEY_TICKED(J_ATK)){ //countdown == orpheus_power_max && ){
                 if(has_lyre){
                     orpheus_state_before = orpheus_info->ow_state;
                     new_state = ATTACK;
@@ -334,7 +336,7 @@ void UPDATE() {
                     break;
                     case SpriteBlock:{
                         struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
-                        if(block_data->item_type == DOOR_KEY && orpheus_haskey == 1u){
+                        if(block_data->item_type == DOOR_KEY && orpheus_haskey == 1u && KEY_PRESSED(J_INT)){
                             SpriteManagerRemoveSprite(iospr);
                             solved_map = current_map;
 			                redraw_hud = 1;
@@ -347,6 +349,7 @@ void UPDATE() {
                             block_data->counter_verso = -1;                            
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_x++;
+                                SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
@@ -359,6 +362,7 @@ void UPDATE() {
                             block_data->counter_verso = 1;
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_x++;
+                                SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
@@ -372,6 +376,7 @@ void UPDATE() {
                             block_data->counter_verso = 1;
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_y++;
+                                SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
@@ -406,7 +411,6 @@ void orpheus_recharge() BANKED{
             countdown_step = countdown_step_currentmax;
 			countdown += countdown_verso;
 			if(countdown == orpheus_power_max){//RICHARGE COMPLETA
-				orpheus_info->charming = -1;
                 countdown_verso = 0;
                 orpheus_info->charming = 0;
 			}
@@ -452,12 +456,22 @@ void orpheus_update_position() BANKED{
             break;
         }
     }
+    //CHECK TILES OVERLAPPING    
+        UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+        switch(current_state){
+            case StateHades00:
+                if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
+                    orpheus_hitted = 0u;
+                    orhpeus_change_state(HIT);
+                }
+            break;
+        }
 }
 
 void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
-    if(orpheus_info->ow_state == arg_new_state){
+    if(orpheus_info->ow_state == arg_new_state && colliding_block == 0){
         return;
-    };
+    }
     switch(arg_new_state){
         case IDLE_DOWN:
             if(inertia_x == 0){

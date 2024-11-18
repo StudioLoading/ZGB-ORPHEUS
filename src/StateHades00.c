@@ -16,13 +16,15 @@
 IMPORT_MAP(maphades000);
 IMPORT_MAP(maphades001);
 IMPORT_MAP(maphades002);
+IMPORT_MAP(maphades003);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
 
 
 const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
-75,76,77,
+75,76,
 //here the hit tiles
+//84,85,86,87,
 //prev
 6,7,8,2,
 //next
@@ -86,12 +88,19 @@ void START() {
 						key_data->i_configured = 1u;
 					}
 				}break;
+				case HADES_THREE:{
+					s_door = SpriteManagerAdd(SpriteBlock, ((UINT16) 15u << 3) + 5u, ((UINT16) 3u << 3) + 1u);
+					struct ItemInfo* door_data = (struct ItemInfo*) s_door->custom_data;
+					door_data->item_type = DOOR_ENEMY;
+					door_data->i_configured = 1u;
+					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
+					e_configure(e_enemy, SKELETON);
+					SpriteManagerAdd(SpriteGhost, ((UINT16) 19u << 3), ((UINT16) 6u << 3));
+				}break;
 			}
 		}
 		//ENEMIES
 		/*
-		Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 28u << 3), ((UINT16) 60u << 3));
-		e_configure(e_enemy, SKELETON);
 		*/
 	//INITSCROLL
 		switch(current_map){
@@ -103,6 +112,9 @@ void START() {
 			break;
 			case HADES_TWO: 
 				InitScroll(BANK(maphades002), &maphades002, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_THREE: 
+				InitScroll(BANK(maphades003), &maphades003, coll_t_hades001, coll_s_hades001);
 			break;
 		}
 	//HUD

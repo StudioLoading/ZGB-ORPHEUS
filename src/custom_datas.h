@@ -56,7 +56,8 @@ typedef enum{
 	BLOCK_FIXED,
 	BUTTON,
 	DOOR,
-	DOOR_KEY
+	DOOR_KEY,
+	DOOR_ENEMY
 }ITEM_TYPE;
 
 struct ItemInfo{
@@ -72,7 +73,8 @@ typedef enum{
 	HADES_ZERO,
 	HADES_ONE,
 	HADES_TWO,
-	HADES_THREE
+	HADES_THREE,
+	HADES_FOUR
 }MACROMAP;
 
 struct LoadedItem{
