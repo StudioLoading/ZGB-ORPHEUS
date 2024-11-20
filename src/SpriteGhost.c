@@ -10,6 +10,8 @@
 
 #define COUNTER_MAX 8
 
+extern UINT16 idle_countdown;
+
 const UINT8 a_ghost[] = {2, 0,1};
 struct EnemyInfo* ghost_data = 0;
 
@@ -18,13 +20,16 @@ void START() {
     ghost_data = (struct EnemyInfo*) THIS->custom_data;
     ghost_data->e_state = WALK_RIGHT;
 	ghost_data->tile_collision = 0;
-	ghost_data->vx = -1;
 	ghost_data->vy = 0;
     ghost_data->wait = 0;
 	ghost_data->frmskip_wait = 0u;
 	ghost_data->e_configured = 1u;
-	ghost_data->frmskip = 6u;
-
+	ghost_data->frmskip = 4u;
+    THIS->lim_x = 20u;
+    if(_cpu != CGB_TYPE){
+        OBP1_REG = PAL_DEF(0, 0, 1, 3);
+        SPRITE_SET_PALETTE(THIS,1);
+    }
 }
 
 void UPDATE() {
@@ -50,4 +55,5 @@ void UPDATE() {
 }
 
 void DESTROY() {
+    idle_countdown = 800u;
 }

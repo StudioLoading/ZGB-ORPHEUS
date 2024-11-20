@@ -77,6 +77,15 @@ typedef enum{
 	HADES_FOUR
 }MACROMAP;
 
+typedef enum{
+	DEATH_NONE,
+	DEATH_SKULL,
+	DEATH_PUFF_LEFT_0,
+	DEATH_PUFF_LEFT_1,
+	DEATH_PUFF_RIGHT_0,
+	DEATH_PUFF_RIGHT_1,
+}DEATH_COMPONENT;
+
 struct LoadedItem{
 	ITEM_TYPE item_type;
 	UINT16 pos_x;

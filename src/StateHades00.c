@@ -50,6 +50,7 @@ extern UINT8 current_map;
 extern UINT8 orpheus_haskey;
 extern MACROMAP max_map;
 extern MACROMAP solved_map;
+extern UINT16 idle_countdown;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -95,7 +96,6 @@ void START() {
 					door_data->i_configured = 1u;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
 					e_configure(e_enemy, SKELETON);
-					SpriteManagerAdd(SpriteGhost, ((UINT16) 19u << 3), ((UINT16) 6u << 3));
 				}break;
 			}
 		}
@@ -163,6 +163,24 @@ void UPDATE() {
 		if(s_orpheus->y > ((UINT16) 16u << 3)){
 			if(init_block_button == 1){
 				init_block_button = 0;
+			}
+		}
+	//GHOSTS
+		if(current_map == HADES_THREE){
+			if(idle_countdown < 10 && idle_countdown > 0){
+				UINT16 ghost_spawnx = ((UINT16) 19u << 3);
+				INT8 ghost_vx = -1;
+				MirroMode ghost_mirror = NO_MIRROR;
+				if(s_orpheus->x > scroll_target->x){
+					ghost_spawnx = ((UINT16) 1u << 3);
+					ghost_vx = 1;
+					ghost_mirror = V_MIRROR;
+				}
+				Sprite* s_ghost = SpriteManagerAdd(SpriteGhost, ghost_spawnx, s_orpheus->y + 4u);
+				struct EnemyInfo* ghost_data = (struct EnemyInfo*) s_ghost->custom_data;
+				ghost_data->vx = ghost_vx;
+				s_ghost->mirror = ghost_mirror;
+				idle_countdown = 0;
 			}
 		}
 }

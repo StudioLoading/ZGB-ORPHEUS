@@ -32,6 +32,7 @@ const UINT8 a_orpheus_hit_down[] = {2, 0, 2};
 const UINT8 a_orpheus_hit_up[] = {2, 0, 5};
 const UINT8 a_orpheus_hit_h[] = {2, 0, 9};
 const UINT8 a_orpheus_push[] = {3, 7, 11,11};
+const UINT8 a_orpheus_dead[] = {1, 0};
 
 struct OrpheusInfo* orpheus_info;
 SPRITE_STATES new_state = 0;
@@ -57,6 +58,7 @@ UINT8 colliding_block = 0u;
 INT8 orpheus_starting_up = 0u;
 UINT8 inertia_x = 0u;
 UINT8 inertia_y = 0u;
+UINT16 idle_countdown = 800u; 
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -118,6 +120,10 @@ void START() {
     orpheus_starting_up = 40;
     inertia_x = 0u;
     inertia_y = 0u;
+    if(_cpu != CGB_TYPE){
+        OBP1_REG = PAL_DEF(0, 0, 1, 3);
+        SPRITE_SET_PALETTE(THIS,1);
+    }
 }
 
 void UPDATE() {
@@ -125,6 +131,12 @@ void UPDATE() {
         orpheus_starting_up--;
         return;
     }
+    //CHECK DEATH
+    if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
+        orhpeus_change_state(DIE);
+        return;
+    }
+    if(orpheus_info->ow_state == DIE) {return;}
     colliding_block = 0u;
     //CAMERA MOVEMENT ON CHANGING MAP
         if(a_walk_counter_y < 0){
@@ -228,6 +240,7 @@ void UPDATE() {
                     orpheus_update_position();
                 }
                 orpheus_recharge();
+                idle_countdown--;
             break;
             case WALK_DOWN: case WALK_UP:
             case WALK_LEFT: case WALK_RIGHT:
@@ -322,6 +335,7 @@ void UPDATE() {
                     case SpriteItem:
                         orpheus_pickup(iospr);
                     break;
+                    case SpriteGhost:
                     case SpriteSkeleton:
                         if(orpheus_info->ow_state != HIT){
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
@@ -469,8 +483,13 @@ void orpheus_update_position() BANKED{
 }
 
 void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
-    if(orpheus_info->ow_state == arg_new_state && colliding_block == 0){
+    if(orpheus_info->ow_state == arg_new_state && colliding_block == 0 && arg_new_state != DIE){
         return;
+    }
+    if(arg_new_state != IDLE_DOWN && arg_new_state != IDLE_UP
+        && arg_new_state != IDLE_RIGHT && arg_new_state != IDLE_LEFT
+        && idle_countdown != 800u){
+        idle_countdown = 800u;
     }
     switch(arg_new_state){
         case IDLE_DOWN:
@@ -572,6 +591,13 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
                 break;
             }
             countdown_step = countdown_step_currentmax;
+        break;
+        case DIE:
+            SetSpriteAnim(THIS, a_orpheus_dead, 1u);
+            Sprite* s_death_skull = SpriteManagerAdd(SpriteDeath, THIS->x, THIS->y);
+            struct EnemyInfo* dskull_data = (struct EnemyInfo*)s_death_skull->custom_data;
+            dskull_data->tile_collision = DEATH_SKULL;
+            dskull_data->e_configured = 1u;
         break;
     }
     orpheus_info->ow_state = arg_new_state;

@@ -15,6 +15,7 @@ _SPRITE_DMG(SpriteLyre, lyre)\
 _SPRITE_DMG(SpriteBlock, block)\
 _SPRITE_DMG(SpriteSkeleton, enemyskeletor)\
 _SPRITE_DMG(SpriteGhost, ghost)\
+_SPRITE_DMG(SpriteDeath, death)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"
