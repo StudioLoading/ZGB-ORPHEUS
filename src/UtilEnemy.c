@@ -19,8 +19,11 @@ extern Sprite* s_orpheus;
 extern UINT8 orpheus_attack_cooldown;
 extern SONG song_selection;
 extern MACROMAP current_map;
+extern UINT8 area_enemy_counter;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
 void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
@@ -81,7 +84,9 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
             }
         break;
         case DIE:
+            area_enemy_counter--;
             SpriteManagerRemoveSprite(s_enemy);
+            spawn_death_animation(s_enemy->x, s_enemy->y);
         break;
     }
     switch(e_data->e_state){
@@ -180,7 +185,10 @@ void e_management(Sprite* s_enemy) BANKED{
             case WALK_LEFT:
             case WALK_RIGHT:
             case HIT:
-                UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+                UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+4) >> 3);
+                if(tile == 0){
+                    tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
+                }
 				if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
                     if(e_data->e_state != HIT){
                         e_turn(s_enemy, e_sprite_type);
@@ -260,5 +268,11 @@ void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
 }
 
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
+    if(current_map == HADES_FOUR){
+        Sprite* s_key = SpriteManagerAdd(SpriteItem, s_enemy->x + 8u, s_enemy->y + 16u);
+        struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
+        key_data->item_type = KEY;
+        key_data->i_configured = 1u;
+    }
     e_change_state(s_enemy, DIE, e_sprite_type);
 }

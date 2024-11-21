@@ -73,6 +73,7 @@ extern MACROMAP prev_map;
 extern MACROMAP current_map;
 extern UINT8 orpheus_haskey;
 extern MACROMAP solved_map;
+extern INT8 restart_current_map;
 
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
@@ -83,7 +84,8 @@ extern void init_write_dialog(UINT8 nlines) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void go_to_next_map() BANKED;
 extern void go_to_prev_map() BANKED;
-
+extern void solve_current_map() BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_type) BANKED;
 
 void START() {
@@ -348,15 +350,11 @@ void UPDATE() {
                             orhpeus_change_state(HIT);
                         }
                     break;
+                    case SpriteGate:
                     case SpriteBlock:{
+                        inertia_x = 0;
+                        inertia_y = 0;
                         struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
-                        if(block_data->item_type == DOOR_KEY && orpheus_haskey == 1u && KEY_PRESSED(J_INT)){
-                            SpriteManagerRemoveSprite(iospr);
-                            solved_map = current_map;
-			                redraw_hud = 1;
-                            orpheus_haskey = 0;
-                            return;
-                        }
                         INT8 deltax = THIS->x - iospr->x;
                         INT8 deltay = THIS->y - iospr->y;
                         if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){
@@ -461,10 +459,17 @@ void orpheus_update_position() BANKED{
                     case 8u:
                         go_to_prev_map();
                     break;
-                    case 44u:
-                    case 45u:
-                    case 46u:
-                        go_to_next_map();
+                    case 88u: case 90u: case 92u:
+                    case 94u: case 96u: case 98u:
+                    case 100u: case 102u: case 104u:
+                        if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
+                            solve_current_map();
+                            redraw_hud = 1;
+                            orpheus_haskey = 0;
+                        }
+                        if(solved_map >= current_map){
+                            go_to_next_map();
+                        }
                     break;
                 }
             break;
@@ -593,11 +598,10 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
             countdown_step = countdown_step_currentmax;
         break;
         case DIE:
+            solved_map = current_map - 1;
+            restart_current_map = 1;
             SetSpriteAnim(THIS, a_orpheus_dead, 1u);
-            Sprite* s_death_skull = SpriteManagerAdd(SpriteDeath, THIS->x, THIS->y);
-            struct EnemyInfo* dskull_data = (struct EnemyInfo*)s_death_skull->custom_data;
-            dskull_data->tile_collision = DEATH_SKULL;
-            dskull_data->e_configured = 1u;
+            spawn_death_animation(THIS->x, THIS->y);
         break;
     }
     orpheus_info->ow_state = arg_new_state;

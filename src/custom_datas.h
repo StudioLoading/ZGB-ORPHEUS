@@ -28,7 +28,8 @@ struct OrpheusInfo{
 
 typedef enum{
 	SKELETON,
-	SKELETON_SHIELD
+	SKELETON_SHIELD,
+	SKELETON_KEY
 }ENEMY_TYPE;
 
 struct EnemyInfo{
@@ -69,12 +70,15 @@ struct ItemInfo{
 };
 
 typedef enum{
+	NONE,
 	TUTORIAL,
 	HADES_ZERO,
 	HADES_ONE,
 	HADES_TWO,
 	HADES_THREE,
-	HADES_FOUR
+	HADES_FOUR,
+	BOSS_CHARON,
+	END_DEMO
 }MACROMAP;
 
 typedef enum{

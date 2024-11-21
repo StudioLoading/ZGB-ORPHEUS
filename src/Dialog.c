@@ -64,6 +64,12 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d6, EMPTY_STRING_20, 21);
             return 6u;
         break;
+        case PUSH_BUTTON:
+            memcpy(d1, "I CAN OPEN THE GATE ", 21);
+            memcpy(d2, "BY STANDING OVER    ", 21);
+            memcpy(d3, "THAT BUTTON.        ", 21);
+            return 3u;
+        break;
         case PRESS_INTERACT:
             memcpy(d1, "PRESS THE INTERACT  ", 21);
             memcpy(d2, "BUTTON TO GET THE   ", 21);
@@ -74,7 +80,10 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d1, "I AM ABLE TO PUSH   ", 21);
             memcpy(d2, "HEAVY BLOCKS  (PRESS", 21);
             memcpy(d3, "INTERACT BUTTON)    ", 21);
-            return 3u;
+            memcpy(d4, "TO OPEN THIS GATE I ", 21);
+            memcpy(d5, "NEED TO PUSH THAT   ", 21);
+            memcpy(d6, "BLOCK ON THE BUTTON.", 21);
+            return 6u;
         break;
         case HADES_ENTRANCE:
             memcpy(d1, "HERE I AM... THE    ", 21);
@@ -83,6 +92,15 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d4, "EURYDICE! NO MATTER ", 21);
             memcpy(d5, "HOW MANY CHALLENGES ", 21);
             memcpy(d6, "MAY I FACE!         ", 21);
+            return 6u;
+        break;
+        case TUTORIAL_PLAY:
+            memcpy(d1, "BY PLAYING MY LYRE  ", 21);
+            memcpy(d2, "I WILL MOVE MY ENEMI", 21);
+            memcpy(d3, "ES AROUND... LET ME ", 21);
+            memcpy(d4, "PUSH THAT SKELETON  ", 21);
+            memcpy(d5, "INTO THOSE FLAMES!  ", 21);
+            memcpy(d6, EMPTY_STRING_20, 21);
             return 6u;
         break;
     }

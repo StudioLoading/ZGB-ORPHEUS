@@ -20,16 +20,6 @@ Sprite* s_puff_right_1 = 0;
 UINT8 init_puffs = 0u;
 
 void START() {
-    /*
-	SPRITE_STATES e_state;
-	UINT8 tile_collision;
-	INT8 vx;
-	INT8 vy;
-    UINT8 wait;
-	UINT8 frmskip_wait;
-	UINT8 e_configured;
-	UINT8 frmskip;
-    */
     struct EnemyInfo* d_data = (struct EnemyInfo*) THIS->custom_data;
     d_data->frmskip = 0;
     d_data->frmskip_wait = 3;
@@ -42,19 +32,20 @@ void START() {
         struct EnemyInfo* pl0_data = (struct EnemyInfo*)s_puff_left_0->custom_data;
         pl0_data->tile_collision = DEATH_PUFF_LEFT_0;
         pl0_data->e_configured = 1u;
-        s_puff_left_1 = SpriteManagerAdd(SpriteDeath, THIS->x-4, THIS->y - 4);
-        struct EnemyInfo* pl1_data = (struct EnemyInfo*)s_puff_left_1->custom_data;
-        pl1_data->tile_collision = DEATH_PUFF_LEFT_1;
-        pl1_data->e_configured = 1u;
         s_puff_right_0 = SpriteManagerAdd(SpriteDeath, THIS->x+4, THIS->y);
         struct EnemyInfo* pr0_data = (struct EnemyInfo*)s_puff_right_0->custom_data;
         pr0_data->tile_collision = DEATH_PUFF_RIGHT_0;
         pr0_data->e_configured = 1u;
-        s_puff_right_1 = SpriteManagerAdd(SpriteDeath, THIS->x+4, THIS->y - 4);
-        struct EnemyInfo* pr1_data = (struct EnemyInfo*)s_puff_right_1->custom_data;
-        pr1_data->tile_collision = DEATH_PUFF_RIGHT_1;
-        pr1_data->e_configured = 1u;
-    
+        if(_cpu == CGB_TYPE){
+            s_puff_right_1 = SpriteManagerAdd(SpriteDeath, THIS->x+4, THIS->y - 4);
+            struct EnemyInfo* pr1_data = (struct EnemyInfo*)s_puff_right_1->custom_data;
+            pr1_data->tile_collision = DEATH_PUFF_RIGHT_1;
+            pr1_data->e_configured = 1u;
+            s_puff_left_1 = SpriteManagerAdd(SpriteDeath, THIS->x-4, THIS->y - 4);
+            struct EnemyInfo* pl1_data = (struct EnemyInfo*)s_puff_left_1->custom_data;
+            pl1_data->tile_collision = DEATH_PUFF_LEFT_1;
+            pl1_data->e_configured = 1u;
+        }    
     }
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);

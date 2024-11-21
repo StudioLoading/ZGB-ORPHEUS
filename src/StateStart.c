@@ -13,24 +13,26 @@
 #define SPAWNY_HADES_TUTORIAL 11
 #define SPAWNX_HADES003_IN 4
 #define SPAWNY_HADES003_IN 4
+#define SPAWNX_BOSSCHARON_IN 9
+#define SPAWNY_BOSSCHARON_IN 15
 
 IMPORT_MAP(inbetweenmap);
 
 UINT8 tutorial_go = 1u; //TODO 0
-UINT8 tutorial_hades_entrance = 1u; // TODO 0
+UINT8 tutorial_hades_entrance = 0u;//1u; // TODO 0
 UINT8 tutorial_get_lyre = 1u; // TODO 0
 
-MACROMAP solved_map = HADES_TWO;
-MACROMAP current_map = HADES_THREE; //TODO TUTORIAL
-MACROMAP next_map = HADES_FOUR; //TODO HADES_ZERO
-MACROMAP prev_map = HADES_TWO; //TODO TUTORIAL
-MACROMAP max_map = HADES_TWO;
-UINT8 has_lyre = 1u;//TODO 0
+MACROMAP solved_map = NONE; //HADES_THREE; //TODO HADES_ZERO
+MACROMAP current_map = TUTORIAL; //HADES_FOUR; //TODO TUTORIAL
+MACROMAP next_map = HADES_ZERO; //HADES_FOUR; //TODO HADES_ZERO
+MACROMAP prev_map = NONE; //HADES_THREE; //TODO TUTORIAL
+MACROMAP max_map = TUTORIAL; //HADES_FOUR; //TODO TUTORIAL
+UINT8 has_lyre = 1; //TODO 0
 
-UINT16 orpheus_spawnx = ((UINT16) SPAWNX_HADES003_IN << 3);//((UINT16) 28u << 3) - 4u;
-UINT16 orpheus_spawny = ((UINT16) SPAWNX_HADES003_IN << 3);//((UINT16) 79u << 3);
-UINT16 camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3); //todo 30
-UINT16 camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4u; //todo 64
+UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;//((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 3) - 4u;
+UINT16 orpheus_spawny = ((UINT16) 79u << 3);//((UINT16) SPAWNY_BOSSCHARON_IN << 3);//((UINT16) 79u << 3);
+UINT16 camera_spawnx = ((UINT16) 30 << 3);//((UINT16) SPAWNX_HADES_TUTORIAL << 3); //todo 30
+UINT16 camera_spawny = ((UINT16) 64 << 3) + 4u;//((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4u; //todo 64
 
 extern UINT8 current_map;
 
@@ -44,7 +46,11 @@ void START(){
         case HADES_ONE:
         case HADES_TWO:
         case HADES_THREE:
+        case HADES_FOUR:
             SetState(StateHades00);
+        break;
+        case BOSS_CHARON:
+            SetState(StateBoss00);
         break;
     }
 

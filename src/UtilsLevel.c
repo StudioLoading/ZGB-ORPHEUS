@@ -37,11 +37,17 @@
 #define SPAWNX_HADES002_IN 8
 #define SPAWNY_HADES002_IN 3
 #define SPAWNX_HADES002_OUT 5
-#define SPAWNY_HADES002_OUT 12
+#define SPAWNY_HADES002_OUT 13
 #define SPAWNX_HADES003_IN 4
 #define SPAWNY_HADES003_IN 4
-#define SPAWNX_HADES003_OUT 4
-#define SPAWNY_HADES003_OUT 15
+#define SPAWNX_HADES003_OUT 15
+#define SPAWNY_HADES003_OUT 3
+#define SPAWNX_HADES004_IN 4
+#define SPAWNY_HADES004_IN 4
+#define SPAWNX_HADES004_OUT 6
+#define SPAWNY_HADES004_OUT 13
+#define SPAWNX_BOSSCHARON_IN 9
+#define SPAWNY_BOSSCHARON_IN 15
 
 Sprite* s_camera;
 Sprite* s_orpheus;
@@ -63,12 +69,15 @@ UINT8 orpheus_haskey = 0u;
 UINT8 in_dialog = 0u;
 UINT8 init_block_button = 0u;
 UINT8 anim_counter = 0u;
+UINT8 area_enemy_counter = 0u;
+UINT8 changing_map = 0u;
+INT8 restart_current_map = 0;
 
 extern UINT8 has_lyre;
-extern UINT16 orpheus_spawnx;/// = ((UINT16) 28u << 3) - 4u;
-extern UINT16 orpheus_spawny;// = ((UINT16) 79u << 3);
-extern UINT16 camera_spawnx;// = ((UINT16) 30u << 3);
-extern UINT16 camera_spawny;// = ((UINT16) 64u << 3);
+extern UINT16 orpheus_spawnx;
+extern UINT16 orpheus_spawny;
+extern UINT16 camera_spawnx;
+extern UINT16 camera_spawny;
 extern MACROMAP solved_map;
 extern MACROMAP current_map;
 extern MACROMAP next_map;
@@ -97,6 +106,8 @@ void init_write_dialog(UINT8 nlines) BANKED;
 void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void go_to_next_map() BANKED;
+void solve_current_map() BANKED;
+void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
@@ -123,9 +134,21 @@ void level_common_start() BANKED{
 		move_camera_down = 0u;
 		move_camera_left = 0u;
 		init_block_button = 0;
+		changing_map = 0u;
+		restart_current_map = 0;
+		anim_counter = 0u;
 }
 
 void level_common_update_play() BANKED{
+	//restart current map
+		if(restart_current_map > 0){
+			restart_current_map++;
+			if(restart_current_map >= 120){
+				orpheus_hp = 4;
+				SetState(StateHades00);
+			}
+			return;
+		}
 	// move camera
 		if(move_camera_up || move_camera_down || move_camera_left || move_camera_right){
 			move_camera();
@@ -170,18 +193,28 @@ void level_common_update_play() BANKED{
 			UpdateHUD();
 		}
 	// tiles animation
-		anim_counter++;
-		if(anim_counter >= ANIM_COUNTER_MAX){
-			anim_counter = 0u;
+		if(current_map > TUTORIAL && current_map < BOSS_CHARON){
+			anim_counter++;
+			if(anim_counter >= ANIM_COUNTER_MAX){
+				anim_counter = 0u;
+			}
+			switch(anim_counter){
+				case 0u: Anim_0();
+				break;
+				case 8u: Anim_1();
+				break;
+				case 16u: Anim_2();
+				break;
+				case 24u: Anim_3();
+				break;
+			}
 		}
-		switch(anim_counter){
-			case 0u: Anim_0();
-			break;
-			case 8u: Anim_1();
-			break;
-			case 16u: Anim_2();
-			break;
-			case 24u: Anim_3();
+	//check enemy counter
+		switch(current_map){
+			case HADES_THREE:
+				if(area_enemy_counter == 0u && changing_map == 0u){
+					solve_current_map();
+				}
 			break;
 		}
 	// log
@@ -238,10 +271,10 @@ void UpdateHUD() BANKED{
 		for(idx = 0; idx <= 19; idx++){
 			UPDATE_HUD_TILE(idx,0,0);
 		}
-		UPDATE_HUD_TILE(0,1,52);
-		UPDATE_HUD_TILE(0,2,53);
+		UPDATE_HUD_TILE(0,1,25);
+		UPDATE_HUD_TILE(0,2,26);
 		UPDATE_HUD_TILE(5,1,47);
-		UPDATE_HUD_TILE(5,2,54);
+		UPDATE_HUD_TILE(5,2,52);
 		UPDATE_HUD_TILE(6,1,0);
 		UPDATE_HUD_TILE(6,2,0);
 		UPDATE_HUD_TILE(13,1,25);
@@ -464,7 +497,7 @@ void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
     draw_button(x, y, t);
 	if(button_pressed == 0){
 		button_pressed = 1;
-		solved_map = current_map;
+		solve_current_map();
 	}else if(button_pressed == 1){
 		button_pressed = 0;
 	}
@@ -478,6 +511,7 @@ void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
 }
 
 void go_to_next_map() BANKED{
+	changing_map = 1u;
 	SpriteManagerRemoveSprite(s_orpheus);
 	if(next_map > max_map){
 		max_map = next_map;
@@ -492,6 +526,7 @@ void go_to_next_map() BANKED{
 	current_map = next_map;
 	switch(next_map){
 		case HADES_ZERO:
+			solved_map = current_map;
 			prev_map = TUTORIAL;
 			next_map = HADES_ONE;
 			camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3);
@@ -519,17 +554,36 @@ void go_to_next_map() BANKED{
 		break;
 		case HADES_THREE:
 			prev_map = HADES_TWO;
-			next_map = HADES_THREE;
+			next_map = HADES_FOUR;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES003_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES003_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
+			//a_walk_counter_y = 16;
 			next_state = StateHades00;
+		break;
+		case HADES_FOUR:
+			prev_map = HADES_THREE;
+			next_map = BOSS_CHARON;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			new_state = IDLE_DOWN;
+			//a_walk_counter_y = 16;
+			next_state = StateHades00;
+		break;
+		case BOSS_CHARON:
+			prev_map = HADES_FOUR;
+			next_map = END_DEMO;
+			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;
+			next_state = StateBoss00;
+			a_walk_counter_y = -16;
 		break;
 	}
 	SetState(next_state);
 }
 
 void go_to_prev_map() BANKED{
+	changing_map = 1u;
 	SpriteManagerRemoveSprite(s_orpheus);
 	current_map = prev_map;
 	UINT8 next_state = StateTutorial;
@@ -557,14 +611,15 @@ void go_to_prev_map() BANKED{
 			prev_map = HADES_ZERO;
 			next_map = HADES_TWO;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES001_OUT << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES001_OUT << 3) + 2u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES001_OUT << 3) + 4u;
 			next_state = StateHades00;
 		break;
 		case HADES_TWO:
 			prev_map = HADES_ONE;
 			next_map = HADES_THREE;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_OUT << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES002_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES002_OUT << 3);
+			//a_walk_counter_y = 16;
 			next_state = StateHades00;
 		break;
 		case HADES_THREE:
@@ -574,6 +629,25 @@ void go_to_prev_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_HADES003_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
+		case HADES_FOUR:
+			prev_map = HADES_THREE;
+			next_map = HADES_FOUR;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
 	}
 	SetState(next_state);
+}
+
+void solve_current_map() BANKED{
+	solved_map = current_map;
+	Anim_Opendoors();
+}
+
+void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED{
+	Sprite* s_death_skull = SpriteManagerAdd(SpriteDeath, spawnx, spawny);
+	struct EnemyInfo* dskull_data = (struct EnemyInfo*)s_death_skull->custom_data;
+	dskull_data->tile_collision = DEATH_SKULL;
+	dskull_data->e_configured = 1u;
 }

@@ -27,10 +27,9 @@ const UINT8 coll_tiles_intro[] = {4u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23
 0};
 const UINT8 coll_surface_intro[] = {1u, 66u, 67u,69u,70u, 97u, 98u, 0};
 
-Sprite* s_block_00 = 0;
-Sprite* s_block_01 = 0;
-Sprite* s_door = 0;
-Sprite* s_key = 0;
+UINT8 gate_pushed = 0u;
+UINT8 tutorial_push_button = 0u;
+Sprite* s_gate = 0;
 
 extern UINT8 tutorial_go;
 extern UINT8 tutorial_hades_entrance;
@@ -42,6 +41,8 @@ extern UINT8 button_pressed;
 extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;
 extern UINT8 has_lyre;
+extern MACROMAP solved_map;
+extern MACROMAP current_map;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -50,6 +51,8 @@ extern void init_write_dialog(UINT8 nlines) BANKED;
 extern void write_dialog() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+extern void solve_current_map() BANKED;
 
 void START() {
 	level_common_start();
@@ -62,14 +65,15 @@ void START() {
 			heart_data->item_type = HEART;
 			heart_data->i_configured = 1;
 		}
+		if(gate_pushed == 1u){
+			s_gate = SpriteManagerAdd(SpriteGate, ((UINT16) 28u << 3), ((UINT16) 21u << 3));
+			draw_button(32u, 24u, 124u);
+		}else{
+			s_gate = SpriteManagerAdd(SpriteGate, ((UINT16) 30u << 3), ((UINT16) 21u << 3));
+		}
 		if(has_lyre == 0){
 			SpriteManagerAdd(SpriteLyre, ((UINT16) 7u << 3), ((UINT16) 39u << 3) +1);
 		}
-		//ENEMIES
-		/*
-		Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 28u << 3), ((UINT16) 60u << 3));
-		e_configure(e_enemy, SKELETON);
-		*/
 	//INITSCROLL
 		InitScroll(BANK(omapintro), &omapintro, coll_tiles_intro, coll_surface_intro);
 	//HUD
@@ -79,6 +83,7 @@ void START() {
 		if(tutorial_go == 0){
 			a_walk_counter_y = -108;
 		}
+	
 }
 
 void UPDATE() {
@@ -99,14 +104,36 @@ void UPDATE() {
 		level_common_update_play();
 	}
 	//DIALOGS INTERRUPTS
-		if(s_orpheus->y < ((UINT16) 29u << 3) && has_lyre == 0){
-			s_orpheus->y += 4u;
-			init_write_dialog(prepare_dialog(MISSING_LYRE));
+		if(s_orpheus->y < ((UINT16) 29u << 3)){
+			if(has_lyre == 0){
+				s_orpheus->y += 4u;
+				init_write_dialog(prepare_dialog(MISSING_LYRE));
+			}else if(gate_pushed == 0 && tutorial_push_button == 0u){
+				s_orpheus->y -= 2u;
+				tutorial_push_button = 1u;
+				init_write_dialog(prepare_dialog(PUSH_BUTTON));
+			}
 		}
 		if(s_orpheus->y < ((UINT16) 8u << 3)){
 			if(tutorial_hades_entrance == 0){
 				init_write_dialog(prepare_dialog(HADES_ENTRANCE));
 				tutorial_hades_entrance = 1u;
+			}
+		}
+	//GATES
+		if(button_pressed == 0u){
+			UINT8 tile = GetScrollTile((s_orpheus->x + 4) >> 3, (s_orpheus->y+16) >> 3);
+			if(tile == 120u || tile == 121u || tile == 122u || tile == 123u){
+				button_pressed = 1u;
+				gate_pushed = 1u;
+				struct EnemyInfo* g_data = (struct EnemyInfo*) s_gate->custom_data;
+				g_data->e_configured = 1u;
+				solved_map = current_map;
+				draw_button(32u, 24u, 124u);
+			}
+		}else{
+			if(scroll_target->y > ((UINT16) 25u << 3) && scroll_target->y < ((UINT16) 35u << 3)){
+				draw_button(32u, 24u, 124u);
 			}
 		}
 }

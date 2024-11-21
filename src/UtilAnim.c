@@ -29,3 +29,20 @@ void Anim_2() BANKED{
 void Anim_3() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002ta3, BANK(maphades002ta3));//fire
 }
+
+void Anim_Opendoors() BANKED{
+	set_banked_bkg_data(88u, 18u, &maphades002ta1, BANK(maphades002ta1));//exit door tiles of all types
+}
+
+void Anim_Charon_0() BANKED{
+	set_banked_bkg_data(106u, 4u, &maphades002t, BANK(maphades002t));//river
+}
+void Anim_Charon_1() BANKED{
+	set_banked_bkg_data(106u, 4u, &maphades002ta1, BANK(maphades002ta1));//river
+}
+void Anim_Charon_2() BANKED{
+	set_banked_bkg_data(106u, 4u, &maphades002ta2, BANK(maphades002ta2));//river
+}
+void Anim_Charon_3() BANKED{
+	set_banked_bkg_data(106u, 4u, &maphades002ta3, BANK(maphades002ta3));//river
+}
