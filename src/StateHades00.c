@@ -23,7 +23,8 @@ IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
 
 
-const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
+const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,
+60, 61,63,64,66,
 75,76, 107, 108, 111, 112,
 //here the hit tiles
 //84,85,86,87,

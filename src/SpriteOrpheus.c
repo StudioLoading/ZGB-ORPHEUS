@@ -202,7 +202,7 @@ void UPDATE() {
             else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
         }
     //ATTACK MANAGEMENT J_ATK
-        if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != ATTACK){
+        if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != ATTACK && countdown == orpheus_power_max){
 			if(KEY_TICKED(J_ATK)){ //countdown == orpheus_power_max && ){
                 if(has_lyre){
                     orpheus_state_before = orpheus_info->ow_state;
@@ -442,9 +442,6 @@ void orpheus_update_position() BANKED{
         switch(current_state){
             case StateTutorial:
                 switch(orpheus_info->tile_collision){
-                    case 38u: //spini
-                        orhpeus_change_state(HIT);
-                    break;
                     case 11u:
                     case 12u:
                         go_to_next_map();
@@ -475,7 +472,7 @@ void orpheus_update_position() BANKED{
             break;
         }
     }
-    //CHECK TILES OVERLAPPING    
+    //CHECK TILES OVERLAPPING
         UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
         switch(current_state){
             case StateHades00:

@@ -8,6 +8,11 @@
 
 #include "custom_datas.h"
 
+extern Sprite* s_gate_other;
+extern UINT8 gate_pushed;
+
+UINT8 other_gate_created = 0u;
+
 void START() {
     THIS->lim_x = 1000u;
     THIS->lim_y = 1000u;
@@ -17,8 +22,25 @@ void START() {
     g_data->vx = 0;
     g_data->vy = 0;
     g_data->tile_collision = 0;
-    g_data->wait = 16;
+    g_data->wait = 14;
     g_data->e_configured = 0;
+    if(other_gate_created == 0u){
+        other_gate_created = 1u;
+        s_gate_other = SpriteManagerAdd(SpriteGate, ((UINT16) 31u << 3) -4, ((UINT16) 21u << 3) +3);
+        s_gate_other->mirror = V_MIRROR;
+        struct EnemyInfo* g_data_other = (struct EnemyInfo*) s_gate_other->custom_data;
+        g_data_other->frmskip = 0;
+        g_data_other->frmskip_wait = 12;
+        g_data_other->vx = 0;
+        g_data_other->vy = 0;
+        g_data_other->tile_collision = 0;
+        g_data_other->wait = 14;
+        g_data_other->e_configured = 0;
+		if(gate_pushed == 1u){
+            s_gate_other->x = ((UINT16) 32u << 3);
+            g_data_other->e_configured = 3;
+        }
+    }
 }
 
 void UPDATE() {
@@ -34,7 +56,19 @@ void UPDATE() {
             g_data->vy++;
             THIS->x--;
             if( g_data->vy >= g_data->wait){
-                g_data->e_configured = 2u;
+                g_data->e_configured = 3u;
+            }
+        }break;
+        case 2u:{
+            g_data->frmskip++; 
+            if(g_data->frmskip < g_data->frmskip_wait){
+                return;
+            }
+            g_data->frmskip = 0u;
+            g_data->vy++;
+            THIS->x++;
+            if( g_data->vy >= g_data->wait){
+                g_data->e_configured = 0u;
             }
         }break;
     }

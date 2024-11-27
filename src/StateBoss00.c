@@ -13,7 +13,7 @@
 #include "Dialog.h"
 #include "UtilAnim.h"
 
-#define ANIM_COUNTER_MAX 32
+#define ANIM_COUNTER_MAX 48
 
 IMPORT_MAP(maphades005);
 IMPORT_MAP(hudmap);
@@ -148,13 +148,13 @@ void UPDATE() {
 	*/
 	//ANIMS
 		anim_counter++;
-		if(anim_counter >= ANIM_COUNTER_MAX){
+		if(anim_counter >= (ANIM_COUNTER_MAX + 48u)){
 			anim_counter = 0u;
 		}
 		switch(anim_counter){
 			case 0u: Anim_Charon_0(); break;
-			case 8u: Anim_Charon_1(); break;
-			case 16u: Anim_Charon_2(); break;
-			case 24u: Anim_Charon_3(); break;
+			case 16u: Anim_Charon_1(); break;
+			case 32u: Anim_Charon_2(); break;
+			case 48u: Anim_Charon_3(); break;
 		}
 }

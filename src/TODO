@@ -1,9 +1,6 @@
 
-- dialogo non pausa al termine della terza riga
-- cancello con bottone a peso-Orpheus su tutorial
-
+- entrance charon
 - caronte
-
 
 - COSA FACCIAMO QUANDO ORPHEUS PERDE TUTTI I CUORI?
     ritorno all'inizio della macroarea
@@ -13,6 +10,7 @@ POST DEMO
 - FADE OUT IN BLACK
     posso farlo a mano andando a pistolare le palette, muovendo progressivamente i colori in nero dal DARKER al LIGHTER tutto valorizzandoli a DARKER
 - SCHERMATA DI SCELTA TASTI: J_A e J_B devon essere J_ATK J_INT
+- dialogo non pausa al termine della terza riga: si potrebbe mettere in pausa le invocazioni della write_dialog() e pulire lo schermo solo poco prima di inizializzarlo per scrivere riga 0 delle tre
 
 
 

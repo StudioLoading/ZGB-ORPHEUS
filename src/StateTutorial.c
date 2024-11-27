@@ -21,7 +21,6 @@ const UINT8 coll_tiles_intro[] = {4u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23
 82u, 87u, 88u, 89u, 90u, 91u, 92u, 93u, 94u, 95u, 96u, 106u,
 108u, 109u, 110, 111, 114u,115u,
 //here the hit tiles
-38u,
 //exit
 11u, 12u,
 0};
@@ -30,6 +29,7 @@ const UINT8 coll_surface_intro[] = {1u, 66u, 67u,69u,70u, 97u, 98u, 0};
 UINT8 gate_pushed = 0u;
 UINT8 tutorial_push_button = 0u;
 Sprite* s_gate = 0;
+Sprite* s_gate_other = 0;
 
 extern UINT8 tutorial_go;
 extern UINT8 tutorial_hades_entrance;
@@ -43,6 +43,7 @@ extern UINT16 orpheus_spawny;
 extern UINT8 has_lyre;
 extern MACROMAP solved_map;
 extern MACROMAP current_map;
+extern UINT8 other_gate_created;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -65,11 +66,12 @@ void START() {
 			heart_data->item_type = HEART;
 			heart_data->i_configured = 1;
 		}
+		other_gate_created = 0u;
 		if(gate_pushed == 1u){
-			s_gate = SpriteManagerAdd(SpriteGate, ((UINT16) 28u << 3), ((UINT16) 21u << 3));
+			s_gate = SpriteManagerAdd(SpriteGate, ((UINT16) 28u << 3), ((UINT16) 21u << 3)+3);
 			draw_button(32u, 24u, 124u);
 		}else{
-			s_gate = SpriteManagerAdd(SpriteGate, ((UINT16) 30u << 3), ((UINT16) 21u << 3));
+			s_gate = SpriteManagerAdd(SpriteGate, ((UINT16) 29u << 3) + 3u, ((UINT16) 21u << 3) +3);
 		}
 		if(has_lyre == 0){
 			SpriteManagerAdd(SpriteLyre, ((UINT16) 7u << 3), ((UINT16) 39u << 3) +1);
@@ -121,13 +123,15 @@ void UPDATE() {
 			}
 		}
 	//GATES
-		if(button_pressed == 0u){
-			UINT8 tile = GetScrollTile((s_orpheus->x + 4) >> 3, (s_orpheus->y+16) >> 3);
+		if(button_pressed == 0u && gate_pushed == 0){
+			UINT8 tile = GetScrollTile((s_orpheus->x + 4) >> 3, (s_orpheus->y+12) >> 3);
 			if(tile == 120u || tile == 121u || tile == 122u || tile == 123u){
 				button_pressed = 1u;
 				gate_pushed = 1u;
 				struct EnemyInfo* g_data = (struct EnemyInfo*) s_gate->custom_data;
 				g_data->e_configured = 1u;
+				struct EnemyInfo* g_data_other = (struct EnemyInfo*) s_gate_other->custom_data;
+				g_data_other->e_configured = 2u;
 				solved_map = current_map;
 				draw_button(32u, 24u, 124u);
 			}

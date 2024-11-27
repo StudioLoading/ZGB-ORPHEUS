@@ -35,14 +35,14 @@ void Anim_Opendoors() BANKED{
 }
 
 void Anim_Charon_0() BANKED{
-	set_banked_bkg_data(106u, 4u, &maphades002t, BANK(maphades002t));//river
+	set_banked_bkg_data(106u, 7u, &maphades002t, BANK(maphades002t));//river
 }
 void Anim_Charon_1() BANKED{
-	set_banked_bkg_data(106u, 4u, &maphades002ta1, BANK(maphades002ta1));//river
+	set_banked_bkg_data(106u, 7u, &maphades002ta1, BANK(maphades002ta1));//river
 }
 void Anim_Charon_2() BANKED{
-	set_banked_bkg_data(106u, 4u, &maphades002ta2, BANK(maphades002ta2));//river
+	set_banked_bkg_data(106u, 7u, &maphades002ta2, BANK(maphades002ta2));//river
 }
 void Anim_Charon_3() BANKED{
-	set_banked_bkg_data(106u, 4u, &maphades002ta3, BANK(maphades002ta3));//river
+	set_banked_bkg_data(106u, 7u, &maphades002ta3, BANK(maphades002ta3));//river
 }
