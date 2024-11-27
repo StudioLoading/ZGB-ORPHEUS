@@ -2,6 +2,7 @@
 #define ZGBMAIN_H
 
 #define STATES \
+_STATE(StateCredit)\
 _STATE(StateStart)\
 _STATE(StateTutorial)\
 _STATE(StateHades00)\
@@ -9,6 +10,7 @@ _STATE(StateBoss00)\
 STATE_DEF_END
 
 #define SPRITES \
+_SPRITE_DMG(SpriteNote, note)\
 _SPRITE_DMG(SpriteOrpheus, orpheus)\
 _SPRITE_DMG(SpriteCamera, camera)\
 _SPRITE_DMG(SpriteItem, item)\

@@ -49,7 +49,7 @@ MACROMAP current_map = TUTORIAL;
 MACROMAP next_map = HADES_ZERO;
 MACROMAP prev_map = NONE;
 MACROMAP max_map = TUTORIAL;
-UINT8 has_lyre = 1; //todo 0
+UINT8 has_lyre = 0;
 
 UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
 UINT16 orpheus_spawny = ((UINT16) 79u << 3);

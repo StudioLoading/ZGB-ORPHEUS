@@ -18,7 +18,8 @@
 			"print.h": "c",
 			"sgb.h": "c",
 			"bankmanager.h": "c",
-			"string.h": "c"
+			"string.h": "c",
+			"math.h": "c"
 		}
 	}
 }
