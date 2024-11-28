@@ -7,43 +7,87 @@
 #include "Scroll.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
+#include "string.h"
+#include "Print.h"
 
 #include "custom_datas.h"
 
 #define NOTE_COUNT_MAX 80
+#define PRESSSTART_COUNT_MAX 20
 
 IMPORT_MAP(mapcredit0);
+IMPORT_MAP(mapcredit1);
+IMPORT_MAP(maptitlescreen);
+IMPORT_TILES(font);
 
 UINT8 note_countdown = 0;
 UINT8 note_configured = 1;
 UINT8 rndm = 0u;
-
+UINT8 credit_page_counter = 0u;
 
 void START(){
-	InitScroll(BANK(mapcredit0), &mapcredit0, 0, 0);
-    Sprite* s_note0 = SpriteManagerAdd(SpriteNote, 0, 40u);
-    struct EnemyInfo* note_data = (struct EnemyInfo*) s_note0->custom_data;
-    note_data->e_configured = 3;
+    switch(credit_page_counter){
+        case 0u:
+            Sprite* s_note0 = SpriteManagerAdd(SpriteNote, 0, 40u);
+            struct EnemyInfo* note_data = (struct EnemyInfo*) s_note0->custom_data;
+            note_data->e_configured = 3;
+            InitScroll(BANK(mapcredit0), &mapcredit0, 0, 0);
+        break;
+        case 1u:
+            InitScroll(BANK(mapcredit1), &mapcredit1, 0, 0);
+        break;
+        case 2u:
+            InitScroll(BANK(maptitlescreen), &maptitlescreen, 0, 0);
+        break;
+    }
+    INIT_FONT(font, PRINT_BKG);
 }
 
 void UPDATE(){
-    note_countdown++;
-    rndm++;
-    if(note_countdown >= NOTE_COUNT_MAX){
-        note_countdown = 0;
-        note_configured++;
-        if(note_configured > 3){
-            note_configured = 1;
+    if(credit_page_counter == 1){//misu & sloopygoop
+        note_countdown++;
+        rndm++;
+        if(note_countdown >= NOTE_COUNT_MAX){
+            note_countdown = 0;
+            note_configured++;
+            if(note_configured > 3){
+                note_configured = 1;
+            }
+            Sprite* s_note = SpriteManagerAdd(SpriteNote, 0, 35u * note_configured);
+            struct EnemyInfo* note_data = (struct EnemyInfo*) s_note->custom_data;
+            if(rndm | 0){
+                note_data->e_configured = note_configured+1;
+            }else{
+                note_data->e_configured = note_configured;
+            }
         }
-        Sprite* s_note = SpriteManagerAdd(SpriteNote, 0, 35u * note_configured);
-        struct EnemyInfo* note_data = (struct EnemyInfo*) s_note->custom_data;
-        if(rndm | 0){
-            note_data->e_configured = note_configured+1;
-        }else{
-            note_data->e_configured = note_configured;
+    }
+    if(credit_page_counter == 2){//titlescreen
+        note_countdown++;
+        if(note_countdown >= PRESSSTART_COUNT_MAX){
+            note_countdown = 0;
+            if(rndm == 0){rndm = 1;}
+            else{rndm = 0;}
+            switch(rndm){
+                case 0u: PRINT(5, 14, "PRESS START");
+                break;
+                case 1u: PRINT(5, 14, "           ");
+                break;
+            }
         }
     }
     if(KEY_TICKED(J_START)){
-        SetState(StateStart);
+        credit_page_counter++;
+        note_countdown = 0;
+        rndm = 0;
+        switch(credit_page_counter){
+            case 1u://misu & sloopygoop
+            case 2u://titlescreen
+                SetState(StateCredit);
+            break;
+            case 3u://intro + tutorial
+                SetState(StateIntro);
+            break;
+        }
     }
 }

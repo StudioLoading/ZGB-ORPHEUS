@@ -3,6 +3,7 @@
 
 #define STATES \
 _STATE(StateCredit)\
+_STATE(StateIntro)\
 _STATE(StateStart)\
 _STATE(StateTutorial)\
 _STATE(StateHades00)\

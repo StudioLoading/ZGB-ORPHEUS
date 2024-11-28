@@ -19,7 +19,8 @@
 			"sgb.h": "c",
 			"bankmanager.h": "c",
 			"string.h": "c",
-			"math.h": "c"
+			"math.h": "c",
+			"scroll.h": "c"
 		}
 	}
 }
