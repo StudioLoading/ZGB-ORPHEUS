@@ -38,8 +38,8 @@ unsigned char get_char(UINT8 arg_writing_line, UINT8 arg_counter_char) BANKED;
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
         case FIRSTEVER:
-            memcpy(d1, "THE GATES OF THE    ", 21);
-            memcpy(d2, "HADES ARE NOT FAR...", 21);
+            memcpy(d1, "THE GATES OF HADES  ", 21);
+            memcpy(d2, "ARE NOT FAR...      ", 21);
             memcpy(d3, "I NEED TO FIND MY   ", 21);
             memcpy(d4, "LYRE FIRST! I THINK ", 21);
             memcpy(d5, "MY MOTHER CALLIOPE  ", 21);

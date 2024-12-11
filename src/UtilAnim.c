@@ -7,6 +7,10 @@ IMPORT_TILES(maphades002t);
 IMPORT_TILES(maphades002ta1);
 IMPORT_TILES(maphades002ta2);
 IMPORT_TILES(maphades002ta3);
+IMPORT_TILES(maphades002ta4);
+IMPORT_TILES(maphades002ta5);
+IMPORT_TILES(maphades002ta6);
+IMPORT_TILES(maphades002ta7);
 
 
 
@@ -45,4 +49,16 @@ void Anim_Charon_2() BANKED{
 }
 void Anim_Charon_3() BANKED{
 	set_banked_bkg_data(106u, 7u, &maphades002ta3, BANK(maphades002ta3));//river
+}
+void Anim_Charon_4() BANKED{
+	set_banked_bkg_data(106u, 7u, &maphades002ta4, BANK(maphades002ta4));//river
+}
+void Anim_Charon_5() BANKED{
+	set_banked_bkg_data(106u, 7u, &maphades002ta5, BANK(maphades002ta5));//river
+}
+void Anim_Charon_6() BANKED{
+	set_banked_bkg_data(106u, 7u, &maphades002ta6, BANK(maphades002ta6));//river
+}
+void Anim_Charon_7() BANKED{
+	set_banked_bkg_data(106u, 7u, &maphades002ta7, BANK(maphades002ta7));//river
 }

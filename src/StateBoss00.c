@@ -13,8 +13,7 @@
 #include "Dialog.h"
 #include "UtilAnim.h"
 
-#define ANIM_COUNTER_MAX 48
-
+#define ANIM_COUNTER_MAX 56
 IMPORT_MAP(maphades005);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
@@ -30,6 +29,8 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
 88,90,92,94,96,98,100,102,104,
 0};
 const UINT8 coll_s_hades005[] = {0};
+
+Sprite* s_charon = 0;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -49,6 +50,9 @@ extern MACROMAP solved_map;
 extern UINT16 idle_countdown;
 extern UINT8 area_enemy_counter;
 extern UINT8 anim_counter;
+extern Sprite* s_charon_boat;
+extern Sprite* s_charon_hand_left;
+extern Sprite* s_charon_hand_right;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -67,8 +71,8 @@ void START() {
 			switch(current_map){
 				case BOSS_CHARON:{
 					area_enemy_counter = 1;
-					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 7u << 3), ((UINT16) 14u << 3));
-					e_configure(e_enemy, SKELETON_KEY);
+					//Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 7u << 3), ((UINT16) 14u << 3));
+					//e_configure(e_enemy, SKELETON_KEY);
 				}break;
 			}
 		}
@@ -76,6 +80,11 @@ void START() {
 		switch(current_map){
 			case BOSS_CHARON: 
 				InitScroll(BANK(maphades005), &maphades005, coll_t_hades005, coll_s_hades005);
+				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 4u << 3) + 3u);
+				Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
+				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
+				heart_data->item_type = HEART;
+				heart_data->i_configured = 1u;
 			break;
 		}
 	//HUD
@@ -148,13 +157,17 @@ void UPDATE() {
 	*/
 	//ANIMS
 		anim_counter++;
-		if(anim_counter >= (ANIM_COUNTER_MAX + 48u)){
+		if(anim_counter >= (ANIM_COUNTER_MAX + 8)){
 			anim_counter = 0u;
 		}
 		switch(anim_counter){
 			case 0u: Anim_Charon_0(); break;
-			case 16u: Anim_Charon_1(); break;
-			case 32u: Anim_Charon_2(); break;
-			case 48u: Anim_Charon_3(); break;
+			case 8u: Anim_Charon_1(); break;
+			case 16u: Anim_Charon_2(); break;
+			case 24u: Anim_Charon_3(); break;
+			case 32u: Anim_Charon_4(); break;
+			case 40u: Anim_Charon_5(); break;
+			case 48u: Anim_Charon_6(); break;
+			case 56u: Anim_Charon_7(); break;
 		}
 }

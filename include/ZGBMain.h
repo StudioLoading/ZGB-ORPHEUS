@@ -13,6 +13,8 @@ STATE_DEF_END
 #define SPRITES \
 _SPRITE_DMG(SpriteNote, note)\
 _SPRITE_DMG(SpriteOrpheus, orpheus)\
+_SPRITE_DMG(SpriteOrpheuslyre, orpheuslyre)\
+_SPRITE_DMG(SpriteOrpheusnote, orpheusnote)\
 _SPRITE_DMG(SpriteCamera, camera)\
 _SPRITE_DMG(SpriteItem, item)\
 _SPRITE_DMG(SpriteLyre, lyre)\
@@ -21,6 +23,9 @@ _SPRITE_DMG(SpriteBlock, block)\
 _SPRITE_DMG(SpriteSkeleton, enemyskeletor)\
 _SPRITE_DMG(SpriteGhost, ghost)\
 _SPRITE_DMG(SpriteDeath, death)\
+_SPRITE_DMG(SpriteCharon, charon)\
+_SPRITE_DMG(SpriteCharonhand, charonhand)\
+_SPRITE_DMG(SpriteCharonboat, charonboat)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

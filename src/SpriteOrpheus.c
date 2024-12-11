@@ -33,6 +33,7 @@ const UINT8 a_orpheus_hit_up[] = {2, 0, 5};
 const UINT8 a_orpheus_hit_h[] = {2, 0, 9};
 const UINT8 a_orpheus_push[] = {3, 7, 11,11};
 const UINT8 a_orpheus_dead[] = {1, 0};
+const UINT8 a_orpheus_attack_down[] = {1, 14};
 
 struct OrpheusInfo* orpheus_info;
 SPRITE_STATES new_state = 0;
@@ -58,7 +59,8 @@ UINT8 colliding_block = 0u;
 INT8 orpheus_starting_up = 0u;
 UINT8 inertia_x = 0u;
 UINT8 inertia_y = 0u;
-UINT16 idle_countdown = 800u; 
+UINT16 idle_countdown = 800u;
+Sprite* s_lyre = 0;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -314,6 +316,9 @@ void UPDATE() {
                 if(inertia_x > 0){inertia_x = 0;}
                 if(inertia_y > 0){inertia_y = 0;}
                 orpheus_wait--;
+                if(s_lyre && orpheus_wait == 35){
+                    SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
+                }
                 if(orpheus_wait <= 1){
                     orhpeus_change_state(orpheus_state_before);
                     return;
@@ -493,6 +498,9 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
         && idle_countdown != 800u){
         idle_countdown = 800u;
     }
+    if(orpheus_info->ow_state == ATTACK){
+        SpriteManagerRemoveSprite(s_lyre);
+    }
     switch(arg_new_state){
         case IDLE_DOWN:
             if(inertia_x == 0){
@@ -575,24 +583,27 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
             countdown_verso = 1;
             redraw_hud = 1;
             orpheus_info->charming = 1;
+            SetSpriteAnim(THIS, a_orpheus_attack_down, 1u);
             switch(song_selection){
                 case ATTRACT://charm
                     countdown_step_currentmax = COUNTDOWN_SKIP_ATTRACT;
-                    orpheus_wait = 20u;
+                    orpheus_wait = 80u;
                     orpheus_attack_cooldown = 120u;
                 break;
                 case REPEL://repell
                     countdown_step_currentmax = COUNTDOWN_SKIP_REPELL;
-                    orpheus_wait = 20u;
+                    orpheus_wait = 80u;
                     orpheus_attack_cooldown = 120u;
                 break;
                 case SLEEP://attract
                     countdown_step_currentmax = COUNTDOWN_SKIP_SLEEP;
-                    orpheus_wait = 30u;
+                    orpheus_wait = 80u;
                     orpheus_attack_cooldown = 200u;
                 break;
             }
             countdown_step = countdown_step_currentmax;
+            s_lyre = SpriteManagerAdd(SpriteOrpheuslyre, THIS->x-4, THIS->y);
+            SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
         break;
         case DIE:
             solved_map = current_map - 1;
