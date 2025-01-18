@@ -25,9 +25,9 @@ void START() {
     PRINT(0, 9, "DEMO OF ORPHEUS.    ");
     PRINT(0, 10, "FOLLOW THE KICKSTART");
     PRINT(0, 11, "ER PAGE OF THIS     ");
-    PRINT(0, 12, "PROJECT TO BE UP    ");
-    PRINT(0, 13, "DATE WITH ITS DEVE ");
-    PRINT(0, 14, "LOPMENT!           ");
+    PRINT(0, 12, "PROJECT TO STAY UP  ");
+    PRINT(0, 13, "DATED ON ITS DEVELOP");
+    PRINT(0, 14, "MENT!               ");
 }
 
 void UPDATE() {
