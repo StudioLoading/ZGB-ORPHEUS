@@ -40,28 +40,58 @@ void UPDATE(){
     if(text_shown == 0u){
         switch(intro_page_counter){
             case 0u:
-                PRINT(0,14, "FIRST LINE OF TEXT !");
-                PRINT(0,15, EMPTY_STRING_20);
-                PRINT(0,16, EMPTY_STRING_20);
-                PRINT(0,17, "LAST LINE OF TEXT !!");
+                PRINT(0,11, "A LONG TIME AGO, IN ");
+                PRINT(0,12, "ANCIENT GREECE, A HE");
+                PRINT(0,13, "RO AND A NYMPH WERE ");
+                PRINT(0,14, "DEEPLY IN LOVE WITH ");
+                PRINT(0,15, "EACH OTHER. THEIR NA");
+                PRINT(0,16, "MES WERE            ");
+                PRINT(0,17, "ORPHEUS AND EURYDICE");
             break;
             case 1u:
-                PRINT(0,14, "FIRST LINE OF TEXT !");
-                PRINT(0,15, EMPTY_STRING_20);
-                PRINT(0,16, EMPTY_STRING_20);
-                PRINT(0,17, "LAST LINE OF TEXT !!");
+                PRINT(0,11, "THEY LIVED HAPPILY  ");
+                PRINT(0,12, "AND THEIR DAYS ACCOM");
+                PRINT(0,13, "PANIED BY THE SWEET ");
+                PRINT(0,14, "MUSIC ORPHEUS COMPO ");
+                PRINT(0,15, "SED WITH HIS LYRE.  ");
+                PRINT(0,16, "                    ");
+                PRINT(0,17, "                    ");
             break;
             case 2u:
-                PRINT(0,14, "FIRST LINE OF TEXT !");
-                PRINT(0,15, EMPTY_STRING_20);
-                PRINT(0,16, EMPTY_STRING_20);
-                PRINT(0,17, "LAST LINE OF TEXT !!");
+                PRINT(0,11, "UNFORTUNATELY ONE   ");
+                PRINT(0,12, "DAY EURYDICE STEPPED");
+                PRINT(0,13, "ON A SNAKE. IN DEFEN");
+                PRINT(0,14, "SE IT BIT HER, POISO");
+                PRINT(0,15, "NING HER IMMEDIATELY");
+                PRINT(0,16, "                    ");
+                PRINT(0,17, "                    ");
             break;
             case 3u:
-                PRINT(0,14, "FIRST LINE OF TEXT !");
-                PRINT(0,15, EMPTY_STRING_20);
-                PRINT(0,16, EMPTY_STRING_20);
-                PRINT(0,17, "LAST LINE OF TEXT !!");
+                PRINT(0,11, "THE POOR NYMPH SUD  ");
+                PRINT(0,12, "DENLY DIED, LEAVING ");
+                PRINT(0,13, "ORPHEUS ALONE WITH  ");
+                PRINT(0,14, "HIS GRIEF.          ");
+                PRINT(0,15, "                    ");
+                PRINT(0,16, "                    ");
+                PRINT(0,17, "                    ");
+            break;
+            case 4u:
+                PRINT(0,11, "HOWEVER, THE YOUNG  ");
+                PRINT(0,12, "HERO DID NOT GIVE UP");
+                PRINT(0,13, "BECAUSE HE KNEW     ");
+                PRINT(0,14, "THAT EVERY SOUL OF  ");
+                PRINT(0,15, "THE DEPARTED ENDED  ");
+                PRINT(0,16, "DOWN IN THE         ");
+                PRINT(0,17, "UNDERWORLD.         ");
+            break;
+            case 5u:
+                PRINT(0,11, "DETERMINED TO BRING ");
+                PRINT(0,12, "EURYDICE BACK TO LI ");
+                PRINT(0,13, "FE, ORPHEUS GATHERED");
+                PRINT(0,14, "HIS COURAGE AND DECI");
+                PRINT(0,15, "DED TO FACE THE GOD ");
+                PRINT(0,16, "OF THE UNDERWORLD   ");
+                PRINT(0,17, "HIMSELF.            ");
             break;
         }
 
@@ -70,7 +100,7 @@ void UPDATE(){
 
     if(KEY_TICKED(J_START) || KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
         intro_page_counter++;
-        if(intro_page_counter < 4){
+        if(intro_page_counter < 6){
             SetState(StateIntro);
         }else{
             SetState(StateStart);

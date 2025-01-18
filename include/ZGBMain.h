@@ -12,6 +12,8 @@ STATE_DEF_END
 
 #define SPRITES \
 _SPRITE_DMG(SpriteNote, note)\
+_SPRITE_DMG(SpriteButterfly, butterfly)\
+_SPRITE_DMG(SpriteDog, dog)\
 _SPRITE_DMG(SpriteOrpheus, orpheus)\
 _SPRITE_DMG(SpriteOrpheuslyre, orpheuslyre)\
 _SPRITE_DMG(SpriteOrpheusnote, orpheusnote)\

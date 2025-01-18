@@ -19,7 +19,7 @@
 IMPORT_MAP(inbetweenmap);
 
 // START FROM OTHER POSITION 
-/*
+
 UINT8 tutorial_go = 1u; //TODO 0
 UINT8 tutorial_hades_entrance =1u; // TODO 0
 UINT8 tutorial_get_lyre = 1u; // TODO 0
@@ -35,11 +35,11 @@ UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 
 UINT16 orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3);//((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3); //todo ((UINT16) 30 << 3) + 4u;
 UINT16 camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4u;// TODO ((UINT16) 64 << 3) + 4u;
-*/
+
 
 
 //START FROM TUTORIAL
-
+/*
 UINT8 tutorial_go = 0;
 UINT8 tutorial_hades_entrance = 0;
 UINT8 tutorial_get_lyre = 0;
@@ -55,7 +55,7 @@ UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
 UINT16 orpheus_spawny = ((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) 30 << 3) + 4u;
 UINT16 camera_spawny = ((UINT16) 64 << 3) + 4u;
-
+*/
 
 extern UINT8 current_map;
 

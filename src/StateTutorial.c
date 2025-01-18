@@ -30,6 +30,7 @@ UINT8 gate_pushed = 0u;
 UINT8 tutorial_push_button = 0u;
 Sprite* s_gate = 0;
 Sprite* s_gate_other = 0;
+Sprite* s_butt3 = 0;
 
 extern UINT8 tutorial_go;
 extern UINT8 tutorial_hades_entrance;
@@ -76,6 +77,13 @@ void START() {
 		if(has_lyre == 0){
 			SpriteManagerAdd(SpriteLyre, ((UINT16) 7u << 3), ((UINT16) 39u << 3) +1);
 		}
+		Sprite* s_butt1 = SpriteManagerAdd(SpriteButterfly, ((UINT16) 25u << 3), ((UINT16) 60u << 3));
+		struct EnemyInfo* butt1_data = (struct EnemyInfo*) s_butt1->custom_data;
+		butt1_data->e_configured = 1;
+		Sprite* s_butt2 = SpriteManagerAdd(SpriteButterfly, ((UINT16) 35u << 3), ((UINT16) 58u << 3));
+		struct EnemyInfo* butt2_data = (struct EnemyInfo*) s_butt2->custom_data;
+		butt2_data->e_configured = 2;
+		Sprite* s_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 30u << 3), ((UINT16) 60u << 3));
 	//INITSCROLL
 		InitScroll(BANK(omapintro), &omapintro, coll_tiles_intro, coll_surface_intro);
 	//HUD
@@ -104,6 +112,11 @@ void UPDATE() {
 	}
 	if(tutorial_go > 0){
 		level_common_update_play();
+	}
+	if(s_butt3 == 0 && s_orpheus->x < ((UINT16) 15u << 3)){
+		s_butt3 = SpriteManagerAdd(SpriteButterfly, ((UINT16) 7u << 3), ((UINT16) 44u << 3));
+		struct EnemyInfo* butt3_data = (struct EnemyInfo*) s_butt3->custom_data;
+		butt3_data->e_configured = 1;
 	}
 	//DIALOGS INTERRUPTS
 		if(s_orpheus->y < ((UINT16) 29u << 3)){

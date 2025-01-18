@@ -17,6 +17,8 @@
 
 IMPORT_MAP(mapcredit0);
 IMPORT_MAP(mapcredit1);
+IMPORT_MAP(mapcredit2);
+IMPORT_MAP(mapcredit3);
 IMPORT_MAP(maptitlescreen);
 IMPORT_TILES(font);
 
@@ -37,10 +39,17 @@ void START(){
             InitScroll(BANK(mapcredit1), &mapcredit1, 0, 0);
         break;
         case 2u:
+            InitScroll(BANK(mapcredit2), &mapcredit2, 0, 0);
+        break;
+        case 3u:
+            InitScroll(BANK(mapcredit3), &mapcredit3, 0, 0);
+        break;
+        case 4u:
             InitScroll(BANK(maptitlescreen), &maptitlescreen, 0, 0);
         break;
     }
     INIT_FONT(font, PRINT_BKG);
+    PRINT(12, 17, "VO.O.XV");
 }
 
 void UPDATE(){
@@ -62,7 +71,7 @@ void UPDATE(){
             }
         }
     }
-    if(credit_page_counter == 2){//titlescreen
+    if(credit_page_counter == 4){//titlescreen
         note_countdown++;
         if(note_countdown >= PRESSSTART_COUNT_MAX){
             note_countdown = 0;
@@ -82,10 +91,12 @@ void UPDATE(){
         rndm = 0;
         switch(credit_page_counter){
             case 1u://misu & sloopygoop
-            case 2u://titlescreen
+            case 2u://faultbox & studioloading
+            case 3u://zgb engine
+            case 4u://titlescreen
                 SetState(StateCredit);
             break;
-            case 3u://intro + tutorial
+            case 5u://intro + tutorial
                 SetState(StateIntro);
             break;
         }

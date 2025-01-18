@@ -69,7 +69,7 @@ PAD2 sulla SNES, prendere spunto da:
 
 PNG2MAP
 cd C:\ZGB-2023.0\tools\png2map\
-png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\mapcredit1.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\mapcredit1.gbm
+png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\mapcredit3.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\mapcredit3.gbm
 
 GBM TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
 cd C:\Users\checc\GB\ZGB-2023.0\tools\png2gbtiles
