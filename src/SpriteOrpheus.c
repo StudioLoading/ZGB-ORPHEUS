@@ -441,6 +441,9 @@ void orpheus_update_position() BANKED{
         orpheus_info->vx = 0;
         orpheus_info->vy = 0;
     }
+    if(current_state == StateBoss00 && THIS->y > ((UINT16) 16u << 3) && orpheus_info->vy > 0){
+        return;
+    }
     orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);
     if(orpheus_info->tile_collision){
         //CHECK COLLISION WITH DAMAGE TILES

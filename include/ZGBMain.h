@@ -2,12 +2,14 @@
 #define ZGBMAIN_H
 
 #define STATES \
+_STATE(StateUtils)\
 _STATE(StateCredit)\
 _STATE(StateIntro)\
 _STATE(StateStart)\
 _STATE(StateTutorial)\
 _STATE(StateHades00)\
 _STATE(StateBoss00)\
+_STATE(StateEnddemo)\
 STATE_DEF_END
 
 #define SPRITES \

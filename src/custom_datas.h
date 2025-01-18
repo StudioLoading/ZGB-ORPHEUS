@@ -1,6 +1,12 @@
 #ifndef CUSTOMDATAS_FILE
 #define CUSTOMDATAS_FILE
 
+
+typedef enum{
+	BORDER_SKY,
+	BORDER_FLAMES
+}CURRENT_BORDER;
+
 typedef enum{
 	GENERIC_IDLE,
 	GENERIC_WALK,

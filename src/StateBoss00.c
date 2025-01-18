@@ -31,6 +31,7 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
 const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
+UINT16 end_demo_counter = 250u;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -94,6 +95,10 @@ void START() {
 }
 
 void UPDATE() {
+	end_demo_counter--;
+	if(end_demo_counter < 10){
+		SetState(StateEnddemo);
+	}
 	if(in_dialog){
 		write_dialog();
 	}

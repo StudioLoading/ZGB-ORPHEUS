@@ -27,9 +27,14 @@ UINT8 note_configured = 1;
 UINT8 rndm = 0u;
 UINT8 credit_page_counter = 0u;
 
+uint8_t sgb_checked = 0;
+extern void manage_sgb_border() BANKED;
+
 void START(){
+    sgb_checked = sgb_check();
+    manage_sgb_border();
     switch(credit_page_counter){
-        case 0u:
+        case 0u: 
             Sprite* s_note0 = SpriteManagerAdd(SpriteNote, 0, 40u);
             struct EnemyInfo* note_data = (struct EnemyInfo*) s_note0->custom_data;
             note_data->e_configured = 3;
