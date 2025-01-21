@@ -8,7 +8,7 @@
 
 #include "custom_datas.h"
 
-extern Sprite* s_gate_other;
+Sprite* s_gate_other;
 extern UINT8 gate_pushed;
 
 UINT8 other_gate_created = 0u;
@@ -20,7 +20,6 @@ void START() {
     g_data->frmskip = 0;
     g_data->frmskip_wait = 12;
     g_data->vx = 0;
-    g_data->vy = 0;
     g_data->tile_collision = 0;
     g_data->wait = 14;
     g_data->e_configured = 0;
@@ -38,25 +37,38 @@ void START() {
         g_data_other->e_configured = 0;
 		if(gate_pushed == 1u){
             s_gate_other->x = ((UINT16) 32u << 3);
-            g_data_other->e_configured = 3;
+            g_data_other->e_configured = 0;
         }
     }
 }
 
 void UPDATE() {
     struct EnemyInfo* g_data = (struct EnemyInfo*) THIS->custom_data;
+    INT16 delta_scroll_t = scroll_target->y - THIS->y;
     switch(g_data->e_configured){
         case 0u: break;
         case 1u:{
+            if(s_gate_other != THIS){
+                struct EnemyInfo* g_data_other2 = (struct EnemyInfo*) s_gate_other->custom_data;
+                if(g_data_other2->e_configured == 0){
+                    g_data_other2->e_configured = 2;
+                }
+            }
             g_data->frmskip++; 
             if(g_data->frmskip < g_data->frmskip_wait){
                 return;
             }
             g_data->frmskip = 0u;
-            g_data->vy++;
+            g_data->vx++;
+            if(delta_scroll_t < -20){
+                THIS->x = ((UINT16) 28u << 3);
+                THIS->y = ((UINT16) 21u << 3)+3;
+                g_data->e_configured = 0u;
+                return;
+            }
             THIS->x--;
-            if( g_data->vy >= g_data->wait){
-                g_data->e_configured = 3u;
+            if( g_data->vx >= g_data->wait){
+                g_data->e_configured = 0u;
             }
         }break;
         case 2u:{
@@ -65,9 +77,15 @@ void UPDATE() {
                 return;
             }
             g_data->frmskip = 0u;
-            g_data->vy++;
+            g_data->vx++;
+            if(delta_scroll_t < -20){
+                THIS->x = ((UINT16) 32u << 3);
+                THIS->y = ((UINT16) 21u << 3)+3;
+                g_data->e_configured = 0u;
+                return;
+            }
             THIS->x++;
-            if( g_data->vy >= g_data->wait){
+            if( g_data->vx >= g_data->wait){
                 g_data->e_configured = 0u;
             }
         }break;

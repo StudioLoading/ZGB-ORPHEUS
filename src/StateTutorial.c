@@ -29,7 +29,6 @@ const UINT8 coll_surface_intro[] = {1u, 66u, 67u,69u,70u, 97u, 98u, 0};
 UINT8 gate_pushed = 0u;
 UINT8 tutorial_push_button = 0u;
 Sprite* s_gate = 0;
-Sprite* s_gate_other = 0;
 Sprite* s_butt3 = 0;
 
 extern UINT8 tutorial_go;
@@ -143,8 +142,6 @@ void UPDATE() {
 				gate_pushed = 1u;
 				struct EnemyInfo* g_data = (struct EnemyInfo*) s_gate->custom_data;
 				g_data->e_configured = 1u;
-				struct EnemyInfo* g_data_other = (struct EnemyInfo*) s_gate_other->custom_data;
-				g_data_other->e_configured = 2u;
 				solved_map = current_map;
 				draw_button(32u, 24u, 124u);
 			}
