@@ -87,11 +87,17 @@ void START() {
 					area_enemy_counter = 1;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
 					e_configure(e_enemy, SKELETON);
+					Sprite* e_enemy_2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 16u << 3), ((UINT16) 14u << 3));
+					e_configure(e_enemy_2, SKELETON);
 				}break;
 				case HADES_FOUR:{
 					area_enemy_counter = 1;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 7u << 3), ((UINT16) 14u << 3));
 					e_configure(e_enemy, SKELETON_KEY);
+					Sprite* e_enemy_2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 15u << 3), ((UINT16) 2u << 3));
+					e_configure(e_enemy_2, SKELETON);
+					Sprite* e_enemy_3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 9u << 3), ((UINT16) 7u << 3));
+					e_configure(e_enemy_3, SKELETON);
 				}break;
 			}
 		}

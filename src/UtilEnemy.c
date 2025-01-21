@@ -116,6 +116,8 @@ void e_management(Sprite* s_enemy) BANKED{
     }
     if(e_data->e_state == HIT){
         {
+        // aumento velocità abbassando frameskip
+        e_data->frmskip = 4u;
         //fix MIRROR for rounding animation
             if(s_enemy->anim_frame == 3){
                 s_enemy->mirror = V_MIRROR;
@@ -162,6 +164,8 @@ void e_management(Sprite* s_enemy) BANKED{
         }
     }else{
         e_data->wait++;//USING AS RANDOM TO CLOCKWISE TURNING
+        //ripristino frameskip
+        e_data->frmskip = 12u;
     }
     if(e_data->frmskip_wait == 0){
         e_data->frmskip_wait = e_data->frmskip;

@@ -13,9 +13,9 @@
 #include "Dialog.h"
 
 #define POWER_MAX 40
-#define COUNTDOWN_SKIP_ATTRACT 1
-#define COUNTDOWN_SKIP_REPELL 2
-#define COUNTDOWN_SKIP_SLEEP 4
+#define COUNTDOWN_SKIP_ATTRACT 2
+#define COUNTDOWN_SKIP_REPELL 4
+#define COUNTDOWN_SKIP_SLEEP 8
 
 UINT8 J_INT=J_A;//0x10;
 UINT8 J_ATK=J_B;//0x20;
@@ -183,8 +183,7 @@ void UPDATE() {
     //MOVEMENTS
         if(in_dialog == 1){
             switch(orpheus_info->ow_state){
-                case WALK_UP:
-                    orhpeus_change_state(IDLE_UP); break;
+                case WALK_UP: orhpeus_change_state(IDLE_UP); break;
                 case WALK_DOWN: orhpeus_change_state(IDLE_DOWN); break;
                 case WALK_LEFT: orhpeus_change_state(IDLE_LEFT); break;
                 case WALK_RIGHT: orhpeus_change_state(IDLE_RIGHT); break;
@@ -193,7 +192,7 @@ void UPDATE() {
         }
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if(orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10){
+        if((orpheus_info->ow_state != ATTACK) && (orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10)){
             if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
             else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
             else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
@@ -320,6 +319,7 @@ void UPDATE() {
                     SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
                 }
                 if(orpheus_wait <= 1){
+                    SpriteManagerRemoveSprite(s_lyre);
                     orhpeus_change_state(orpheus_state_before);
                     return;
                 }
@@ -500,10 +500,7 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
         && arg_new_state != IDLE_RIGHT && arg_new_state != IDLE_LEFT
         && idle_countdown != 800u){
         idle_countdown = 800u;
-    }
-    if(orpheus_info->ow_state == ATTACK){
-        SpriteManagerRemoveSprite(s_lyre);
-    }
+    }    
     switch(arg_new_state){
         case IDLE_DOWN:
             if(inertia_x == 0){
@@ -590,17 +587,17 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
             switch(song_selection){
                 case ATTRACT://charm
                     countdown_step_currentmax = COUNTDOWN_SKIP_ATTRACT;
-                    orpheus_wait = 80u;
+                    orpheus_wait = 120u;
                     orpheus_attack_cooldown = 120u;
                 break;
                 case REPEL://repell
                     countdown_step_currentmax = COUNTDOWN_SKIP_REPELL;
-                    orpheus_wait = 80u;
+                    orpheus_wait = 120u;
                     orpheus_attack_cooldown = 120u;
                 break;
                 case SLEEP://attract
                     countdown_step_currentmax = COUNTDOWN_SKIP_SLEEP;
-                    orpheus_wait = 80u;
+                    orpheus_wait = 120u;
                     orpheus_attack_cooldown = 200u;
                 break;
             }
