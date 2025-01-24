@@ -110,4 +110,8 @@ struct LoadedEnemy{
 	struct EnemyInfo einfo;
 };
 
+typedef enum{
+	PUSH_NONE, PUSH_UP, PUSH_RIGHT, PUSH_DOWN, PUSH_LEFT
+}PUSHING;
+
 #endif

@@ -11,34 +11,41 @@
 
 #define SPAWNX_HADES_TUTORIAL 10
 #define SPAWNY_HADES_TUTORIAL 11
-#define SPAWNX_HADES003_IN 4
-#define SPAWNY_HADES003_IN 4
-#define SPAWNX_BOSSCHARON_IN 9
-#define SPAWNY_BOSSCHARON_IN 15
 
 IMPORT_MAP(inbetweenmap);
 
 // START FROM OTHER POSITION 
-/*
+#define SPAWNX_HADES000_IN 10
+#define SPAWNY_HADES000_IN 15
+#define SPAWNX_HADES001_IN 4
+#define SPAWNY_HADES001_IN 4
+#define SPAWNX_HADES003_IN 4
+#define SPAWNY_HADES003_IN 4
+#define SPAWNX_BOSSCHARON_IN 9
+#define SPAWNY_BOSSCHARON_IN 15
+#define SPAWNX_HADES_TUTORIAL 10
+#define SPAWNY_HADES_TUTORIAL 11
+
 UINT8 tutorial_go = 1u; //TODO 0
-UINT8 tutorial_hades_entrance =1u; // TODO 0
+UINT8 tutorial_hades_entrance = 1u; // TODO 0
 UINT8 tutorial_get_lyre = 1u; // TODO 0
 
-MACROMAP solved_map = HADES_FOUR; //TODO NONE
-MACROMAP current_map = BOSS_CHARON; //TODO TUTORIAL
-MACROMAP next_map = BOSS_CHARON; //TODO HADES_ZERO
-MACROMAP prev_map = HADES_FOUR; //TODO NONE
-MACROMAP max_map = BOSS_CHARON; //TODO TUTORIAL
+MACROMAP solved_map = HADES_ZERO; //TODO NONE
+MACROMAP current_map = HADES_ONE; //TODO TUTORIAL
+MACROMAP next_map = HADES_TWO; //TODO HADES_ZERO
+MACROMAP prev_map = HADES_ZERO; //TODO NONE
+MACROMAP max_map = HADES_ONE; //TODO TUTORIAL
 UINT8 has_lyre = 1; //TODO 0
 
-UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 3) - 4u;
-UINT16 orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3);//((UINT16) 79u << 3);
+UINT16 orpheus_spawnx = ((UINT16) SPAWNX_HADES001_IN << 3);//((UINT16) 28u << 3) - 4u;
+UINT16 orpheus_spawny = ((UINT16) SPAWNY_HADES001_IN << 3);//((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3); //todo ((UINT16) 30 << 3) + 4u;
 UINT16 camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4u;// TODO ((UINT16) 64 << 3) + 4u;
-*/
+
 
 
 //START FROM TUTORIAL
+/*
 UINT8 tutorial_go = 0;
 UINT8 tutorial_hades_entrance = 0;
 UINT8 tutorial_get_lyre = 0;
@@ -54,7 +61,7 @@ UINT16 orpheus_spawnx = ((UINT16) 28u << 3) - 4u;
 UINT16 orpheus_spawny = ((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) 30 << 3) + 4u;
 UINT16 camera_spawny = ((UINT16) 64 << 3) + 4u;
-
+*/
 
 extern UINT8 current_map;
 

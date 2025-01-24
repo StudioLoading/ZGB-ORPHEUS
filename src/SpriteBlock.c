@@ -8,7 +8,7 @@
 
 #include "custom_datas.h"
 
-#define COUNTER_MAX 8
+#define COUNTER_MAX 2
 
 const UINT8 a_block[] = {1, 0};
 const UINT8 a_door_enemy[] = {1, 1};

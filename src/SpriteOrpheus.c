@@ -61,6 +61,7 @@ UINT8 inertia_x = 0u;
 UINT8 inertia_y = 0u;
 UINT16 idle_countdown = 800u;
 Sprite* s_lyre = 0;
+PUSHING orpheus_pushing = NONE;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -77,6 +78,7 @@ extern UINT8 orpheus_haskey;
 extern MACROMAP solved_map;
 extern INT8 restart_current_map;
 
+void orpheus_behave() BANKED;
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 void orpheus_update_position() BANKED;
 void orpheus_hit() BANKED;
@@ -215,116 +217,7 @@ void UPDATE() {
         }
     orhpeus_change_state(new_state);
     //BEHAVE
-        switch(new_state){
-            case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
-                if(inertia_x > 31){
-                    inertia_x = 0;
-                    if(new_state == IDLE_LEFT){
-                        orpheus_info->vx = -1;
-                    }else if(new_state == IDLE_RIGHT){
-                        orpheus_info->vx = 1;
-                    }
-                }else{
-                    inertia_x = 0;
-                    if(orpheus_info->vx != 0){orpheus_info->vx = 0;}
-                } 
-                if(inertia_y > 31){
-                    inertia_y = 0;
-                    if(new_state == IDLE_DOWN){
-                        orpheus_info->vy = 1;
-                    }else if(new_state == IDLE_UP){
-                        orpheus_info->vy = -1;
-                    }
-                }else{
-                    inertia_y = 0;
-                    if(orpheus_info->vy != 0){orpheus_info->vy = 0;}
-                } 
-                if(orpheus_info->vx || orpheus_info->vy){//solo per inerzia
-                    orpheus_update_position();
-                }
-                orpheus_recharge();
-                idle_countdown--;
-            break;
-            case WALK_DOWN: case WALK_UP:
-            case WALK_LEFT: case WALK_RIGHT:
-                if(orpheus_info->vx != 0 && inertia_x > 0 && inertia_x < 32){
-                    inertia_x++;
-                }
-                if(orpheus_info->vy != 0 && inertia_y > 0 && inertia_y < 32){
-                    inertia_y++;
-                }
-                orpheus_update_position();
-            break;
-            case HIT:
-                if(inertia_x > 0){inertia_x = 0;}
-                if(inertia_y > 0){inertia_y = 0;}
-                hit_frameskip--;
-                if(hit_frameskip == 0){
-                    hit_frameskip_max++;
-                    hit_frameskip = hit_frameskip_max;
-                    if(push_vx != 0 || push_vy != 0){
-                        orpheus_info->vx = push_vx;
-                        orpheus_info->vy = push_vy;
-                    }else{
-                        switch(orpheus_state_before){
-                            case WALK_DOWN: case IDLE_DOWN:
-                                orpheus_info->vy = -1;
-                                orpheus_info->vx = 0;
-                            break;
-                            case WALK_UP: case IDLE_UP:
-                                orpheus_info->vy = 1;
-                                orpheus_info->vx = 0;
-                            break;
-                            case WALK_LEFT: case IDLE_LEFT:
-                                orpheus_info->vy = 0;
-                                orpheus_info->vx = 1;
-                            break;
-                            case WALK_RIGHT: case IDLE_RIGHT:
-                                orpheus_info->vy = 0;
-                                orpheus_info->vx = -1;
-                            break;
-                        }
-                    }
-                    orpheus_update_position();
-                }
-                if(orpheus_hit_countdown > 0){//going backwards
-                    orpheus_hit_countdown--;
-                }else if(orpheus_hit_countdown <= 0){//hit effect ends
-                    // || orpheus_hitted != 0){
-                    orpheus_hit_countdown = 0;
-                    orpheus_hitted = 0u;
-                    push_vx = 0;
-                    push_vy = 0;
-                    switch(orpheus_state_before){
-                        case WALK_DOWN: case IDLE_DOWN:
-                            orhpeus_change_state(IDLE_DOWN);
-                        break;
-                        case WALK_UP: case IDLE_UP: case GENERIC_IDLE: case GENERIC_WALK:
-                            orhpeus_change_state(IDLE_UP);
-                        break;
-                        case WALK_LEFT: case IDLE_LEFT:
-                            orhpeus_change_state(IDLE_LEFT);
-                        break;
-                        case WALK_RIGHT: case IDLE_RIGHT:
-                            orhpeus_change_state(IDLE_RIGHT);
-                        break;
-                    }
-                }
-            break;
-            case ATTACK:
-                if(inertia_x > 0){inertia_x = 0;}
-                if(inertia_y > 0){inertia_y = 0;}
-                orpheus_wait--;
-                if(s_lyre && orpheus_wait == 35){
-                    SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
-                }
-                if(orpheus_wait <= 1){
-                    SpriteManagerRemoveSprite(s_lyre);
-                    orhpeus_change_state(orpheus_state_before);
-                    return;
-                }
-            break;
-        }
+        orpheus_behave();
     //SPRITE COLLISION
         UINT8 scroll_o_tile;
         Sprite* iospr;
@@ -367,9 +260,11 @@ void UPDATE() {
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_x++;
                                 SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
+                                orpheus_pushing = PUSH_RIGHT;
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
+                                orpheus_pushing = PUSH_NONE;
                             }
                             if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
                                 THIS->x++;
@@ -380,9 +275,11 @@ void UPDATE() {
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_x++;
                                 SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
+                                orpheus_pushing = PUSH_LEFT;
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
+                                orpheus_pushing = PUSH_NONE;
                             }
                             if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
                                 THIS->x--;
@@ -394,9 +291,11 @@ void UPDATE() {
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_y++;
                                 SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
+                                orpheus_pushing = PUSH_DOWN;
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
+                                orpheus_pushing = PUSH_NONE;
                             }
                             if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
                                 THIS->y--;
@@ -406,9 +305,11 @@ void UPDATE() {
                             block_data->counter_verso = -1;
                             if(KEY_PRESSED(J_INT)){
                                 block_data->counter_y++;
+                                orpheus_pushing = PUSH_UP;
                             }else if(KEY_RELEASED(J_INT)){
                                 block_data->counter_x = 0;
                                 block_data->counter_y = 0;
+                                orpheus_pushing = PUSH_NONE;
                             }
                             if(orpheus_info->vy < 0 && deltay > 6){
                                 THIS->y++;
@@ -419,6 +320,119 @@ void UPDATE() {
                 }
             }
         }
+}
+
+void orpheus_behave() BANKED{
+    switch(new_state){
+        case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
+            if(inertia_x > 31){
+                inertia_x = 0;
+                if(new_state == IDLE_LEFT){
+                    orpheus_info->vx = -1;
+                }else if(new_state == IDLE_RIGHT){
+                    orpheus_info->vx = 1;
+                }
+            }else{
+                inertia_x = 0;
+                if(orpheus_info->vx != 0){orpheus_info->vx = 0;}
+            } 
+            if(inertia_y > 31){
+                inertia_y = 0;
+                if(new_state == IDLE_DOWN){
+                    orpheus_info->vy = 1;
+                }else if(new_state == IDLE_UP){
+                    orpheus_info->vy = -1;
+                }
+            }else{
+                inertia_y = 0;
+                if(orpheus_info->vy != 0){orpheus_info->vy = 0;}
+            } 
+            if(orpheus_info->vx || orpheus_info->vy){//solo per inerzia
+                orpheus_update_position();
+            }
+            orpheus_recharge();
+            idle_countdown--;
+        break;
+        case WALK_DOWN: case WALK_UP:
+        case WALK_LEFT: case WALK_RIGHT:
+            if(orpheus_info->vx != 0 && inertia_x > 0 && inertia_x < 32){
+                inertia_x++;
+            }
+            if(orpheus_info->vy != 0 && inertia_y > 0 && inertia_y < 32){
+                inertia_y++;
+            }
+            orpheus_update_position();
+        break;
+        case HIT:
+            if(inertia_x > 0){inertia_x = 0;}
+            if(inertia_y > 0){inertia_y = 0;}
+            hit_frameskip--;
+            if(hit_frameskip == 0){
+                hit_frameskip_max++;
+                hit_frameskip = hit_frameskip_max;
+                if(push_vx != 0 || push_vy != 0){
+                    orpheus_info->vx = push_vx;
+                    orpheus_info->vy = push_vy;
+                }else{
+                    switch(orpheus_state_before){
+                        case WALK_DOWN: case IDLE_DOWN:
+                            orpheus_info->vy = -1;
+                            orpheus_info->vx = 0;
+                        break;
+                        case WALK_UP: case IDLE_UP:
+                            orpheus_info->vy = 1;
+                            orpheus_info->vx = 0;
+                        break;
+                        case WALK_LEFT: case IDLE_LEFT:
+                            orpheus_info->vy = 0;
+                            orpheus_info->vx = 1;
+                        break;
+                        case WALK_RIGHT: case IDLE_RIGHT:
+                            orpheus_info->vy = 0;
+                            orpheus_info->vx = -1;
+                        break;
+                    }
+                }
+                orpheus_update_position();
+            }
+            if(orpheus_hit_countdown > 0){//going backwards
+                orpheus_hit_countdown--;
+            }else if(orpheus_hit_countdown <= 0){//hit effect ends
+                // || orpheus_hitted != 0){
+                orpheus_hit_countdown = 0;
+                orpheus_hitted = 0u;
+                push_vx = 0;
+                push_vy = 0;
+                switch(orpheus_state_before){
+                    case WALK_DOWN: case IDLE_DOWN:
+                        orhpeus_change_state(IDLE_DOWN);
+                    break;
+                    case WALK_UP: case IDLE_UP: case GENERIC_IDLE: case GENERIC_WALK:
+                        orhpeus_change_state(IDLE_UP);
+                    break;
+                    case WALK_LEFT: case IDLE_LEFT:
+                        orhpeus_change_state(IDLE_LEFT);
+                    break;
+                    case WALK_RIGHT: case IDLE_RIGHT:
+                        orhpeus_change_state(IDLE_RIGHT);
+                    break;
+                }
+            }
+        break;
+        case ATTACK:
+            if(inertia_x > 0){inertia_x = 0;}
+            if(inertia_y > 0){inertia_y = 0;}
+            orpheus_wait--;
+            if(s_lyre && orpheus_wait == 35){
+                SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
+            }
+            if(orpheus_wait <= 1){
+                SpriteManagerRemoveSprite(s_lyre);
+                orhpeus_change_state(orpheus_state_before);
+                return;
+            }
+        break;
+    }
 }
 
 void orpheus_recharge() BANKED{
@@ -440,6 +454,10 @@ void orpheus_update_position() BANKED{
     if(colliding_block == 1){
         orpheus_info->vx = 0;
         orpheus_info->vy = 0;
+    }
+    if(orpheus_pushing > 0){
+        //orpheus_info->vx = orpheus_info->vx << 1;
+        //orpheus_info->vy = orpheus_info->vy << 1;
     }
     if(current_state == StateBoss00 && THIS->y > ((UINT16) 16u << 3) && orpheus_info->vy > 0){
         return;

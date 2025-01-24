@@ -16,6 +16,7 @@
 #define TEXT_TIMEOUT 40
 
 IMPORT_MAP(mapintro);
+IMPORT_MAP(intro0map);
 IMPORT_TILES(font);
 
 extern UINT8 J_INT;
@@ -27,9 +28,17 @@ UINT8 text_wait = 0u;
 UINT8 text_shown = 0u;
 
 void START(){
-	InitScroll(BANK(mapintro), &mapintro, 0, 0);
-    INIT_FONT(font, PRINT_BKG);
     text_shown = 0u;
+    switch(intro_page_counter){
+        case 0u:
+	        InitScroll(BANK(intro0map), &intro0map, 0, 0);
+        break;
+        default:
+            InitScroll(BANK(mapintro), &mapintro, 0, 0);
+        break;
+    }
+    INIT_FONT(font, PRINT_BKG);
+    print_target = PRINT_BKG;
 }
 
 void UPDATE(){
