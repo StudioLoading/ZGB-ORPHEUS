@@ -20,7 +20,7 @@ void START() {
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
-    onote_hp = 8;
+    onote_hp = 12;
     frmskip = 0;
     left_right = -2;
 }

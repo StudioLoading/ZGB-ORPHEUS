@@ -82,7 +82,6 @@ void START() {
 		Sprite* s_butt2 = SpriteManagerAdd(SpriteButterfly, ((UINT16) 35u << 3), ((UINT16) 58u << 3));
 		struct EnemyInfo* butt2_data = (struct EnemyInfo*) s_butt2->custom_data;
 		butt2_data->e_configured = 2;
-		Sprite* s_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 30u << 3), ((UINT16) 60u << 3));
 	//INITSCROLL
 		InitScroll(BANK(omapintro), &omapintro, coll_tiles_intro, coll_surface_intro);
 	//HUD

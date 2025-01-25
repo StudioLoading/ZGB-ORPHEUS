@@ -17,6 +17,7 @@
 
 IMPORT_MAP(mapintro);
 IMPORT_MAP(intro0map);
+IMPORT_MAP(intro1map);
 IMPORT_TILES(font);
 
 extern UINT8 J_INT;
@@ -32,6 +33,9 @@ void START(){
     switch(intro_page_counter){
         case 0u:
 	        InitScroll(BANK(intro0map), &intro0map, 0, 0);
+        break;
+        case 1u:
+	        InitScroll(BANK(intro1map), &intro1map, 0, 0);
         break;
         default:
             InitScroll(BANK(mapintro), &mapintro, 0, 0);

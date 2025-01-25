@@ -87,17 +87,15 @@ void START() {
 					area_enemy_counter = 1;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
 					e_configure(e_enemy, SKELETON);
-					Sprite* e_enemy_2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 16u << 3), ((UINT16) 14u << 3));
-					e_configure(e_enemy_2, SKELETON);
 				}break;
 				case HADES_FOUR:{
 					area_enemy_counter = 1;
-					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 7u << 3), ((UINT16) 14u << 3));
-					e_configure(e_enemy, SKELETON_KEY);
-					Sprite* e_enemy_2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 15u << 3), ((UINT16) 2u << 3));
+					Sprite* e_enemy = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
+					e_configure(e_enemy, DOG);
+					/*Sprite* e_enemy_2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 15u << 3), ((UINT16) 2u << 3));
 					e_configure(e_enemy_2, SKELETON);
 					Sprite* e_enemy_3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 9u << 3), ((UINT16) 7u << 3));
-					e_configure(e_enemy_3, SKELETON);
+					e_configure(e_enemy_3, SKELETON);*/
 				}break;
 			}
 		}
@@ -181,8 +179,8 @@ void UPDATE() {
 			}
 		}
 	//GHOSTS
-		if(current_map == HADES_THREE){
-			if(idle_countdown < 10 && idle_countdown > 0){
+		if(current_map > HADES_TWO && current_map < BOSS_CHARON){
+			if(in_dialog == 0 && idle_countdown < 10 && idle_countdown > 0){
 				UINT16 ghost_spawnx = ((UINT16) 19u << 3);
 				INT8 ghost_vx = -1;
 				MirroMode ghost_mirror = NO_MIRROR;

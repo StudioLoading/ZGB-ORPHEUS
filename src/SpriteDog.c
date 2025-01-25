@@ -1,95 +1,105 @@
 #include "Banks/SetAutoBank.h"
 
+#include "SGB.h"
+#include "BankManager.h"
 #include "ZGBMain.h"
+#include "Keys.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
 
 #include "custom_datas.h"
-#include "CircleMath.h"
+
+const UINT8 a_dog_hidden[] = {1, 0};
+const UINT8 a_dog_up[] = {4, 5,6,5,6};
+const UINT8 a_dog_idle_up[] = {4, 5,5,5,5};
+const UINT8 a_dog_down[] = {2, 1,7};
+const UINT8 a_dog_idle_down[] = {4, 1,1,1,1};
+const UINT8 a_dog_h[] = {3, 4,3,2};
+const UINT8 a_dog_idle_h[] = {1, 2};
+const UINT8 a_dog_repelled[] = {2, 0,1};
+const UINT8 a_dog_preattack_h[] = {8, 8,2,2,8,2,2,2,2};
+
+extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type) BANKED;
+extern void e_update_anim(struct EnemyInfo* e_data, UINT8 sprite_type) BANKED;
+extern void e_dog_management(Sprite* s_enemy) BANKED;
+extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+
+void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 
-const UINT8 dog_up[] = {2, 5,6};
-const UINT8 dog_h[] = {4, 2,3,4,3};
-const UINT8 dog_down[] = {2, 0,1};
-
-const UINT8 dog_idleup[] = {2, 5,6};
-const UINT8 dog_idleh[] = {1, 2};
-const UINT8 dog_idledown[] = {2, 0,1};
-
-void START() {
-    THIS->lim_x = THIS->x;
-    THIS->lim_y = THIS->y;
-    SetSpriteAnim(THIS, dog_idledown, 4u);
-    struct EnemyInfo* dog_data = (struct EnemyInfo*) THIS->custom_data;
-    dog_data->e_state = GENERIC_IDLE;
-    dog_data->wait = 120u;
-    dog_data->frmskip = 2u;
-    dog_data->frmskip_wait = 0u;
-    dog_data->e_configured = 0u;
-    dog_data->vx = 1;
-    /*    
-	SPRITE_STATES e_state;
-	UINT8 tile_collision;
-	INT8 vx;
-	INT8 vy;
-    UINT8 wait;
-	UINT8 frmskip_wait;
-	UINT8 e_configured;
-	UINT8 frmskip;
-     */
+void START(){
+    SetSpriteAnim(THIS, a_dog_hidden, 6);
+    struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+    e_data->frmskip = 2u;
+    e_start(e_data, IDLE_DOWN);
+    if(_cpu != CGB_TYPE){
+        OBP1_REG = PAL_DEF(0, 0, 1, 3);
+        SPRITE_SET_PALETTE(THIS,1);
+    }
+    e_change_state(THIS, IDLE_RIGHT, THIS->type);
 }
 
-void UPDATE() {
-    struct EnemyInfo* dog_data = (struct EnemyInfo*) THIS->custom_data;
-    if(dog_data->e_configured == 0){ return; }
-    dog_data->frmskip_wait--;
-    if(dog_data->frmskip_wait > 0){
+void UPDATE(){
+    struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+    if(e_data->e_configured == 0){
         return;
     }
-    dog_data->frmskip_wait = dog_data->frmskip;
-    switch(dog_data->e_state){
-        case GENERIC_IDLE:
-            dog_data->wait--;
-            if(dog_data->wait == 0){
-                dog_data->e_configured++;
-                if(dog_data->e_configured > 3u){
-                    dog_data->e_configured = 1u;
-                }
-                dog_data->wait = 80;
-                if(dog_data->e_configured == 2){
-                    dog_data->wait = 120;
-                }
-                SetSpriteAnim(THIS, dog_h, 24u);
-                if(dog_data->vx == 1){ dog_data->vx = -1;}
-                else{dog_data->vx = 1;}
-                dog_data->vy = 0;
-                dog_data->e_state = GENERIC_WALK;
-            }
+    e_dog_management(THIS);
+}
+
+void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
+    switch(new_state){
+        case IDLE_UP: 
+            SetSpriteAnim(s_enemy, a_dog_idle_up, 4);
         break;
-        case GENERIC_WALK:{
-            UINT8 cos_position = dog_data->tile_collision + 64u;
-            if(dog_data->e_configured == 1){
-                THIS->x = THIS->lim_x + (dog_data->vx * ((sine_wave[cos_position]) >> 2));
-                THIS->y = THIS->lim_y + ((sine_wave[dog_data->tile_collision]) >> 3);
-            }else if(dog_data->e_configured == 2){
-                THIS->x = THIS->lim_x + (dog_data->vx * ((sine_wave[cos_position]) >> 4));
-                THIS->y = THIS->lim_y + ((sine_wave[dog_data->tile_collision]) >> 2);
-            }
-            dog_data->tile_collision += 3u;
-            dog_data->wait--;
-            if(dog_data->wait <= 10){
-                dog_data->wait = 180u;
-                if(dog_data->e_configured == 2){
-                    dog_data->wait = 60u;
-                }
-                SetSpriteAnim(THIS, dog_idledown, 4u);
-                dog_data->e_state = GENERIC_IDLE;
-            }
-        }break;
+        case WALK_UP: 
+            SetSpriteAnim(s_enemy, a_dog_up, 6);
+        break;
+        case IDLE_DOWN: 
+            SetSpriteAnim(s_enemy, a_dog_idle_down, 4);
+        break;      
+        case WALK_DOWN:
+            SetSpriteAnim(s_enemy, a_dog_down, 6);
+        break;
+        case IDLE_LEFT: 
+            s_enemy->mirror = V_MIRROR;
+            SetSpriteAnim(s_enemy, a_dog_idle_h, 8);
+        break;        
+        case WALK_LEFT:
+            s_enemy->mirror = V_MIRROR;
+            SetSpriteAnim(s_enemy, a_dog_h, 8);
+        break;
+        case IDLE_RIGHT: 
+            s_enemy->mirror = NO_MIRROR;
+            SetSpriteAnim(s_enemy, a_dog_idle_h, 8);
+        break;
+        case WALK_RIGHT: 
+            s_enemy->mirror = NO_MIRROR;
+            SetSpriteAnim(s_enemy, a_dog_h, 8);
+        break;
+        case HIT:
+            SetSpriteAnim(s_enemy, a_dog_repelled, 12);
+        break;
+        case PREATTACK_RIGHT:
+            s_enemy->mirror = NO_MIRROR;
+            SetSpriteAnim(s_enemy, a_dog_preattack_h, 12);
+        break;
+        case PREATTACK_UP:
+            SetSpriteAnim(s_enemy, a_dog_up, 8);
+        break;
+        case PREATTACK_LEFT:
+            s_enemy->mirror = V_MIRROR;
+            SetSpriteAnim(s_enemy, a_dog_preattack_h, 12);
+        break;
+        case PREATTACK_DOWN:
+            SetSpriteAnim(s_enemy, a_dog_down, 12);
+        break;
     }
 }
 
-void DESTROY() {
+void DESTROY(){
+    e_destroy(THIS, THIS->type);
 }

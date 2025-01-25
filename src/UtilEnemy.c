@@ -20,8 +20,10 @@ extern UINT8 orpheus_attack_cooldown;
 extern SONG song_selection;
 extern MACROMAP current_map;
 extern UINT8 area_enemy_counter;
+extern UINT8 in_dialog;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
@@ -31,7 +33,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type)
 void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 void e_management(Sprite* s_enemy) BANKED;
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
-void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED;
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 
 void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED{
@@ -56,6 +58,9 @@ void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED{
         case SpriteSkeleton:
             skeleton_update_anim(s_enemy, e_data->e_state);
         break;
+        case SpriteDog:
+            dog_update_anim(s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -71,7 +76,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case WALK_LEFT: e_data->wait = 0; e_data->vx = -1; e_data->vy = 0; break;
         case IDLE_DOWN: case IDLE_UP: case IDLE_LEFT: case IDLE_RIGHT:
             switch(e_sprite_type){
-                case SpriteSkeleton: 
+                case SpriteSkeleton:
+                case SpriteDog:
                     e_data->wait = 160u;
                 break;
             }
@@ -88,6 +94,12 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
             SpriteManagerRemoveSprite(s_enemy);
             spawn_death_animation(s_enemy->x, s_enemy->y);
         break;
+        case PREATTACK_RIGHT:
+        case PREATTACK_UP:
+        case PREATTACK_LEFT:
+        case PREATTACK_DOWN:
+            e_data->wait = 120; 
+        break;
     }
     switch(e_data->e_state){
         case GENERIC_IDLE: 
@@ -99,7 +111,9 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
     e_update_anim(s_enemy, e_sprite_type);
 }
 
+
 void e_management(Sprite* s_enemy) BANKED{
+    if(in_dialog) return;
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->frmskip_wait > 0){
@@ -111,7 +125,7 @@ void e_management(Sprite* s_enemy) BANKED{
         if(e_data->wait > 0){
             e_data->wait--;
         }else{
-            e_turn(s_enemy, e_sprite_type);
+            e_turn(s_enemy, e_sprite_type, 0);
         }
     }
     if(e_data->e_state == HIT){
@@ -169,18 +183,29 @@ void e_management(Sprite* s_enemy) BANKED{
     }
     if(e_data->frmskip_wait == 0){
         e_data->frmskip_wait = e_data->frmskip;
+        INT8 delta_y = s_enemy->y - s_orpheus->y; 
+        INT8 delta_x = s_enemy->x - s_orpheus->x;
         switch (e_data->e_state){
             case WALK_LEFT:
             case WALK_RIGHT:
-                if(e_data->wait < 100){//check if Orpheus is over or above enemy
-                    INT8 delta_y = s_enemy->y - s_orpheus->y; 
+                if(e_data->wait < 30){//check if Orpheus is over or above enemy
                     if(delta_y > 40){//enemy molto sotto orpheus
                         e_change_state(s_enemy, WALK_UP, e_sprite_type);
-                    }
-                    if(delta_y < -40){//enemy molto sopra orpheus
+                    }else if(delta_y < -40){//enemy molto sopra orpheus
                         e_change_state(s_enemy, WALK_DOWN, e_sprite_type);
                     }
                 }
+            break;
+            case WALK_UP:
+            case WALK_DOWN:
+                if(e_data->wait < 30){//check if Orpheus is over or above enemy
+                    if(delta_x > 40){//enemy molto a destra di orpheus
+                        e_change_state(s_enemy, WALK_LEFT, e_sprite_type);
+                    }else if(delta_x < -40){//enemy molto a sinistra di orpheus
+                        e_change_state(s_enemy, WALK_RIGHT, e_sprite_type);
+                    }
+                }
+
             break;
         }
         switch (e_data->e_state){
@@ -195,10 +220,10 @@ void e_management(Sprite* s_enemy) BANKED{
                 }
 				if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
                     if(e_data->e_state != HIT){
-                        e_turn(s_enemy, e_sprite_type);
+                        e_turn(s_enemy, e_sprite_type, 0);
                     }else{e_destroy(s_enemy, e_sprite_type);}
 				}
-                e_data->tile_collision = TranslateSprite(THIS, e_data->vx, e_data->vy);
+                e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
                 if(e_data->tile_collision){
                     e_check_tile_collision(s_enemy, e_sprite_type);
                 }
@@ -209,25 +234,41 @@ void e_management(Sprite* s_enemy) BANKED{
 
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
-    e_turn(s_enemy, e_sprite_type);
+    switch(e_sprite_type){
+        case SpriteSkeleton:
+            e_turn(s_enemy, e_sprite_type, 0);
+        break;
+        case SpriteDog:
+            e_turn(s_enemy, e_sprite_type, TURN_COUNTERCLOCKWISE);
+        break;
+    }
 }
 
-void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
+void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED{
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
-    UINT8 wise = 0;
-    if(e_data->wait > 120u){
-        wise = TURN_CLOCKWISE;
-    }else{
-        wise = TURN_COUNTERCLOCKWISE;
-    }
-    e_data->e_configured++;//used as a counter on same turn wise
-    if(e_data->e_configured < 5 && wise == TURN_COUNTERCLOCKWISE){
-        wise = TURN_CLOCKWISE;
-    }else if(e_data->e_configured < 9 && wise == TURN_CLOCKWISE){
-        wise = TURN_COUNTERCLOCKWISE;
-    }else if(e_data->e_configured >= 9){
-        wise = TURN_OPPOSITE;
-        e_data->e_configured = 1;
+    //mi scosto dalla collisione
+        if(e_data->tile_collision){
+            if(e_data->vx > 0){ THIS->x-=2; }
+            if(e_data->vx < 0){ THIS->x+=2; }
+            if(e_data->vy > 0){ THIS->y-=2; }
+            if(e_data->vy < 0){ THIS->y+=2; }
+        }
+    UINT8 wise = forced_wise;
+    if(wise == 0){// non ho forzato la girata
+        if(e_data->wait > 120u){
+            wise = TURN_CLOCKWISE;
+        }else{
+            wise = TURN_COUNTERCLOCKWISE;
+        }
+        e_data->e_configured++;//used as a counter on same turn wise
+        if(e_data->e_configured < 5 && wise == TURN_COUNTERCLOCKWISE){
+            wise = TURN_CLOCKWISE;
+        }else if(e_data->e_configured < 9 && wise == TURN_CLOCKWISE){
+            wise = TURN_COUNTERCLOCKWISE;
+        }else if(e_data->e_configured >= 9){
+            wise = TURN_OPPOSITE;
+            e_data->e_configured = 1;
+        }
     }
     switch(wise){
         case TURN_CLOCKWISE:
@@ -255,25 +296,26 @@ void e_turn(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
             }
         break;
     }
-    
-    switch(e_data->e_state){
-        case IDLE_LEFT: 
-            e_change_state(s_enemy, WALK_LEFT, e_sprite_type); break;
-        case IDLE_RIGHT: 
-            e_change_state(s_enemy, WALK_RIGHT, e_sprite_type); break;
-        case IDLE_UP: 
-            e_change_state(s_enemy, WALK_UP, e_sprite_type); break;
-        case IDLE_DOWN: 
-            e_change_state(s_enemy, WALK_DOWN, e_sprite_type); break;
-        case GENERIC_WALK:
-            e_change_state(s_enemy, WALK_DOWN, e_sprite_type); break;
-        break;
+    if(e_sprite_type != SpriteDog){//se non è un cane, riparti subito
+        switch(e_data->e_state){
+            case IDLE_LEFT: 
+                e_change_state(s_enemy, WALK_LEFT, e_sprite_type); break;
+            case IDLE_RIGHT: 
+                e_change_state(s_enemy, WALK_RIGHT, e_sprite_type); break;
+            case IDLE_UP: 
+                e_change_state(s_enemy, WALK_UP, e_sprite_type); break;
+            case IDLE_DOWN: 
+                e_change_state(s_enemy, WALK_DOWN, e_sprite_type); break;
+            case GENERIC_WALK:
+                e_change_state(s_enemy, WALK_DOWN, e_sprite_type); break;
+            break;
+        }
     }
 }
 
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     if(current_map == HADES_FOUR){
-        Sprite* s_key = SpriteManagerAdd(SpriteItem, s_enemy->x + 8u, s_enemy->y + 16u);
+        Sprite* s_key = SpriteManagerAdd(SpriteItem, s_enemy->x + 8u, s_enemy->y + 10u);
         struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
         key_data->item_type = KEY;
         key_data->i_configured = 1u;

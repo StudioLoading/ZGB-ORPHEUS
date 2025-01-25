@@ -21,7 +21,11 @@ typedef enum{
 	JUMP,
 	ATTACK,
 	HIT,
-	DIE
+	DIE,
+	PREATTACK_RIGHT,
+	PREATTACK_UP,
+	PREATTACK_LEFT,
+	PREATTACK_DOWN
 }SPRITE_STATES;
 
 struct OrpheusInfo{
@@ -35,7 +39,9 @@ struct OrpheusInfo{
 typedef enum{
 	SKELETON,
 	SKELETON_SHIELD,
-	SKELETON_KEY
+	SKELETON_KEY,
+	DOG,
+	DOG_KEY
 }ENEMY_TYPE;
 
 struct EnemyInfo{
@@ -73,6 +79,10 @@ struct ItemInfo{
 	INT8 counter_x;
 	INT8 counter_y;
 	INT8 counter_verso;//1 o -1
+};
+
+struct ExclamationInfo{
+	INT8 counter;
 };
 
 typedef enum{

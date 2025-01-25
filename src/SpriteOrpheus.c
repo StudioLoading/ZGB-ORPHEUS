@@ -215,7 +215,7 @@ void UPDATE() {
                 }
 			}
         }
-    orhpeus_change_state(new_state);
+        orhpeus_change_state(new_state);
     //BEHAVE
         orpheus_behave();
     //SPRITE COLLISION
@@ -592,8 +592,14 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
                 case IDLE_LEFT: case IDLE_RIGHT:
                     SetSpriteAnim(THIS, a_orpheus_hit_h, 24u);
                 break;
+                case ATTACK:
+                    SetSpriteAnim(THIS, a_orpheus_hit_down, 24u);
+                    SpriteManagerRemoveSprite(s_lyre);
+                break;
             }
-            orpheus_state_before = orpheus_info->ow_state;
+            if(orpheus_info->ow_state != ATTACK){
+                orpheus_state_before = orpheus_info->ow_state;
+            }
             orpheus_hit();
         break;
         case ATTACK:
