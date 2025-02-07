@@ -17,6 +17,7 @@ extern unsigned char EMPTY_STRING_20[];
 
 void START() {
 	//INITSCROLL
+        SetWindowY(144);//TO HIDE THE OLD HUD
 		InitScroll(BANK(mapenddemo), &mapenddemo, 0, 0);
 	//MAP
         INIT_FONT(font, PRINT_BKG);
