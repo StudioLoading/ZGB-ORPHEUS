@@ -33,7 +33,7 @@ void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 void START(){
     SetSpriteAnim(THIS, a_dog_hidden, 6);
     struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
-    e_data->frmskip = 2u;
+    e_data->frmskip = 1u;
     e_start(e_data, IDLE_DOWN);
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -66,19 +66,19 @@ void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
         break;
         case IDLE_LEFT: 
             s_enemy->mirror = V_MIRROR;
-            SetSpriteAnim(s_enemy, a_dog_idle_h, 8);
+            SetSpriteAnim(s_enemy, a_dog_idle_h, 12);
         break;        
         case WALK_LEFT:
             s_enemy->mirror = V_MIRROR;
-            SetSpriteAnim(s_enemy, a_dog_h, 8);
+            SetSpriteAnim(s_enemy, a_dog_h, 12);
         break;
         case IDLE_RIGHT: 
             s_enemy->mirror = NO_MIRROR;
-            SetSpriteAnim(s_enemy, a_dog_idle_h, 8);
+            SetSpriteAnim(s_enemy, a_dog_idle_h, 12);
         break;
         case WALK_RIGHT: 
             s_enemy->mirror = NO_MIRROR;
-            SetSpriteAnim(s_enemy, a_dog_h, 8);
+            SetSpriteAnim(s_enemy, a_dog_h, 12);
         break;
         case HIT:
             SetSpriteAnim(s_enemy, a_dog_repelled, 12);
@@ -88,7 +88,7 @@ void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             SetSpriteAnim(s_enemy, a_dog_preattack_h, 12);
         break;
         case PREATTACK_UP:
-            SetSpriteAnim(s_enemy, a_dog_up, 8);
+            SetSpriteAnim(s_enemy, a_dog_up, 12);
         break;
         case PREATTACK_LEFT:
             s_enemy->mirror = V_MIRROR;

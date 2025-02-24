@@ -2,6 +2,7 @@
 
 #include "BankManager.h"
 #include "ZGBMain.h"
+#include "Music.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -21,6 +22,7 @@ IMPORT_MAP(maphades003);
 IMPORT_MAP(maphades004);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
+DECLARE_MUSIC(danger);
 
 
 const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,
@@ -36,11 +38,12 @@ const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,
 const UINT8 coll_s_hades001[] = {0};
 
 UINT8 dialog_block_interact = 0u;
+Sprite* s_block_00;
+Sprite* s_block_01;
+UINT8 hades_music_started = 0u;
 
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
-Sprite* s_block_00;
-Sprite* s_block_01;
 extern Sprite* s_orpheus;
 extern INT8 a_walk_counter_y;
 extern UINT8 button_pressed;
@@ -124,7 +127,11 @@ void START() {
 		if(solved_map >= current_map){
 			Anim_Opendoors();
 		}
-	//VARS
+	//VARS & MUSIC
+		if(hades_music_started == 0){
+			PlayMusic(danger, 1);
+			hades_music_started = 1;
+		}
 }
 
 void UPDATE() {

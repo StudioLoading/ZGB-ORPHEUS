@@ -2,6 +2,7 @@
 
 #include "BankManager.h"
 #include "ZGBMain.h"
+#include "Music.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -12,6 +13,7 @@
 
 IMPORT_MAP(mapenddemo);
 IMPORT_TILES(font);
+DECLARE_MUSIC(intro);
 
 extern unsigned char EMPTY_STRING_20[];
 
@@ -29,6 +31,7 @@ void START() {
     PRINT(0, 12, "PROJECT TO STAY UP  ");
     PRINT(0, 13, "DATED ON ITS DEVELOP");
     PRINT(0, 14, "MENT!               ");
+    //PlayMusic(intro, 1);
 }
 
 void UPDATE() {

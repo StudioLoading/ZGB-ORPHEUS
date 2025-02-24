@@ -4,6 +4,7 @@
 #include "ZGBMain.h"
 #include "Palette.h"
 #include "Keys.h"
+#include "Music.h"
 #include "Scroll.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
@@ -21,11 +22,15 @@ IMPORT_MAP(mapcredit2);
 IMPORT_MAP(mapcredit3);
 IMPORT_MAP(maptitlescreen);
 IMPORT_TILES(font);
+DECLARE_MUSIC(intro);
 
 UINT8 note_countdown = 0;
 UINT8 note_configured = 1;
 UINT8 rndm = 0u;
 UINT8 credit_page_counter = 0u;
+UINT8 intro_music_started = 0u;
+
+extern UINT8 stop_music_on_new_state;
 
 uint8_t sgb_checked = 0;
 extern void manage_sgb_border() BANKED;
@@ -54,7 +59,15 @@ void START(){
         break;
     }
     INIT_FONT(font, PRINT_BKG);
-    PRINT(12, 17, "VO.O.XV");
+    PRINT(17, 17, "XXI");
+    NR52_REG = 0x80; //Enables sound, you should always setup this first
+    NR51_REG = 0xFF; //Enables all channels (left and right)
+    NR50_REG = 0x44; //Max volumes
+    stop_music_on_new_state = 0;
+    if(intro_music_started == 0){
+        intro_music_started = 1;
+        PlayMusic(intro, 1);
+    }
 }
 
 void UPDATE(){

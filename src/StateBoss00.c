@@ -2,6 +2,7 @@
 
 #include "BankManager.h"
 #include "ZGBMain.h"
+#include "Music.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -17,6 +18,7 @@
 IMPORT_MAP(maphades005);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
+DECLARE_MUSIC(battle);
 
 
 const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
@@ -31,7 +33,7 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
 const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
-UINT16 end_demo_counter = 250u;
+UINT16 end_demo_counter = 600u;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -92,6 +94,7 @@ void START() {
         INIT_FONT(font, PRINT_WIN);
         INIT_HUD(hudmap);
 	//VARS
+	PlayMusic(battle, 1);
 }
 
 void UPDATE() {
