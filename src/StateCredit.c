@@ -59,7 +59,9 @@ void START(){
         break;
     }
     INIT_FONT(font, PRINT_BKG);
-    PRINT(17, 17, "XXI");
+    if(credit_page_counter == 0){
+        PRINT(13, 17, "DEMO");
+    }
     NR52_REG = 0x80; //Enables sound, you should always setup this first
     NR51_REG = 0xFF; //Enables all channels (left and right)
     NR50_REG = 0x44; //Max volumes

@@ -14,16 +14,23 @@
 #include "Dialog.h"
 
 #define TEXT_TIMEOUT 40
+#define NOTE_COUNT_MAX 105
 
 IMPORT_MAP(mapintro);
-IMPORT_MAP(intro0map);
-IMPORT_MAP(intro1map);
+IMPORT_MAP(intro0);
+IMPORT_MAP(intro1);
+IMPORT_MAP(intro2);
+IMPORT_MAP(intro3);
+IMPORT_MAP(intro4);
 IMPORT_TILES(font);
 
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
 
 extern unsigned char EMPTY_STRING_20[];
+extern UINT8 note_countdown;
+extern UINT8 rndm;
+extern UINT8 note_configured;
 UINT8 intro_page_counter = 0u;
 UINT8 text_wait = 0u;
 UINT8 text_shown = 0u;
@@ -32,10 +39,18 @@ void START(){
     text_shown = 0u;
     switch(intro_page_counter){
         case 0u:
-	        InitScroll(BANK(intro0map), &intro0map, 0, 0);
-        break;
         case 1u:
-	        InitScroll(BANK(intro1map), &intro1map, 0, 0);
+	        InitScroll(BANK(intro0), &intro0, 0, 0);
+        break;
+        case 2u:
+	        InitScroll(BANK(intro2), &intro2, 0, 0);
+        break;
+        case 3u:
+	        InitScroll(BANK(intro3), &intro3, 0, 0);
+        break;
+        case 4u:
+        case 5u:
+	        InitScroll(BANK(intro4), &intro4, 0, 0);
         break;
         default:
             InitScroll(BANK(mapintro), &mapintro, 0, 0);
@@ -43,12 +58,33 @@ void START(){
     }
     INIT_FONT(font, PRINT_BKG);
     print_target = PRINT_BKG;
+    note_countdown = NOTE_COUNT_MAX - 20;
+    note_configured = 0;
+    rndm = 1;
 }
 
 void UPDATE(){
     if(text_wait < TEXT_TIMEOUT){
         text_wait++;
         return;
+    }
+    if(intro_page_counter == 1){
+        note_countdown++;
+        rndm++;
+        if(note_countdown >= NOTE_COUNT_MAX){
+            note_countdown = 0;
+            note_configured++;
+            if(note_configured > 3){
+                note_configured = 1;
+            }
+            Sprite* s_note = SpriteManagerAdd(SpriteNote, 40u, 55u + (note_configured << 1));
+            struct EnemyInfo* note_data = (struct EnemyInfo*) s_note->custom_data;
+            if(rndm | 0){
+                note_data->e_configured = note_configured+1;
+            }else{
+                note_data->e_configured = note_configured;
+            }
+        }
     }
     if(text_shown == 0u){
         switch(intro_page_counter){
