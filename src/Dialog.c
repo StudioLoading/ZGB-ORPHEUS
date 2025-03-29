@@ -43,7 +43,7 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d3, "I NEED TO FIND MY   ", 21);
             memcpy(d4, "LYRE FIRST! I THINK ", 21);
             memcpy(d5, "MY MOTHER CALLIOPE  ", 21);
-            memcpy(d6, "SENT IT AROUND HERE.", 21);
+            memcpy(d6, "LEFT IT AROUND HERE.", 21);
             memcpy(d7, EMPTY_STRING_20, 21);
             memcpy(d8, "   ...LET'S GO!     ", 21);
             memcpy(d9, EMPTY_STRING_20, 21);
@@ -87,11 +87,11 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
         break;
         case HADES_ENTRANCE:
             memcpy(d1, "HERE I AM... THE    ", 21);
-            memcpy(d2, "GATES OF THE HADES! ", 21);
+            memcpy(d2, "GATES OF HADES!     ", 21);
             memcpy(d3, "I WILL SAVE YOU,    ", 21);
             memcpy(d4, "EURYDICE! NO MATTER ", 21);
             memcpy(d5, "HOW MANY CHALLENGES ", 21);
-            memcpy(d6, "MAY I FACE!         ", 21);
+            memcpy(d6, "I FACE!             ", 21);
             return 6u;
         break;
         case TUTORIAL_PLAY:

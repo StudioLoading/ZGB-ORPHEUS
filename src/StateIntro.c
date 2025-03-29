@@ -46,10 +46,13 @@ void START(){
 	        InitScroll(BANK(intro2), &intro2, 0, 0);
         break;
         case 3u:
-	        InitScroll(BANK(intro3), &intro3, 0, 0);
+            InitScroll(BANK(intro1), &intro1, 0, 0);
         break;
         case 4u:
+            InitScroll(BANK(intro3), &intro3, 0, 0);
+        break;
         case 5u:
+        case 6u:
 	        InitScroll(BANK(intro4), &intro4, 0, 0);
         break;
         default:
@@ -116,6 +119,15 @@ void UPDATE(){
                 PRINT(0,17, "                    ");
             break;
             case 3u:
+                PRINT(0,11, "                    ");
+                PRINT(0,12, "ORPHEUS BRAVELY     ");
+                PRINT(0,13, "DEFEATED THE SNAKE, ");
+                PRINT(0,14, "TRYING TO PROTECT   ");
+                PRINT(0,15, "HIS BELOVED NYMPH   ");
+                PRINT(0,16, "FROM DANGER.        ");
+                PRINT(0,17, "                    ");
+            break;
+            case 4u:
                 PRINT(0,11, "THE POOR NYMPH SUD  ");
                 PRINT(0,12, "DENLY DIED, LEAVING ");
                 PRINT(0,13, "ORPHEUS ALONE WITH  ");
@@ -124,16 +136,16 @@ void UPDATE(){
                 PRINT(0,16, "                    ");
                 PRINT(0,17, "                    ");
             break;
-            case 4u:
+            case 5u:
                 PRINT(0,11, "HOWEVER, THE YOUNG  ");
                 PRINT(0,12, "HERO DID NOT GIVE UP");
                 PRINT(0,13, "BECAUSE HE KNEW     ");
                 PRINT(0,14, "THAT EVERY SOUL OF  ");
-                PRINT(0,15, "THE DEPARTED ENDED  ");
-                PRINT(0,16, "DOWN IN THE         ");
+                PRINT(0,15, "THE DEPARTED FOUND  ");
+                PRINT(0,16, "THEIR WAY TO THE    ");
                 PRINT(0,17, "UNDERWORLD.         ");
             break;
-            case 5u:
+            case 6u:
                 PRINT(0,11, "DETERMINED TO BRING ");
                 PRINT(0,12, "EURYDICE BACK TO LI ");
                 PRINT(0,13, "FE, ORPHEUS GATHERED");
@@ -149,7 +161,7 @@ void UPDATE(){
 
     if(KEY_TICKED(J_START) || KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
         intro_page_counter++;
-        if(intro_page_counter < 6){
+        if(intro_page_counter < 7){
             SetState(StateIntro);
         }else{
             SetState(StateStart);

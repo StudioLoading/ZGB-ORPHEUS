@@ -111,6 +111,7 @@ void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
+extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 
 
 void level_common_start() BANKED{
@@ -140,7 +141,7 @@ void level_common_start() BANKED{
 }
 
 void level_common_update_play() BANKED{
-	//restart current map
+	// restart current map
 		if(restart_current_map > 0){
 			restart_current_map++;
 			if(restart_current_map >= 120){
@@ -212,7 +213,8 @@ void level_common_update_play() BANKED{
 	//check enemy counter
 		switch(current_map){
 			case HADES_THREE:
-				if(area_enemy_counter == 0u && changing_map == 0u){
+			case HADES_FOUR:
+				if(area_enemy_counter == 0u && changing_map == 0u && solved_map < current_map){
 					solve_current_map();
 				}
 			break;
@@ -433,7 +435,7 @@ void init_write_dialog(UINT8 nlines) BANKED{
 }
 
 void write_dialog() BANKED{	
-    if(KEY_TICKED(J_UP)){init_write_dialog(n_lines);}
+    if(KEY_TICKED(J_SELECT)){init_write_dialog(n_lines);}
     switch(dialog_ready){
 		case 0u:
 		{
@@ -445,23 +447,23 @@ void write_dialog() BANKED{
 		}
 		break;
 		case 1:
-		{
-        if(KEY_PRESSED(J_ATK) || KEY_PRESSED(J_INT) || KEY_PRESSED(J_DOWN)){
-            wait_char = 1u;
-        }
-        wait_char--;
-        if(wait_char == 0u){//mostra lettera successiva
-            if(writing_line <= n_lines){
-				show_next_character();
-			}else{
-				if(KEY_TICKED(J_UP)){
-					init_write_dialog(n_lines);
-				}else if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
-					dialog_ready = 2u;
+			{
+			if(KEY_PRESSED(J_ATK) || KEY_PRESSED(J_INT) || KEY_PRESSED(J_DOWN)){
+				wait_char = 1u;
+			}
+			wait_char--;
+			if(wait_char == 0u){//mostra lettera successiva
+				if(writing_line <= n_lines){
+					show_next_character();
+				}else{
+					if(KEY_TICKED(J_SELECT)){
+						init_write_dialog(n_lines);
+					}else if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT) || KEY_TICKED(J_UP) || KEY_TICKED(J_DOWN) || KEY_TICKED(J_LEFT) || KEY_TICKED(J_RIGHT) || KEY_RELEASED(J_INT) || KEY_RELEASED(J_ATK) || KEY_RELEASED(J_UP) || KEY_RELEASED(J_DOWN) || KEY_RELEASED(J_LEFT) || KEY_RELEASED(J_RIGHT) || KEY_RELEASED(J_START)){
+						dialog_ready = 2u;
+					}
 				}
 			}
-        }
-		}
+			}
 		break;
 		case 2u:
 			redraw_hud = 1;
@@ -495,7 +497,7 @@ void fill_bar_idx(UINT8 i, UINT8 r) BANKED{
 
 void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
     draw_button(x, y, t);
-	if(button_pressed == 0){
+	if(button_pressed == 0 && solved_map < current_map){
 		button_pressed = 1;
 		solve_current_map();
 	}else if(button_pressed == 1){
@@ -563,6 +565,15 @@ void go_to_next_map() BANKED{
 		break;
 		case HADES_FOUR:
 			prev_map = HADES_THREE;
+			next_map = HADES_FIVE;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			new_state = IDLE_DOWN;
+			//a_walk_counter_y = 16;
+			next_state = StateHades00;
+		break;
+		case HADES_FIVE:
+			prev_map = HADES_FOUR;
 			next_map = BOSS_CHARON;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
@@ -636,12 +647,20 @@ void go_to_prev_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
+		case HADES_FIVE:
+			prev_map = HADES_FOUR;
+			next_map = HADES_FIVE;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
 	}
 	SetState(next_state);
 }
 
 void solve_current_map() BANKED{
 	solved_map = current_map;
+	my_play_fx(4u, 20, 0x3f, 0xe8, 0x4d, 0xc0, 0x00);
 	Anim_Opendoors();
 }
 

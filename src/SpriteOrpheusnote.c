@@ -16,13 +16,13 @@ INT8 onote_hp = 64;
 void START() {
     THIS->lim_x = 10u;
     THIS->lim_y = 10u;
+    onote_hp = 12;
+    frmskip = 0;
+    left_right = -2;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
-    onote_hp = 12;
-    frmskip = 0;
-    left_right = -2;
 }
 
 void UPDATE() {

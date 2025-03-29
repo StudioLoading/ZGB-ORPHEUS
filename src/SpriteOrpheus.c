@@ -428,6 +428,12 @@ void orpheus_behave() BANKED{
             }
             if(orpheus_wait <= 1){
                 SpriteManagerRemoveSprite(s_lyre);
+                switch(orpheus_state_before){
+                    case WALK_UP: orpheus_state_before = IDLE_UP; break;
+                    case WALK_DOWN: orpheus_state_before = IDLE_DOWN; break;
+                    case WALK_LEFT: orpheus_state_before = IDLE_LEFT; break;
+                    case WALK_RIGHT: orpheus_state_before = IDLE_RIGHT; break;
+                }
                 orhpeus_change_state(orpheus_state_before);
                 return;
             }

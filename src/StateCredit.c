@@ -29,6 +29,7 @@ UINT8 note_configured = 1;
 UINT8 rndm = 0u;
 UINT8 credit_page_counter = 0u;
 UINT8 intro_music_started = 0u;
+INT8 test_sfx_counter = 0;
 
 extern UINT8 stop_music_on_new_state;
 
@@ -40,6 +41,9 @@ void START(){
     manage_sgb_border();
     switch(credit_page_counter){
         case 0u: 
+            NR52_REG = 0x80; //Enables sound, you should always setup this first
+            NR51_REG = 0xFF; //Enables all channels (left and right)
+            NR50_REG = 0x77; //Max volumes
             Sprite* s_note0 = SpriteManagerAdd(SpriteNote, 0, 40u);
             struct EnemyInfo* note_data = (struct EnemyInfo*) s_note0->custom_data;
             note_data->e_configured = 3;
@@ -62,9 +66,6 @@ void START(){
     if(credit_page_counter == 0){
         PRINT(13, 17, "DEMO");
     }
-    NR52_REG = 0x80; //Enables sound, you should always setup this first
-    NR51_REG = 0xFF; //Enables all channels (left and right)
-    NR50_REG = 0x44; //Max volumes
     stop_music_on_new_state = 0;
     if(intro_music_started == 0){
         intro_music_started = 1;

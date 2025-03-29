@@ -92,7 +92,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
             }break;
             case PREATTACK_RIGHT:
-                if((s_enemy->anim_frame == 0 || s_enemy->anim_frame == 3) && e_data->e_configured == 1){
+                if((s_enemy->anim_frame == 0) && e_data->e_configured == 1){
                     SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+18, s_enemy->y - 2);
                     e_data->e_configured = 2;
                 }else{
@@ -104,7 +104,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
             break;
             case PREATTACK_UP:
-                if(s_enemy->anim_frame == 0 || s_enemy->anim_frame == 3){
+                if(s_enemy->anim_frame == 0){
                     if(e_data->e_configured == 1){
                         SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+2, s_enemy->y - 4);
                         e_data->e_configured = 2;
@@ -118,7 +118,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
             break;
             case PREATTACK_LEFT:
-                if(s_enemy->anim_frame == 0 || s_enemy->anim_frame == 3){
+                if(s_enemy->anim_frame == 0){
                     if(e_data->e_configured == 1){
                         SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+18, s_enemy->y - 2);
                         e_data->e_configured = 2;
@@ -132,7 +132,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
             break;
             case PREATTACK_DOWN:
-                if(s_enemy->anim_frame == 0 || s_enemy->anim_frame == 3){
+                if(s_enemy->anim_frame == 0){
                     if(e_data->e_configured == 1){
                         SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+2, s_enemy->y - 4);
                         e_data->e_configured = 2;

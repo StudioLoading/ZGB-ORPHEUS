@@ -109,7 +109,7 @@ void UPDATE() {
 		level_common_update_play();
 	}
 	//DIALOGS
-		switch(current_map){
+		/*switch(current_map){
 			case HADES_THREE:
 				if(s_orpheus->y > ((UINT16) 6u << 3) || s_orpheus->x > ((UINT16) 5u << 3)){
 					if(dialog_block_interact == 0u){
@@ -118,7 +118,7 @@ void UPDATE() {
 					}
 				}
 			break;
-		}
+		}*/
 	//BLOCK MANAGEMENT
 		if(current_map == HADES_ONE){
 			if(init_block_button == 0){

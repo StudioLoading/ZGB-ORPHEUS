@@ -52,10 +52,10 @@ extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern void write_dialog() BANKED;
+extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
-extern void solve_current_map() BANKED;
 
 void START() {
 	level_common_start();
@@ -146,6 +146,7 @@ void UPDATE() {
 				g_data->e_configured = 1u;
 				solved_map = current_map;
 				draw_button(32u, 24u, 124u);
+				my_play_fx(4u, 50, 0x35, 0x52, 0x5b, 0xc0, 0x00);
 			}
 		}else{
 			if(scroll_target->y > ((UINT16) 25u << 3) && scroll_target->y < ((UINT16) 35u << 3)){

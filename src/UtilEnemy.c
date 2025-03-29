@@ -314,7 +314,7 @@ void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED{
 }
 
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
-    if(current_map == HADES_FOUR){
+    if(current_map == HADES_FIVE){
         Sprite* s_key = SpriteManagerAdd(SpriteItem, s_enemy->x + 8u, s_enemy->y + 10u);
         struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
         key_data->item_type = KEY;

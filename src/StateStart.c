@@ -80,6 +80,7 @@ void START(){
         case HADES_TWO:
         case HADES_THREE:
         case HADES_FOUR:
+        case HADES_FIVE:
             SetState(StateHades00);
         break;
         case BOSS_CHARON:

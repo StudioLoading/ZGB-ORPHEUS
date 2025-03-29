@@ -38,6 +38,7 @@ const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,
 const UINT8 coll_s_hades001[] = {0};
 
 UINT8 dialog_block_interact = 0u;
+UINT8 dialog_skeleton_lyre = 0u;
 Sprite* s_block_00;
 Sprite* s_block_01;
 UINT8 hades_music_started = 0u;
@@ -56,6 +57,7 @@ extern MACROMAP max_map;
 extern MACROMAP solved_map;
 extern UINT16 idle_countdown;
 extern UINT8 area_enemy_counter;
+extern UINT8 changing_map;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -92,13 +94,20 @@ void START() {
 					e_configure(e_enemy, SKELETON);
 				}break;
 				case HADES_FOUR:{
+					area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					e_configure(e_skeleton1, SKELETON);
+					
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton2, SKELETON);
+
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
+					e_configure(e_skeleton3, SKELETON);
+				}break;
+				case HADES_FIVE:{
 					area_enemy_counter = 1;
-					Sprite* e_enemy = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
-					e_configure(e_enemy, DOG);
-					/*Sprite* e_enemy_2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 15u << 3), ((UINT16) 2u << 3));
-					e_configure(e_enemy_2, SKELETON);
-					Sprite* e_enemy_3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 9u << 3), ((UINT16) 7u << 3));
-					e_configure(e_enemy_3, SKELETON);*/
+					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
+					e_configure(e_dog, DOG);
 				}break;
 			}
 		}
@@ -117,6 +126,9 @@ void START() {
 				InitScroll(BANK(maphades003), &maphades003, coll_t_hades001, coll_s_hades001);
 			break;
 			case HADES_FOUR:
+				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_FIVE:
 				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
 			break;
 		}
@@ -142,23 +154,25 @@ void UPDATE() {
 		level_common_update_play();
 	}
 	//DIALOGS
-		switch(current_map){
-			case HADES_ONE:
-				if(s_orpheus->y > ((UINT16) 6u << 3)){
-					if(dialog_block_interact == 0u){
-						init_write_dialog(prepare_dialog(TUTORIAL_BLOCKS));
-						dialog_block_interact = 1u;
+		if(changing_map == 0){
+			switch(current_map){
+				case HADES_ONE:
+					if(s_orpheus->y > ((UINT16) 6u << 3)){
+						if(dialog_block_interact == 0u){
+							init_write_dialog(prepare_dialog(TUTORIAL_BLOCKS));
+							dialog_block_interact = 1u;
+						}
 					}
-				}
-			break;
-			case HADES_THREE:
-				if(s_orpheus->y > ((UINT16) 6u << 3) || s_orpheus->x > ((UINT16) 5u << 3)){
-					if(dialog_block_interact == 0u){
-						init_write_dialog(prepare_dialog(TUTORIAL_PLAY));
-						dialog_block_interact = 1u;
+				break;
+				case HADES_THREE:
+					if(s_orpheus->y > ((UINT16) 6u << 3) || s_orpheus->x > ((UINT16) 5u << 3)){
+						if(dialog_skeleton_lyre == 0u){
+							init_write_dialog(prepare_dialog(TUTORIAL_PLAY));
+							dialog_skeleton_lyre = 1u;
+						}
 					}
-				}
-			break;
+				break;
+			}
 		}
 	//BLOCK MANAGEMENT
 		if(current_map == HADES_ONE){
