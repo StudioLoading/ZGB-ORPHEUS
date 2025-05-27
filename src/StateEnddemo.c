@@ -15,8 +15,6 @@ IMPORT_MAP(mapenddemo);
 IMPORT_TILES(font);
 DECLARE_MUSIC(intro);
 
-extern unsigned char EMPTY_STRING_20[];
-
 void START() {
 	//INITSCROLL
         SetWindowY(144);//TO HIDE THE OLD HUD

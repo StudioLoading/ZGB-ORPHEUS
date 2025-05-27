@@ -41,7 +41,6 @@ extern UINT8 init_block_button;
 extern Sprite* s_block_00;
 extern Sprite* s_block_01;
 extern Sprite* s_orpheus;
-extern INT8 a_walk_counter_y;
 extern UINT8 button_pressed;
 extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;

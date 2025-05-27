@@ -13,6 +13,7 @@
 #include "custom_datas.h"
 #include "Dialog.h"
 #include "UtilAnim.h"
+#include "UtilsLoadSave.h"
 
 
 IMPORT_MAP(maphades000);
@@ -34,6 +35,8 @@ const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,
 6,7,8,2,
 //next
 88,90,92,94,96,98,100,102,104,
+//cartel
+116, 118,
 0};
 const UINT8 coll_s_hades001[] = {0};
 
@@ -42,11 +45,11 @@ UINT8 dialog_skeleton_lyre = 0u;
 Sprite* s_block_00;
 Sprite* s_block_01;
 UINT8 hades_music_started = 0u;
+UINT8 show_cartel = 0u;
 
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
 extern Sprite* s_orpheus;
-extern INT8 a_walk_counter_y;
 extern UINT8 button_pressed;
 extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;
@@ -58,6 +61,7 @@ extern MACROMAP solved_map;
 extern UINT16 idle_countdown;
 extern UINT8 area_enemy_counter;
 extern UINT8 changing_map;
+extern UINT8 sprite_stack_top;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -71,8 +75,10 @@ extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void START() {
 	level_common_start();
 	//SPRITES
-		s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
-		if(solved_map < current_map){
+		if(sprite_stack_top > 0){
+			RestoreSprites();
+		}else if(solved_map < current_map){
+			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 			switch(current_map){
 				case HADES_ONE:{
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 5u << 3), ((UINT16) 8u << 3) + 3u);
@@ -110,6 +116,8 @@ void START() {
 					e_configure(e_dog, DOG);
 				}break;
 			}
+		}else{
+			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 		}
 	//INITSCROLL
 		switch(current_map){
@@ -133,7 +141,7 @@ void START() {
 			break;
 		}
 	//HUD
-        INIT_FONT(font, PRINT_WIN);
+        //INIT_FONT(font, PRINT_WIN);
         INIT_HUD(hudmap);
 	//EXIT DOORS OPEN
 		if(solved_map >= current_map){
@@ -154,25 +162,20 @@ void UPDATE() {
 		level_common_update_play();
 	}
 	//DIALOGS
-		if(changing_map == 0){
+		if(show_cartel){
 			switch(current_map){
+				case HADES_ZERO:
+					prepare_dialog(HADES_WELCOME);
+				break;
 				case HADES_ONE:
-					if(s_orpheus->y > ((UINT16) 6u << 3)){
-						if(dialog_block_interact == 0u){
-							init_write_dialog(prepare_dialog(TUTORIAL_BLOCKS));
-							dialog_block_interact = 1u;
-						}
-					}
+					prepare_dialog(TUTORIAL_BLOCKS);
 				break;
 				case HADES_THREE:
-					if(s_orpheus->y > ((UINT16) 6u << 3) || s_orpheus->x > ((UINT16) 5u << 3)){
-						if(dialog_skeleton_lyre == 0u){
-							init_write_dialog(prepare_dialog(TUTORIAL_PLAY));
-							dialog_skeleton_lyre = 1u;
-						}
-					}
+					prepare_dialog(TUTORIAL_PLAY);
 				break;
 			}
+			SaveSprites();
+			SetState(StateCartel);
 		}
 	//BLOCK MANAGEMENT
 		if(current_map == HADES_ONE){

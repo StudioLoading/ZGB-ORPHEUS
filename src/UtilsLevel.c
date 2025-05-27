@@ -21,8 +21,8 @@
 
 #define SPAWNX_CAMERA_TUTORIAL 30
 #define SPAWNY_CAMERA_TUTORIAL 11
-#define SPAWNX_HADES_TUTORIAL 10
-#define SPAWNY_HADES_TUTORIAL 11
+#define SPAWNX_CAMERA_HADES 10
+#define SPAWNY_CAMERA_HADES 11
 
 #define SPAWNX_TUTORIAL 29
 #define SPAWNY_TUTORIAL 7
@@ -95,6 +95,7 @@ extern UINT8 J_INT;
 extern UINT8 J_ATK;
 extern unsigned char EMPTY_STRING_20[];
 extern SPRITE_STATES new_state;
+extern UINT8 show_cartel;
 
 void level_common_start() BANKED;
 void level_common_update_play() BANKED;
@@ -109,7 +110,6 @@ void go_to_next_map() BANKED;
 void solve_current_map() BANKED;
 void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
-extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 
@@ -138,6 +138,7 @@ void level_common_start() BANKED{
 		changing_map = 0u;
 		restart_current_map = 0;
 		anim_counter = 0u;
+		show_cartel = 0u;
 }
 
 void level_common_update_play() BANKED{
@@ -421,7 +422,7 @@ void UpdateHUD() BANKED{
 		if(orpheus_haskey == 1){
 			PRINT(0,0,"                  01");
 		}else{
-			PRINT(0,0,"                    ");
+			//PRINT(0,0,"                    ");
 		}
 }
 
@@ -531,8 +532,8 @@ void go_to_next_map() BANKED{
 			solved_map = current_map;
 			prev_map = TUTORIAL;
 			next_map = HADES_ONE;
-			camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3);
-			camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4u;
+			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
+			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4u;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES000_IN << 3);
 			//a_walk_counter_y = -8;
@@ -614,8 +615,8 @@ void go_to_prev_map() BANKED{
 			next_map = HADES_ONE;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_OUT << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES000_OUT << 3);
-			camera_spawnx = ((UINT16) SPAWNX_HADES_TUTORIAL << 3);
-			camera_spawny = ((UINT16) SPAWNY_HADES_TUTORIAL << 3) + 4;
+			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
+			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4;
 			next_state = StateHades00;
 		break;
 		case HADES_ONE:

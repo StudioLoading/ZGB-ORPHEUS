@@ -103,6 +103,36 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d6, EMPTY_STRING_20, 21);
             return 6u;
         break;
+        case TUTORIAL_CARTEL:
+            memcpy(d0, "WELCOME YOU BASTAR", 21);
+            memcpy(d1, "WELCOME YOU BASTAR", 21);
+            memcpy(d2, "GATES OF HADES!   ", 21);
+            memcpy(d3, "I WILL SAVE YOU,  ", 21);
+            memcpy(d4, "EURYDICE! NO MATTE", 21);
+            memcpy(d5, "HOW MANY CHALLENGE", 21);
+            memcpy(d6, "I FACE!           ", 21);
+            memcpy(d7, "I FACE!           ", 21);
+            memcpy(d8, "I FACE!           ", 21);
+            memcpy(d9, "I FACE!           ", 21);
+            memcpy(d10, "I FACE!           ", 21);
+            memcpy(d11, "I FACE!           ", 21);
+            memcpy(d12, "I FACE!           ", 21);
+        break;
+        case HADES_WELCOME:
+            memcpy(d0, "WELCOME YOU BASTAR", 21);
+            memcpy(d1, "WELCOME YOU BASTAR", 21);
+            memcpy(d2, "GATES OF HADES!   ", 21);
+            memcpy(d3, "I WILL SAVE YOU,  ", 21);
+            memcpy(d4, "EURYDICE! NO MATTE", 21);
+            memcpy(d5, "HOW MANY CHALLENGE", 21);
+            memcpy(d6, "I FACE!           ", 21);
+            memcpy(d7, "I FACE!           ", 21);
+            memcpy(d8, "I FACE!           ", 21);
+            memcpy(d9, "I FACE!           ", 21);
+            memcpy(d10, "I FACE!           ", 21);
+            memcpy(d11, "I FACE!           ", 21);
+            memcpy(d12, "I FACE!           ", 21);
+        break;
     }
     return 0u;
 }

@@ -77,6 +77,7 @@ extern MACROMAP current_map;
 extern UINT8 orpheus_haskey;
 extern MACROMAP solved_map;
 extern INT8 restart_current_map;
+extern UINT8 show_cartel;
 
 void orpheus_behave() BANKED;
 void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
@@ -138,12 +139,12 @@ void UPDATE() {
         return;
     }
     //CHECK DEATH
-    if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
-        orhpeus_change_state(DIE);
-        return;
-    }
-    if(orpheus_info->ow_state == DIE) {return;}
-    colliding_block = 0u;
+        if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
+            orhpeus_change_state(DIE);
+            return;
+        }
+        if(orpheus_info->ow_state == DIE) {return;}
+        colliding_block = 0u;
     //CAMERA MOVEMENT ON CHANGING MAP
         if(a_walk_counter_y < 0){
             a_walk_counter_y++;
@@ -236,6 +237,7 @@ void UPDATE() {
                         orpheus_pickup(iospr);
                     break;
                     case SpriteGhost:
+                    case SpriteDog:
                     case SpriteSkeleton:
                         if(orpheus_info->ow_state != HIT){
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
@@ -469,11 +471,18 @@ void orpheus_update_position() BANKED{
         return;
     }
     orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);
+    //CHECK COLLISION WITH DAMAGE TILES
     if(orpheus_info->tile_collision){
-        //CHECK COLLISION WITH DAMAGE TILES
         switch(current_state){
             case StateTutorial:
                 switch(orpheus_info->tile_collision){
+                    case 6u: 
+                    case 30u://CARTEL!
+                        if(KEY_PRESSED(J_INT)){
+                            prepare_dialog(TUTORIAL_PLAY);
+                            SetState(StateCartel);
+                        }
+                    break;
                     case 11u:
                     case 12u:
                         go_to_next_map();
@@ -498,6 +507,11 @@ void orpheus_update_position() BANKED{
                         }
                         if(solved_map >= current_map){
                             go_to_next_map();
+                        }
+                    break;
+                    case 116u: case 118u://CARTEL!
+                        if(KEY_PRESSED(J_INT)){
+                            show_cartel = 1;
                         }
                     break;
                 }

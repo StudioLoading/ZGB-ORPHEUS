@@ -27,7 +27,6 @@ IMPORT_TILES(font);
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
 
-extern unsigned char EMPTY_STRING_20[];
 extern UINT8 note_countdown;
 extern UINT8 rndm;
 extern UINT8 note_configured;

@@ -19,7 +19,7 @@ IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
 DECLARE_MUSIC(tutorial);
 
-const UINT8 coll_tiles_intro[] = {4u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23u, 24u, 25u, 32u, 33u, 34u, 35u, 36u, 40u, 41u, 51u, 53u, 60u, 61u, 62u, 63u, 64u, 65u, 80u,
+const UINT8 coll_tiles_intro[] = {4u, 6u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23u, 24u, 25u, 30u, 32u, 33u, 34u, 35u, 36u, 40u, 41u, 51u, 53u, 60u, 61u, 62u, 63u, 64u, 65u, 80u,
 82u, 87u, 88u, 89u, 90u, 91u, 92u, 93u, 94u, 95u, 96u, 106u,
 108u, 109u, 110, 111, 114u,115u,
 //here the hit tiles
@@ -38,7 +38,6 @@ extern UINT8 tutorial_hades_entrance;
 extern UINT8 tutorial_get_lyre;
 extern UINT8 in_dialog;
 extern Sprite* s_orpheus;
-extern INT8 a_walk_counter_y;
 extern UINT8 button_pressed;
 extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;
@@ -46,8 +45,8 @@ extern UINT8 has_lyre;
 extern MACROMAP solved_map;
 extern MACROMAP current_map;
 extern UINT8 other_gate_created;
+extern INT8 a_walk_counter_y;
 
-extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
