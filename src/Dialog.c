@@ -133,6 +133,41 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d11, "I FACE!           ", 21);
             memcpy(d12, "I FACE!           ", 21);
         break;
+        case HADES_MOVE_BLOCK:
+            memcpy(d1, "BY PRESSING THE IN  ", 21);
+            memcpy(d2, "TERACT BUTTON YOU   ", 21);
+            memcpy(d3, "ARE ABLE TO PUSH    ", 21);
+            memcpy(d4, "HEAVY BLOCKS.       ", 21);
+            //memcpy(d5, "TO OPEN GATES AS THE", 21);
+            memcpy(d6, "TO OPEN GATES AS THE", 21);
+            memcpy(d7, "EXIT OF THIS ROOM   ", 21);
+            memcpy(d8, "THE BUTTON MUST BE  ", 21);
+            memcpy(d9, "PUSHED TO THE FLOOR ", 21);
+            memcpy(d10, "BY MOVING AN HEAVY  ", 21);
+            memcpy(d11, "BLOCK OVER IT.      ", 21);
+        break;
+        case HADES_USE_KEY:
+            memcpy(d1, "YOU WILL FIND OLD ", 21);
+            memcpy(d2, "LOCKED DOORS ON   ", 21);
+            memcpy(d3, "YOUR PATH.        ", 21);
+            memcpy(d5, "THOSE CAN BE      ", 21);
+            memcpy(d6, "UNLOCKED WITH A   ", 21);
+            memcpy(d7, "KEY.              ", 21);
+            //memcpy(d5, "TO OPEN GATES AS THE", 21);
+            memcpy(d8, "GRAB IT AND INTER-", 21);
+            memcpy(d9, "ACT WITH THE DOOR ", 21);
+            memcpy(d10, "TO USE IT.       ", 21);
+        break;
+        case HADES_KILL_ENEMY:
+            memcpy(d1, "SOME GATES OPEN IF", 21);
+            memcpy(d2, "AND ONLY IF THERE ", 21);
+            memcpy(d3, "ARE NO HADES CREA,", 21);
+            memcpy(d4, "TURES AROUND.     ", 21);
+            //memcpy(d5, "TO OPEN GATES AS THE", 21);
+            memcpy(d6, "USE THE FATUOUS   ", 21);
+            memcpy(d7, "FIRE AT YOUR ADVAN", 21);
+            memcpy(d8, "TAGE.             ", 21);
+        break;
     }
     return 0u;
 }

@@ -278,8 +278,8 @@ void UpdateHUD() BANKED{
 		UPDATE_HUD_TILE(0,2,26);
 		UPDATE_HUD_TILE(5,1,47);
 		UPDATE_HUD_TILE(5,2,52);
-		UPDATE_HUD_TILE(6,1,0);
-		UPDATE_HUD_TILE(6,2,0);
+		UPDATE_HUD_TILE(6,1,55);
+		UPDATE_HUD_TILE(6,2,56);
 		UPDATE_HUD_TILE(13,1,25);
 		UPDATE_HUD_TILE(13,2,26);
 		UPDATE_HUD_TILE(19,1,27);
@@ -418,11 +418,9 @@ void UpdateHUD() BANKED{
 			}
 		}
 	//KEY
-		print_target = PRINT_WIN;
 		if(orpheus_haskey == 1){
-			PRINT(0,0,"                  01");
-		}else{
-			//PRINT(0,0,"                    ");
+			UPDATE_HUD_TILE(6,1,53);
+			UPDATE_HUD_TILE(6,2,54);
 		}
 }
 

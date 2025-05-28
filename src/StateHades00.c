@@ -168,10 +168,13 @@ void UPDATE() {
 					prepare_dialog(HADES_WELCOME);
 				break;
 				case HADES_ONE:
-					prepare_dialog(TUTORIAL_BLOCKS);
+					prepare_dialog(HADES_MOVE_BLOCK);
+				break;
+				case HADES_TWO:
+					prepare_dialog(HADES_USE_KEY);
 				break;
 				case HADES_THREE:
-					prepare_dialog(TUTORIAL_PLAY);
+					prepare_dialog(HADES_KILL_ENEMY);
 				break;
 			}
 			SaveSprites();
