@@ -272,7 +272,7 @@ void UpdateHUD() BANKED{
 	//STRUCTURE
 		INT8 idx = 0;
 		for(idx = 0; idx <= 19; idx++){
-			UPDATE_HUD_TILE(idx,0,0);
+			UPDATE_HUD_TILE(idx,0,57);
 		}
 		UPDATE_HUD_TILE(0,1,25);
 		UPDATE_HUD_TILE(0,2,26);

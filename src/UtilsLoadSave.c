@@ -13,6 +13,7 @@ UINT8 sprite_stack_top = 0u;
 
 extern Sprite* sprite_manager_sprites[];
 extern UINT8* sprite_manager_sprites_pool;
+extern Sprite* s_orpheus;
 extern Sprite* s_block_00;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
@@ -47,6 +48,7 @@ void RestoreSprites() BANKED{
                 struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
                 i_data->i_configured = 1;
             break;
+            case SpriteOrpheus: s_orpheus = spr; break;
         }
         // puoi anche ripristinare altre info, se le hai salvate
     }

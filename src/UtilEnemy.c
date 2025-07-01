@@ -129,9 +129,8 @@ void e_management(Sprite* s_enemy) BANKED{
         }
     }
     if(e_data->e_state == HIT){
-        {
         // aumento velocità abbassando frameskip
-        e_data->frmskip = 4u;
+            e_data->frmskip = 4u;
         //fix MIRROR for rounding animation
             if(s_enemy->anim_frame == 3){
                 s_enemy->mirror = V_MIRROR;
@@ -170,8 +169,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     e_data->vy = 0;
                 break;
             }
-        }
-        if(e_data->wait > 0){
+            if(e_data->wait > 0){
             e_data->wait--;
         }else{
             e_change_state(s_enemy, GENERIC_WALK, e_sprite_type);
