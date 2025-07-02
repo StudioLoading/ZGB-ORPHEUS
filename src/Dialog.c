@@ -168,6 +168,21 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d7, "FIRE AT YOUR ADVAN", 21);
             memcpy(d8, "TAGE.             ", 21);
         break;
+        case BOSS_CHARON_INTRO:
+            memcpy(d0, "CHARON:           ", 21);
+            memcpy(d1, "SOME GATES OPEN IF", 21);
+            memcpy(d2, "AND ONLY IF THERE ", 21);
+            memcpy(d3, "ARE NO HADES CREA,", 21);
+            memcpy(d4, "TURES AROUND.     ", 21);
+            memcpy(d5, "??????????????????", 21);
+            memcpy(d6, "USE THE FATUOUS   ", 21);
+            memcpy(d7, "FIRE AT YOUR ADVAN", 21);
+            memcpy(d8, "TAGE.             ", 21);
+            memcpy(d9, "TAGE.             ", 21);
+            memcpy(d10, "TAGE.             ", 21);
+            memcpy(d11, "TAGE.             ", 21);
+            memcpy(d12, "TAGE.             ", 21);
+        break;
     }
     return 0u;
 }

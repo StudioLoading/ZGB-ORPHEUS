@@ -51,6 +51,10 @@ void START(){
 
 void UPDATE(){
     if(KEY_TICKED(J_A)){
-        SetState(StateHades00);
+        if(current_map == BOSS_CHARON){
+            SetState(StateBoss00);
+        }else{
+            SetState(StateHades00);
+        }
     }
 }

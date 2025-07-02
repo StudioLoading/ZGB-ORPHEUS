@@ -17,12 +17,12 @@
 #define ANIM_COUNTER_MAX 84
 IMPORT_MAP(maphades005);
 IMPORT_MAP(hudmap);
-IMPORT_TILES(font);
+//IMPORT_TILES(font);
 DECLARE_MUSIC(battle);
 
 
 const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
-75,76, 107, 108, 111, 112,
+75,76,
 //here the hit tiles
 //84,85,86,87,
 //prev
@@ -34,6 +34,7 @@ const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
 UINT16 end_demo_counter = 600u;
+UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play!
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -55,6 +56,7 @@ extern UINT8 anim_counter;
 extern Sprite* s_charon_boat;
 extern Sprite* s_charon_hand_left;
 extern Sprite* s_charon_hand_right;
+extern INT8 a_walk_counter_y;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -64,6 +66,7 @@ extern void write_dialog() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+extern void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
 
 void START() {
 	level_common_start();
@@ -78,11 +81,11 @@ void START() {
 				}break;
 			}
 		}
-	//INITSCROLL
+	//INITSCROLL & BOSS SPRITES
 		switch(current_map){
 			case BOSS_CHARON: 
 				InitScroll(BANK(maphades005), &maphades005, coll_t_hades005, coll_s_hades005);
-				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 4u << 3) + 3u);
+				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 5u << 3));
 				Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
 				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
 				heart_data->item_type = HEART;
@@ -90,59 +93,36 @@ void START() {
 			break;
 		}
 	//HUD
-        INIT_FONT(font, PRINT_WIN);
+        //INIT_FONT(font, PRINT_WIN);
         INIT_HUD(hudmap);
 	//VARS
-	PlayMusic(battle, 1);
+		PlayMusic(battle, 1);
+	//PER STAGE
+		if(boss_intro == 0){
+			boss_intro = 1;
+			a_walk_counter_y = -52;
+		}else if(boss_intro == 3){
+		}
 }
 
 void UPDATE() {
-	end_demo_counter--;
+	/*end_demo_counter--;
 	if(end_demo_counter < 10){
 		SetState(StateEnddemo);
+	}*/
+	if(current_map == BOSS_CHARON && a_walk_counter_y == 0 && boss_intro == 1){
+		boss_intro = 2;
 	}
-	if(in_dialog){
-		write_dialog();
+	switch(boss_intro){
+		case 2:{
+			prepare_dialog(BOSS_CHARON_INTRO);
+			SetState(StateCartel);
+			boss_intro = 3;
+		}break;
+		case 3:
+			level_common_update_play();
+		break;
 	}
-	if(tutorial_go > 0){
-		level_common_update_play();
-	}
-	//DIALOGS
-		/*switch(current_map){
-			case HADES_THREE:
-				if(s_orpheus->y > ((UINT16) 6u << 3) || s_orpheus->x > ((UINT16) 5u << 3)){
-					if(dialog_block_interact == 0u){
-						init_write_dialog(prepare_dialog(TUTORIAL_PLAY));
-						dialog_block_interact = 1u;
-					}
-				}
-			break;
-		}*/
-	//BLOCK MANAGEMENT
-		if(current_map == HADES_ONE){
-			if(init_block_button == 0){
-				if(button_pressed == 1 || solved_map >= current_map){
-					draw_button(1u, 15u, 71u);
-				}else{
-					s_block_01->x = (UINT16) 3u << 3;
-					s_block_01->y = ((UINT16) 8u << 3) - 1u;
-				}
-				init_block_button = 1u;
-			}
-			if(button_pressed == 0){
-				UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
-				if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
-					press_release_button(1u, 15u, 71u);
-					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
-					block00_data->i_configured = 3;
-				}
-			}
-		}
-		if(s_orpheus->y > ((UINT16) 16u << 3)){
-			if(init_block_button == 1){
-				init_block_button = 0;
-			}
-		}
 	//GHOSTS
 	/*	if(current_map == HADES_THREE){
 			if(idle_countdown < 10 && idle_countdown > 0){

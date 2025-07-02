@@ -36,6 +36,13 @@ struct OrpheusInfo{
     INT8 charming;
 };
 
+struct CharonInfo{
+	SPRITE_STATES e_state;
+	UINT8 tile_collision;
+    UINT8 wait;
+	UINT8 wait_max;
+};
+
 typedef enum{
 	SKELETON,
 	SKELETON_SHIELD,

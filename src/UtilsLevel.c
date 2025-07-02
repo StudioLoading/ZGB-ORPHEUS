@@ -72,6 +72,8 @@ UINT8 anim_counter = 0u;
 UINT8 area_enemy_counter = 0u;
 UINT8 changing_map = 0u;
 INT8 restart_current_map = 0;
+INT8 boss_hp_max = 0;
+INT8 boss_hp_current = 0;
 
 extern UINT8 has_lyre;
 extern UINT16 orpheus_spawnx;
@@ -157,17 +159,19 @@ void level_common_update_play() BANKED{
 			return;
 		}
 	// orpheus_scroll_deltay
-		INT16 orpheus_scroll_deltay = s_orpheus->y - scroll_target->y;
-		if(orpheus_scroll_deltay < -72){
-			move_camera_up = 1;
-			move_camera_desty = scroll_target->y - 144u;
-			a_walk_counter_y = -32;
-			return;
-		}else if(orpheus_scroll_deltay > 40){
-			move_camera_down = 1;
-			move_camera_desty = scroll_target->y + 144u;
-			a_walk_counter_y = +32;
-			return;
+		if(current_map != BOSS_CHARON){
+			INT16 orpheus_scroll_deltay = s_orpheus->y - scroll_target->y;
+			if(orpheus_scroll_deltay < -72){
+				move_camera_up = 1;
+				move_camera_desty = scroll_target->y - 144u;
+				a_walk_counter_y = -32;
+				return;
+			}else if(orpheus_scroll_deltay > 40){
+				move_camera_down = 1;
+				move_camera_desty = scroll_target->y + 144u;
+				a_walk_counter_y = +32;
+				return;
+			}
 		}
 	// orpheus_scroll_deltax
 		INT16 orpheus_scroll_deltax = s_orpheus->x - scroll_target->x;
@@ -422,7 +426,19 @@ void UpdateHUD() BANKED{
 			UPDATE_HUD_TILE(6,1,53);
 			UPDATE_HUD_TILE(6,2,54);
 		}
-}
+	//BOSS HP
+		if(current_map == BOSS_CHARON){
+			INT8 idx_bosshp = 0;
+			UPDATE_HUD_TILE(6,0,0);
+			for(idx_bosshp = 0; idx_bosshp < boss_hp_current; idx_bosshp++){
+				UPDATE_HUD_TILE(7+idx_bosshp,0,59);
+			}
+			for(;idx_bosshp < boss_hp_max; idx_bosshp++){
+				UPDATE_HUD_TILE(7+idx_bosshp,0,60);
+			}
+			UPDATE_HUD_TILE(7+boss_hp_max,0,0);
+		}
+	}
 
 void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
