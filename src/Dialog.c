@@ -168,11 +168,11 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d7, "FIRE AT YOUR ADVAN", 21);
             memcpy(d8, "TAGE.             ", 21);
         break;
-        case BOSS_CHARON_INTRO:
-            memcpy(d0, "CHARON:           ", 21);
-            memcpy(d1, "SOME GATES OPEN IF", 21);
-            memcpy(d2, "AND ONLY IF THERE ", 21);
-            memcpy(d3, "ARE NO HADES CREA,", 21);
+        case HADES_DEATH:
+            memcpy(d0, "HADES DEATH!      ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "YOU DIE!          ", 21);
+            memcpy(d3, "                  ", 21);
             memcpy(d4, "TURES AROUND.     ", 21);
             memcpy(d5, "??????????????????", 21);
             memcpy(d6, "USE THE FATUOUS   ", 21);
@@ -182,6 +182,36 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d10, "TAGE.             ", 21);
             memcpy(d11, "TAGE.             ", 21);
             memcpy(d12, "TAGE.             ", 21);
+        break;
+        case BOSS_CHARON_INTRO:
+            memcpy(d0, "CHARON:           ", 21);
+            memcpy(d1, "YOUR LYRE CAN CON,", 21);
+            memcpy(d2, "TROL HIS BOAT FOR ", 21);
+            memcpy(d3, "A LIMITED PERIOD  ", 21);
+            memcpy(d4, "OF TIME. PUSH HIM ", 21);
+            memcpy(d5, "AGAINST THOSE     ", 21);
+            memcpy(d6, "STONES!           ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "WHEN HIS HANDS    ", 21);
+            memcpy(d9, "MOVE IN CIRCLES   ", 21);
+            memcpy(d10, "THE BOAT GETS    ", 21);
+            memcpy(d11, "UNDER HIS FULL   ", 21);
+            memcpy(d12, "CONTROL.         ", 21);
+        break;
+        case BOSS_CHARON_BEATED:
+            memcpy(d0, "CHARON:           ", 21);
+            memcpy(d1, "YOU BEATED ME     ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+            memcpy(d11, "                  ", 21);
+            memcpy(d12, "                  ", 21);
         break;
     }
     return 0u;

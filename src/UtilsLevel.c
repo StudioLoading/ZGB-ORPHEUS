@@ -71,7 +71,7 @@ UINT8 init_block_button = 0u;
 UINT8 anim_counter = 0u;
 UINT8 area_enemy_counter = 0u;
 UINT8 changing_map = 0u;
-INT8 restart_current_map = 0;
+UINT8 restart_current_map = 0u;
 INT8 boss_hp_max = 0;
 INT8 boss_hp_current = 0;
 
@@ -111,6 +111,7 @@ void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void go_to_next_map() BANKED;
 void solve_current_map() BANKED;
 void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+void reset_maps() BANKED;
 
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
@@ -138,18 +139,36 @@ void level_common_start() BANKED{
 		move_camera_left = 0u;
 		init_block_button = 0;
 		changing_map = 0u;
-		restart_current_map = 0;
+		restart_current_map = 0u;
 		anim_counter = 0u;
 		show_cartel = 0u;
 }
 
+void reset_maps() BANKED{
+	/*MACROMAP solved_map = HADES_FIVE; //TODO NONE
+MACROMAP current_map = BOSS_CHARON; //TODO TUTORIAL
+MACROMAP next_map = BOSS_CHARON; //TODO HADES_ZERO
+MACROMAP prev_map = HADES_FIVE; //TODO NONE
+MACROMAP max_map*/
+	if(current_map <= BOSS_CHARON){
+		solved_map = HADES_ZERO;
+		current_map = HADES_ZERO;
+		next_map = HADES_ONE;
+		prev_map = HADES_ZERO;
+		max_map = HADES_ZERO;
+	}
+}
+
 void level_common_update_play() BANKED{
 	// restart current map
-		if(restart_current_map > 0){
+		if(restart_current_map > 0u){
 			restart_current_map++;
-			if(restart_current_map >= 120){
+			if(restart_current_map >= 250u){
 				orpheus_hp = 4;
+				restart_current_map = 0u;
+				reset_maps();
 				SetState(StateHades00);
+				//TODO Perché non SetState(StateStart) ?
 			}
 			return;
 		}
@@ -275,9 +294,9 @@ void UpdateHUD() BANKED{
 	redraw_hud = 0;
 	//STRUCTURE
 		INT8 idx = 0;
-		for(idx = 0; idx <= 19; idx++){
+		/*for(idx = 0; idx <= 19; idx++){
 			UPDATE_HUD_TILE(idx,0,57);
-		}
+		}*/
 		UPDATE_HUD_TILE(0,1,25);
 		UPDATE_HUD_TILE(0,2,26);
 		UPDATE_HUD_TILE(5,1,47);

@@ -10,8 +10,12 @@
 
 #define BOAT_COUNT_MAX 80
 #define BOAT_FRMSKIP_MAX 1
-#define BOAT_FRMSKIP_MID 4
-#define BOAT_FRMSKIP_LOW 8
+#define BOAT_FRMSKIP_MID 2
+#define BOAT_FRMSKIP_LOW 3
+
+
+const UINT8 a_charonboat[] = {1, 1};
+const UINT8 a_charonboat_blink[] = {2, 0,1};
 
 UINT8 boat_count = 0u;
 INT8 boat_vx = 1;
@@ -30,7 +34,8 @@ void boat_turn() BANKED;
 
 
 void START() {
-    boat_frmskip_max = BOAT_FRMSKIP_MAX;
+    SetSpriteAnim(THIS, a_charonboat, 1u);
+    boat_frmskip_max = BOAT_FRMSKIP_LOW;
     boat_frmskip = boat_frmskip_max;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -53,6 +58,11 @@ void UPDATE() {
             break;
         }
         if(boss_intro < 3){return;}
+        if(charon_info.e_state == HIT){
+            SetSpriteAnim(THIS, a_charonboat_blink, 30u);
+        }else{
+            SetSpriteAnim(THIS, a_charonboat, 1u);
+        }
         if(charon_info.e_state != GENERIC_WALK){
             THIS->x = s_charon->x - 4u;
             THIS->y = s_charon->y + 16u; 
@@ -68,12 +78,13 @@ void UPDATE() {
             THIS->x = boat_walk_left_limit;
         }
     //boat_frmskip_max
-        if(boss_hp_current > 3){
-            boat_frmskip_max = BOAT_FRMSKIP_LOW;
-        }else if(boss_hp_current > 1){
+        if(boss_hp_current == 4){
             boat_frmskip_max = BOAT_FRMSKIP_MID;
-        }else{
-            boat_frmskip_max = BOAT_FRMSKIP_LOW;
+        }else if(boss_hp_current > 2){
+            boat_frmskip_max = BOAT_FRMSKIP_MAX;
+        }else{//speed up the boat!
+            boat_frmskip_max = BOAT_FRMSKIP_MAX;
+            //boat_vx = boat_vx * 2;
         }
     //TRANSLATION
         boat_frmskip--;

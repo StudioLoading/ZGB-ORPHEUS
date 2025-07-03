@@ -78,9 +78,10 @@ extern UINT8 orpheus_haskey;
 extern MACROMAP solved_map;
 extern INT8 restart_current_map;
 extern UINT8 show_cartel;
+extern UINT8 boss_intro;
 
 void orpheus_behave() BANKED;
-void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
+void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 void orpheus_update_position() BANKED;
 void orpheus_hit() BANKED;
 void orpheus_recharge() BANKED;
@@ -98,10 +99,10 @@ void START() {
     THIS->lim_y = 100;
     SetSpriteAnim(THIS, a_orpheus_idledown, 8u);
     new_state = GENERIC_IDLE;
-    orhpeus_change_state(IDLE_DOWN);
+    orpheus_change_state(THIS, IDLE_DOWN);
     if(tutorial_go == 0 || (current_map == HADES_ZERO && THIS->y > 50u)){
         SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
-        orhpeus_change_state(IDLE_UP);
+        orpheus_change_state(THIS, IDLE_UP);
     }
     orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
     orpheus_info->vx = 0;
@@ -140,7 +141,7 @@ void UPDATE() {
     }
     //CHECK DEATH
         if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
-            orhpeus_change_state(DIE);
+            orpheus_change_state(THIS, DIE);
             return;
         }
         if(orpheus_info->ow_state == DIE) {return;}
@@ -148,33 +149,33 @@ void UPDATE() {
     //CAMERA MOVEMENT ON CHANGING MAP
         if(a_walk_counter_y < 0){
             a_walk_counter_y++;
-            orhpeus_change_state(WALK_UP);
+            orpheus_change_state(THIS, WALK_UP);
             if(a_walk_counter_y == 0){
-                orhpeus_change_state(IDLE_UP);    
+                orpheus_change_state(THIS, IDLE_UP);    
             }
             orpheus_update_position();
             return;
         }else if(a_walk_counter_y > 0){
             a_walk_counter_y--;
-            orhpeus_change_state(WALK_DOWN);
+            orpheus_change_state(THIS, WALK_DOWN);
             if(a_walk_counter_y == 0){
-                orhpeus_change_state(IDLE_DOWN);    
+                orpheus_change_state(THIS, IDLE_DOWN);    
             }
             orpheus_update_position();
             return;
         }else if(a_walk_counter_x < 0){
             a_walk_counter_x++;
-            orhpeus_change_state(WALK_LEFT);
+            orpheus_change_state(THIS, WALK_LEFT);
             if(a_walk_counter_x == 0){
-                orhpeus_change_state(IDLE_LEFT);    
+                orpheus_change_state(THIS, IDLE_LEFT);    
             }
             orpheus_update_position();
             return;
         }else if(a_walk_counter_x > 0){
             a_walk_counter_x--;
-            orhpeus_change_state(WALK_RIGHT);
+            orpheus_change_state(THIS, WALK_RIGHT);
             if(a_walk_counter_x == 0){
-                orhpeus_change_state(IDLE_RIGHT);    
+                orpheus_change_state(THIS, IDLE_RIGHT);    
             }
             orpheus_update_position();
             return;
@@ -186,10 +187,10 @@ void UPDATE() {
     //MOVEMENTS
         if(in_dialog == 1){
             switch(orpheus_info->ow_state){
-                case WALK_UP: orhpeus_change_state(IDLE_UP); break;
-                case WALK_DOWN: orhpeus_change_state(IDLE_DOWN); break;
-                case WALK_LEFT: orhpeus_change_state(IDLE_LEFT); break;
-                case WALK_RIGHT: orhpeus_change_state(IDLE_RIGHT); break;
+                case WALK_UP: orpheus_change_state(THIS, IDLE_UP); break;
+                case WALK_DOWN: orpheus_change_state(THIS, IDLE_DOWN); break;
+                case WALK_LEFT: orpheus_change_state(THIS, IDLE_LEFT); break;
+                case WALK_RIGHT: orpheus_change_state(THIS, IDLE_RIGHT); break;
             }
             return;
         }
@@ -216,7 +217,7 @@ void UPDATE() {
                 }
 			}
         }
-        orhpeus_change_state(new_state);
+        orpheus_change_state(THIS, new_state);
     //BEHAVE
         orpheus_behave();
     //SPRITE COLLISION
@@ -239,7 +240,8 @@ void UPDATE() {
                     case SpriteGhost:
                     case SpriteDog:
                     case SpriteSkeleton:
-                        if(orpheus_info->ow_state != HIT){
+                    case SpriteCharonhand:
+                        if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
                             if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
                                 push_vx = e_data->vx;
@@ -247,7 +249,7 @@ void UPDATE() {
                             if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
                                 push_vy = e_data->vy;
                             }
-                            orhpeus_change_state(HIT);
+                            orpheus_change_state(THIS, HIT);
                         }
                     break;
                     case SpriteGate:
@@ -407,16 +409,16 @@ void orpheus_behave() BANKED{
                 push_vy = 0;
                 switch(orpheus_state_before){
                     case WALK_DOWN: case IDLE_DOWN:
-                        orhpeus_change_state(IDLE_DOWN);
+                        orpheus_change_state(THIS, IDLE_DOWN);
                     break;
                     case WALK_UP: case IDLE_UP: case GENERIC_IDLE: case GENERIC_WALK:
-                        orhpeus_change_state(IDLE_UP);
+                        orpheus_change_state(THIS, IDLE_UP);
                     break;
                     case WALK_LEFT: case IDLE_LEFT:
-                        orhpeus_change_state(IDLE_LEFT);
+                        orpheus_change_state(THIS, IDLE_LEFT);
                     break;
                     case WALK_RIGHT: case IDLE_RIGHT:
-                        orhpeus_change_state(IDLE_RIGHT);
+                        orpheus_change_state(THIS, IDLE_RIGHT);
                     break;
                 }
             }
@@ -436,7 +438,7 @@ void orpheus_behave() BANKED{
                     case WALK_LEFT: orpheus_state_before = IDLE_LEFT; break;
                     case WALK_RIGHT: orpheus_state_before = IDLE_RIGHT; break;
                 }
-                orhpeus_change_state(orpheus_state_before);
+                orpheus_change_state(THIS, orpheus_state_before);
                 return;
             }
         break;
@@ -524,14 +526,17 @@ void orpheus_update_position() BANKED{
             case StateHades00:
                 if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
                     orpheus_hitted = 0u;
-                    orhpeus_change_state(HIT);
+                    orpheus_change_state(THIS, HIT);
                 }
             break;
         }
 }
 
-void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
+void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED{
     if(orpheus_info->ow_state == arg_new_state && colliding_block == 0 && arg_new_state != DIE){
+        return;
+    }
+    if(orpheus_info->ow_state == DIE){
         return;
     }
     if(arg_new_state != IDLE_DOWN && arg_new_state != IDLE_UP
@@ -545,56 +550,56 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
                 orpheus_info->vx = 0;
                 orpheus_info->vy = 0;
             }
-            SetSpriteAnim(THIS, a_orpheus_idledown, 4u);
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_idledown, 4u);
         break;
         case IDLE_UP:
             if(inertia_x == 0){
                 orpheus_info->vx = 0;
                 orpheus_info->vy = 0;
             }
-            SetSpriteAnim(THIS, a_orpheus_idleup, 4u);
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_idleup, 4u);
         break;
         case IDLE_LEFT:
             if(inertia_x == 0){
                 orpheus_info->vx = 0;
                 orpheus_info->vy = 0;
             }
-            SetSpriteAnim(THIS, a_orpheus_idleh, 4u);
-            THIS->mirror = V_MIRROR;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_idleh, 4u);
+            arg_s_orpheus->mirror = V_MIRROR;
         break;
         case IDLE_RIGHT:
             if(inertia_x == 0){
                 orpheus_info->vx = 0;
                 orpheus_info->vy = 0;
             }
-            SetSpriteAnim(THIS, a_orpheus_idleh, 4u);
-            THIS->mirror = NO_MIRROR;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_idleh, 4u);
+            arg_s_orpheus->mirror = NO_MIRROR;
         break;
         case WALK_DOWN:
             inertia_y = 1;
             orpheus_info->vx = 0;
             orpheus_info->vy = 1;
-            SetSpriteAnim(THIS, a_orpheus_walk_down, 12u);
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_down, 12u);
         break;
         case WALK_UP:
             inertia_y = 1;
             orpheus_info->vx = 0;
             orpheus_info->vy = -1;
-            SetSpriteAnim(THIS, a_orpheus_walk_up, 12u);
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_up, 12u);
         break;
         case WALK_LEFT:
             inertia_x = 1;
             orpheus_info->vx = -1;
             orpheus_info->vy = 0;
-            SetSpriteAnim(THIS, a_orpheus_walk_h, 12u);
-            THIS->mirror = V_MIRROR;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_h, 12u);
+            arg_s_orpheus->mirror = V_MIRROR;
         break;
         case WALK_RIGHT:
             inertia_x = 1;
             orpheus_info->vx = 1;
             orpheus_info->vy = 0;
-            SetSpriteAnim(THIS, a_orpheus_walk_h, 12u);
-            THIS->mirror = NO_MIRROR;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_h, 12u);
+            arg_s_orpheus->mirror = NO_MIRROR;
         break;
         case HIT:
             hit_frameskip_max = 1;
@@ -602,18 +607,18 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
             switch(orpheus_info->ow_state){
                 case WALK_DOWN:
                 case IDLE_DOWN:
-                    SetSpriteAnim(THIS, a_orpheus_hit_down, 24u);
+                    SetSpriteAnim(arg_s_orpheus, a_orpheus_hit_down, 24u);
                 break;
                 case WALK_UP:
                 case IDLE_UP:
-                    SetSpriteAnim(THIS, a_orpheus_hit_up, 24u);
+                    SetSpriteAnim(arg_s_orpheus, a_orpheus_hit_up, 24u);
                 break;
                 case WALK_LEFT: case WALK_RIGHT:
                 case IDLE_LEFT: case IDLE_RIGHT:
-                    SetSpriteAnim(THIS, a_orpheus_hit_h, 24u);
+                    SetSpriteAnim(arg_s_orpheus, a_orpheus_hit_h, 24u);
                 break;
                 case ATTACK:
-                    SetSpriteAnim(THIS, a_orpheus_hit_down, 24u);
+                    SetSpriteAnim(arg_s_orpheus, a_orpheus_hit_down, 24u);
                     SpriteManagerRemoveSprite(s_lyre);
                 break;
             }
@@ -627,7 +632,7 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
             countdown_verso = 1;
             redraw_hud = 1;
             orpheus_info->charming = 1;
-            SetSpriteAnim(THIS, a_orpheus_attack_down, 1u);
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_attack_down, 1u);
             switch(song_selection){
                 case ATTRACT://charm
                     countdown_step_currentmax = COUNTDOWN_SKIP_ATTRACT;
@@ -646,14 +651,18 @@ void orhpeus_change_state(SPRITE_STATES arg_new_state) BANKED{
                 break;
             }
             countdown_step = countdown_step_currentmax;
-            s_lyre = SpriteManagerAdd(SpriteOrpheuslyre, THIS->x-4, THIS->y);
+            s_lyre = SpriteManagerAdd(SpriteOrpheuslyre, arg_s_orpheus->x-4, arg_s_orpheus->y);
             SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
         break;
         case DIE:
-            solved_map = current_map - 1;
-            restart_current_map = 1;
-            SetSpriteAnim(THIS, a_orpheus_dead, 1u);
-            spawn_death_animation(THIS->x, THIS->y);
+            if(restart_current_map == 0u){
+                restart_current_map = 1u;
+            }
+            boss_intro = 0;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_dead, 1u);
+            if(orpheus_info->ow_state != arg_new_state){//make sure death anim once
+                spawn_death_animation(arg_s_orpheus->x, arg_s_orpheus->y);
+            }
         break;
     }
     orpheus_info->ow_state = arg_new_state;
@@ -675,7 +684,7 @@ void orpheus_pickup(Sprite* itemsprite) BANKED{
                 has_lyre = 1u;
                 init_write_dialog(prepare_dialog(FOUND_LYRE));
                 SpriteManagerRemoveSprite(itemsprite);
-                orhpeus_change_state(IDLE_DOWN);
+                orpheus_change_state(THIS, IDLE_DOWN);
             }
             if(KEY_TICKED(J_ATK)){
                 init_write_dialog(prepare_dialog(PRESS_INTERACT));

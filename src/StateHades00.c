@@ -46,6 +46,7 @@ Sprite* s_block_00;
 Sprite* s_block_01;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
+UINT8 death_countdown = 0u;
 
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
@@ -155,12 +156,21 @@ void START() {
 }
 
 void UPDATE() {
-	if(in_dialog){
+	/*if(in_dialog){
 		write_dialog();
-	}
+	}*/
 	if(tutorial_go > 0){
 		level_common_update_play();
 	}
+	//DEATH COOLDOWN BEFORE CHANGING SCREEN
+		if(death_countdown){
+			death_countdown--;
+			if(death_countdown == 0){
+				prepare_dialog(HADES_DEATH);
+				SetState(StateCartel);
+			}
+			return;
+		}
 	//DIALOGS
 		if(show_cartel){
 			switch(current_map){

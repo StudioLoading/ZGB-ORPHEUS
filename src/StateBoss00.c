@@ -24,7 +24,7 @@ DECLARE_MUSIC(battle);
 const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
 75,76,
 //here the hit tiles
-//84,85,86,87,
+113, 114, 115, 120,
 //prev
 6,7,8,2,
 //next
@@ -34,7 +34,7 @@ const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
 UINT16 end_demo_counter = 600u;
-UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play!
+UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play; 4 boss dead
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -57,6 +57,7 @@ extern Sprite* s_charon_boat;
 extern Sprite* s_charon_hand_left;
 extern Sprite* s_charon_hand_right;
 extern INT8 a_walk_counter_y;
+extern UINT8 death_countdown;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -66,7 +67,7 @@ extern void write_dialog() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
-extern void orhpeus_change_state(SPRITE_STATES new_state) BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 void START() {
 	level_common_start();
@@ -76,8 +77,6 @@ void START() {
 			switch(current_map){
 				case BOSS_CHARON:{
 					area_enemy_counter = 1;
-					//Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 7u << 3), ((UINT16) 14u << 3));
-					//e_configure(e_enemy, SKELETON_KEY);
 				}break;
 			}
 		}
@@ -101,15 +100,10 @@ void START() {
 		if(boss_intro == 0){
 			boss_intro = 1;
 			a_walk_counter_y = -52;
-		}else if(boss_intro == 3){
 		}
 }
 
 void UPDATE() {
-	/*end_demo_counter--;
-	if(end_demo_counter < 10){
-		SetState(StateEnddemo);
-	}*/
 	if(current_map == BOSS_CHARON && a_walk_counter_y == 0 && boss_intro == 1){
 		boss_intro = 2;
 	}
@@ -119,8 +113,31 @@ void UPDATE() {
 			SetState(StateCartel);
 			boss_intro = 3;
 		}break;
+		case 0://on Orpheus death!
 		case 3:
 			level_common_update_play();
+		break;
+		case 4:	//DEATH COOLDOWN BEFORE CHANGING SCREEN
+			if(death_countdown){
+				death_countdown--;
+				switch(death_countdown){
+					case 100u:
+						SpriteManagerRemoveSprite(s_charon_hand_left);
+						SpriteManagerRemoveSprite(s_charon_hand_right);
+					break;
+					case 60u:
+                        spawn_death_animation(s_charon->x + 4u, s_charon->y + 12u);
+					break;
+					case 50u:
+						SpriteManagerRemoveSprite(s_charon);
+					break;
+					case 0u:{
+						boss_intro = 0;//reset
+						prepare_dialog(BOSS_CHARON_BEATED);
+						SetState(StateCartel);
+					}
+				}
+			}
 		break;
 	}
 	//GHOSTS

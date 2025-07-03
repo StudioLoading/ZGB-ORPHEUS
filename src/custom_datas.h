@@ -39,8 +39,10 @@ struct OrpheusInfo{
 struct CharonInfo{
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;
-    UINT8 wait;
-	UINT8 wait_max;
+	INT8 vx;
+    INT8 wait;
+	INT8 wait_max;
+	INT8 countdown;
 };
 
 typedef enum{
