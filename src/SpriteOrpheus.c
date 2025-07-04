@@ -435,7 +435,9 @@ void orpheus_behave() BANKED{
             if(inertia_y > 0){inertia_y = 0;}
             orpheus_wait--;
             if(s_lyre && orpheus_wait == 35){
-                SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
+                Sprite* s_note = SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
+                struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
+                notedata->is_enemy = 0u;
             }
             if(orpheus_wait <= 1){
                 SpriteManagerRemoveSprite(s_lyre);
@@ -659,7 +661,9 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             }
             countdown_step = countdown_step_currentmax;
             s_lyre = SpriteManagerAdd(SpriteOrpheuslyre, arg_s_orpheus->x-4, arg_s_orpheus->y);
-            SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
+            Sprite* s_note = SpriteManagerAdd(SpriteOrpheusnote, s_lyre->x+12, s_lyre->y - 2);
+            struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
+            notedata->is_enemy = 0u;
         break;
         case DIE:
             if(restart_current_map == 0u){

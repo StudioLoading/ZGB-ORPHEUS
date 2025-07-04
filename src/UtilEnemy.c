@@ -130,6 +130,9 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case PREATTACK_DOWN:
             e_data->wait = 120; 
         break;
+        case ATTACK:
+            e_data->wait = 5;
+        break;
     }
     switch(e_data->e_state){
         case GENERIC_IDLE: 
@@ -244,7 +247,7 @@ void e_management(Sprite* s_enemy) BANKED{
             case WALK_UP:
             case WALK_LEFT:
             case WALK_RIGHT:
-            case HIT:
+            case HIT:{
                 UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+4) >> 3);
                 if(tile == 0){
                     tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
@@ -258,9 +261,32 @@ void e_management(Sprite* s_enemy) BANKED{
                 if(e_data->tile_collision){
                     e_check_tile_collision(s_enemy, e_sprite_type);
                 }
+            }
             break;
         }
     }
+    if(e_data->e_state != ATTACK){
+        switch(s_enemy->type){
+            case SpriteLostsoul:
+                if(e_data->wait == 100){
+                    e_change_state(s_enemy, ATTACK, s_enemy->type);
+                }
+            break;
+        }
+    }
+    if(e_data->e_state == ATTACK && e_data->wait > 0 && e_data->wait < 10){
+        //wait settato a 5 sulla e_change_state(..)
+        e_data->wait = 90;
+
+    }
+}
+
+void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED{
+    Sprite* s_hitnote = SpriteManagerAdd(SpriteOrpheusnote, arg_spawnx, arg_spawny);
+    struct NoteInfo* e_hitnotedata = (struct NoteInfo*) s_hitnote->custom_data;
+    e_hitnotedata->is_enemy = 1u;
+    e_hitnotedata->centerx = arg_spawnx;
+    e_hitnotedata->centery = arg_spawny;
 }
 
 void e_check_sprite_collision(Sprite* s_enemy) BANKED{

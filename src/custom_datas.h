@@ -66,6 +66,12 @@ struct EnemyInfo{
 	UINT8 frmskip;
 };
 
+struct NoteInfo{
+	UINT8 is_enemy;
+	INT16 centerx;
+	INT16 centery;
+};
+
 typedef enum{
 	ATTRACT,
 	SLEEP,

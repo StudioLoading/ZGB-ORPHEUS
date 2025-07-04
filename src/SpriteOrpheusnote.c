@@ -26,24 +26,33 @@ void START() {
 }
 
 void UPDATE() {
-    if(frmskip < 4){
-        frmskip++;
-        return;
-    }
-    frmskip = 0;
-    THIS->y--;
-    left_right++;
-    if(left_right == 8){
-        left_right= -2;
-    }
-    if(left_right < 0){
-        THIS->x--;
-    }else if(left_right > 0){
-        THIS->x++;
-    }
-    onote_hp--;
-    if(onote_hp < 0){
-        SpriteManagerRemoveSprite(THIS);
+    struct NoteInfo* notedata = (struct NoteInfo*) THIS->custom_data;
+    switch(notedata->is_enemy){
+        case 0u:{//NOT AN ENEMY
+            if(frmskip < 4){
+                frmskip++;
+                return;
+            }
+            frmskip = 0;
+            THIS->y--;
+            left_right++;
+            if(left_right == 8){
+                left_right= -2;
+            }
+            if(left_right < 0){
+                THIS->x--;
+            }else if(left_right > 0){
+                THIS->x++;
+            }
+            onote_hp--;
+            if(onote_hp < 0){
+                SpriteManagerRemoveSprite(THIS);
+            }
+        }
+        break;
+        case 1u:
+
+        break;
     }
 
 }

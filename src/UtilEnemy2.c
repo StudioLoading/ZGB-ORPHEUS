@@ -93,7 +93,9 @@ void e_dog_management(Sprite* s_enemy) BANKED{
             }break;
             case PREATTACK_RIGHT:
                 if((s_enemy->anim_frame == 0) && e_data->e_configured == 1){
-                    SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+18, s_enemy->y - 2);
+                    Sprite* s_note = SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+18, s_enemy->y - 2);
+                    struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
+                    notedata->is_enemy = 0u;
                     e_data->e_configured = 2;
                 }else{
                     e_data->e_configured = 1;
@@ -106,7 +108,9 @@ void e_dog_management(Sprite* s_enemy) BANKED{
             case PREATTACK_UP:
                 if(s_enemy->anim_frame == 0){
                     if(e_data->e_configured == 1){
-                        SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+2, s_enemy->y - 4);
+                        Sprite* s_note = SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+2, s_enemy->y - 4);
+                        struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
+                        notedata->is_enemy = 0u;
                         e_data->e_configured = 2;
                     }
                 }else{
@@ -120,7 +124,9 @@ void e_dog_management(Sprite* s_enemy) BANKED{
             case PREATTACK_LEFT:
                 if(s_enemy->anim_frame == 0){
                     if(e_data->e_configured == 1){
-                        SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+18, s_enemy->y - 2);
+                        Sprite* s_note = SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+18, s_enemy->y - 2);
+                        struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
+                        notedata->is_enemy = 0u;
                         e_data->e_configured = 2;
                     }
                 }else{
@@ -134,7 +140,9 @@ void e_dog_management(Sprite* s_enemy) BANKED{
             case PREATTACK_DOWN:
                 if(s_enemy->anim_frame == 0){
                     if(e_data->e_configured == 1){
-                        SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+2, s_enemy->y - 4);
+                        Sprite* s_note = SpriteManagerAdd(SpriteOrpheusnote, s_enemy->x+2, s_enemy->y - 4);
+                        struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
+                        notedata->is_enemy = 0u;
                         e_data->e_configured = 2;
                     }
                 }else{
