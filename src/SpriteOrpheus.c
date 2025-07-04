@@ -228,6 +228,7 @@ void UPDATE() {
                 switch(iospr->type){
                     case SpriteSkeleton:
                     case SpriteInfernalimp:
+                    case SpriteLostsoul:
                         e_change_state(iospr, HIT, iospr->type);
                     break;
                     case SpriteSkeletonshield:

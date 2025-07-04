@@ -26,6 +26,7 @@ extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKE
 extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void infernalimp_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void lostsoul_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
@@ -73,6 +74,9 @@ void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED{
         case SpriteInfernalimp:
             infernalimp_update_anim(s_enemy, e_data->e_state);
         break;
+        case SpriteLostsoul:
+            lostsoul_update_anim(s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -84,14 +88,21 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
     switch(new_state){
         case WALK_DOWN: e_data->wait = 0; e_data->vx = 0; e_data->vy = 1;break;
         case WALK_UP: e_data->wait = 0; e_data->vx = 0; e_data->vy = -1;break;
-        case WALK_RIGHT: e_data->wait = 0; e_data->vx = 1; e_data->vy = 0; break;
-        case WALK_LEFT: e_data->wait = 0; e_data->vx = -1; e_data->vy = 0; break;
+        case WALK_RIGHT: 
+            if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
+            e_data->wait = 0; e_data->vx = 1;  break;
+        case WALK_LEFT: 
+            if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
+            e_data->wait = 0; e_data->vx = -1; break;
         case IDLE_DOWN: case IDLE_UP: case IDLE_LEFT: case IDLE_RIGHT:
             switch(e_sprite_type){
                 case SpriteSkeleton:
                 case SpriteSkeletonshield:
                 case SpriteDog:
                     e_data->wait = 160u;
+                break;
+                case SpriteLostsoul:
+                    e_data->wait = 110u;
                 break;
                 case SpriteInfernalimp:
                     e_data->wait = 80u;
@@ -102,6 +113,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
             switch(e_sprite_type){
                 case SpriteSkeleton:
                 case SpriteSkeletonshield:
+                case SpriteLostsoul:
                 case SpriteInfernalimp:
                     e_data->wait = orpheus_attack_cooldown;
                 break;
@@ -138,9 +150,6 @@ void e_management(Sprite* s_enemy) BANKED{
     if(in_dialog) return;
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
-    if(e_data->frmskip_wait > 0){
-        e_data->frmskip_wait--;
-    }
     if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 
         e_data->e_state != WALK_LEFT && e_data->e_state != WALK_RIGHT &&
         e_data->e_state != HIT){
@@ -192,16 +201,18 @@ void e_management(Sprite* s_enemy) BANKED{
                 break;
             }
             if(e_data->wait > 0){
-            e_data->wait--;
-        }else{
-            e_change_state(s_enemy, GENERIC_WALK, e_sprite_type);
-        }
+                e_data->wait--;
+            }else{
+                e_change_state(s_enemy, GENERIC_WALK, e_sprite_type);
+            }
     }else{
         e_data->wait++;//USING AS RANDOM TO CLOCKWISE TURNING
         //ripristino frameskip
         //e_data->frmskip = 12u;
     }
-    if(e_data->frmskip_wait == 0){
+    if(e_data->frmskip_wait > 0){
+        e_data->frmskip_wait--;
+    }else{
         e_data->frmskip_wait = e_data->frmskip;
         INT16 delta_y = (INT16)s_enemy->y - (INT16)s_orpheus->y; 
         INT16 delta_x = (INT16)s_enemy->x - (INT16)s_orpheus->x;
@@ -281,6 +292,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     switch(e_sprite_type){
         case SpriteSkeleton:
         case SpriteSkeletonshield:
+        case SpriteLostsoul:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, e_sprite_type, 0);
             }

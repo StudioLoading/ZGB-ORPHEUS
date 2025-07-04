@@ -28,6 +28,7 @@ _SPRITE_DMG(SpriteBlock, block)\
 _SPRITE_DMG(SpriteSkeleton, enemyskeletor)\
 _SPRITE_DMG(SpriteSkeletonshield, enemyskeletorshield)\
 _SPRITE_DMG(SpriteInfernalimp, enemyinfernalimp)\
+_SPRITE_DMG(SpriteLostsoul, enemylostsoul)\
 _SPRITE_DMG(SpriteGhost, ghost)\
 _SPRITE_DMG(SpriteDeath, death)\
 _SPRITE_DMG(SpriteCharon, charon)\

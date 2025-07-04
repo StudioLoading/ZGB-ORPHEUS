@@ -51,7 +51,8 @@ typedef enum{
 	SKELETON_KEY,
 	DOG,
 	DOG_KEY,
-	INFERNALIMP
+	INFERNALIMP,
+	LOSTSOUL
 }ENEMY_TYPE;
 
 struct EnemyInfo{

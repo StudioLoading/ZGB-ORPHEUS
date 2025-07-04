@@ -64,7 +64,7 @@ void START(){
     }
     INIT_FONT(font, PRINT_BKG);
     if(credit_page_counter == 0){
-        PRINT(13, 17, "DEMO");
+        //PRINT(13, 17, "DEMO");
     }
     stop_music_on_new_state = 0;
     if(intro_music_started == 0){
