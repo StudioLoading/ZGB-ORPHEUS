@@ -238,6 +238,7 @@ void level_common_update_play() BANKED{
 		switch(current_map){
 			case HADES_THREE:
 			case HADES_FOUR:
+			case HADES_SIX:
 				if(area_enemy_counter == 0u && changing_map == 0u && solved_map < current_map){
 					solve_current_map();
 				}

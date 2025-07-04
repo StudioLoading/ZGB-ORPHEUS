@@ -21,8 +21,8 @@ IMPORT_MAP(maphades001);
 IMPORT_MAP(maphades002);
 IMPORT_MAP(maphades003);
 IMPORT_MAP(maphades004);
+IMPORT_MAP(maphades006);
 IMPORT_MAP(hudmap);
-IMPORT_TILES(font);
 DECLARE_MUSIC(danger);
 
 
@@ -116,6 +116,13 @@ void START() {
 					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
 					e_configure(e_dog, DOG);
 				}break;
+				case HADES_SIX:{
+					area_enemy_counter = 1;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					e_configure(e_skeleton1, SKELETON_SHIELD);
+					Sprite* e_infernalimp1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 10u << 3));
+					e_configure(e_infernalimp1, INFERNALIMP);
+				}break;
 			}
 		}else{
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
@@ -139,6 +146,9 @@ void START() {
 			break;
 			case HADES_FIVE:
 				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_SIX:
+				InitScroll(BANK(maphades006), &maphades006, coll_t_hades001, coll_s_hades001);
 			break;
 		}
 	//HUD

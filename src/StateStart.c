@@ -33,11 +33,11 @@ UINT8 tutorial_go = 1u; //TODO 0
 UINT8 tutorial_hades_entrance = 1u; // TODO 0
 UINT8 tutorial_get_lyre = 1u; // TODO 0
 
-MACROMAP solved_map = HADES_FIVE; //TODO NONE
-MACROMAP current_map = BOSS_CHARON; //TODO TUTORIAL
-MACROMAP next_map = BOSS_CHARON; //TODO HADES_ZERO
-MACROMAP prev_map = HADES_FIVE; //TODO NONE
-MACROMAP max_map = BOSS_CHARON; //TODO TUTORIAL
+MACROMAP solved_map = BOSS_CHARON; //TODO NONE
+MACROMAP current_map = HADES_SIX; //TODO TUTORIAL
+MACROMAP next_map = HADES_SEVEN; //TODO HADES_ZERO
+MACROMAP prev_map = BOSS_CHARON; //TODO NONE
+MACROMAP max_map = HADES_SIX; //TODO TUTORIAL
 UINT8 has_lyre = 1; //TODO 0
 
 UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 3) - 4u;
@@ -79,6 +79,7 @@ void START(){
         case HADES_THREE:
         case HADES_FOUR:
         case HADES_FIVE:
+        case HADES_SIX:
 			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
 			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4;
             a_walk_counter_y = 0;

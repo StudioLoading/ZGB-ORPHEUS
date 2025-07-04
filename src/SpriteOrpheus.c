@@ -227,7 +227,13 @@ void UPDATE() {
             if(orpheus_info->ow_state == ATTACK){
                 switch(iospr->type){
                     case SpriteSkeleton:
+                    case SpriteInfernalimp:
                         e_change_state(iospr, HIT, iospr->type);
+                    break;
+                    case SpriteSkeletonshield:
+                        if(song_selection == SLEEP){
+                            e_change_state(iospr, HIT, iospr->type);
+                        }
                     break;
                 }
             }
@@ -671,7 +677,7 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
 void orpheus_hit() BANKED{
     if(orpheus_hitted == 0u){
         orpheus_hp--;
-        orpheus_hit_countdown = 32;
+        orpheus_hit_countdown = 64;
         orpheus_hitted = 1u;
         redraw_hud = 1;
     }

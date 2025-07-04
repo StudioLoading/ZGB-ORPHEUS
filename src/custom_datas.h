@@ -50,7 +50,8 @@ typedef enum{
 	SKELETON_SHIELD,
 	SKELETON_KEY,
 	DOG,
-	DOG_KEY
+	DOG_KEY,
+	INFERNALIMP
 }ENEMY_TYPE;
 
 struct EnemyInfo{
@@ -104,6 +105,8 @@ typedef enum{
 	HADES_FOUR,
 	HADES_FIVE,
 	BOSS_CHARON,
+	HADES_SIX,
+	HADES_SEVEN,
 	END_DEMO
 }MACROMAP;
 

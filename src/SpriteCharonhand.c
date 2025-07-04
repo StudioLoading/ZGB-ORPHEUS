@@ -17,7 +17,7 @@ extern UINT8 charon_attack_type;
 const UINT8 a_charonhand[] = {1, 1};
 const UINT8 a_charonhand_blink[] = {2, 0,1};
 
-void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
 /*
 struct EnemyInfo{

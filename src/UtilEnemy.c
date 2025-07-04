@@ -23,7 +23,9 @@ extern UINT8 area_enemy_counter;
 extern UINT8 in_dialog;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void infernalimp_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
@@ -32,9 +34,13 @@ void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type) BANKED;
 void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 void e_management(Sprite* s_enemy) BANKED;
+void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED;
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+
 
 void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED{
     e_data->e_state = new_state;
@@ -58,8 +64,14 @@ void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED{
         case SpriteSkeleton:
             skeleton_update_anim(s_enemy, e_data->e_state);
         break;
+        case SpriteSkeletonshield:
+            skeletonshield_update_anim(s_enemy, e_data->e_state);
+        break;
         case SpriteDog:
             dog_update_anim(s_enemy, e_data->e_state);
+        break;
+        case SpriteInfernalimp:
+            infernalimp_update_anim(s_enemy, e_data->e_state);
         break;
     }
 }
@@ -77,14 +89,20 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case IDLE_DOWN: case IDLE_UP: case IDLE_LEFT: case IDLE_RIGHT:
             switch(e_sprite_type){
                 case SpriteSkeleton:
+                case SpriteSkeletonshield:
                 case SpriteDog:
                     e_data->wait = 160u;
+                break;
+                case SpriteInfernalimp:
+                    e_data->wait = 80u;
                 break;
             }
         break;
         case HIT:
             switch(e_sprite_type){
                 case SpriteSkeleton:
+                case SpriteSkeletonshield:
+                case SpriteInfernalimp:
                     e_data->wait = orpheus_attack_cooldown;
                 break;
             }
@@ -108,9 +126,13 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         break;
     }
     e_data->e_state = new_state;
-    e_update_anim(s_enemy, e_sprite_type);
+    if(e_data->e_configured == 0 ||
+        (e_data->wait && e_data->wait < 100 && e_data->tile_collision == 0) ||
+        (e_data->tile_collision)
+    ){
+        e_update_anim(s_enemy, e_sprite_type);
+    }
 }
-
 
 void e_management(Sprite* s_enemy) BANKED{
     if(in_dialog) return;
@@ -177,12 +199,12 @@ void e_management(Sprite* s_enemy) BANKED{
     }else{
         e_data->wait++;//USING AS RANDOM TO CLOCKWISE TURNING
         //ripristino frameskip
-        e_data->frmskip = 12u;
+        //e_data->frmskip = 12u;
     }
     if(e_data->frmskip_wait == 0){
         e_data->frmskip_wait = e_data->frmskip;
-        INT8 delta_y = s_enemy->y - s_orpheus->y; 
-        INT8 delta_x = s_enemy->x - s_orpheus->x;
+        INT16 delta_y = (INT16)s_enemy->y - (INT16)s_orpheus->y; 
+        INT16 delta_x = (INT16)s_enemy->x - (INT16)s_orpheus->x;
         switch (e_data->e_state){
             case WALK_LEFT:
             case WALK_RIGHT:
@@ -217,7 +239,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
                 }
 				if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                    if(e_data->e_state != HIT){
+                    if(e_data->e_state != HIT || s_enemy->type == SpriteSkeletonshield){
                         e_turn(s_enemy, e_sprite_type, 0);
                     }else{e_destroy(s_enemy, e_sprite_type);}
 				}
@@ -230,11 +252,43 @@ void e_management(Sprite* s_enemy) BANKED{
     }
 }
 
+void e_check_sprite_collision(Sprite* s_enemy) BANKED{
+    UINT8 scroll_e_tile;
+    Sprite* iespr;
+    SPRITEMANAGER_ITERATE(scroll_e_tile, iespr) {
+        if(CheckCollision(s_enemy, iespr)) {
+            switch(iespr->type){
+                case SpriteOrpheus:
+                case SpriteOrpheuslyre:
+                    /*if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
+                            struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
+                            if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
+                                push_vx = e_data->vx;
+                            }
+                            if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
+                                push_vy = e_data->vy;
+                            }*/
+                    orpheus_change_state(s_orpheus, HIT);
+                    //}
+                break;
+            }
+        }
+    }
+}
+
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     switch(e_sprite_type){
         case SpriteSkeleton:
-            e_turn(s_enemy, e_sprite_type, 0);
+        case SpriteSkeletonshield:
+            if(e_data->e_state != HIT){
+                e_turn(s_enemy, e_sprite_type, 0);
+            }
+        break;
+        case SpriteInfernalimp:
+            if(e_data->e_state != HIT){
+                e_turn(s_enemy, e_sprite_type, TURN_CLOCKWISE);
+            }
         break;
         case SpriteDog:
             e_turn(s_enemy, e_sprite_type, TURN_COUNTERCLOCKWISE);

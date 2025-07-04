@@ -23,7 +23,6 @@ const UINT8 a_dog_preattack_h[] = {8, 8,2,2,8,2,2,2,2};
 
 extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type) BANKED;
-extern void e_update_anim(struct EnemyInfo* e_data, UINT8 sprite_type) BANKED;
 extern void e_dog_management(Sprite* s_enemy) BANKED;
 extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 
