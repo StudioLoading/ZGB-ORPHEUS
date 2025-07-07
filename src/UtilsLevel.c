@@ -218,7 +218,7 @@ void level_common_update_play() BANKED{
 			UpdateHUD();
 		}
 	// tiles animation
-		if(current_map > TUTORIAL && current_map < BOSS_CHARON){
+		if(current_map > TUTORIAL && current_map != BOSS_CHARON){
 			anim_counter++;
 			if(anim_counter >= ANIM_COUNTER_MAX){
 				anim_counter = 0u;

@@ -40,7 +40,8 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED;
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED;
-
+UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
+UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
@@ -267,10 +268,14 @@ void e_management(Sprite* s_enemy) BANKED{
                     if(tile == 0){
                         tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
                     }
-                    if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                        if(e_data->e_state != HIT || s_enemy->type == SpriteSkeletonshield){
+                    UINT8 is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
+                    UINT8 is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
+                    if(is_against_fire || is_against_pit){
+                        if(e_data->e_state != HIT){
                             e_turn(s_enemy, e_sprite_type, 0);
-                        }else{e_destroy(s_enemy, e_sprite_type);}
+                        }else{
+                            e_destroy(s_enemy, e_sprite_type);
+                        }
                     }
                     e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
                     if(e_data->tile_collision){
@@ -289,6 +294,26 @@ void e_management(Sprite* s_enemy) BANKED{
             break;
         }
     }
+}
+
+UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
+    UINT8 result = 0;
+    if(arg_sprite_type == SpriteInfernalimp){
+        result = 0;
+    }else{
+        result = arg_tile == 84u || arg_tile == 85u || arg_tile == 86u || arg_tile == 87u;
+    }
+    return result;
+}
+
+UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
+    UINT8 result = 0u;
+    if(arg_sprite_type == SpriteLostsoul){
+        result = 0;
+    }else{
+        result = arg_tile == 20u || arg_tile == 21u || arg_tile == 66u || ( arg_tile >= 68u && arg_tile <= 83u);
+    }
+    return result;
 }
 
 void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED{
