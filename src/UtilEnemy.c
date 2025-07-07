@@ -39,6 +39,8 @@ void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED;
 void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED;
+
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
@@ -89,10 +91,10 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case WALK_DOWN: e_data->wait = 0; e_data->vx = 0; e_data->vy = 1;break;
         case WALK_UP: e_data->wait = 0; e_data->vx = 0; e_data->vy = -1;break;
         case WALK_RIGHT: 
-            if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
+            //if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
             e_data->wait = 0; e_data->vx = 1;  break;
         case WALK_LEFT: 
-            if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
+            //if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
             e_data->wait = 0; e_data->vx = -1; break;
         case IDLE_DOWN: case IDLE_UP: case IDLE_LEFT: case IDLE_RIGHT:
             switch(e_sprite_type){
@@ -131,7 +133,12 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
             e_data->wait = 120; 
         break;
         case ATTACK:
-            e_data->wait = 5;
+            switch(e_sprite_type){
+                case SpriteLostsoul:
+                    e_spawn_hitnote(s_enemy->x + 2, s_enemy->y + 4);
+                break;
+            }
+            e_data->wait = 0;
         break;
     }
     switch(e_data->e_state){
@@ -141,12 +148,13 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         break;
     }
     e_data->e_state = new_state;
-    if(e_data->e_configured == 0 ||
+    /*if(e_data->e_configured == 0 ||
         (e_data->wait && e_data->wait < 100 && e_data->tile_collision == 0) ||
-        (e_data->tile_collision)
-    ){
+        (e_data->tile_collision) ||
+        (new_state == ATTACK)
+    ){*/
         e_update_anim(s_enemy, e_sprite_type);
-    }
+    //}
 }
 
 void e_management(Sprite* s_enemy) BANKED{
@@ -155,7 +163,7 @@ void e_management(Sprite* s_enemy) BANKED{
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 
         e_data->e_state != WALK_LEFT && e_data->e_state != WALK_RIGHT &&
-        e_data->e_state != HIT){
+        e_data->e_state != HIT && e_data->e_state != ATTACK){
         if(e_data->wait > 0){
             e_data->wait--;
         }else{
@@ -212,81 +220,95 @@ void e_management(Sprite* s_enemy) BANKED{
         e_data->wait++;//USING AS RANDOM TO CLOCKWISE TURNING
         //ripristino frameskip
         //e_data->frmskip = 12u;
+        if(e_data->e_state == ATTACK){
+            if(e_data->wait > 100){
+                e_change_state(s_enemy, WALK_DOWN, s_enemy->type);
+            }
+        }
     }
     if(e_data->frmskip_wait > 0){
         e_data->frmskip_wait--;
     }else{
         e_data->frmskip_wait = e_data->frmskip;
-        INT16 delta_y = (INT16)s_enemy->y - (INT16)s_orpheus->y; 
-        INT16 delta_x = (INT16)s_enemy->x - (INT16)s_orpheus->x;
-        switch (e_data->e_state){
-            case WALK_LEFT:
-            case WALK_RIGHT:
-                if(e_data->wait < 30){//check if Orpheus is over or above enemy
-                    if(delta_y > 40){//enemy molto sotto orpheus
-                        e_change_state(s_enemy, WALK_UP, e_sprite_type);
-                    }else if(delta_y < -40){//enemy molto sopra orpheus
-                        e_change_state(s_enemy, WALK_DOWN, e_sprite_type);
+        //CHANGE DIRECTION
+            INT16 delta_y = (INT16)s_enemy->y - (INT16)s_orpheus->y; 
+            INT16 delta_x = (INT16)s_enemy->x - (INT16)s_orpheus->x;
+            switch (e_data->e_state){
+                case WALK_LEFT:
+                case WALK_RIGHT:
+                    if(e_data->wait < 30){//check if Orpheus is over or above enemy
+                        if(delta_y > 40){//enemy molto sotto orpheus
+                            e_change_state(s_enemy, WALK_UP, e_sprite_type);
+                        }else if(delta_y < -40){//enemy molto sopra orpheus
+                            e_change_state(s_enemy, WALK_DOWN, e_sprite_type);
+                        }
                     }
-                }
-            break;
-            case WALK_UP:
-            case WALK_DOWN:
-                if(e_data->wait < 30){//check if Orpheus is over or above enemy
-                    if(delta_x > 40){//enemy molto a destra di orpheus
-                        e_change_state(s_enemy, WALK_LEFT, e_sprite_type);
-                    }else if(delta_x < -40){//enemy molto a sinistra di orpheus
-                        e_change_state(s_enemy, WALK_RIGHT, e_sprite_type);
+                break;
+                case WALK_UP:
+                case WALK_DOWN:
+                    if(e_data->wait < 30){//check if Orpheus is over or above enemy
+                        if(delta_x > 40){//enemy molto a destra di orpheus
+                            e_change_state(s_enemy, WALK_LEFT, e_sprite_type);
+                        }else if(delta_x < -40){//enemy molto a sinistra di orpheus
+                            e_change_state(s_enemy, WALK_RIGHT, e_sprite_type);
+                        }
                     }
-                }
 
-            break;
-        }
-        switch (e_data->e_state){
-            case WALK_DOWN:
-            case WALK_UP:
-            case WALK_LEFT:
-            case WALK_RIGHT:
-            case HIT:{
-                UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+4) >> 3);
-                if(tile == 0){
-                    tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
-                }
-				if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                    if(e_data->e_state != HIT || s_enemy->type == SpriteSkeletonshield){
-                        e_turn(s_enemy, e_sprite_type, 0);
-                    }else{e_destroy(s_enemy, e_sprite_type);}
-				}
-                e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
-                if(e_data->tile_collision){
-                    e_check_tile_collision(s_enemy, e_sprite_type);
-                }
+                break;
             }
-            break;
-        }
+        //TRANSLATE SPRITE
+            switch (e_data->e_state){
+                case WALK_DOWN:
+                case WALK_UP:
+                case WALK_LEFT:
+                case WALK_RIGHT:
+                case HIT:{
+                    UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+4) >> 3);
+                    if(tile == 0){
+                        tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
+                    }
+                    if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
+                        if(e_data->e_state != HIT || s_enemy->type == SpriteSkeletonshield){
+                            e_turn(s_enemy, e_sprite_type, 0);
+                        }else{e_destroy(s_enemy, e_sprite_type);}
+                    }
+                    e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
+                    if(e_data->tile_collision){
+                        e_check_tile_collision(s_enemy, e_sprite_type);
+                    }
+                }
+                break;
+            }
     }
     if(e_data->e_state != ATTACK){
         switch(s_enemy->type){
             case SpriteLostsoul:
-                if(e_data->wait == 100){
+                if(e_data->wait == 200){
                     e_change_state(s_enemy, ATTACK, s_enemy->type);
                 }
             break;
         }
     }
-    if(e_data->e_state == ATTACK && e_data->wait > 0 && e_data->wait < 10){
-        //wait settato a 5 sulla e_change_state(..)
-        e_data->wait = 90;
-
-    }
 }
 
 void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED{
     Sprite* s_hitnote = SpriteManagerAdd(SpriteOrpheusnote, arg_spawnx, arg_spawny);
+    s_hitnote->lim_x = arg_spawnx;
+    s_hitnote->lim_y = arg_spawny;
     struct NoteInfo* e_hitnotedata = (struct NoteInfo*) s_hitnote->custom_data;
     e_hitnotedata->is_enemy = 1u;
-    e_hitnotedata->centerx = arg_spawnx;
-    e_hitnotedata->centery = arg_spawny;
+    e_hitnotedata->vx = 2;
+    if(arg_spawnx > s_orpheus->x){ 
+        e_hitnotedata->vx = -2;
+    }
+    e_hitnotedata->vy = 1;
+    if(arg_spawny > s_orpheus->y){ 
+        e_hitnotedata->vy = -1;
+    }
+    e_hitnotedata->wait = 0u;
+	e_hitnotedata->frmskip = 0;
+	e_hitnotedata->frmskip_max = 8;
+
 }
 
 void e_check_sprite_collision(Sprite* s_enemy) BANKED{

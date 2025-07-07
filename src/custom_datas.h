@@ -68,8 +68,11 @@ struct EnemyInfo{
 
 struct NoteInfo{
 	UINT8 is_enemy;
-	INT16 centerx;
-	INT16 centery;
+	INT8 vx;
+	INT8 vy;
+	UINT8 wait;
+	INT8 frmskip;
+	INT8 frmskip_max;
 };
 
 typedef enum{

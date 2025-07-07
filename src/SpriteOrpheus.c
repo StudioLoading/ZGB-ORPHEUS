@@ -259,6 +259,13 @@ void UPDATE() {
                             orpheus_change_state(THIS, HIT);
                         }
                     break;
+                    case SpriteOrpheusnote:{
+                        struct NoteInfo* e_data = (struct NoteInfo*) iospr->custom_data;
+                        if(e_data->is_enemy){
+                            orpheus_change_state(THIS, HIT);
+                        }
+                    }
+                    break;
                     case SpriteGate:
                     case SpriteBlock:{
                         inertia_x = 0;
@@ -502,7 +509,7 @@ void orpheus_update_position() BANKED{
             break;
             case StateHades00:
                 switch(orpheus_info->tile_collision){
-                    case 2u:
+                    //case 2u:
                     case 6u:
                     case 7u:
                     case 8u:
