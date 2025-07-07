@@ -24,7 +24,8 @@
 			"dialog.h": "c",
 			"zgbmain.h": "c",
 			"utilsloadsave.h": "c",
-			"vector.h": "c"
+			"vector.h": "c",
+			"zgbmain_init.h": "c"
 		}
 	}
 }

@@ -74,6 +74,10 @@ UINT8 changing_map = 0u;
 UINT8 restart_current_map = 0u;
 INT8 boss_hp_max = 0;
 INT8 boss_hp_current = 0;
+UINT8 spikes_countdown = 255u;
+UINT8 spikes_hit_flag = 0u;
+MACROMAP trap_button_pressed = HADES_ZERO;
+UINT8 evaluate_button = 1u;//0 normal, 1 init, 2 force pressed
 
 extern UINT8 has_lyre;
 extern UINT16 orpheus_spawnx;
@@ -142,24 +146,51 @@ void level_common_start() BANKED{
 		restart_current_map = 0u;
 		anim_counter = 0u;
 		show_cartel = 0u;
+		spikes_countdown = 0u;
+		spikes_hit_flag = 0u;
+		evaluate_button = 1u;
 }
 
 void reset_maps() BANKED{
 	/*MACROMAP solved_map = HADES_FIVE; //TODO NONE
-MACROMAP current_map = BOSS_CHARON; //TODO TUTORIAL
-MACROMAP next_map = BOSS_CHARON; //TODO HADES_ZERO
-MACROMAP prev_map = HADES_FIVE; //TODO NONE
-MACROMAP max_map*/
+	MACROMAP current_map = BOSS_CHARON; //TODO TUTORIAL
+	MACROMAP next_map = BOSS_CHARON; //TODO HADES_ZERO
+	MACROMAP prev_map = HADES_FIVE; //TODO NONE
+	MACROMAP max_map*/
 	if(current_map <= BOSS_CHARON){
 		solved_map = HADES_ZERO;
 		current_map = HADES_ZERO;
 		next_map = HADES_ONE;
 		prev_map = HADES_ZERO;
 		max_map = HADES_ZERO;
+	}else if(current_map <= HADES_SIX){
+		solved_map = HADES_SIX;
+		current_map = HADES_SIX;
+		next_map = HADES_SEVEN;
+		prev_map = HADES_SIX;
+		max_map = HADES_SIX;
 	}
 }
 
 void level_common_update_play() BANKED{
+	// check button draw
+		if(evaluate_button){
+			if(current_map == HADES_SIX){
+				if(trap_button_pressed < current_map){
+					draw_button(12, 11, 67u);
+				}else{
+					draw_button(12, 11, 71u);
+				}
+			}
+			evaluate_button = 0u;
+		}
+		UINT8 tile = GetScrollTile((s_orpheus->x + 4) >> 3, (s_orpheus->y+12) >> 3);
+		if(tile == 71u || tile == 72u || tile == 73u || tile == 74u){
+			if(trap_button_pressed < current_map){
+				trap_button_pressed = current_map;
+				evaluate_button = 1u;
+			}
+		}
 	// restart current map
 		if(restart_current_map > 0u){
 			restart_current_map++;
@@ -234,16 +265,33 @@ void level_common_update_play() BANKED{
 				break;
 			}
 		}
-	//check enemy counter
-		switch(current_map){
-			case HADES_THREE:
-			case HADES_FOUR:
-			case HADES_SIX:
-				if(area_enemy_counter == 0u && changing_map == 0u && solved_map < current_map){
-					solve_current_map();
-				}
-			break;
+	// spikes animation
+		if(current_map >= HADES_SIX){
+			spikes_countdown++;//0-120-160-200
+			if(spikes_countdown > 180u){
+				Anim_Spike_0();
+			}else if(spikes_countdown > 160u){
+				Anim_Spike_1();
+			}else if(spikes_countdown > 140u){
+				spikes_hit_flag = 0u;
+				Anim_Spike_2();
+			}else if(spikes_countdown < 6u){
+				Anim_Spike_1();
+			}else{
+				spikes_hit_flag = 1u;
+				Anim_Spike_3();
+			}
 		}
+	// check enemy counter
+	switch(current_map){
+		case HADES_THREE:
+		case HADES_FOUR:
+		case HADES_SIX:
+			if(area_enemy_counter == 0u && changing_map == 0u && solved_map < current_map){
+				solve_current_map();
+			}
+		break;
+	}
 	// log
     /*
 	switch(orpheus_info->ow_state){

@@ -34,6 +34,20 @@ void Anim_3() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002ta3, BANK(maphades002ta3));//fire
 }
 
+
+void Anim_Spike_0() BANKED{
+	set_banked_bkg_data(50u, 1u, &maphades002t, BANK(maphades002t));//spike
+}
+void Anim_Spike_1() BANKED{
+	set_banked_bkg_data(50u, 1u, &maphades002ta1, BANK(maphades002ta1));//spike
+}
+void Anim_Spike_2() BANKED{
+	set_banked_bkg_data(50u, 1u, &maphades002ta2, BANK(maphades002ta2));//spike
+}
+void Anim_Spike_3() BANKED{
+	set_banked_bkg_data(50u, 1u, &maphades002ta3, BANK(maphades002ta3));//spike
+}
+
 void Anim_Opendoors() BANKED{
 	set_banked_bkg_data(88u, 18u, &maphades002ta1, BANK(maphades002ta1));//exit door tiles of all types
 }

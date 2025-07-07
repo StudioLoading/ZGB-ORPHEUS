@@ -79,6 +79,7 @@ extern MACROMAP solved_map;
 extern INT8 restart_current_map;
 extern UINT8 show_cartel;
 extern UINT8 boss_intro;
+extern UINT8 spikes_hit_flag;
 
 void orpheus_behave() BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -86,6 +87,7 @@ void orpheus_update_position() BANKED;
 void orpheus_hit() BANKED;
 void orpheus_recharge() BANKED;
 void orpheus_pickup(Sprite* itemsprite) BANKED;
+void orpheus_check_tile_overlapping() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void go_to_next_map() BANKED;
@@ -340,6 +342,21 @@ void UPDATE() {
         }
 }
 
+void orpheus_check_tile_overlapping() BANKED{
+    UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+    switch(current_state){
+        case StateHades00:
+            if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
+                orpheus_hitted = 0u;
+                orpheus_change_state(THIS, HIT);
+            }
+            if(tile == 50u && spikes_hit_flag){
+                orpheus_change_state(THIS, HIT);
+            }
+        break;
+    }
+}
+
 void orpheus_behave() BANKED{
     switch(new_state){
         case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
@@ -369,6 +386,7 @@ void orpheus_behave() BANKED{
                 orpheus_update_position();
             }
             orpheus_recharge();
+            orpheus_check_tile_overlapping();
             idle_countdown--;
         break;
         case WALK_DOWN: case WALK_UP:
@@ -379,6 +397,7 @@ void orpheus_behave() BANKED{
             if(orpheus_info->vy != 0 && inertia_y > 0 && inertia_y < 32){
                 inertia_y++;
             }
+            orpheus_check_tile_overlapping();
             orpheus_update_position();
         break;
         case HIT:
@@ -509,7 +528,6 @@ void orpheus_update_position() BANKED{
             break;
             case StateHades00:
                 switch(orpheus_info->tile_collision){
-                    //case 2u:
                     case 6u:
                     case 7u:
                     case 8u:
@@ -536,16 +554,6 @@ void orpheus_update_position() BANKED{
             break;
         }
     }
-    //CHECK TILES OVERLAPPING
-        UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
-        switch(current_state){
-            case StateHades00:
-                if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                    orpheus_hitted = 0u;
-                    orpheus_change_state(THIS, HIT);
-                }
-            break;
-        }
 }
 
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED{

@@ -120,10 +120,11 @@ void START() {
 					area_enemy_counter = 1;
 					/*Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1, SKELETON_SHIELD);*/
-					Sprite* e_infernalimp1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 10u << 3));
-					e_configure(e_infernalimp1, INFERNALIMP);
-					Sprite* e_lostsoul1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
-					e_configure(e_lostsoul1, LOSTSOUL);
+					/*Sprite* e_infernalimp1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 10u << 3));
+					e_configure(e_infernalimp1, INFERNALIMP);*/
+					/*Sprite* e_lostsoul1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					e_configure(e_lostsoul1, LOSTSOUL);*/
+					Sprite* s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 12u << 3), ((UINT16) 8u << 3));
 				}break;
 			}
 		}else{
