@@ -44,6 +44,7 @@ UINT8 dialog_block_interact = 0u;
 UINT8 dialog_skeleton_lyre = 0u;
 Sprite* s_block_00;
 Sprite* s_block_01;
+Sprite* s_blade;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
 UINT8 death_countdown = 0u;
@@ -63,6 +64,7 @@ extern UINT16 idle_countdown;
 extern UINT8 area_enemy_counter;
 extern UINT8 changing_map;
 extern UINT8 sprite_stack_top;
+extern UINT8 flag_button_repushable;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
@@ -124,7 +126,7 @@ void START() {
 					e_configure(e_infernalimp1, INFERNALIMP);*/
 					/*Sprite* e_lostsoul1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_lostsoul1, LOSTSOUL);*/
-					Sprite* s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 12u << 3), ((UINT16) 8u << 3));
 				}break;
 			}
 		}else{
@@ -165,6 +167,9 @@ void START() {
 		if(hades_music_started == 0){
 			PlayMusic(danger, 1);
 			hades_music_started = 1;
+		}
+		if(current_map == HADES_SIX){
+			flag_button_repushable = 1u;
 		}
 }
 

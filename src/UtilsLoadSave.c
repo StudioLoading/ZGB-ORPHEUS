@@ -15,6 +15,7 @@ extern Sprite* sprite_manager_sprites[];
 extern UINT8* sprite_manager_sprites_pool;
 extern Sprite* s_orpheus;
 extern Sprite* s_block_00;
+extern Sprite* s_blade;
 
 extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 
@@ -44,6 +45,7 @@ void RestoreSprites() BANKED{
             case SpriteSkeleton: e_configure(spr, SKELETON); break;
             case SpriteDog: e_configure(spr, DOG); break;
             case SpriteBlock: s_block_00 = spr; break;
+            case SpriteBlade: s_blade = spr; break;
             case SpriteItem:
                 struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
                 i_data->i_configured = 1;

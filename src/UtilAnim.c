@@ -11,6 +11,7 @@ IMPORT_TILES(maphades002ta4);
 IMPORT_TILES(maphades002ta5);
 IMPORT_TILES(maphades002ta6);
 IMPORT_TILES(maphades002ta7);
+IMPORT_TILES(maphades003t);
 
 
 
@@ -36,7 +37,7 @@ void Anim_3() BANKED{
 
 
 void Anim_Spike_0() BANKED{
-	set_banked_bkg_data(50u, 1u, &maphades002t, BANK(maphades002t));//spike
+	set_banked_bkg_data(50u, 1u, &maphades003t, BANK(maphades003t));//spike
 }
 void Anim_Spike_1() BANKED{
 	set_banked_bkg_data(50u, 1u, &maphades002ta1, BANK(maphades002ta1));//spike

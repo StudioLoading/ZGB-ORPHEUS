@@ -18,6 +18,7 @@
 #define V_CAMERA 2
 #define MAX_WAIT_CHAR 4
 #define ANIM_COUNTER_MAX 32
+#define REPUSHABLE_BUTTON_COOLDOWN_MAX 400
 
 #define SPAWNX_CAMERA_TUTORIAL 30
 #define SPAWNY_CAMERA_TUTORIAL 11
@@ -78,6 +79,9 @@ UINT8 spikes_countdown = 255u;
 UINT8 spikes_hit_flag = 0u;
 MACROMAP trap_button_pressed = HADES_ZERO;
 UINT8 evaluate_button = 1u;//0 normal, 1 init, 2 force pressed
+UINT8 flag_button_repushable = 0u;
+UINT16 repushable_button_cooldown = REPUSHABLE_BUTTON_COOLDOWN_MAX;
+UINT8 flag_button_pushable = 1u;
 
 extern UINT8 has_lyre;
 extern UINT16 orpheus_spawnx;
@@ -102,6 +106,7 @@ extern UINT8 J_ATK;
 extern unsigned char EMPTY_STRING_20[];
 extern SPRITE_STATES new_state;
 extern UINT8 show_cartel;
+extern UINT8 spawned_ball;
 
 void level_common_start() BANKED;
 void level_common_update_play() BANKED;
@@ -116,6 +121,7 @@ void go_to_next_map() BANKED;
 void solve_current_map() BANKED;
 void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 void reset_maps() BANKED;
+void spawn_ball() BANKED;
 
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
@@ -149,6 +155,9 @@ void level_common_start() BANKED{
 		spikes_countdown = 0u;
 		spikes_hit_flag = 0u;
 		evaluate_button = 1u;
+		flag_button_repushable = 0u;
+		repushable_button_cooldown = REPUSHABLE_BUTTON_COOLDOWN_MAX;
+		flag_button_pushable = 1u;
 }
 
 void reset_maps() BANKED{
@@ -164,7 +173,7 @@ void reset_maps() BANKED{
 		prev_map = HADES_ZERO;
 		max_map = HADES_ZERO;
 	}else if(current_map <= HADES_SIX){
-		solved_map = HADES_SIX;
+		solved_map = BOSS_CHARON;
 		current_map = HADES_SIX;
 		next_map = HADES_SEVEN;
 		prev_map = HADES_SIX;
@@ -172,13 +181,28 @@ void reset_maps() BANKED{
 	}
 }
 
+void spawn_ball() BANKED{
+	if(spawned_ball == 0u){
+		flag_button_pushable = 0u;
+		Sprite* s_fireball = SpriteManagerAdd(SpriteFireball, 36u, 28u);
+		struct EnemyInfo* fireball_data = (struct EnemyInfo*) s_fireball->custom_data;
+		fireball_data->vx = 0;
+		fireball_data->vy = 1;
+		fireball_data->e_configured = 1;
+	}
+}
+
 void level_common_update_play() BANKED{
 	// check button draw
 		if(evaluate_button){
 			if(current_map == HADES_SIX){
-				if(trap_button_pressed < current_map){
+				if(trap_button_pressed < current_map || 
+					(flag_button_repushable && repushable_button_cooldown == REPUSHABLE_BUTTON_COOLDOWN_MAX)
+				){//SET IT PUSHABLE
+					flag_button_pushable = 1u;
+					repushable_button_cooldown--;
 					draw_button(12, 11, 67u);
-				}else{
+				}else{//SET IT PUSHED
 					draw_button(12, 11, 71u);
 				}
 			}
@@ -186,8 +210,22 @@ void level_common_update_play() BANKED{
 		}
 		UINT8 tile = GetScrollTile((s_orpheus->x + 4) >> 3, (s_orpheus->y+12) >> 3);
 		if(tile == 71u || tile == 72u || tile == 73u || tile == 74u){
+			evaluate_button = 1u;
 			if(trap_button_pressed < current_map){
 				trap_button_pressed = current_map;
+			}
+			if(flag_button_pushable == 1){
+				spawn_ball();
+			}
+		}
+		if(flag_button_repushable){
+			if(repushable_button_cooldown < REPUSHABLE_BUTTON_COOLDOWN_MAX){
+				repushable_button_cooldown--;
+				if(repushable_button_cooldown == 0){
+					flag_button_pushable = 1u;
+					repushable_button_cooldown = REPUSHABLE_BUTTON_COOLDOWN_MAX;
+				}
+			}else{
 				evaluate_button = 1u;
 			}
 		}
@@ -508,7 +546,8 @@ void UpdateHUD() BANKED{
 		}
 	}
 
-void init_write_dialog(UINT8 nlines) BANKED{
+
+	void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
 	dialog_ready = 0u; 
     writing_line = 1u;

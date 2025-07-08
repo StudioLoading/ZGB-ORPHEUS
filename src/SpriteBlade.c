@@ -9,8 +9,12 @@
 #include "CircleMath.h"
 #include "custom_datas.h"
 
-
 const UINT8 a_blade[] = {4, 0,1,2,3};
+
+extern Sprite* s_orpheus;
+
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+
 
 void START() {
     THIS->lim_x = THIS->x;
@@ -19,6 +23,10 @@ void START() {
     bladedata->frmskip = 0;
     bladedata->frmskip_max = 12;
     bladedata->wait = 0;
+    if(_cpu != CGB_TYPE){
+        OBP1_REG = PAL_DEF(0, 0, 1, 2);
+        SPRITE_SET_PALETTE(THIS,1);
+    }
 }
 
 void UPDATE() {
@@ -31,6 +39,16 @@ void UPDATE() {
         //THIS->y = THIS->lim_y + ((sine_wave[bladedata->wait]) >> 3);
         bladedata->wait += 3;
     }
+    //SPRITE COLLISION
+        UINT8 scroll_bl_tile;
+        Sprite* iblspr;
+        SPRITEMANAGER_ITERATE(scroll_bl_tile, iblspr) {
+            if(iblspr->type == SpriteOrpheus){
+                if(CheckCollision(THIS, iblspr)) {
+                    orpheus_change_state(s_orpheus, HIT);
+                }
+            }
+        }
 }
 
 void DESTROY() {

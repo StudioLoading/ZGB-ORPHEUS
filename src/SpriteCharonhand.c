@@ -176,7 +176,7 @@ void UPDATE() {
                 case 3://attack finished, nothing to do
                 break;
             }
-             //SPRITE COLLISION
+            //SPRITE COLLISION
             UINT8 scroll_ch_tile;
             Sprite* ichspr;
             SPRITEMANAGER_ITERATE(scroll_ch_tile, ichspr) {
