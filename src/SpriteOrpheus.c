@@ -127,7 +127,7 @@ void START() {
     orpheus_power_max = POWER_MAX;
 	countdown = orpheus_power_max;
     countdown_verso = 0;
-    orpheus_starting_up = 40;
+    orpheus_starting_up = 20;
     inertia_x = 0u;
     inertia_y = 0u;
     if(_cpu != CGB_TYPE){
@@ -141,12 +141,13 @@ void UPDATE() {
         orpheus_starting_up--;
         return;
     }
+    if(orpheus_info == 0){ return; }
     //CHECK DEATH
+        if(orpheus_info->ow_state == DIE){ return; }
         if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
             orpheus_change_state(THIS, DIE);
             return;
         }
-        if(orpheus_info->ow_state == DIE) {return;}
         colliding_block = 0u;
     //CAMERA MOVEMENT ON CHANGING MAP
         if(a_walk_counter_y < 0){
@@ -198,7 +199,8 @@ void UPDATE() {
         }
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if((orpheus_info->ow_state != ATTACK) && (orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10)){
+        if((orpheus_info->ow_state != ATTACK) && orpheus_hitted == 0){
+            //(orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10) &&
             if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
             else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
             else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
@@ -223,6 +225,7 @@ void UPDATE() {
     //BEHAVE
         orpheus_behave();
     //SPRITE COLLISION
+        if(orpheus_hitted) return;
         UINT8 scroll_o_tile;
         Sprite* iospr;
         SPRITEMANAGER_ITERATE(scroll_o_tile, iospr) {
@@ -349,7 +352,6 @@ void orpheus_check_tile_overlapping() BANKED{
     switch(current_state){
         case StateHades00:
             if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                orpheus_hitted = 0u;
                 orpheus_change_state(THIS, HIT);
             }
             if(tile == 50u && spikes_hit_flag){
@@ -437,7 +439,6 @@ void orpheus_behave() BANKED{
             if(orpheus_hit_countdown > 0){//going backwards
                 orpheus_hit_countdown--;
             }else if(orpheus_hit_countdown <= 0){//hit effect ends
-                // || orpheus_hitted != 0){
                 orpheus_hit_countdown = 0;
                 orpheus_hitted = 0u;
                 push_vx = 0;
@@ -682,7 +683,7 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             struct NoteInfo* notedata = (struct NoteInfo*) s_note->custom_data;
             notedata->is_enemy = 0u;
         break;
-        case DIE:
+        case DIE:{
             if(restart_current_map == 0u){
                 restart_current_map = 1u;
             }
@@ -691,7 +692,7 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             if(orpheus_info->ow_state != arg_new_state){//make sure death anim once
                 spawn_death_animation(arg_s_orpheus->x, arg_s_orpheus->y);
             }
-        break;
+        }break;
     }
     orpheus_info->ow_state = arg_new_state;
 }

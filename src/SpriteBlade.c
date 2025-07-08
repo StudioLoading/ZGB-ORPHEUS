@@ -24,7 +24,7 @@ void START() {
     bladedata->frmskip_max = 12;
     bladedata->wait = 0;
     if(_cpu != CGB_TYPE){
-        OBP1_REG = PAL_DEF(0, 0, 1, 2);
+        OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
 }

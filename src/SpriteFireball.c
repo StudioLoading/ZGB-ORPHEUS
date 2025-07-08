@@ -27,10 +27,6 @@ void START() {
     fireball_mirroring = 10;    
     struct EnemyInfo* fireball_data = (struct EnemyInfo*) THIS->custom_data;
     fireball_data->e_state = GENERIC_WALK;
-    /*
-    fireball_data->wait = 120u;
-    fireball_data->frmskip = 2u;
-    fireball_data->frmskip_wait = 0u;*/
     fireball_data->e_configured = 0u;
     spawned_ball = 1u;
     if(_cpu != CGB_TYPE){
