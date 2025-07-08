@@ -41,8 +41,8 @@ void UPDATE() {
         UINT8 scroll_bl_tile;
         Sprite* iblspr;
         SPRITEMANAGER_ITERATE(scroll_bl_tile, iblspr) {
-            if(iblspr->type == SpriteOrpheus){
-                if(CheckCollision(THIS, iblspr)) {
+            if(CheckCollision(THIS, iblspr)) {
+                if(iblspr->type == SpriteOrpheus){
                     orpheus_change_state(iblspr, HIT);
                 }
             }

@@ -50,21 +50,22 @@ void UPDATE() {
             if(t_fireball_coll){
                 THIS->x += fireball_data->vx;
                 THIS->y += fireball_data->vy;
+            }else{
+            //SPRITE COLLISION
+                UINT8 scroll_fb_tile;
+                Sprite* ifbspr;
+                SPRITEMANAGER_ITERATE(scroll_fb_tile, ifbspr) {
+                    if(CheckCollision(THIS, ifbspr)) {
+                        if(ifbspr->type == SpriteOrpheus){
+                            orpheus_change_state(ifbspr, HIT);
+                        }else if(ifbspr->type != SpriteFireball && ifbspr->type != SpriteBlade){
+                            e_destroy(ifbspr, ifbspr->type);
+                        }
+                    }
+                }
             }
         }break;
     }
-    //SPRITE COLLISION
-        UINT8 scroll_fb_tile;
-        Sprite* ifbspr;
-        SPRITEMANAGER_ITERATE(scroll_fb_tile, ifbspr) {
-            if(CheckCollision(THIS, ifbspr)) {
-                if(ifbspr->type == SpriteOrpheus){
-                    orpheus_change_state(ifbspr, HIT);
-                }else if(ifbspr->type != SpriteFireball && ifbspr->type != SpriteBlade){
-                    e_destroy(ifbspr, ifbspr->type);
-                }
-            }
-        }
 }
 
 void DESTROY() {
