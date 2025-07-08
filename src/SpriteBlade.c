@@ -11,8 +11,6 @@
 
 const UINT8 a_blade[] = {4, 0,1,2,3};
 
-extern Sprite* s_orpheus;
-
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
 
@@ -45,7 +43,7 @@ void UPDATE() {
         SPRITEMANAGER_ITERATE(scroll_bl_tile, iblspr) {
             if(iblspr->type == SpriteOrpheus){
                 if(CheckCollision(THIS, iblspr)) {
-                    orpheus_change_state(s_orpheus, HIT);
+                    orpheus_change_state(iblspr, HIT);
                 }
             }
         }

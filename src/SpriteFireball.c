@@ -14,9 +14,6 @@ const UINT8 a_fireball[] = {1, 1};
 INT8 fireball_mirroring = 10;
 UINT8 spawned_ball = 0u;
 
-extern Sprite* s_orpheus;
-extern struct OrpheusInfo* orpheus_info;
-
 extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
@@ -30,7 +27,7 @@ void START() {
     fireball_data->e_configured = 0u;
     spawned_ball = 1u;
     if(_cpu != CGB_TYPE){
-        OBP1_REG = PAL_DEF(0, 0, 1, 2);
+        OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
 }
@@ -62,9 +59,7 @@ void UPDATE() {
         SPRITEMANAGER_ITERATE(scroll_fb_tile, ifbspr) {
             if(CheckCollision(THIS, ifbspr)) {
                 if(ifbspr->type == SpriteOrpheus){
-                    if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
-                        orpheus_change_state(s_orpheus, HIT);
-                    }
+                    orpheus_change_state(ifbspr, HIT);
                 }else if(ifbspr->type != SpriteFireball && ifbspr->type != SpriteBlade){
                     e_destroy(ifbspr, ifbspr->type);
                 }
