@@ -37,8 +37,8 @@ const UINT8 a_orpheus_attack_down[] = {1, 14};
 
 struct OrpheusInfo* orpheus_info;
 SPRITE_STATES new_state = 0;
-UINT8 orpheus_power_max = 0;
-UINT8 orpheus_hp_max = 4u;
+INT8 orpheus_power_max = 0;
+INT8 orpheus_hp_max = 4;
 INT8 orpheus_hp = 3;
 INT8 orpheus_hit_countdown = 0;
 INT8 a_walk_counter_x = 0;
@@ -249,6 +249,8 @@ void UPDATE() {
                     case SpriteGhost:
                     case SpriteDog:
                     case SpriteSkeleton:
+                    case SpriteBlade:
+                    case SpriteFireball:
                     case SpriteCharonhand:
                         if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;

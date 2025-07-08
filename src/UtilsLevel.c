@@ -116,13 +116,12 @@ void fill_bar_idx(UINT8 i, UINT8 r) BANKED;
 void show_next_character() BANKED;
 void init_write_dialog(UINT8 nlines) BANKED;
 void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
-void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void go_to_next_map() BANKED;
 void solve_current_map() BANKED;
-void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 void reset_maps() BANKED;
-void spawn_ball() BANKED;
 
+extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+extern void spawn_ball() BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 
@@ -178,17 +177,6 @@ void reset_maps() BANKED{
 		next_map = HADES_SEVEN;
 		prev_map = HADES_SIX;
 		max_map = HADES_SIX;
-	}
-}
-
-void spawn_ball() BANKED{
-	if(spawned_ball == 0u){
-		flag_button_pushable = 0u;
-		Sprite* s_fireball = SpriteManagerAdd(SpriteFireball, 36u, 28u);
-		struct EnemyInfo* fireball_data = (struct EnemyInfo*) s_fireball->custom_data;
-		fireball_data->vx = 0;
-		fireball_data->vy = 1;
-		fireball_data->e_configured = 1;
 	}
 }
 
@@ -627,13 +615,6 @@ void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
 	}
 }
 
-void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
-    set_bkg_tile_xy(x, y, t);
-    set_bkg_tile_xy(x, y+1, t+1);
-    set_bkg_tile_xy(x+1, y, t+2);
-    set_bkg_tile_xy(x+1, y+1, t+3);
-}
-
 void go_to_next_map() BANKED{
 	changing_map = 1u;
 	SpriteManagerRemoveSprite(s_orpheus);
@@ -784,11 +765,4 @@ void solve_current_map() BANKED{
 	solved_map = current_map;
 	my_play_fx(4u, 20, 0x3f, 0xe8, 0x4d, 0xc0, 0x00);
 	Anim_Opendoors();
-}
-
-void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED{
-	Sprite* s_death_skull = SpriteManagerAdd(SpriteDeath, spawnx, spawny);
-	struct EnemyInfo* dskull_data = (struct EnemyInfo*)s_death_skull->custom_data;
-	dskull_data->tile_collision = DEATH_SKULL;
-	dskull_data->e_configured = 1u;
 }

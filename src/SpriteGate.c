@@ -67,7 +67,7 @@ void UPDATE() {
                 return;
             }
             THIS->x--;
-            if( g_data->vx >= g_data->wait){
+            if( (UINT8)g_data->vx >= g_data->wait){
                 g_data->e_configured = 0u;
             }
         }break;
@@ -85,7 +85,7 @@ void UPDATE() {
                 return;
             }
             THIS->x++;
-            if( g_data->vx >= g_data->wait){
+            if( (UINT8)g_data->vx >= g_data->wait){
                 g_data->e_configured = 0u;
             }
         }break;

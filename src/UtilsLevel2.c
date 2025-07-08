@@ -1,0 +1,48 @@
+#include "Banks/SetAutoBank.h"
+
+#include "SGB.h"
+#include "BankManager.h"
+#include "ZGBMain.h"
+#include "Fade.h"
+#include "Keys.h"
+#include "Scroll.h"
+#include "Sprite.h"
+#include "SpriteManager.h"
+#include "string.h"
+#include "Palette.h"
+#include "Print.h"
+
+#include "custom_datas.h"
+#include "UtilAnim.h"
+
+extern UINT8 flag_button_pushable;
+extern UINT8 spawned_ball;
+
+void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+void spawn_ball() BANKED;
+void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+
+void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
+    set_bkg_tile_xy(x, y, t);
+    set_bkg_tile_xy(x, y+1, t+1);
+    set_bkg_tile_xy(x+1, y, t+2);
+    set_bkg_tile_xy(x+1, y+1, t+3);
+}
+
+void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED{
+	Sprite* s_death_skull = SpriteManagerAdd(SpriteDeath, spawnx, spawny);
+	struct EnemyInfo* dskull_data = (struct EnemyInfo*)s_death_skull->custom_data;
+	dskull_data->tile_collision = DEATH_SKULL;
+	dskull_data->e_configured = 1u;
+}
+
+void spawn_ball() BANKED{
+	if(spawned_ball == 0u){
+		flag_button_pushable = 0u;
+		Sprite* s_fireball = SpriteManagerAdd(SpriteFireball, 36u, 28u);
+		struct EnemyInfo* fireball_data = (struct EnemyInfo*) s_fireball->custom_data;
+		fireball_data->vx = 0;
+		fireball_data->vy = 1;
+		fireball_data->e_configured = 1;
+	}
+}
