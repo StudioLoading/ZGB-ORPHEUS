@@ -43,7 +43,7 @@ INT8 orpheus_hp = 3;
 INT8 orpheus_hit_countdown = 0;
 INT8 a_walk_counter_x = 0;
 INT8 a_walk_counter_y = 0;
-UINT8 orpheus_hitted = 0;
+UINT8 orpheus_hitted = 0u;
 INT8 hit_frameskip = 0;
 INT8 hit_frameskip_max = 0;
 SPRITE_STATES orpheus_state_before = 0;
@@ -111,10 +111,6 @@ void START() {
     if(tutorial_go == 0 || (current_map == HADES_ZERO && THIS->y > 50u)){
         SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
         orpheus_change_state(THIS, IDLE_UP);
-    }
-    if(_cpu != CGB_TYPE){
-        OBP1_REG = PAL_DEF(0, 0, 1, 3);
-        SPRITE_SET_PALETTE(THIS,1);
     }
     orpheus_hitted = 0u;
     orpheus_hit_countdown = 0;
@@ -252,8 +248,8 @@ void UPDATE() {
                         case SpriteGhost:
                         case SpriteDog:
                         case SpriteSkeleton:
-                        //case SpriteBlade:
-                        //case SpriteFireball:
+                        case SpriteBlade:
+                        case SpriteFireball:
                         case SpriteCharonhand:
                             if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                                 struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
