@@ -100,18 +100,18 @@ void START() {
     THIS->lim_x = 100;
     THIS->lim_y = 100;
     SetSpriteAnim(THIS, a_orpheus_idledown, 8u);
-    new_state = GENERIC_IDLE;
-    orpheus_change_state(THIS, IDLE_DOWN);
-    if(tutorial_go == 0 || (current_map == HADES_ZERO && THIS->y > 50u)){
-        SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
-        orpheus_change_state(THIS, IDLE_UP);
-    }
     orpheus_info = (struct OrpheusInfo*) THIS->custom_data;
     orpheus_info->vx = 0;
     orpheus_info->vy = 0;
     orpheus_info->tile_collision = 0u;
     orpheus_info->ow_state = IDLE_DOWN;
     orpheus_info->charming = 0;
+    new_state = GENERIC_IDLE;
+    orpheus_change_state(THIS, IDLE_DOWN);
+    if(tutorial_go == 0 || (current_map == HADES_ZERO && THIS->y > 50u)){
+        SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
+        orpheus_change_state(THIS, IDLE_UP);
+    }
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
