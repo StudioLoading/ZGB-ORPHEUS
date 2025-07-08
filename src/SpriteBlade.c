@@ -30,12 +30,15 @@ void START() {
 void UPDATE() {
     struct NoteInfo* bladedata = (struct NoteInfo*) THIS->custom_data;
     bladedata->frmskip++;
+    SPRITE_SET_PALETTE(THIS,1);
     if(bladedata->frmskip >= bladedata->frmskip_max){
         bladedata->frmskip = 0;
         UINT8 cos_position = bladedata->wait + 64u;
         THIS->x = THIS->lim_x + ((sine_wave[cos_position]) >> 3);
         //THIS->y = THIS->lim_y + ((sine_wave[bladedata->wait]) >> 3);
         bladedata->wait += 3;
+    }if(bladedata->frmskip < (bladedata->frmskip_max >> 1)){
+        SPRITE_SET_PALETTE(THIS,0);
     }
     //SPRITE COLLISION
         UINT8 scroll_bl_tile;

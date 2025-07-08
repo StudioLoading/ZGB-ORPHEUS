@@ -25,6 +25,8 @@ void START() {
     struct EnemyInfo* fireball_data = (struct EnemyInfo*) THIS->custom_data;
     fireball_data->e_state = GENERIC_WALK;
     fireball_data->e_configured = 0u;
+    fireball_data->vx = 0;
+    fireball_data->vy = 0;
     spawned_ball = 1u;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -41,8 +43,10 @@ void UPDATE() {
             if(fireball_mirroring <= 0){
                 if(THIS->mirror == NO_MIRROR){
                     THIS->mirror = V_MIRROR;
+                    SPRITE_SET_PALETTE(THIS,0);
                 }else{
                     THIS->mirror = NO_MIRROR;
+                    SPRITE_SET_PALETTE(THIS,1);
                 }
                 fireball_mirroring = 10;
             }

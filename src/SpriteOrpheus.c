@@ -242,106 +242,107 @@ void UPDATE() {
                         }
                     break;
                 }
-            }
-            if(CheckCollision(THIS, iospr)) {
-                switch(iospr->type){
-                    case SpriteLyre:
-                    case SpriteItem:
-                        orpheus_pickup(iospr);
-                    break;
-                    case SpriteGhost:
-                    case SpriteDog:
-                    case SpriteSkeleton:
-                    case SpriteBlade:
-                    case SpriteFireball:
-                    case SpriteCharonhand:
-                        if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
-                            struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
-                            if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
-                                push_vx = e_data->vx;
+            }else{
+                if(CheckCollision(THIS, iospr)) {
+                    switch(iospr->type){
+                        case SpriteLyre:
+                        case SpriteItem:
+                            orpheus_pickup(iospr);
+                        break;
+                        case SpriteGhost:
+                        case SpriteDog:
+                        case SpriteSkeleton:
+                        //case SpriteBlade:
+                        //case SpriteFireball:
+                        case SpriteCharonhand:
+                            if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
+                                struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
+                                if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
+                                    push_vx = e_data->vx;
+                                }
+                                if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
+                                    push_vy = e_data->vy;
+                                }
+                                orpheus_change_state(THIS, HIT);
                             }
-                            if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
-                                push_vy = e_data->vy;
+                        break;
+                        case SpriteOrpheusnote:{
+                            struct NoteInfo* e_data = (struct NoteInfo*) iospr->custom_data;
+                            if(e_data->is_enemy){
+                                orpheus_change_state(THIS, HIT);
                             }
-                            orpheus_change_state(THIS, HIT);
                         }
-                    break;
-                    case SpriteOrpheusnote:{
-                        struct NoteInfo* e_data = (struct NoteInfo*) iospr->custom_data;
-                        if(e_data->is_enemy){
-                            orpheus_change_state(THIS, HIT);
-                        }
+                        break;
+                        case SpriteGate:
+                        case SpriteBlock:{
+                            inertia_x = 0;
+                            inertia_y = 0;
+                            struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
+                            INT8 deltax = THIS->x - iospr->x;
+                            INT8 deltay = THIS->y - iospr->y;
+                            if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){
+                                block_data->counter_verso = -1;                            
+                                if(KEY_PRESSED(J_INT)){
+                                    block_data->counter_x++;
+                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
+                                    orpheus_pushing = PUSH_RIGHT;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    block_data->counter_x = 0;
+                                    block_data->counter_y = 0;
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
+                                    THIS->x++;
+                                    colliding_block = 1u;
+                                }
+                            }else if(THIS->x < iospr->x && orpheus_info->ow_state == WALK_RIGHT){
+                                block_data->counter_verso = 1;
+                                if(KEY_PRESSED(J_INT)){
+                                    block_data->counter_x++;
+                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
+                                    orpheus_pushing = PUSH_LEFT;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    block_data->counter_x = 0;
+                                    block_data->counter_y = 0;
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
+                                    THIS->x--;
+                                    colliding_block = 1u;
+                                }   
+                            }
+                            if(THIS->y < iospr->y && orpheus_info->ow_state == WALK_DOWN){
+                                block_data->counter_verso = 1;
+                                if(KEY_PRESSED(J_INT)){
+                                    block_data->counter_y++;
+                                    SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
+                                    orpheus_pushing = PUSH_DOWN;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    block_data->counter_x = 0;
+                                    block_data->counter_y = 0;
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
+                                    THIS->y--;
+                                    colliding_block = 1u;
+                                }
+                            }else if(THIS->y > iospr->y && orpheus_info->ow_state == WALK_UP){
+                                block_data->counter_verso = -1;
+                                if(KEY_PRESSED(J_INT)){
+                                    block_data->counter_y++;
+                                    orpheus_pushing = PUSH_UP;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    block_data->counter_x = 0;
+                                    block_data->counter_y = 0;
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vy < 0 && deltay > 6){
+                                    THIS->y++;
+                                    colliding_block = 1u;
+                                }
+                            }
+                        }break;                    
                     }
-                    break;
-                    case SpriteGate:
-                    case SpriteBlock:{
-                        inertia_x = 0;
-                        inertia_y = 0;
-                        struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
-                        INT8 deltax = THIS->x - iospr->x;
-                        INT8 deltay = THIS->y - iospr->y;
-                        if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){
-                            block_data->counter_verso = -1;                            
-                            if(KEY_PRESSED(J_INT)){
-                                block_data->counter_x++;
-                                SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
-                                orpheus_pushing = PUSH_RIGHT;
-                            }else if(KEY_RELEASED(J_INT)){
-                                block_data->counter_x = 0;
-                                block_data->counter_y = 0;
-                                orpheus_pushing = PUSH_NONE;
-                            }
-                            if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
-                                THIS->x++;
-                                colliding_block = 1u;
-                            }
-                        }else if(THIS->x < iospr->x && orpheus_info->ow_state == WALK_RIGHT){
-                            block_data->counter_verso = 1;
-                            if(KEY_PRESSED(J_INT)){
-                                block_data->counter_x++;
-                                SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
-                                orpheus_pushing = PUSH_LEFT;
-                            }else if(KEY_RELEASED(J_INT)){
-                                block_data->counter_x = 0;
-                                block_data->counter_y = 0;
-                                orpheus_pushing = PUSH_NONE;
-                            }
-                            if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
-                                THIS->x--;
-                                colliding_block = 1u;
-                            }   
-                        }
-                        if(THIS->y < iospr->y && orpheus_info->ow_state == WALK_DOWN){
-                            block_data->counter_verso = 1;
-                            if(KEY_PRESSED(J_INT)){
-                                block_data->counter_y++;
-                                SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
-                                orpheus_pushing = PUSH_DOWN;
-                            }else if(KEY_RELEASED(J_INT)){
-                                block_data->counter_x = 0;
-                                block_data->counter_y = 0;
-                                orpheus_pushing = PUSH_NONE;
-                            }
-                            if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
-                                THIS->y--;
-                                colliding_block = 1u;
-                            }
-                        }else if(THIS->y > iospr->y && orpheus_info->ow_state == WALK_UP){
-                            block_data->counter_verso = -1;
-                            if(KEY_PRESSED(J_INT)){
-                                block_data->counter_y++;
-                                orpheus_pushing = PUSH_UP;
-                            }else if(KEY_RELEASED(J_INT)){
-                                block_data->counter_x = 0;
-                                block_data->counter_y = 0;
-                                orpheus_pushing = PUSH_NONE;
-                            }
-                            if(orpheus_info->vy < 0 && deltay > 6){
-                                THIS->y++;
-                                colliding_block = 1u;
-                            }
-                        }
-                    }break;                    
                 }
             }
         }
@@ -503,60 +504,56 @@ void orpheus_update_position() BANKED{
         orpheus_info->vx = 0;
         orpheus_info->vy = 0;
     }
-    if(orpheus_pushing > 0){
-        //orpheus_info->vx = orpheus_info->vx << 1;
-        //orpheus_info->vy = orpheus_info->vy << 1;
-    }
     if(current_state == StateBoss00 && THIS->y > ((UINT16) 16u << 3) && orpheus_info->vy > 0){
         return;
     }
     orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);
-    //CHECK COLLISION WITH DAMAGE TILES
-    if(orpheus_info->tile_collision){
-        switch(current_state){
-            case StateTutorial:
-                switch(orpheus_info->tile_collision){
-                    case 6u: 
-                    case 30u://CARTEL!
-                        if(KEY_PRESSED(J_INT)){
-                            prepare_dialog(TUTORIAL_PLAY);
-                            SetState(StateCartel);
-                        }
-                    break;
-                    case 11u:
-                    case 12u:
-                        go_to_next_map();
-                    break;
-                }
-            break;
-            case StateHades00:
-                switch(orpheus_info->tile_collision){
-                    case 6u:
-                    case 7u:
-                    case 8u:
-                        go_to_prev_map();
-                    break;
-                    case 88u: case 90u: case 92u:
-                    case 94u: case 96u: case 98u:
-                    case 100u: case 102u: case 104u:
-                        if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
-                            solve_current_map();
-                            redraw_hud = 1;
-                            orpheus_haskey = 0;
-                        }
-                        if(solved_map >= current_map){
+    //CHECK COLLISION WITH INTERACTIVE TILES
+        if(orpheus_info->tile_collision){
+            switch(current_state){
+                case StateTutorial:
+                    switch(orpheus_info->tile_collision){
+                        case 6u: 
+                        case 30u://CARTEL!
+                            if(KEY_PRESSED(J_INT)){
+                                prepare_dialog(TUTORIAL_PLAY);
+                                SetState(StateCartel);
+                            }
+                        break;
+                        case 11u:
+                        case 12u:
                             go_to_next_map();
-                        }
-                    break;
-                    case 116u: case 118u://CARTEL!
-                        if(KEY_PRESSED(J_INT)){
-                            show_cartel = 1;
-                        }
-                    break;
-                }
-            break;
+                        break;
+                    }
+                break;
+                case StateHades00:
+                    switch(orpheus_info->tile_collision){
+                        case 6u:
+                        case 7u:
+                        case 8u:
+                            go_to_prev_map();
+                        break;
+                        case 88u: case 90u: case 92u:
+                        case 94u: case 96u: case 98u:
+                        case 100u: case 102u: case 104u:
+                            if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
+                                solve_current_map();
+                                redraw_hud = 1;
+                                orpheus_haskey = 0;
+                            }
+                            if(solved_map >= current_map){
+                                go_to_next_map();
+                            }
+                        break;
+                        case 116u: case 118u://CARTEL!
+                            if(KEY_PRESSED(J_INT)){
+                                show_cartel = 1;
+                            }
+                        break;
+                    }
+                break;
+            }
         }
-    }
 }
 
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED{
