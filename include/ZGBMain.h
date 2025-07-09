@@ -37,6 +37,8 @@ _SPRITE_DMG(SpriteCharonboat, charonboat)\
 _SPRITE_DMG(SpriteBlade, enemyblade)\
 _SPRITE_DMG(SpriteFireball, fireball)\
 _SPRITE_DMG(SpriteStone, stone)\
+_SPRITE_DMG(SpriteTartarus, enemytartarus)\
+_SPRITE_DMG(SpriteOoze, enemyooze)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

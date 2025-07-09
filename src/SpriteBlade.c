@@ -43,7 +43,7 @@ void UPDATE() {
     }
     //CHECK TILE OVERLAPPING FOR PITS!
         UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
-        if(tile == 20u || tile == 21u || tile == 66u || (tile >= 68u && tile <= 83u)){
+        if(tile == 20u || tile == 21u || tile == 66u || (tile >= 78u && tile <= 83u)){
             SpriteManagerRemoveSprite(THIS);
             return;
         }

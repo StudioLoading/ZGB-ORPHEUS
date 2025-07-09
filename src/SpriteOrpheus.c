@@ -61,7 +61,7 @@ UINT8 inertia_x = 0u;
 UINT8 inertia_y = 0u;
 UINT16 idle_countdown = 800u;
 Sprite* s_lyre = 0;
-PUSHING orpheus_pushing = NONE;
+PUSHING orpheus_pushing = PUSH_NONE;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -206,6 +206,10 @@ void UPDATE() {
             else if(KEY_RELEASED(J_LEFT)){new_state = IDLE_LEFT;}
             else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
         }
+    //INTERACT RELEASED
+        if(KEY_RELEASED(J_INT)){
+            orpheus_pushing = PUSH_NONE;
+        }
     //ATTACK MANAGEMENT J_ATK
         if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != ATTACK && countdown == orpheus_power_max){
 			if(KEY_TICKED(J_ATK)){ //countdown == orpheus_power_max && ){
@@ -230,9 +234,11 @@ void UPDATE() {
                     case SpriteSkeleton:
                     case SpriteInfernalimp:
                     case SpriteLostsoul:
+                    case SpriteTartarus:
                         e_change_state(iospr, HIT, iospr->type);
                     break;
                     case SpriteSkeletonshield:
+                    case SpriteOoze:
                         if(song_selection == SLEEP){
                             e_change_state(iospr, HIT, iospr->type);
                         }
@@ -245,6 +251,12 @@ void UPDATE() {
                         case SpriteItem:
                             orpheus_pickup(iospr);
                         break;
+                        case SpriteOoze:{
+                            struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
+                            if(e_data->e_state != ATTACK){
+                                return;
+                            }
+                        }
                         case SpriteGhost:
                         case SpriteDog:
                         case SpriteSkeleton:
@@ -269,11 +281,58 @@ void UPDATE() {
                             }
                         }
                         break;
-                        case SpriteGate:
                         case SpriteStone:
-                            if(orpheus_info->ow_state == HIT || orpheus_info->ow_state == DIE){
-                                return;
+                        case SpriteGate:{
+                            inertia_x = 0;
+                            inertia_y = 0;
+                            INT8 deltax = THIS->x - iospr->x;
+                            INT8 deltay = THIS->y - iospr->y;
+                            if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){                            
+                                if(KEY_PRESSED(J_INT)){
+                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
+                                    orpheus_pushing = PUSH_RIGHT;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
+                                    THIS->x++;
+                                    colliding_block = 1u;
+                                }
+                            }else if(THIS->x < iospr->x && orpheus_info->ow_state == WALK_RIGHT){
+                                if(KEY_PRESSED(J_INT)){
+                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
+                                    orpheus_pushing = PUSH_LEFT;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
+                                    THIS->x--;
+                                    colliding_block = 1u;
+                                }   
                             }
+                            if(THIS->y < iospr->y && orpheus_info->ow_state == WALK_DOWN){
+                                if(KEY_PRESSED(J_INT)){
+                                    SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
+                                    orpheus_pushing = PUSH_DOWN;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
+                                    THIS->y--;
+                                    colliding_block = 1u;
+                                }
+                            }else if(THIS->y > iospr->y && orpheus_info->ow_state == WALK_UP){
+                                if(KEY_PRESSED(J_INT)){
+                                    orpheus_pushing = PUSH_UP;
+                                }else if(KEY_RELEASED(J_INT)){
+                                    orpheus_pushing = PUSH_NONE;
+                                }
+                                if(orpheus_info->vy < 0 && deltay > 6){
+                                    THIS->y++;
+                                    colliding_block = 1u;
+                                }
+                            }
+                        }break;
                         case SpriteBlock:{
                             inertia_x = 0;
                             inertia_y = 0;

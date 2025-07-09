@@ -27,6 +27,9 @@ extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state)
 extern void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void infernalimp_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void lostsoul_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void tartarus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void ooze_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
@@ -80,6 +83,12 @@ void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED{
         case SpriteLostsoul:
             lostsoul_update_anim(s_enemy, e_data->e_state);
         break;
+        case SpriteTartarus:
+            tartarus_update_anim(s_enemy, e_data->e_state);
+        break;
+        case SpriteOoze:
+            ooze_update_anim(s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -92,10 +101,10 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case WALK_DOWN: e_data->wait = 0; e_data->vx = 0; e_data->vy = 1;break;
         case WALK_UP: e_data->wait = 0; e_data->vx = 0; e_data->vy = -1;break;
         case WALK_RIGHT: 
-            //if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
+            if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){e_data->vy = 0;}
             e_data->wait = 0; e_data->vx = 1;  break;
         case WALK_LEFT: 
-            //if(e_sprite_type != SpriteLostsoul){e_data->vy = 0;}
+            if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){e_data->vy = 0;}
             e_data->wait = 0; e_data->vx = -1; break;
         case IDLE_DOWN: case IDLE_UP: case IDLE_LEFT: case IDLE_RIGHT:
             switch(e_sprite_type){
@@ -105,6 +114,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                     e_data->wait = 160u;
                 break;
                 case SpriteLostsoul:
+                case SpriteOoze:
+                case SpriteTartarus:
                     e_data->wait = 110u;
                 break;
                 case SpriteInfernalimp:
@@ -118,6 +129,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                 case SpriteSkeletonshield:
                 case SpriteLostsoul:
                 case SpriteInfernalimp:
+                case SpriteTartarus:
+                case SpriteOoze:
                     e_data->wait = orpheus_attack_cooldown;
                 break;
             }
@@ -137,6 +150,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
             switch(e_sprite_type){
                 case SpriteLostsoul:
                     e_spawn_hitnote(s_enemy->x + 2, s_enemy->y + 4);
+                break;
+                case SpriteOoze:
                 break;
             }
             e_data->wait = 0;
@@ -272,7 +287,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     UINT8 is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
                     if(is_against_fire || is_against_pit){
                         if(e_data->e_state != HIT){
-                            e_turn(s_enemy, e_sprite_type, 0);
+                            e_turn(s_enemy, e_sprite_type, TURN_OPPOSITE);
                         }else{
                             e_destroy(s_enemy, e_sprite_type);
                         }
@@ -282,12 +297,18 @@ void e_management(Sprite* s_enemy) BANKED{
                         e_check_tile_collision(s_enemy, e_sprite_type);
                     }
                 }
+                case ATTACK:
+                    if(s_enemy->type == SpriteOoze){
+                        e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
+                    }
+                break;
                 break;
             }
     }
     if(e_data->e_state != ATTACK){
         switch(s_enemy->type){
             case SpriteLostsoul:
+            case SpriteOoze:
                 if(e_data->wait == 200){
                     e_change_state(s_enemy, ATTACK, s_enemy->type);
                 }
@@ -311,7 +332,7 @@ UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
     if(arg_sprite_type == SpriteLostsoul){
         result = 0;
     }else{
-        result = arg_tile == 20u || arg_tile == 21u || arg_tile == 66u || ( arg_tile >= 68u && arg_tile <= 83u);
+        result = arg_tile == 20u || arg_tile == 21u || arg_tile == 66u || ( arg_tile >= 78u && arg_tile <= 83u);
     }
     return result;
 }
@@ -366,6 +387,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteSkeleton:
         case SpriteSkeletonshield:
         case SpriteLostsoul:
+        case SpriteTartarus:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, e_sprite_type, 0);
             }

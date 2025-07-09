@@ -28,6 +28,7 @@ void START() {
     stone_data->e_configured = 0u;
     stone_data->vx = 0;
     stone_data->vy = 0;
+    stone_data->wait = 40u;//cooldown for Orpheus not to be HIT
     spawned_ball = 1u;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -41,6 +42,9 @@ void UPDATE() {
         case 0: return; break;
         case 1:{//vx and vy to be set externally
             stone_mirroring--;
+            if(stone_data->wait){
+                stone_data->wait--;
+            }
             if(stone_mirroring <= 0){
                 if(THIS->mirror == NO_MIRROR){
                     THIS->mirror = V_MIRROR;
@@ -53,9 +57,10 @@ void UPDATE() {
             }
             UINT8 t_stone_coll = TranslateSprite(THIS, stone_data->vx << delta_time, stone_data->vy << delta_time);
             if(t_stone_coll){
+                stone_data->vx = 0;
+                stone_data->vy = 0;
+                SPRITE_SET_PALETTE(THIS,1);
                 stone_data->e_configured = 2;
-                //THIS->x += stone_data->vx;
-                //THIS->y += stone_data->vy;
             }else{
                 UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
                 if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
@@ -73,15 +78,15 @@ void UPDATE() {
                         Sprite* istspr;
                         SPRITEMANAGER_ITERATE(scroll_st_tile, istspr) {
                             if(CheckCollision(THIS, istspr)) {
-                                if(istspr->type == SpriteOrpheus){
+                                if(istspr->type == SpriteOrpheus && stone_data->wait == 0){
                                     orpheus_change_state(istspr, HIT);
-                                } else if(istspr->type != SpriteStone && istspr->type != SpriteBlade && istspr->type != SpriteDeath && istspr->type != SpriteOrpheusnote){
+                                } else if(istspr->type != SpriteStone && istspr->type != SpriteBlade && istspr->type != SpriteDeath && istspr->type != SpriteOrpheusnote && istspr->type != SpriteOrpheus){
                                     e_destroy(istspr, istspr->type);
                                 }
                             }
                         }
-                    }
                 }
+            }
         }break;
         case 2://stopped, can be rolled away by Orpheus
             switch(orpheus_pushing){
@@ -89,6 +94,25 @@ void UPDATE() {
                     stone_data->vx = 1;
                     stone_data->vy = 0;
                     stone_data->e_configured = 1;
+                    stone_data->wait = 40u;
+                break;
+                case PUSH_RIGHT: 
+                    stone_data->vx = -1;
+                    stone_data->vy = 0;
+                    stone_data->e_configured = 1;
+                    stone_data->wait = 40u;
+                break;
+                case PUSH_UP: 
+                    stone_data->vx = 0;
+                    stone_data->vy = -1;
+                    stone_data->e_configured = 1;
+                    stone_data->wait = 40u;
+                break;
+                case PUSH_DOWN: 
+                    stone_data->vx = 0;
+                    stone_data->vy = 1;
+                    stone_data->e_configured = 1;
+                    stone_data->wait = 40u;
                 break;
             }
         break;
