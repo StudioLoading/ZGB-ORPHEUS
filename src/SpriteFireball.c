@@ -38,6 +38,7 @@ void UPDATE() {
     struct EnemyInfo* fireball_data = (struct EnemyInfo*) THIS->custom_data;
     switch(fireball_data->e_configured){
         case 0: return; break;
+        case 2://stone transformed into a fireball!
         case 1:{//vx and vy to be set externally
             fireball_mirroring--;
             if(fireball_mirroring <= 0){
@@ -62,7 +63,8 @@ void UPDATE() {
                     if(CheckCollision(THIS, ifbspr)) {
                         if(ifbspr->type == SpriteOrpheus){
                             orpheus_change_state(ifbspr, HIT);
-                        }else if(ifbspr->type != SpriteFireball && ifbspr->type != SpriteBlade){
+                        }else if(ifbspr->type != SpriteFireball && ifbspr->type != SpriteBlade && ifbspr->type != SpriteDeath && ifbspr->type != SpriteOrpheusnote
+                        && ifbspr->type != SpriteStone){
                             e_destroy(ifbspr, ifbspr->type);
                         }
                     }

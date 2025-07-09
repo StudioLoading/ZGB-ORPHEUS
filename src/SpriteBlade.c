@@ -12,6 +12,7 @@
 const UINT8 a_blade[] = {4, 0,1,2,3};
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 
 void START() {
@@ -47,10 +48,17 @@ void UPDATE() {
             if(CheckCollision(THIS, iblspr)) {
                 if(iblspr->type == SpriteOrpheus){
                     orpheus_change_state(iblspr, HIT);
-                }
+                }else if(iblspr->type == SpriteFireball){
+                    struct EnemyInfo* fireball_data = (struct EnemyInfo*) iblspr->custom_data;
+                    if(fireball_data->e_configured == 2){//super fireball!
+                        SpriteManagerRemoveSprite(THIS);
+                    }
+
             }
         }
+    }
 }
 
 void DESTROY() {
+    spawn_death_animation(THIS->x + 8u, THIS->y + 8u);
 }

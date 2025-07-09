@@ -195,8 +195,8 @@ void UPDATE() {
         }
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if((orpheus_info->ow_state != ATTACK) && orpheus_hitted == 0){
-            //(orpheus_info->ow_state != HIT || orpheus_hit_countdown < 10) &&
+        if(orpheus_info->ow_state != ATTACK && orpheus_hitted == 0 &&      orpheus_info->ow_state != HIT){
+            // || orpheus_hit_countdown < 10
             if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
             else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
             else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
@@ -270,6 +270,10 @@ void UPDATE() {
                         }
                         break;
                         case SpriteGate:
+                        case SpriteStone:
+                            if(orpheus_info->ow_state == HIT || orpheus_info->ow_state == DIE){
+                                return;
+                            }
                         case SpriteBlock:{
                             inertia_x = 0;
                             inertia_y = 0;
@@ -501,6 +505,9 @@ void orpheus_update_position() BANKED{
         orpheus_info->vy = 0;
     }
     if(current_state == StateBoss00 && THIS->y > ((UINT16) 16u << 3) && orpheus_info->vy > 0){
+        return;
+    }
+    if(orpheus_hitted && orpheus_info->tile_collision){
         return;
     }
     orpheus_info->tile_collision = TranslateSprite(THIS, orpheus_info->vx << delta_time, orpheus_info->vy << delta_time);

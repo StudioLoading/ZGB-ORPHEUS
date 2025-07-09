@@ -126,7 +126,7 @@ void START() {
 					e_configure(e_infernalimp1, INFERNALIMP);*/
 					/*Sprite* e_lostsoul1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_lostsoul1, LOSTSOUL);*/
-					s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 13u << 3), ((UINT16) 14u << 3));
 				}break;
 			}
 		}else{

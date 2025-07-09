@@ -121,7 +121,7 @@ void solve_current_map() BANKED;
 void reset_maps() BANKED;
 
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
-extern void spawn_ball() BANKED;
+extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 
@@ -203,7 +203,11 @@ void level_common_update_play() BANKED{
 				trap_button_pressed = current_map;
 			}
 			if(flag_button_pushable == 1){
-				spawn_ball();
+				switch(current_map){
+					case HADES_SIX:
+						spawn_ball(SpriteStone, 36u, 28u, J_DOWN);
+					break;
+				}
 			}
 		}
 		if(flag_button_repushable){
