@@ -41,6 +41,12 @@ void UPDATE() {
     }if(bladedata->frmskip < (bladedata->frmskip_max >> 1)){
         SPRITE_SET_PALETTE(THIS,0);
     }
+    //CHECK TILE OVERLAPPING FOR PITS!
+        UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+        if(tile == 20u || tile == 21u || tile == 66u || (tile >= 68u && tile <= 83u)){
+            SpriteManagerRemoveSprite(THIS);
+            return;
+        }
     //SPRITE COLLISION
         UINT8 scroll_bl_tile;
         Sprite* iblspr;
