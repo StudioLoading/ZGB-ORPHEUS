@@ -42,9 +42,11 @@ void UPDATE() {
         case 1:{//vx and vy to be set externally
             fireball_mirroring--;
             if(fireball_mirroring <= 0){
-                if(THIS->mirror == NO_MIRROR){
+                if(THIS->mirror == NO_MIRROR ){
                     THIS->mirror = V_MIRROR;
-                    SPRITE_SET_PALETTE(THIS,0);
+                    if(fireball_data->e_configured < 2){//if it's not superfireball
+                        SPRITE_SET_PALETTE(THIS,0);
+                    }
                 }else{
                     THIS->mirror = NO_MIRROR;
                     SPRITE_SET_PALETTE(THIS,1);
