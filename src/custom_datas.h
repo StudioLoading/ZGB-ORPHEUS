@@ -54,7 +54,8 @@ typedef enum{
 	INFERNALIMP,
 	LOSTSOUL,
 	TARTARUS,
-	OOZE
+	OOZE,
+	SENTINEL
 }ENEMY_TYPE;
 
 struct EnemyInfo{

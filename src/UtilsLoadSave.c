@@ -42,10 +42,16 @@ void RestoreSprites() BANKED{
         );
         memcpy(spr->custom_data, sprite_stack[i].custom_data, sizeof(sprite_stack[i].custom_data));
         switch(sprite_stack[i].type){
-            case SpriteSkeleton: e_configure(spr, SKELETON); break;
-            case SpriteDog: e_configure(spr, DOG); break;
             case SpriteBlock: s_block_00 = spr; break;
             case SpriteBlade: s_blade = spr; break;
+            case SpriteSkeleton: e_configure(spr, SKELETON); break;
+            case SpriteDog: e_configure(spr, DOG); break;
+            case SpriteSkeletonshield: e_configure(spr, SKELETON_SHIELD); break;
+            case SpriteInfernalimp: e_configure(spr, INFERNALIMP); break;
+            case SpriteLostsoul: e_configure(spr, LOSTSOUL); break;
+            case SpriteTartarus: e_configure(spr, TARTARUS); break;
+            case SpriteOoze: e_configure(spr, OOZE); break;
+            case SpriteSentinel: e_configure(spr, SENTINEL); break;
             case SpriteItem:
                 struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
                 i_data->i_configured = 1;

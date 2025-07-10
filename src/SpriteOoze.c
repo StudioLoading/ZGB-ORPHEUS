@@ -59,11 +59,11 @@ void ooze_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             SetSpriteAnim(s_enemy, a_ooze_down, 16);
         break;
         case IDLE_LEFT: case WALK_LEFT:
-            s_enemy->mirror = V_MIRROR;
+            s_enemy->mirror = NO_MIRROR;
             SetSpriteAnim(s_enemy, a_ooze_h, 16);
         break;
         case IDLE_RIGHT: case WALK_RIGHT: 
-            s_enemy->mirror = NO_MIRROR;
+            s_enemy->mirror = V_MIRROR;
             SetSpriteAnim(s_enemy, a_ooze_h, 16);
         break;
         case HIT:

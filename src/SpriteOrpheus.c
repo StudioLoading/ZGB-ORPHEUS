@@ -195,8 +195,11 @@ void UPDATE() {
         }
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if(orpheus_info->ow_state != ATTACK && orpheus_hitted == 0 &&      orpheus_info->ow_state != HIT){
-            // || orpheus_hit_countdown < 10
+        if((orpheus_info->ow_state != ATTACK && orpheus_hitted == 0 &&      orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 20){
+            if(orpheus_hit_countdown){
+                orpheus_hitted = 0;
+                orpheus_hit_countdown = 0;
+            }
             if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
             else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
             else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
@@ -235,6 +238,7 @@ void UPDATE() {
                     case SpriteInfernalimp:
                     case SpriteLostsoul:
                     case SpriteTartarus:
+                    case SpriteSentinel:
                         e_change_state(iospr, HIT, iospr->type);
                     break;
                     case SpriteSkeletonshield:
@@ -262,6 +266,7 @@ void UPDATE() {
                         case SpriteSkeleton:
                         case SpriteBlade:
                         case SpriteFireball:
+                        case SpriteSentinel:
                         case SpriteCharonhand:
                             if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                                 struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
@@ -421,7 +426,7 @@ void orpheus_check_tile_overlapping() BANKED{
     }
 }
 
-void orpheus_behave() BANKED{
+void orpheus_behave() BANKED{   
     switch(new_state){
         case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
             if(inertia_x > 31){
@@ -494,7 +499,9 @@ void orpheus_behave() BANKED{
                         break;
                     }
                 }
-                orpheus_update_position();
+                if(orpheus_info->tile_collision == 0){//risk to enter a wall
+                    orpheus_update_position();
+                }
             }
             if(orpheus_hit_countdown > 0){//going backwards
                 orpheus_hit_countdown--;
@@ -589,6 +596,10 @@ void orpheus_update_position() BANKED{
                     }
                 break;
                 case StateHades00:
+                    if(orpheus_info->ow_state == HIT){
+                        THIS->x -= orpheus_info->vx;
+                        THIS->y -= orpheus_info->vy;
+                    }
                     switch(orpheus_info->tile_collision){
                         case 6u:
                         case 7u:
@@ -759,7 +770,7 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
 void orpheus_hit() BANKED{
     if(orpheus_hitted == 0u){
         orpheus_hp--;
-        orpheus_hit_countdown = 64;
+        orpheus_hit_countdown = 80;
         orpheus_hitted = 1u;
         redraw_hud = 1;
     }
