@@ -56,7 +56,8 @@ typedef enum{
 	TARTARUS,
 	OOZE,
 	SENTINEL,
-	SIREN
+	SIREN,
+	SHADOW
 }ENEMY_TYPE;
 
 struct EnemyInfo{

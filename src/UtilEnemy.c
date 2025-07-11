@@ -31,6 +31,7 @@ extern void tartarus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKE
 extern void ooze_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void sentinel_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void siren_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void shadow_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -97,6 +98,9 @@ void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED{
         case SpriteSiren:
             siren_update_anim(s_enemy, e_data->e_state);
         break;
+        case SpriteShadow:
+            shadow_update_anim(s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -124,6 +128,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                 case SpriteSkeletonshield:
                 case SpriteSentinel:
                 case SpriteDog:
+                case SpriteShadow:
                     e_data->wait = 160u;
                 break;
                 case SpriteLostsoul:
@@ -149,6 +154,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                 case SpriteOoze:
                 case SpriteSentinel:
                 case SpriteSiren:
+                case SpriteShadow:
                     e_data->wait = orpheus_attack_cooldown;
                 break;
             }
@@ -422,6 +428,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteSkeletonshield:
         case SpriteLostsoul:
         case SpriteTartarus:
+        case SpriteShadow:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, e_sprite_type, 0);
             }

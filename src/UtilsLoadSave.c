@@ -53,6 +53,7 @@ void RestoreSprites() BANKED{
             case SpriteOoze: e_configure(spr, OOZE); break;
             case SpriteSentinel: e_configure(spr, SENTINEL); break;
             case SpriteSiren: e_configure(spr, SIREN); break;
+            case SpriteShadow: e_configure(spr, SHADOW); break;
             case SpriteItem:
                 struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
                 i_data->i_configured = 1;

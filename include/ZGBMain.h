@@ -41,6 +41,7 @@ _SPRITE_DMG(SpriteTartarus, enemytartarus)\
 _SPRITE_DMG(SpriteOoze, enemyooze)\
 _SPRITE_DMG(SpriteSentinel, enemysentinel)\
 _SPRITE_DMG(SpriteSiren, enemysiren)\
+_SPRITE_DMG(SpriteShadow, enemyshadow)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

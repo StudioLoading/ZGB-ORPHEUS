@@ -195,19 +195,21 @@ void UPDATE() {
         }
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if((orpheus_info->ow_state != ATTACK && orpheus_hitted == 0 &&      orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 20){
-            if(orpheus_hit_countdown){
-                orpheus_hitted = 0;
-                orpheus_hit_countdown = 0;
+        if(orpheus_info->ow_state != ATTACK){
+            if((orpheus_hitted == 0 && orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 20){
+                if(orpheus_hit_countdown){
+                    orpheus_hitted = 0;
+                    orpheus_hit_countdown = 0;
+                }
+                if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
+                else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
+                else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
+                else if(KEY_PRESSED(J_RIGHT)){new_state = WALK_RIGHT;}
+                else if(KEY_RELEASED(J_DOWN)){new_state = IDLE_DOWN;}
+                else if(KEY_RELEASED(J_UP)){new_state = IDLE_UP;}
+                else if(KEY_RELEASED(J_LEFT)){new_state = IDLE_LEFT;}
+                else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
             }
-            if(KEY_PRESSED(J_DOWN)){new_state = WALK_DOWN;}
-            else if(KEY_PRESSED(J_UP)){new_state = WALK_UP;}
-            else if(KEY_PRESSED(J_LEFT)){new_state = WALK_LEFT;}
-            else if(KEY_PRESSED(J_RIGHT)){new_state = WALK_RIGHT;}
-            else if(KEY_RELEASED(J_DOWN)){new_state = IDLE_DOWN;}
-            else if(KEY_RELEASED(J_UP)){new_state = IDLE_UP;}
-            else if(KEY_RELEASED(J_LEFT)){new_state = IDLE_LEFT;}
-            else if(KEY_RELEASED(J_RIGHT)){new_state = IDLE_RIGHT;}
         }
     //INTERACT RELEASED
         if(KEY_RELEASED(J_INT)){
@@ -239,6 +241,7 @@ void UPDATE() {
                     case SpriteLostsoul:
                     case SpriteTartarus:
                     case SpriteSentinel:
+                    case SpriteShadow:
                         e_change_state(iospr, HIT, iospr->type);
                     break;
                     case SpriteSkeletonshield:
@@ -270,6 +273,7 @@ void UPDATE() {
                         case SpriteFireball:
                         case SpriteSentinel:
                         case SpriteCharonhand:
+                        case SpriteShadow:
                             if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                                 struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
                                 if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
