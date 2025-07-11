@@ -108,8 +108,12 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
             if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){e_data->vy = 0;}
             e_data->wait = 0; e_data->vx = 1;  break;
         case WALK_LEFT: 
-            if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){e_data->vy = 0;}
-            e_data->wait = 0; e_data->vx = -1; break;
+            if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){
+                e_data->vy = 0;
+            }
+            e_data->wait = 0;
+            e_data->vx = -1;
+        break;
         case IDLE_DOWN: case IDLE_UP: case IDLE_LEFT: case IDLE_RIGHT:
             switch(e_sprite_type){
                 case SpriteSkeleton:
@@ -154,7 +158,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case PREATTACK_DOWN:
             switch(e_sprite_type){
                 case SpriteDog: e_data->wait = 100; break;
-                case SpriteSentinel: e_data->wait = 8; break;
+                case SpriteSentinel: e_data->wait = 80; break;
             } 
         break;
         case ATTACK:
@@ -456,26 +460,26 @@ void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED{
     switch(wise){
         case TURN_CLOCKWISE:
             switch(e_data->e_state){
-                case WALK_DOWN: e_change_state(s_enemy, IDLE_LEFT, e_sprite_type); break;
-                case WALK_LEFT: e_change_state(s_enemy, IDLE_UP, e_sprite_type); break;
-                case WALK_UP: e_change_state(s_enemy, IDLE_RIGHT, e_sprite_type); break;
-                case WALK_RIGHT: e_change_state(s_enemy, IDLE_DOWN, e_sprite_type); break;
+                case IDLE_DOWN: case WALK_DOWN: e_change_state(s_enemy, IDLE_LEFT, e_sprite_type); break;
+                case IDLE_LEFT: case WALK_LEFT: e_change_state(s_enemy, IDLE_UP, e_sprite_type); break;
+                case IDLE_UP: case WALK_UP: e_change_state(s_enemy, IDLE_RIGHT, e_sprite_type); break;
+                case IDLE_RIGHT: case WALK_RIGHT: e_change_state(s_enemy, IDLE_DOWN, e_sprite_type); break;
             }
         break;
         case TURN_COUNTERCLOCKWISE:        
             switch(e_data->e_state){
-                case WALK_DOWN: e_change_state(s_enemy, IDLE_RIGHT, e_sprite_type); break;
-                case WALK_LEFT: e_change_state(s_enemy, IDLE_DOWN, e_sprite_type); break;
-                case WALK_UP: e_change_state(s_enemy, IDLE_LEFT, e_sprite_type); break;
-                case WALK_RIGHT: e_change_state(s_enemy, IDLE_UP, e_sprite_type); break;
+                case IDLE_DOWN: case WALK_DOWN: e_change_state(s_enemy, IDLE_RIGHT, e_sprite_type); break;
+                case IDLE_LEFT: case WALK_LEFT: e_change_state(s_enemy, IDLE_DOWN, e_sprite_type); break;
+                case IDLE_UP: case WALK_UP: e_change_state(s_enemy, IDLE_LEFT, e_sprite_type); break;
+                case IDLE_RIGHT: case WALK_RIGHT: e_change_state(s_enemy, IDLE_UP, e_sprite_type); break;
             }
         break;
         case TURN_OPPOSITE:
             switch(e_data->e_state){
-                case WALK_DOWN: e_change_state(s_enemy, IDLE_UP, e_sprite_type); break;
-                case WALK_LEFT: e_change_state(s_enemy, IDLE_RIGHT, e_sprite_type); break;
-                case WALK_UP: e_change_state(s_enemy, IDLE_DOWN, e_sprite_type); break;
-                case WALK_RIGHT: e_change_state(s_enemy, IDLE_LEFT, e_sprite_type); break;
+                case IDLE_DOWN: case WALK_DOWN: e_change_state(s_enemy, IDLE_UP, e_sprite_type); break;
+                case IDLE_LEFT: case WALK_LEFT: e_change_state(s_enemy, IDLE_RIGHT, e_sprite_type); break;
+                case IDLE_UP: case WALK_UP: e_change_state(s_enemy, IDLE_DOWN, e_sprite_type); break;
+                case IDLE_RIGHT: case WALK_RIGHT: e_change_state(s_enemy, IDLE_LEFT, e_sprite_type); break;
             }
         break;
     }

@@ -35,12 +35,12 @@ void START(){
     struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
     e_data->frmskip = 1u;
     e_data->wait = 0;
-    e_start(e_data, IDLE_DOWN);
+    e_start(e_data, WALK_DOWN);
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
-    e_change_state(THIS, WALK_DOWN, THIS->type);
+    e_change_state(THIS, IDLE_DOWN, THIS->type);
 }
 
 void UPDATE(){
