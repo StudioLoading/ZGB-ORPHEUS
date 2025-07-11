@@ -243,6 +243,7 @@ void UPDATE() {
                     break;
                     case SpriteSkeletonshield:
                     case SpriteOoze:
+                    case SpriteSiren:
                         if(song_selection == SLEEP){
                             e_change_state(iospr, HIT, iospr->type);
                         }
@@ -255,7 +256,8 @@ void UPDATE() {
                         case SpriteItem:
                             orpheus_pickup(iospr);
                         break;
-                        case SpriteOoze:{
+                        case SpriteOoze:
+                        case SpriteSiren:{
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
                             if(e_data->e_state != ATTACK){
                                 return;

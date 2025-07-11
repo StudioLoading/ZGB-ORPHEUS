@@ -30,6 +30,7 @@ extern void lostsoul_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKE
 extern void tartarus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void ooze_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void sentinel_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void siren_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -93,6 +94,9 @@ void e_update_anim(Sprite* s_enemy, UINT8 sprite_type) BANKED{
         case SpriteSentinel:
             sentinel_update_anim(s_enemy, e_data->e_state);
         break;
+        case SpriteSiren:
+            siren_update_anim(s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -105,7 +109,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
         case WALK_DOWN: e_data->wait = 0; e_data->vx = 0; e_data->vy = 1;break;
         case WALK_UP: e_data->wait = 0; e_data->vx = 0; e_data->vy = -1;break;
         case WALK_RIGHT: 
-            if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){e_data->vy = 0;}
+            if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze && e_sprite_type != SpriteSiren ){e_data->vy = 0;}
             e_data->wait = 0; e_data->vx = 1;  break;
         case WALK_LEFT: 
             if(e_sprite_type != SpriteLostsoul && e_sprite_type != SpriteOoze){
@@ -124,6 +128,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                 break;
                 case SpriteLostsoul:
                 case SpriteOoze:
+                case SpriteSiren:
                     e_data->wait = 120u;
                 break;
                 case SpriteTartarus:
@@ -143,6 +148,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                 case SpriteTartarus:
                 case SpriteOoze:
                 case SpriteSentinel:
+                case SpriteSiren:
                     e_data->wait = orpheus_attack_cooldown;
                 break;
             }
@@ -167,6 +173,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_typ
                     e_spawn_hitnote(s_enemy->x + 2, s_enemy->y + 4);
                 break;
                 case SpriteOoze:
+                case SpriteSiren:
                     if(e_data->vx != 2 && e_data->vx != -2){
                         e_data->vx *= 2;
                     }
@@ -325,7 +332,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     }
                 }
                 case ATTACK:
-                    if(s_enemy->type == SpriteOoze){
+                    if(s_enemy->type == SpriteOoze || s_enemy->type == SpriteSiren){
                         e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
                     }
                 break;
@@ -335,6 +342,7 @@ void e_management(Sprite* s_enemy) BANKED{
         switch(s_enemy->type){
             case SpriteLostsoul:
             case SpriteOoze:
+            case SpriteSiren:
                 if(e_data->wait == 200){
                     e_change_state(s_enemy, ATTACK, s_enemy->type);
                 }
@@ -355,7 +363,7 @@ UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
 
 UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
     UINT8 result = 0u;
-    if(arg_sprite_type == SpriteLostsoul || arg_sprite_type == SpriteOoze){
+    if(arg_sprite_type == SpriteLostsoul || arg_sprite_type == SpriteOoze || arg_sprite_type == SpriteSiren){
         result = 0;
     }else{
         result = arg_tile == 20u || arg_tile == 21u || arg_tile == 66u || ( arg_tile >= 78u && arg_tile <= 83u);
@@ -420,6 +428,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         break;
         case SpriteInfernalimp:
         case SpriteOoze:
+        case SpriteSiren:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, e_sprite_type, TURN_CLOCKWISE);
             }

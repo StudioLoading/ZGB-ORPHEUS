@@ -126,11 +126,13 @@ void START() {
 					e_configure(e_infernalimp1, INFERNALIMP);*/
 					/*Sprite* e_lostsoul1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_lostsoul1, LOSTSOUL);*/
-					s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 13u << 3), ((UINT16) 6u << 3));
+					/*s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 13u << 3), ((UINT16) 6u << 3));
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSentinel, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
-					e_configure(e_skeleton1, SENTINEL);
+					e_configure(e_skeleton1, SENTINEL);*/
 					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteOoze, ((UINT16) 13u << 3), ((UINT16) 10u << 3));
 					e_configure(e_skeleton2, OOZE);*/
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSiren, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton2, SIREN);
 				}break;
 			}
 		}else{
