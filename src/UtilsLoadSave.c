@@ -17,7 +17,7 @@ extern Sprite* s_orpheus;
 extern Sprite* s_block_00;
 extern Sprite* s_blade;
 
-extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
+extern void e_configure(Sprite* s_enemy) BANKED;
 
 void SaveSprites() BANKED{
     sprite_stack_top = 0u;
@@ -44,16 +44,16 @@ void RestoreSprites() BANKED{
         switch(sprite_stack[i].type){
             case SpriteBlock: s_block_00 = spr; break;
             case SpriteBlade: s_blade = spr; break;
-            case SpriteSkeleton: e_configure(spr, SKELETON); break;
-            case SpriteDog: e_configure(spr, DOG); break;
-            case SpriteSkeletonshield: e_configure(spr, SKELETON_SHIELD); break;
-            case SpriteInfernalimp: e_configure(spr, INFERNALIMP); break;
-            case SpriteLostsoul: e_configure(spr, LOSTSOUL); break;
-            case SpriteTartarus: e_configure(spr, TARTARUS); break;
-            case SpriteOoze: e_configure(spr, OOZE); break;
-            case SpriteSentinel: e_configure(spr, SENTINEL); break;
-            case SpriteSiren: e_configure(spr, SIREN); break;
-            case SpriteShadow: e_configure(spr, SHADOW); break;
+            case SpriteSkeleton: e_configure(spr); break;
+            case SpriteDog: e_configure(spr); break;
+            case SpriteSkeletonshield: e_configure(spr); break;
+            case SpriteInfernalimp: e_configure(spr); break;
+            case SpriteLostsoul: e_configure(spr); break;
+            case SpriteTartarus: e_configure(spr); break;
+            case SpriteOoze: e_configure(spr); break;
+            case SpriteSentinel: e_configure(spr); break;
+            case SpriteSiren: e_configure(spr); break;
+            case SpriteShadow: e_configure(spr); break;
             case SpriteItem:
                 struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
                 i_data->i_configured = 1;

@@ -17,7 +17,6 @@
 #define CHARON_PREATTACK_MIN 1
 
 const UINT8 a_charon[] = {10, 1,2,2,3,4,5,4,5,4,5};
-const UINT8 a_charon_hidden[] = {1, 0};
 const UINT8 a_charon_hit[] = {20, 0,1,0,2,0,2,0,3,0,4,0,5,0,4,0,5,0,4,0,5};
 
 struct CharonInfo charon_info;
@@ -329,16 +328,16 @@ void charon_preattack_move(UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED{
     if(delta_factor_x < 0){
         charon_walking_frmskip_x_max = -delta_factor_x;    
     }
-    if(charon_walking_frmskip_x_max > 0 && charon_walking_frmskip_x_current < charon_walking_frmskip_x_max){//ecco che devo fare una y
+    if(charon_walking_frmskip_x_max > 0 && (INT8)charon_walking_frmskip_x_current < charon_walking_frmskip_x_max){//ecco che devo fare una y
         actual_charon_vx = 0;
     }
-    if(charon_walking_frmskip_y_max > 0 && charon_walking_frmskip_y_current < charon_walking_frmskip_y_max){
+    if(charon_walking_frmskip_y_max > 0 && (INT8)charon_walking_frmskip_y_current < charon_walking_frmskip_y_max){
         actual_charon_vy = 0;
     }
-    if(charon_walking_frmskip_x_current == charon_walking_frmskip_x_max){
+    if((INT8)charon_walking_frmskip_x_current == charon_walking_frmskip_x_max){
         charon_walking_frmskip_x_current = 0;
     }
-    if(charon_walking_frmskip_y_current == charon_walking_frmskip_y_max){
+    if((INT8)charon_walking_frmskip_y_current == charon_walking_frmskip_y_max){
         charon_walking_frmskip_y_current = 0;
     }
     charon_walking_frmskip_x_current++;
@@ -350,8 +349,8 @@ void charon_preattack_move(UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED{
 
 void charon_change_state(SPRITE_STATES arg_new_state) BANKED{
     switch(arg_new_state){
-        case PREATTACK_DOWN://looping hands
-        break;
+        /*case PREATTACK_DOWN://looping hands
+        break;*/
         case GENERIC_WALK://move left-right
             charon_info.countdown = 80u;
             charonrighthand_data->e_configured = 0;
@@ -385,7 +384,7 @@ void charon_change_state(SPRITE_STATES arg_new_state) BANKED{
             if(charon_attack_type > 4){
                 charon_attack_type = 0;
             }
-            SetSpriteAnim(THIS, a_charon_hidden, 1);
+            SetSpriteAnim(THIS, a_charon_hit, 24u);
         break;
         case ATTACK:
             SetSpriteAnim(THIS, a_charon, 1u);

@@ -22,9 +22,9 @@ const UINT8 a_dog_repelled[] = {2, 0,1};
 const UINT8 a_dog_preattack_h[] = {8, 8,2,2,8,2,2,2,2};
 
 extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
-extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void e_dog_management(Sprite* s_enemy) BANKED;
-extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+extern void e_destroy(Sprite* s_enemy) BANKED;
 
 void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
@@ -38,7 +38,7 @@ void START(){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
-    e_change_state(THIS, IDLE_RIGHT, THIS->type);
+    e_change_state(THIS, IDLE_RIGHT);
 }
 
 void UPDATE(){
@@ -100,5 +100,5 @@ void dog_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
 }
 
 void DESTROY(){
-    e_destroy(THIS, THIS->type);
+    e_destroy(THIS);
 }

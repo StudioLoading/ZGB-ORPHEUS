@@ -15,13 +15,13 @@
 extern UINT8 in_dialog;
 extern Sprite* s_orpheus;
 
-extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
-extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 extern UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
-extern void e_turn(Sprite* s_enemy, UINT8 e_sprite_type, UINT8 forced_wise) BANKED;
-extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+extern void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED;
+extern void e_destroy(Sprite* s_enemy) BANKED;
 
 void e_dog_management(Sprite* s_enemy) BANKED;
 
@@ -43,7 +43,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
             return;
         }
         if(e_data->e_state == IDLE_DOWN || e_data->e_state == IDLE_UP || e_data->e_state == IDLE_RIGHT || e_data->e_state == IDLE_LEFT){
-            e_turn(s_enemy, s_enemy->type, 1);
+            e_turn(s_enemy, 1);
             //TURN_CLOCKWISE defined in UtilEnemy.c
         }
     }
@@ -54,22 +54,22 @@ void e_dog_management(Sprite* s_enemy) BANKED{
         switch (e_data->e_state){
             case IDLE_RIGHT:
                 if(delta_y < 24 && delta_y > -8 && delta_x > 0 && delta_x < 80){
-                    e_change_state(s_enemy, PREATTACK_RIGHT, s_enemy->type);                    
+                    e_change_state(s_enemy, PREATTACK_RIGHT);                    
                 }
             break;
             case IDLE_UP:
                 if(delta_x < 24 && delta_x > -8 && delta_y < 0 && delta_y > -80){
-                    e_change_state(s_enemy, PREATTACK_UP, s_enemy->type);                    
+                    e_change_state(s_enemy, PREATTACK_UP);                    
                 }
             break;
             case IDLE_LEFT:
                 if(delta_y < 16 && delta_y > -12 && delta_x < 0 && delta_x > -80){
-                    e_change_state(s_enemy, PREATTACK_LEFT, s_enemy->type);                    
+                    e_change_state(s_enemy, PREATTACK_LEFT);                    
                 }
             break;
             case IDLE_DOWN:
                 if(delta_x < 16 && delta_x > -12 && delta_y > 0 && delta_y < 80){
-                    e_change_state(s_enemy, PREATTACK_DOWN, s_enemy->type);                    
+                    e_change_state(s_enemy, PREATTACK_DOWN);                    
                 }
             break;
             case WALK_DOWN:
@@ -91,9 +91,9 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 UINT8 is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
                 if(is_against_fire || is_against_pit){
                     if(e_data->e_state != HIT){
-                        e_turn(s_enemy, e_sprite_type, 0);
+                        e_turn(s_enemy, 0);
                     }else{
-                        e_destroy(s_enemy, e_sprite_type);
+                        e_destroy(s_enemy);
                     }
                 }
                 e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
@@ -114,7 +114,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
                 e_data->wait--;
                 if(e_data->wait == 0){ 
-                    e_change_state(s_enemy, WALK_RIGHT, s_enemy->type);
+                    e_change_state(s_enemy, WALK_RIGHT);
                 }
             break;
             case PREATTACK_UP:
@@ -130,7 +130,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
                 e_data->wait--;
                 if(e_data->wait == 0){ 
-                    e_change_state(s_enemy, WALK_UP, s_enemy->type);
+                    e_change_state(s_enemy, WALK_UP);
                 }
             break;
             case PREATTACK_LEFT:
@@ -146,7 +146,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
                 e_data->wait--;
                 if(e_data->wait == 0){ 
-                    e_change_state(s_enemy, WALK_LEFT, s_enemy->type);
+                    e_change_state(s_enemy, WALK_LEFT);
                 }
             break;
             case PREATTACK_DOWN:
@@ -162,7 +162,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 }
                 e_data->wait--;
                 if(e_data->wait == 0){
-                    e_change_state(s_enemy, WALK_DOWN, s_enemy->type);
+                    e_change_state(s_enemy, WALK_DOWN);
                 }
             break;
         }

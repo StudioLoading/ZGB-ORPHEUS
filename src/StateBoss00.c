@@ -56,7 +56,6 @@ extern Sprite* s_charon_hand_right;
 extern INT8 a_walk_counter_y;
 extern UINT8 death_countdown;
 
-extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;

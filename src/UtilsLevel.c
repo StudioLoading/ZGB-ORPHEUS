@@ -275,7 +275,7 @@ void level_common_update_play() BANKED{
 			redraw_hud = 1;
 		}
 	// update HUD
-		if(redraw_hud != 0){
+		if(redraw_hud){
 			UpdateHUD();
 		}
 	// tiles animation
@@ -466,8 +466,21 @@ void UpdateHUD() BANKED{
 			UPDATE_HUD_TILE(12,1,27);
 			UPDATE_HUD_TILE(12,2,28);
 		}
+		if(orpheus_hp == 0){//sono morto, deseleziono tutto
+			UPDATE_HUD_TILE(7,1,9);
+			UPDATE_HUD_TILE(7,2,10);
+			UPDATE_HUD_TILE(8,1,11);
+			UPDATE_HUD_TILE(8,2,12);
+			UPDATE_HUD_TILE(9,1,17);
+			UPDATE_HUD_TILE(9,2,18);
+			UPDATE_HUD_TILE(10,1,19);
+			UPDATE_HUD_TILE(10,2,20);
+			UPDATE_HUD_TILE(11,1,21);
+			UPDATE_HUD_TILE(11,2,22);
+			UPDATE_HUD_TILE(12,1,23);
+			UPDATE_HUD_TILE(12,2,24);
+		}
 	//BAR
-		//if(countdown < orpheus_power_max || has_lyre == 0){
 		if(countdown == 0 || has_lyre == 0){
 			UPDATE_HUD_TILE(14,1,45);
 			UPDATE_HUD_TILE(14,2,46);
@@ -518,6 +531,18 @@ void UpdateHUD() BANKED{
 				fill_bar_idx(3, 16);
 				fill_bar_idx(4, 16);
 			}
+		}
+		if(orpheus_hp == 0){
+			UPDATE_HUD_TILE(14,1,45);
+			UPDATE_HUD_TILE(14,2,46);
+			UPDATE_HUD_TILE(15,1,45);
+			UPDATE_HUD_TILE(15,2,46);
+			UPDATE_HUD_TILE(16,1,45);
+			UPDATE_HUD_TILE(16,2,46);
+			UPDATE_HUD_TILE(17,1,45);
+			UPDATE_HUD_TILE(17,2,46);
+			UPDATE_HUD_TILE(18,1,45);
+			UPDATE_HUD_TILE(18,2,46);
 		}
 	//KEY
 		if(orpheus_haskey == 1){

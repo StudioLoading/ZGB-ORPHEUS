@@ -94,7 +94,7 @@ extern void go_to_next_map() BANKED;
 extern void go_to_prev_map() BANKED;
 extern void solve_current_map() BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
-extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 e_sprite_type) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 void START() {
     THIS->lim_x = 100;
@@ -196,7 +196,7 @@ void UPDATE() {
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
         if(orpheus_info->ow_state != ATTACK){
-            if((orpheus_hitted == 0 && orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 20){
+            if((orpheus_hitted == 0 && orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 30){
                 if(orpheus_hit_countdown){
                     orpheus_hitted = 0;
                     orpheus_hit_countdown = 0;
@@ -230,7 +230,7 @@ void UPDATE() {
     //BEHAVE
         orpheus_behave();
     //SPRITE COLLISION
-        if(orpheus_hitted) return;
+        if(orpheus_hitted || orpheus_hp == 0) return;
         UINT8 scroll_o_tile;
         Sprite* iospr;
         SPRITEMANAGER_ITERATE(scroll_o_tile, iospr) {
@@ -242,13 +242,13 @@ void UPDATE() {
                     case SpriteTartarus:
                     case SpriteSentinel:
                     case SpriteShadow:
-                        e_change_state(iospr, HIT, iospr->type);
+                        e_change_state(iospr, HIT);
                     break;
                     case SpriteSkeletonshield:
                     case SpriteOoze:
                     case SpriteSiren:
                         if(song_selection == SLEEP){
-                            e_change_state(iospr, HIT, iospr->type);
+                            e_change_state(iospr, HIT);
                         }
                     break;
                 }
@@ -420,6 +420,12 @@ void UPDATE() {
 
 void orpheus_check_tile_overlapping() BANKED{
     UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+    if(tile == 0){
+        tile = GetScrollTile((THIS->x + 2) >> 3, (THIS->y+16) >> 3);
+    }
+    if(tile == 0){
+        tile = GetScrollTile((THIS->x + 10) >> 3, (THIS->y+16) >> 3);
+    }
     switch(current_state){
         case StateHades00:
             if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
@@ -607,27 +613,33 @@ void orpheus_update_position() BANKED{
                         THIS->y -= orpheus_info->vy;
                     }
                     switch(orpheus_info->tile_collision){
-                        case 6u:
-                        case 7u:
-                        case 8u:
-                            go_to_prev_map();
+                        case 66u://PIT, INSTANT DEATH!
+                            orpheus_hp = 0;
+                            redraw_hud = 1u;
                         break;
-                        case 88u: case 90u: case 92u:
-                        case 94u: case 96u: case 98u:
-                        case 100u: case 102u: case 104u:
-                            if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
-                                solve_current_map();
-                                redraw_hud = 1;
-                                orpheus_haskey = 0;
-                            }
-                            if(solved_map >= current_map){
-                                go_to_next_map();
-                            }
+                        case 6u://PREV MAP
+                            case 7u:
+                            case 8u:
+                                go_to_prev_map();
                         break;
-                        case 116u: case 118u://CARTEL!
-                            if(KEY_PRESSED(J_INT)){
-                                show_cartel = 1;
-                            }
+                        case 88u://NEXT MAP
+                            case 90u: case 92u:
+                            case 94u: case 96u: case 98u:
+                            case 100u: case 102u: case 104u:
+                                if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
+                                    solve_current_map();
+                                    redraw_hud = 1;
+                                    orpheus_haskey = 0;
+                                }
+                                if(solved_map >= current_map){
+                                    go_to_next_map();
+                                }
+                        break;
+                        case 116u://CARTEL
+                            case 118u:
+                                if(KEY_PRESSED(J_INT)){
+                                    show_cartel = 1;
+                                }
                         break;
                     }
                 break;
@@ -763,6 +775,8 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             if(restart_current_map == 0u){
                 restart_current_map = 1u;
             }
+            orpheus_hp = 0;
+            redraw_hud = 1;
             boss_intro = 0;
             SetSpriteAnim(arg_s_orpheus, a_orpheus_dead, 1u);
             if(orpheus_info->ow_state != arg_new_state){//make sure death anim once

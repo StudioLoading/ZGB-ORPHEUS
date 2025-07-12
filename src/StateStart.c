@@ -51,10 +51,10 @@ UINT8 tutorial_go = 0;
 UINT8 tutorial_hades_entrance = 0;
 UINT8 tutorial_get_lyre = 0;
 
-MACROMAP solved_map = NONE;
+MACROMAP solved_map = MAP_NONE;
 MACROMAP current_map = TUTORIAL;
 MACROMAP next_map = HADES_ZERO;
-MACROMAP prev_map = NONE;
+MACROMAP prev_map = MAP_NONE;
 MACROMAP max_map = TUTORIAL;
 UINT8 has_lyre = 0;
 

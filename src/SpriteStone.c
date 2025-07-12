@@ -15,7 +15,7 @@ INT8 stone_mirroring = 10;
 extern UINT8 spawned_ball;
 extern PUSHING orpheus_pushing;
 
-extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
 void START() {
@@ -81,7 +81,7 @@ void UPDATE() {
                                 if(istspr->type == SpriteOrpheus && stone_data->wait == 0){
                                     orpheus_change_state(istspr, HIT);
                                 } else if(istspr->type != SpriteStone && istspr->type != SpriteBlade && istspr->type != SpriteDeath && istspr->type != SpriteOrpheusnote && istspr->type != SpriteOrpheus){
-                                    e_destroy(istspr, istspr->type);
+                                    e_destroy(istspr);
                                 }
                             }
                         }

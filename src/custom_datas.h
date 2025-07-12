@@ -45,21 +45,6 @@ struct CharonInfo{
 	INT8 countdown;
 };
 
-typedef enum{
-	SKELETON,
-	SKELETON_SHIELD,
-	SKELETON_KEY,
-	DOG,
-	DOG_KEY,
-	INFERNALIMP,
-	LOSTSOUL,
-	TARTARUS,
-	OOZE,
-	SENTINEL,
-	SIREN,
-	SHADOW
-}ENEMY_TYPE;
-
 struct EnemyInfo{
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;
@@ -87,6 +72,7 @@ typedef enum{
 }SONG;
 
 typedef enum{
+	ITEM_NONE,
 	LYRE,
 	HEART,
 	KEY,
@@ -110,8 +96,14 @@ struct ExclamationInfo{
 	INT8 counter;
 };
 
+struct ItemSpawnedByCommon{
+	UINT8 sprite_type;
+	ITEM_TYPE item_type;
+	UINT8 spawned;
+};
+
 typedef enum{
-	NONE,
+	MAP_NONE,
 	TUTORIAL,
 	HADES_ZERO,
 	HADES_ONE,
@@ -133,20 +125,6 @@ typedef enum{
 	DEATH_PUFF_RIGHT_0,
 	DEATH_PUFF_RIGHT_1,
 }DEATH_COMPONENT;
-
-struct LoadedItem{
-	ITEM_TYPE item_type;
-	UINT16 pos_x;
-	UINT16 pos_y;
-	struct ItemInfo iinfo;
-};
-
-struct LoadedEnemy{
-	ENEMY_TYPE item_type;
-	UINT16 posx;
-	UINT16 posy;
-	struct EnemyInfo einfo;
-};
 
 typedef enum{
 	PUSH_NONE, PUSH_UP, PUSH_RIGHT, PUSH_DOWN, PUSH_LEFT

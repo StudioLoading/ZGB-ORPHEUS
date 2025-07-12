@@ -19,10 +19,10 @@ const UINT8 a_siren_repelled[] = {2, 0,5};
 const UINT8 a_siren_attack[] = {2, 4,5};
 
 extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
-extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state, UINT8 sprite_type) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void e_management(Sprite* s_enemy) BANKED;
 extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
-extern void e_destroy(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
+extern void e_destroy(Sprite* s_enemy) BANKED;
 
 void siren_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
@@ -36,7 +36,7 @@ void START(){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
     }
-    e_change_state(THIS, IDLE_DOWN, THIS->type);
+    e_change_state(THIS, IDLE_DOWN);
 }
 
 void UPDATE(){
@@ -76,5 +76,5 @@ void siren_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
 }
 
 void DESTROY(){
-    e_destroy(THIS, THIS->type);
+    e_destroy(THIS);
 }

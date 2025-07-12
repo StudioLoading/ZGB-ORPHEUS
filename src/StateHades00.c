@@ -26,11 +26,11 @@ IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
 
 
-const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,
-60, 61,63,64,66,
+const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,
+60,61,63,64,
 75,76, 107, 108, 111, 112,
-//here the hit tiles
-//84,85,86,87,
+//insta death tiles
+66,
 //prev
 6,7,8,2,
 //next
@@ -48,6 +48,7 @@ Sprite* s_blade;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
 UINT8 death_countdown = 0u;
+struct ItemSpawnedByCommon item_spawned_by_common;
 
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
@@ -66,7 +67,7 @@ extern UINT8 changing_map;
 extern UINT8 sprite_stack_top;
 extern UINT8 flag_button_repushable;
 
-extern void e_configure(Sprite* s_enemy, UINT8 sprite_type) BANKED;
+extern void e_configure(Sprite* s_enemy) BANKED;
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
@@ -81,6 +82,9 @@ void START() {
 		if(sprite_stack_top > 0){
 			RestoreSprites();
 		}else if(solved_map < current_map){
+			item_spawned_by_common.sprite_type = 0;
+			item_spawned_by_common.item_type = 0;
+			item_spawned_by_common.spawned = 0;
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 			switch(current_map){
 				case HADES_ONE:{
@@ -100,39 +104,42 @@ void START() {
 				case HADES_THREE:{
 					area_enemy_counter = 1;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
-					e_configure(e_enemy, SKELETON);
+					e_configure(e_enemy);
 				}break;
 				case HADES_FOUR:{
 					area_enemy_counter = 3;
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
-					e_configure(e_skeleton1, SKELETON);
+					e_configure(e_skeleton1);
 					
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
-					e_configure(e_skeleton2, SKELETON);
+					e_configure(e_skeleton2);
 
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
-					e_configure(e_skeleton3, SKELETON);
+					e_configure(e_skeleton3);
 				}break;
 				case HADES_FIVE:{
 					area_enemy_counter = 1;
 					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
-					e_configure(e_dog, DOG);
+					e_configure(e_dog);
+					item_spawned_by_common.sprite_type = SpriteDog;
+					item_spawned_by_common.item_type = KEY;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_SIX:{
 					area_enemy_counter = 1;
 					/*Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
-					e_configure(e_skeleton1, SKELETON_SHIELD);*/
+					e_configure(e_skeleton1);*/
 					/*Sprite* e_infernalimp1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 10u << 3));
-					e_configure(e_infernalimp1, INFERNALIMP);*/
+					e_configure(e_infernalimp1);*/
 					/*Sprite* e_lostsoul1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
-					e_configure(e_lostsoul1, LOSTSOUL);*/
+					e_configure(e_lostsoul1);*/
 					/*s_blade = SpriteManagerAdd(SpriteBlade,((UINT16) 13u << 3), ((UINT16) 6u << 3));
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSentinel, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
-					e_configure(e_skeleton1, SENTINEL);*/
+					e_configure(e_skeleton1);*/
 					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteOoze, ((UINT16) 13u << 3), ((UINT16) 10u << 3));
-					e_configure(e_skeleton2, OOZE);*/
+					e_configure(e_skeleton2);*/
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteShadow, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
-					e_configure(e_skeleton2, SHADOW);
+					e_configure(e_skeleton2);
 				}break;
 			}
 		}else{
@@ -180,9 +187,6 @@ void START() {
 }
 
 void UPDATE() {
-	/*if(in_dialog){
-		write_dialog();
-	}*/
 	if(tutorial_go > 0){
 		level_common_update_play();
 	}
