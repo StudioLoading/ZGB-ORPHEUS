@@ -32,8 +32,12 @@ extern void ooze_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void sentinel_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void siren_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void shadow_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void banshee_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void magma_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void frost_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void serpent_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
-
+extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
@@ -103,6 +107,18 @@ void e_update_anim(Sprite* arg_s_enemy) BANKED{
         case SpriteShadow:
             shadow_update_anim(arg_s_enemy, e_data->e_state);
         break;
+        case SpriteBanshee:
+            banshee_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteMagma:
+            magma_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteFrost:
+            frost_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteSerpent:
+            serpent_update_anim(arg_s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -112,6 +128,7 @@ UINT8 e_is_attack(UINT8 arg_sprite_type) BANKED{
         case SpriteLostsoul:
         case SpriteOoze:
         case SpriteSiren:
+        case SpriteBanshee:
             result = 1u;
         break;
     }
@@ -123,6 +140,9 @@ UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED{
     switch(arg_sprite_type){
         case SpriteDog:
         case SpriteSentinel:
+        case SpriteTartarus:
+        case SpriteMagma:
+        case SpriteFrost:
             result = 1u;
         break;
     }
@@ -167,15 +187,19 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteSentinel:
                 case SpriteDog:
                 case SpriteShadow:
+                case SpriteSerpent:
                     e_data->wait = 160u;
                 break;
                 case SpriteLostsoul:
                 case SpriteOoze:
                 case SpriteSiren:
+                case SpriteBanshee:
                     e_data->wait = 120u;
                 break;
                 case SpriteTartarus:
-                    e_data->wait = 40u;
+                case SpriteMagma:
+                case SpriteFrost:
+                    e_data->wait = 100u;
                 break;
                 case SpriteInfernalimp:
                     e_data->wait = 80u;
@@ -183,18 +207,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             }
         break;
         case HIT:
-            switch(e_sprite_type){
-                case SpriteSkeleton:
-                case SpriteSkeletonshield:
-                case SpriteLostsoul:
-                case SpriteInfernalimp:
-                case SpriteTartarus:
-                case SpriteOoze:
-                case SpriteSentinel:
-                case SpriteSiren:
-                case SpriteShadow:
-                    e_data->wait = orpheus_attack_cooldown;
-                break;
+            if(is_enemy(e_sprite_type)){
+                e_data->wait = orpheus_attack_cooldown;
             }
         break;
         case DIE:
@@ -214,6 +228,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
         case ATTACK:
             switch(e_sprite_type){
                 case SpriteLostsoul:
+                case SpriteBanshee:
                     e_spawn_hitnote(s_enemy->x + 2, s_enemy->y + 4);
                 break;
                 case SpriteOoze:
@@ -305,6 +320,18 @@ void e_management(Sprite* s_enemy) BANKED{
             }
         }
     }
+    switch (e_data->e_state){
+        case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
+            e_data->wait--;
+            if(e_data->wait == 0){
+                if(e_data->e_state == IDLE_DOWN) e_change_state(s_enemy, WALK_DOWN);
+                if(e_data->e_state == IDLE_LEFT) e_change_state(s_enemy, WALK_LEFT);
+                if(e_data->e_state == IDLE_RIGHT) e_change_state(s_enemy, WALK_RIGHT);
+                if(e_data->e_state == IDLE_UP) e_change_state(s_enemy, WALK_UP);
+                return;
+            }
+        break;
+    }
     if(e_data->frmskip_wait > 0){
         e_data->frmskip_wait--;
     }else{
@@ -333,16 +360,6 @@ void e_management(Sprite* s_enemy) BANKED{
                         }
                     //}
                 break;
-                case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
-                    e_data->wait--;
-                    if(e_data->wait == 0){
-                        if(e_data->e_state == IDLE_DOWN) e_change_state(s_enemy, WALK_DOWN);
-                        if(e_data->e_state == IDLE_LEFT) e_change_state(s_enemy, WALK_LEFT);
-                        if(e_data->e_state == IDLE_RIGHT) e_change_state(s_enemy, WALK_RIGHT);
-                        if(e_data->e_state == IDLE_UP) e_change_state(s_enemy, WALK_UP);
-                        return;
-                    }
-                break;
             }
         //TRANSLATE SPRITE
             switch (e_data->e_state){
@@ -351,7 +368,7 @@ void e_management(Sprite* s_enemy) BANKED{
                 case WALK_LEFT:
                 case WALK_RIGHT:
                 case HIT:{
-                    UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+4) >> 3);
+                    UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+6) >> 3);
                     if(tile == 0){
                         tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
                     }
@@ -387,20 +404,30 @@ void e_management(Sprite* s_enemy) BANKED{
 
 UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
     UINT8 result = 0;
-    if(arg_sprite_type == SpriteInfernalimp || arg_sprite_type == SpriteSentinel){
-        result = 0;
-    }else{
-        result = arg_tile == 84u || arg_tile == 85u || arg_tile == 86u || arg_tile == 87u;
+    switch(arg_sprite_type){
+        case SpriteInfernalimp:
+        case SpriteSentinel:
+        case SpriteMagma:{
+            result = 0;
+        }break;
+        default:
+            result = arg_tile == 84u || arg_tile == 85u || arg_tile == 86u || arg_tile == 87u;
+        break;
     }
     return result;
 }
 
 UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
     UINT8 result = 0u;
-    if(arg_sprite_type == SpriteLostsoul || arg_sprite_type == SpriteOoze || arg_sprite_type == SpriteSiren){
-        result = 0;
-    }else{
-        result = arg_tile == 20u || arg_tile == 66u || ( arg_tile >= 78u && arg_tile <= 83u);
+    switch(arg_sprite_type){
+        case SpriteLostsoul:
+        case SpriteOoze:
+        case SpriteSiren:
+            result = 0;
+        break;
+        default:
+            result = arg_tile == 20u || arg_tile == 66u || ( arg_tile >= 78u && arg_tile <= 83u);
+        break;
     }
     return result;
 }
@@ -448,6 +475,9 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteLostsoul:
         case SpriteTartarus:
         case SpriteShadow:
+        case SpriteMagma:
+        case SpriteFrost:
+        case SpriteSerpent:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, 0);
             }
@@ -455,6 +485,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteInfernalimp:
         case SpriteOoze:
         case SpriteSiren:
+        case SpriteBanshee:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, TURN_CLOCKWISE);
             }

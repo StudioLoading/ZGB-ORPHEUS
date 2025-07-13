@@ -18,6 +18,7 @@ extern Sprite* s_block_00;
 extern Sprite* s_blade;
 
 extern void e_configure(Sprite* s_enemy) BANKED;
+extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 
 void SaveSprites() BANKED{
     sprite_stack_top = 0u;
@@ -41,24 +42,18 @@ void RestoreSprites() BANKED{
             sprite_stack[i].y
         );
         memcpy(spr->custom_data, sprite_stack[i].custom_data, sizeof(sprite_stack[i].custom_data));
-        switch(sprite_stack[i].type){
-            case SpriteBlock: s_block_00 = spr; break;
-            case SpriteBlade: s_blade = spr; break;
-            case SpriteSkeleton: e_configure(spr); break;
-            case SpriteDog: e_configure(spr); break;
-            case SpriteSkeletonshield: e_configure(spr); break;
-            case SpriteInfernalimp: e_configure(spr); break;
-            case SpriteLostsoul: e_configure(spr); break;
-            case SpriteTartarus: e_configure(spr); break;
-            case SpriteOoze: e_configure(spr); break;
-            case SpriteSentinel: e_configure(spr); break;
-            case SpriteSiren: e_configure(spr); break;
-            case SpriteShadow: e_configure(spr); break;
-            case SpriteItem:
-                struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
-                i_data->i_configured = 1;
-            break;
-            case SpriteOrpheus: s_orpheus = spr; break;
+        if(is_enemy(sprite_stack[i].type)){
+            e_configure(spr);
+        }else{
+            switch(sprite_stack[i].type){
+                case SpriteBlock: s_block_00 = spr; break;
+                case SpriteBlade: s_blade = spr; break;
+                case SpriteItem:
+                    struct ItemInfo* i_data = (struct ItemInfo*) spr->custom_data; 
+                    i_data->i_configured = 1;
+                break;
+                case SpriteOrpheus: s_orpheus = spr; break;
+            }
         }
         // puoi anche ripristinare altre info, se le hai salvate
     }

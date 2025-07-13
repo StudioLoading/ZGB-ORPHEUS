@@ -138,7 +138,12 @@ void START() {
 					e_configure(e_skeleton1);*/
 					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteOoze, ((UINT16) 13u << 3), ((UINT16) 10u << 3));
 					e_configure(e_skeleton2);*/
-					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteShadow, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteShadow, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton2);*/
+					/*
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteBanshee, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton2);*/
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSerpent, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton2);
 				}break;
 			}
