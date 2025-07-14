@@ -454,6 +454,10 @@ void orpheus_check_tile_overlapping() BANKED{
             if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
                 orpheus_change_state(THIS, HIT);
             }
+            if(tile == 20 || tile == 66u || tile == 82){
+                orpheus_hp = 0;
+                redraw_hud = 1u;
+            }
             if(tile == 50u && spikes_hit_flag){
                 orpheus_change_state(THIS, HIT);
             }
@@ -636,10 +640,10 @@ void orpheus_update_position() BANKED{
                         THIS->y -= orpheus_info->vy;
                     }
                     switch(orpheus_info->tile_collision){
-                        case 66u://PIT, INSTANT DEATH!
+                        /*case 66u://PIT, INSTANT DEATH!
                             orpheus_hp = 0;
                             redraw_hud = 1u;
-                        break;
+                        break;*/
                         case 6u://PREV MAP
                             case 7u:
                             case 8u:

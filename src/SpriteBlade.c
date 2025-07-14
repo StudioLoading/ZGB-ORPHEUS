@@ -13,6 +13,7 @@ const UINT8 a_blade[] = {4, 0,1,2,3};
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+extern ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 
 
 void START() {
@@ -43,7 +44,8 @@ void UPDATE() {
     }
     //CHECK TILE OVERLAPPING FOR PITS!
         UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
-        if(tile == 20u || tile == 21u || tile == 66u || (tile >= 78u && tile <= 83u)){
+        ENEMY_REACTION on_pit = e_is_damaged_by_pit(tile, SpriteBlade);
+        if(on_pit == ENEMY_REACT_DIE){
             SpriteManagerRemoveSprite(THIS);
             return;
         }

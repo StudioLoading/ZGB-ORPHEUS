@@ -451,6 +451,7 @@ ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED
         case SpriteSiren:
         case SpriteWyrmling:
         case SpriteRevenant:
+        case SpriteMinion:
             result = ENEMY_REACT_PASSTHROUGH;
         break;
         default:{

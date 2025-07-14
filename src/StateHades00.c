@@ -29,8 +29,6 @@ DECLARE_MUSIC(danger);
 const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,
 60,61,63,64,
 75,76, 107, 108, 111, 112,
-//insta death tiles
-66,
 //prev
 6,7,8,2,
 //next
@@ -129,7 +127,7 @@ void START() {
 					area_enemy_counter = 1;
 					/*Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1);*/
-					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteRevenant, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton2);
 				}break;
 			}
