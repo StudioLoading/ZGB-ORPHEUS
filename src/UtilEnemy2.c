@@ -18,8 +18,8 @@ extern Sprite* s_orpheus;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
-extern UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
-extern UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
+extern ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
+extern ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 extern void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 
@@ -87,9 +87,9 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 if(tile == 0){
                     tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+2) >> 3); 
                 }
-                UINT8 is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
-                UINT8 is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
-                if(is_against_fire || is_against_pit){
+                ENEMY_REACTION is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
+                ENEMY_REACTION is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
+                if(is_against_fire == ENEMY_REACT_DIE || is_against_pit == ENEMY_REACT_DIE){
                     if(e_data->e_state != HIT){
                         e_turn(s_enemy, 0);
                     }else{

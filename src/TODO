@@ -5,6 +5,8 @@ POST DEMO
 - GOLEM
 	Tartarus, Magma, Frost
 	dovrebbero diventare invulnerabili alle sfere, sennò che razza di golem sono? Però sempre vulnerabili alle supersfere. Quelle restano invincibili.
+- hitbox degli enemy da aggiornare
+	considera che i minion sono i più piccoli e i golem sono i più grandi
 - HADES 5
 	ho pistolato cose sullo spawn degli item su nemico. è diventata una struct che viene settata all'inizio di ogni mappa nuova. è li che setto chi, morendo, spawna cose.
 - FADE OUT IN BLACK

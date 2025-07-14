@@ -68,6 +68,10 @@ UINT8 is_enemy(UINT8 arg_sprite_type) BANKED{
         case SpriteMagma:
         case SpriteFrost:
         case SpriteSerpent:
+        case SpriteWyrmling:
+        case SpriteDevourer:
+        case SpriteRevenant:
+        case SpriteMinion:
             result = 1u;
         break;
     }

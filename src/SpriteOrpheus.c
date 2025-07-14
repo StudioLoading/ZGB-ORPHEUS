@@ -243,11 +243,14 @@ void UPDATE() {
                     case SpriteShadow:
                     case SpriteBanshee:
                     case SpriteSerpent:
+                    case SpriteDevourer:
+                    case SpriteRevenant:
                         e_change_state(iospr, HIT);
                     break;
                     case SpriteTartarus:
                     case SpriteMagma:
                     case SpriteFrost:
+                    case SpriteMinion:
                         if(song_selection != SLEEP){
                             e_change_state(iospr, HIT);
                         }
@@ -255,6 +258,7 @@ void UPDATE() {
                     case SpriteSkeletonshield:
                     case SpriteOoze:
                     case SpriteSiren:
+                    case SpriteWyrmling:
                         if(song_selection == SLEEP){
                             e_change_state(iospr, HIT);
                         }
@@ -268,7 +272,8 @@ void UPDATE() {
                             orpheus_pickup(iospr);
                         break;
                         case SpriteOoze:
-                        case SpriteSiren:{
+                        case SpriteSiren:
+                        case SpriteWyrmling:{
                             struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
                             if(e_data->e_state != ATTACK){
                                 return;
@@ -289,6 +294,9 @@ void UPDATE() {
                         case SpriteCharonhand:
                         case SpriteShadow:
                         case SpriteSerpent:
+                        case SpriteDevourer:
+                        case SpriteRevenant:
+                        case SpriteMinion:
                             if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                                 struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
                                 if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){

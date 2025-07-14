@@ -47,6 +47,9 @@ _SPRITE_DMG(SpriteMagma, enemymagma)\
 _SPRITE_DMG(SpriteFrost, enemyfrost)\
 _SPRITE_DMG(SpriteSerpent, enemyserpent)\
 _SPRITE_DMG(SpriteWyrmling, enemywyrmling)\
+_SPRITE_DMG(SpriteDevourer, enemydevourer)\
+_SPRITE_DMG(SpriteRevenant, enemyrevenant)\
+_SPRITE_DMG(SpriteMinion, enemyminion)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

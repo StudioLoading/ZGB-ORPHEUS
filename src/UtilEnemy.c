@@ -36,6 +36,10 @@ extern void banshee_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED
 extern void magma_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void frost_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void serpent_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void wyrmling_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void devourer_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void revenant_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void minion_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -50,7 +54,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED;
 void e_destroy(Sprite* s_enemy) BANKED;
 void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED;
-UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
+ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_attack(UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED;
@@ -119,6 +123,18 @@ void e_update_anim(Sprite* arg_s_enemy) BANKED{
         case SpriteSerpent:
             serpent_update_anim(arg_s_enemy, e_data->e_state);
         break;
+        case SpriteWyrmling:
+            wyrmling_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteDevourer:
+            devourer_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteRevenant:
+            revenant_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteMinion:
+            minion_update_anim(arg_s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -129,6 +145,7 @@ UINT8 e_is_attack(UINT8 arg_sprite_type) BANKED{
         case SpriteOoze:
         case SpriteSiren:
         case SpriteBanshee:
+        case SpriteRevenant:
             result = 1u;
         break;
     }
@@ -143,6 +160,7 @@ UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED{
         case SpriteTartarus:
         case SpriteMagma:
         case SpriteFrost:
+        case SpriteMinion:
             result = 1u;
         break;
     }
@@ -188,12 +206,14 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteDog:
                 case SpriteShadow:
                 case SpriteSerpent:
+                case SpriteDevourer:
                     e_data->wait = 160u;
                 break;
                 case SpriteLostsoul:
                 case SpriteOoze:
                 case SpriteSiren:
                 case SpriteBanshee:
+                case SpriteRevenant:
                     e_data->wait = 120u;
                 break;
                 case SpriteTartarus:
@@ -201,6 +221,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteFrost:
                     e_data->wait = 100u;
                 break;
+                case SpriteMinion:
                 case SpriteInfernalimp:
                     e_data->wait = 80u;
                 break;
@@ -233,6 +254,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 break;
                 case SpriteOoze:
                 case SpriteSiren:
+                case SpriteRevenant:
                     if(e_data->vx != 2 && e_data->vx != -2){
                         e_data->vx *= 2;
                     }
@@ -372,9 +394,9 @@ void e_management(Sprite* s_enemy) BANKED{
                     if(tile == 0){
                         tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
                     }
-                    UINT8 is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
-                    UINT8 is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
-                    if(is_against_fire || is_against_pit){
+                    ENEMY_REACTION is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
+                    ENEMY_REACTION is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
+                    if(is_against_fire == ENEMY_REACT_DIE || is_against_pit == ENEMY_REACT_DIE){
                         if(e_data->e_state != HIT){
                             e_turn(s_enemy, 0);
                         }else{
@@ -387,7 +409,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     }
                 }
                 case ATTACK:
-                    if(s_enemy->type == SpriteOoze || s_enemy->type == SpriteSiren){
+                    if(s_enemy->type == SpriteOoze || s_enemy->type == SpriteSiren || s_enemy->type == SpriteWyrmling || s_enemy->type == SpriteRevenant){
                         e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
                     }
                 break;
@@ -402,32 +424,41 @@ void e_management(Sprite* s_enemy) BANKED{
     }
 }
 
-UINT8 e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
-    UINT8 result = 0;
+ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
+    ENEMY_REACTION result = ENEMY_REACT_NONE;
     switch(arg_sprite_type){
         case SpriteInfernalimp:
         case SpriteSentinel:
         case SpriteMagma:{
-            result = 0;
+            result = ENEMY_REACT_PASSTHROUGH;
         }break;
-        default:
+        default:{
             result = arg_tile == 84u || arg_tile == 85u || arg_tile == 86u || arg_tile == 87u;
+            if(result){
+                result = ENEMY_REACT_DIE;
+            }
+        }
         break;
     }
     return result;
 }
 
-UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
-    UINT8 result = 0u;
+ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
+    ENEMY_REACTION result = ENEMY_REACT_NONE;
     switch(arg_sprite_type){
         case SpriteLostsoul:
         case SpriteOoze:
         case SpriteSiren:
-            result = 0;
+        case SpriteWyrmling:
+        case SpriteRevenant:
+            result = ENEMY_REACT_PASSTHROUGH;
         break;
-        default:
+        default:{
             result = arg_tile == 20u || arg_tile == 66u || ( arg_tile >= 78u && arg_tile <= 83u);
-        break;
+            if(result){
+                result = ENEMY_REACT_DIE;
+            }
+        }break;
     }
     return result;
 }
@@ -478,6 +509,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteMagma:
         case SpriteFrost:
         case SpriteSerpent:
+        case SpriteDevourer:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, 0);
             }
@@ -486,6 +518,9 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteOoze:
         case SpriteSiren:
         case SpriteBanshee:
+        case SpriteWyrmling:
+        case SpriteRevenant:
+        case SpriteMinion:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, TURN_CLOCKWISE);
             }
