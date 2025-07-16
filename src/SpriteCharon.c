@@ -59,8 +59,6 @@ extern void boat_turn() BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 void START() {
-    boss_hp_max = 5;
-    boss_hp_current = 5;
     charon_attack_type = 0u;
     SetSpriteAnim(THIS, a_charon, 8);
     s_charon_hand_left = SpriteManagerAdd(SpriteCharonhand, THIS->x - 6u, THIS->y + 4u);

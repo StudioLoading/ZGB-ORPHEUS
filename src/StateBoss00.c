@@ -15,6 +15,10 @@
 #include "UtilAnim.h"
 
 #define ANIM_COUNTER_MAX 84
+#define BOSS_BREATH_MAX 24
+#define BOSS_BREATH_MED 16
+#define BOSS_BREATH_MIN 10
+
 IMPORT_MAP(mapbosscharon);
 IMPORT_MAP(mapbosscerberus);
 IMPORT_MAP(hudmap);
@@ -44,6 +48,10 @@ UINT16 spawn_common_wait = 0u;
 UINT16 spawn_common_wait_max = 0u;
 UINT8 spawned_enemy_counter = 0u;
 UINT8 river_verse = 0u;//0 left;1 right
+INT8 boss_breath_counter = 0;
+INT8 boss_breath_counter_max = 0;
+INT8 boss_breath_verse = 1;//1 low, 2 low, -1 up, -2up
+UINT8 boss_breath_flag = 0u;
 
 void boss_manage_death_charon() BANKED;
 
@@ -129,6 +137,12 @@ void START() {
 		spawned_enemy_counter = 0u;
 		boss_hp_current = 5;
 		PlayMusic(battle, 1);
+		boss_hp_max = 5;
+		boss_hp_current = 5;
+		boss_breath_counter = 0;
+		boss_breath_counter_max = BOSS_BREATH_MAX;
+		boss_breath_verse = 1;
+		boss_breath_flag = 0u;
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -167,6 +181,37 @@ void UPDATE() {
 				}
 			}
 		break;
+	}
+	//BREATHS COUNTER
+	if(boss_breath_flag == 0){
+		boss_breath_counter++;
+		if(boss_breath_counter >= boss_breath_counter_max){
+			boss_breath_counter = 0;
+			if(boss_breath_verse == 1){
+				boss_breath_verse = 2;
+			}else if(boss_breath_verse == 2){
+				boss_breath_verse = -2;
+			}else if(boss_breath_verse == -2){
+				boss_breath_verse = -1;
+			}else if(boss_breath_verse == -1){
+				boss_breath_verse = 0;
+			}else if(boss_breath_verse == 0){
+				boss_breath_verse = 1;
+			}
+			boss_breath_flag = 1u;
+			switch(boss_hp_current){
+				case 1: case 2:
+					if(boss_breath_counter_max != BOSS_BREATH_MIN){
+						boss_breath_counter_max = BOSS_BREATH_MIN;
+					}
+				break;
+				case 3: case 4:
+					if(boss_breath_counter_max != BOSS_BREATH_MED){
+						boss_breath_counter_max = BOSS_BREATH_MED;
+					}
+				break;
+			}
+		}
 	}
 	//COMMON SPAWNING
 		if(spawned_enemy_counter == 0){
