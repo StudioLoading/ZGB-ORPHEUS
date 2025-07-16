@@ -12,6 +12,7 @@ void Anim_Spike_2() BANKED;
 void Anim_Spike_3() BANKED;
 
 void Anim_Opendoors() BANKED;
+void Anim_Cerberus_0() BANKED;
 void Anim_Charon_0() BANKED;
 void Anim_Charon_1() BANKED;
 void Anim_Charon_2() BANKED;

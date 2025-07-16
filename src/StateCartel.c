@@ -51,10 +51,14 @@ void START(){
 
 void UPDATE(){
     if(KEY_TICKED(J_A)){
-        if(current_map == BOSS_CHARON){
-            SetState(StateBoss00);
-        }else{
-            SetState(StateHades00);
+        switch(current_map){
+            case BOSS_CHARON:
+            case BOSS_CERBERUS:
+                SetState(StateBoss00);
+            break;
+            default:
+                SetState(StateHades00);
+            break;
         }
     }
 }

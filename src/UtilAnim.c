@@ -13,6 +13,7 @@ IMPORT_TILES(maphades002ta6);
 IMPORT_TILES(maphades002ta7);
 IMPORT_TILES(maphades003t);
 
+IMPORT_TILES(mapbosscerberust);
 
 
 void set_banked_bkg_data(UINT8 first_tile, UINT8 nb_tiles, struct TilesInfo* t, UINT8 bank) NONBANKED {
@@ -53,6 +54,9 @@ void Anim_Opendoors() BANKED{
 	set_banked_bkg_data(88u, 18u, &maphades002ta1, BANK(maphades002ta1));//exit door tiles of all types
 }
 
+void Anim_Cerberus_0() BANKED{
+	set_banked_bkg_data(106u, 7u, &mapbosscerberust, BANK(mapbosscerberust));//river
+}
 void Anim_Charon_0() BANKED{
 	set_banked_bkg_data(106u, 7u, &maphades002t, BANK(maphades002t));//river
 }

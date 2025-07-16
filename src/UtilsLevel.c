@@ -117,6 +117,7 @@ void show_next_character() BANKED;
 void init_write_dialog(UINT8 nlines) BANKED;
 void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 void go_to_next_map() BANKED;
+void go_to_prev_map() BANKED;
 void solve_current_map() BANKED;
 void reset_maps() BANKED;
 
@@ -171,7 +172,7 @@ void reset_maps() BANKED{
 		next_map = HADES_ONE;
 		prev_map = HADES_ZERO;
 		max_map = HADES_ZERO;
-	}else if(current_map <= HADES_SIX){
+	}else if(current_map <= BOSS_CERBERUS){
 		solved_map = BOSS_CHARON;
 		current_map = HADES_SIX;
 		next_map = HADES_SEVEN;
@@ -279,7 +280,7 @@ void level_common_update_play() BANKED{
 			UpdateHUD();
 		}
 	// tiles animation
-		if(current_map > TUTORIAL && current_map != BOSS_CHARON){
+		if(current_map > TUTORIAL && current_map != BOSS_CHARON && current_map != BOSS_CERBERUS){
 			anim_counter++;
 			if(anim_counter >= ANIM_COUNTER_MAX){
 				anim_counter = 0u;
@@ -550,7 +551,7 @@ void UpdateHUD() BANKED{
 			UPDATE_HUD_TILE(6,2,54);
 		}
 	//BOSS HP
-		if(current_map == BOSS_CHARON){
+		if(current_map == BOSS_CHARON || current_map == BOSS_CERBERUS){
 			INT8 idx_bosshp = 0;
 			UPDATE_HUD_TILE(6,0,0);
 			for(idx_bosshp = 0; idx_bosshp < boss_hp_current; idx_bosshp++){
@@ -710,7 +711,6 @@ void go_to_next_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
-			//a_walk_counter_y = 16;
 			next_state = StateHades00;
 		break;
 		case BOSS_CHARON:
@@ -721,6 +721,50 @@ void go_to_next_map() BANKED{
 			next_state = StateBoss00;
 			a_walk_counter_y = -16;
 		break;
+	}
+	if(next_state == StateTutorial){
+		switch(next_map){
+			case HADES_SIX:
+				prev_map = HADES_FIVE;
+				next_map = HADES_SEVEN;
+				orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+				new_state = IDLE_DOWN;
+				next_state = StateHades00;
+			break;
+			case HADES_SEVEN:
+				prev_map = HADES_SIX;
+				next_map = HADES_EIGHT;
+				orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+				new_state = IDLE_DOWN;
+				next_state = StateHades00;
+			break;
+			case HADES_EIGHT:
+				prev_map = HADES_SEVEN;
+				next_map = HADES_NINE;
+				orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+				new_state = IDLE_DOWN;
+				next_state = StateHades00;
+			break;
+			case HADES_TEN:
+				prev_map = HADES_NINE;
+				next_map = BOSS_CERBERUS;
+				orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+				new_state = IDLE_DOWN;
+				next_state = StateHades00;
+			break;
+			case BOSS_CERBERUS:
+				prev_map = HADES_TEN;
+				next_map = HADES_ELEVEN;
+				orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;
+				next_state = StateBoss00;
+				a_walk_counter_y = -18;
+			break;
+		}
 	}
 	SetState(next_state);
 }

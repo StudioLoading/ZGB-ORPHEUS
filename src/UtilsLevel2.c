@@ -57,6 +57,7 @@ UINT8 is_enemy(UINT8 arg_sprite_type) BANKED{
     switch(arg_sprite_type){
         case SpriteSkeleton:
         case SpriteSkeletonshield:
+        case SpriteSkeletoncerberus:
         case SpriteLostsoul:
         case SpriteInfernalimp:
         case SpriteOoze:

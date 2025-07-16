@@ -15,7 +15,8 @@
 #include "UtilAnim.h"
 
 #define ANIM_COUNTER_MAX 84
-IMPORT_MAP(maphades005);
+IMPORT_MAP(mapbosscharon);
+IMPORT_MAP(mapbosscerberus);
 IMPORT_MAP(hudmap);
 //IMPORT_TILES(font);
 DECLARE_MUSIC(battle);
@@ -28,13 +29,23 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
 //prev
 6,7,8,2,
 //next
-88,90,92,94,96,98,100,102,104,
+88,90,92,94,96,98,100,102,104,113,114,115,116,117,118,
 0};
 const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
+Sprite* s_cerberus_body = 0;
+Sprite* s_cerberus_headcenter = 0;
+Sprite* s_cerberus_headleft = 0;
+Sprite* s_cerberus_headright = 0;
 UINT16 end_demo_counter = 600u;
 UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play; 4 boss dead
+UINT16 spawn_common_wait = 0u;
+UINT16 spawn_common_wait_max = 0u;
+UINT8 spawned_enemy_counter = 0u;
+UINT8 river_verse = 0u;//0 left;1 right
+
+void boss_manage_death_charon() BANKED;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -55,6 +66,8 @@ extern Sprite* s_charon_hand_left;
 extern Sprite* s_charon_hand_right;
 extern INT8 a_walk_counter_y;
 extern UINT8 death_countdown;
+extern INT8 boss_hp_current;
+extern INT8 boss_hp_max;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -63,33 +76,58 @@ extern void write_dialog() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+extern void e_configure(Sprite* s_enemy) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 void START() {
 	level_common_start();
-	//SPRITES
+	//SPRITES & VARS per boss
 		s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 		if(solved_map < current_map){
 			switch(current_map){
 				case BOSS_CHARON:{
-					area_enemy_counter = 1;
+					area_enemy_counter = 2;
+				}break;
+				case BOSS_CERBERUS:{
+					river_verse = 1;
 				}break;
 			}
 		}
 	//INITSCROLL & BOSS SPRITES
 		switch(current_map){
-			case BOSS_CHARON: 
-				InitScroll(BANK(maphades005), &maphades005, coll_t_hades005, coll_s_hades005);
+			case BOSS_CHARON:{
+				InitScroll(BANK(mapbosscharon), &mapbosscharon, coll_t_hades005, coll_s_hades005);
 				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 5u << 3));
 				Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
 				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
 				heart_data->item_type = HEART;
 				heart_data->i_configured = 1u;
-			break;
+			}break;
+			case BOSS_CERBERUS:{
+				InitScroll(BANK(mapbosscerberus), &mapbosscerberus, coll_t_hades005, coll_s_hades005);
+				s_cerberus_headcenter = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 8u << 3), ((UINT16) 3u << 3) + 1);
+					struct CerberusInfo* headcenter_info = (struct CerberusInfo*)s_cerberus_headcenter->custom_data;
+					headcenter_info->head_config = 2;
+				/*s_cerberus_headright = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 10u << 3) - 2u, ((UINT16) 3u << 3) + 4);
+					struct CerberusInfo* headright_info = (struct CerberusInfo*)s_cerberus_headright->custom_data;
+					headright_info->head_config = 3;*/
+				s_cerberus_headleft = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 7u << 3), ((UINT16) 3u << 3) + 4);
+				struct CerberusInfo* headleft_info = (struct CerberusInfo*)s_cerberus_headleft->custom_data;
+				headleft_info->head_config = 1;
+				//s_cerberus_body = SpriteManagerAdd(SpriteCerberusbody, ((UINT16) 11u << 3), ((UINT16) 5u << 3) + 2u);
+				/*Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
+				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
+				heart_data->item_type = HEART;
+				heart_data->i_configured = 1u;*/
+			}break;
 		}
 	//HUD
-        //INIT_FONT(font, PRINT_WIN);
         INIT_HUD(hudmap);
 	//VARS
+		spawn_common_wait = 0u;
+		spawn_common_wait_max = 600u;
+		spawned_enemy_counter = 0u;
+		boss_hp_current = 5;
 		PlayMusic(battle, 1);
 	//PER STAGE
 		if(boss_intro == 0){
@@ -98,13 +136,20 @@ void START() {
 		}
 }
 
-void UPDATE() {
-	if(current_map == BOSS_CHARON && a_walk_counter_y == 0 && boss_intro == 1){
+void UPDATE() {	
+	if(a_walk_counter_y == 0 && boss_intro == 1){
 		boss_intro = 2;
 	}
 	switch(boss_intro){
 		case 2:{
-			prepare_dialog(BOSS_CHARON_INTRO);
+			switch(current_map){
+				case BOSS_CHARON: 
+					prepare_dialog(BOSS_CHARON_INTRO);
+				break;
+				case BOSS_CERBERUS: 
+					prepare_dialog(BOSS_CERBERUS_INTRO);
+				break;
+			}
 			SetState(StateCartel);
 			boss_intro = 3;
 		}break;
@@ -115,26 +160,35 @@ void UPDATE() {
 		case 4:	//DEATH COOLDOWN BEFORE CHANGING SCREEN
 			if(death_countdown){
 				death_countdown--;
-				switch(death_countdown){
-					case 100u:
-						SpriteManagerRemoveSprite(s_charon_hand_left);
-						SpriteManagerRemoveSprite(s_charon_hand_right);
+				switch(current_map){
+					case BOSS_CHARON: 
+						boss_manage_death_charon();
 					break;
-					case 60u:
-                        spawn_death_animation(s_charon->x + 4u, s_charon->y + 12u);
-					break;
-					case 50u:
-						SpriteManagerRemoveSprite(s_charon);
-					break;
-					case 0u:{
-						boss_intro = 0;//reset
-						prepare_dialog(BOSS_CHARON_BEATED);
-						SetState(StateCartel);
-					}
 				}
 			}
 		break;
 	}
+	//COMMON SPAWNING
+		if(spawned_enemy_counter == 0){
+			spawn_common_wait++;
+			if(spawn_common_wait >= spawn_common_wait_max){
+				spawn_common_wait = 0u;
+				switch(current_map){
+					case BOSS_CERBERUS:{
+						Sprite* s_enemy = SpriteManagerAdd(SpriteSkeletoncerberus, ((UINT16) 12u << 3), ((UINT16) 12u << 3));
+						e_configure(s_enemy);
+						e_change_state(s_enemy, IDLE_DOWN);
+					}break;
+				}
+				//change max interval according to boss hp
+					switch(boss_hp_current){
+						case 1: spawn_common_wait_max = 255u; break;
+						case 2: spawn_common_wait_max = 400u; break;
+						case 3: spawn_common_wait_max = 600u; break;
+						default: spawn_common_wait_max = 1000u; break;
+					}
+			}
+		}
 	//GHOSTS
 	/*	if(current_map == HADES_THREE){
 			if(idle_countdown < 10 && idle_countdown > 0){
@@ -159,14 +213,48 @@ void UPDATE() {
 		if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
 			anim_counter = 0u;
 		}
-		switch(anim_counter){
-			case 0u: Anim_Charon_0(); break;
-			case 12u: Anim_Charon_1(); break;
-			case 24u: Anim_Charon_2(); break;
-			case 36u: Anim_Charon_3(); break;
-			case 48u: Anim_Charon_4(); break;
-			case 60u: Anim_Charon_5(); break;
-			case 72u: Anim_Charon_6(); break;
-			case 84u: Anim_Charon_7(); break;
+		if(river_verse == 0){//to the left
+			switch(anim_counter){
+				case 0u: Anim_Cerberus_0(); break;
+				case 12u: Anim_Charon_1(); break;
+				case 24u: Anim_Charon_2(); break;
+				case 36u: Anim_Charon_3(); break;
+				case 48u: Anim_Charon_4(); break;
+				case 60u: Anim_Charon_5(); break;
+				case 72u: Anim_Charon_6(); break;
+				case 84u: Anim_Charon_7(); break;
+			}
+		}else{
+			switch(anim_counter){
+				case 0u: Anim_Cerberus_0(); break;
+				case 12u: Anim_Charon_7(); break;
+				case 24u: Anim_Charon_6(); break;
+				case 36u: Anim_Charon_5(); break;
+				case 48u: Anim_Charon_4(); break;
+				case 60u: Anim_Charon_3(); break;
+				case 72u: Anim_Charon_2(); break;
+				case 84u: Anim_Charon_1(); break;
+			}
+
 		}
+}
+
+void boss_manage_death_charon() BANKED{
+	switch(death_countdown){
+		case 100u:
+			SpriteManagerRemoveSprite(s_charon_hand_left);
+			SpriteManagerRemoveSprite(s_charon_hand_right);
+		break;
+		case 60u:
+			spawn_death_animation(s_charon->x + 4u, s_charon->y + 12u);
+		break;
+		case 50u:
+			SpriteManagerRemoveSprite(s_charon);
+		break;
+		case 0u:{
+			boss_intro = 0;//reset
+			prepare_dialog(BOSS_CHARON_BEATED);
+			SetState(StateCartel);
+		}break;
+	}
 }

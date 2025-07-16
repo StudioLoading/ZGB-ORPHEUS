@@ -45,6 +45,16 @@ struct CharonInfo{
 	INT8 countdown;
 };
 
+struct CerberusInfo{
+	SPRITE_STATES e_state;
+	INT8 vx;
+	INT8 vy;
+    INT8 wait;
+	INT8 frmskip;
+	INT8 frmskip_max;
+	INT8 head_config;
+};
+
 struct EnemyInfo{
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;
@@ -114,6 +124,11 @@ typedef enum{
 	BOSS_CHARON,
 	HADES_SIX,
 	HADES_SEVEN,
+	HADES_EIGHT,
+	HADES_NINE,
+	HADES_TEN,
+	BOSS_CERBERUS,
+	HADES_ELEVEN,
 	END_DEMO
 }MACROMAP;
 

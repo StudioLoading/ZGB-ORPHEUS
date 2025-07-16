@@ -22,6 +22,10 @@ IMPORT_MAP(maphades002);
 IMPORT_MAP(maphades003);
 IMPORT_MAP(maphades004);
 IMPORT_MAP(maphades006);
+IMPORT_MAP(maphades007);
+IMPORT_MAP(maphades008);
+IMPORT_MAP(maphades009);
+IMPORT_MAP(maphades010);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
 
@@ -123,6 +127,7 @@ void START() {
 					item_spawned_by_common.item_type = KEY;
 					item_spawned_by_common.spawned = 0;
 				}break;
+				//BOSS CHARON
 				case HADES_SIX:{
 					area_enemy_counter = 1;
 					/*Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
@@ -130,6 +135,15 @@ void START() {
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton2);
 				}break;
+				case HADES_SEVEN:{
+				}break;
+				case HADES_EIGHT:{
+				}break;
+				case HADES_NINE:{
+				}break;
+				case HADES_TEN:{
+				}break;
+				//BOSS CERBERUS
 			}
 		}else{
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
@@ -152,10 +166,22 @@ void START() {
 				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
 			break;
 			case HADES_FIVE:
-				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
+				InitScroll(BANK(maphades006), &maphades004, coll_t_hades001, coll_s_hades001);
 			break;
 			case HADES_SIX:
 				InitScroll(BANK(maphades006), &maphades006, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_SEVEN:
+				InitScroll(BANK(maphades007), &maphades007, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_EIGHT:
+				InitScroll(BANK(maphades008), &maphades008, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_NINE:
+				InitScroll(BANK(maphades009), &maphades009, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_TEN:
+				InitScroll(BANK(maphades010), &maphades010, coll_t_hades001, coll_s_hades001);
 			break;
 		}
 	//HUD

@@ -21,6 +21,7 @@ extern SONG song_selection;
 extern UINT8 area_enemy_counter;
 extern UINT8 in_dialog;
 extern struct ItemSpawnedByCommon item_spawned_by_common;
+extern UINT8 spawned_enemy_counter;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -40,6 +41,7 @@ extern void wyrmling_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKE
 extern void devourer_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void revenant_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void minion_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -70,6 +72,7 @@ void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED{
     e_data->tile_collision = 0;
     e_data->wait = 0;
     e_data->e_configured = 0;
+    spawned_enemy_counter++;
 }
 
 void e_configure(Sprite* s_enemy) BANKED{
@@ -134,6 +137,9 @@ void e_update_anim(Sprite* arg_s_enemy) BANKED{
         break;
         case SpriteMinion:
             minion_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteSkeletoncerberus:
+            skeletoncerberus_update_anim(arg_s_enemy, e_data->e_state);
         break;
     }
 }
@@ -202,6 +208,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             switch(e_sprite_type){
                 case SpriteSkeleton:
                 case SpriteSkeletonshield:
+                case SpriteSkeletoncerberus:
                 case SpriteSentinel:
                 case SpriteDog:
                 case SpriteShadow:
@@ -234,6 +241,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
         break;
         case DIE:
             area_enemy_counter--;
+            spawned_enemy_counter--;
             SpriteManagerRemoveSprite(s_enemy);
             spawn_death_animation(s_enemy->x, s_enemy->y);
         break;
@@ -342,18 +350,19 @@ void e_management(Sprite* s_enemy) BANKED{
             }
         }
     }
-    switch (e_data->e_state){
-        case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
-            e_data->wait--;
-            if(e_data->wait == 0){
-                if(e_data->e_state == IDLE_DOWN) e_change_state(s_enemy, WALK_DOWN);
-                if(e_data->e_state == IDLE_LEFT) e_change_state(s_enemy, WALK_LEFT);
-                if(e_data->e_state == IDLE_RIGHT) e_change_state(s_enemy, WALK_RIGHT);
-                if(e_data->e_state == IDLE_UP) e_change_state(s_enemy, WALK_UP);
-                return;
-            }
-        break;
-    }
+    //IDLE TO WALK
+        switch (e_data->e_state){
+            case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
+                e_data->wait--;
+                if(e_data->wait == 0){
+                    if(e_data->e_state == IDLE_DOWN) e_change_state(s_enemy, WALK_DOWN);
+                    if(e_data->e_state == IDLE_LEFT) e_change_state(s_enemy, WALK_LEFT);
+                    if(e_data->e_state == IDLE_RIGHT) e_change_state(s_enemy, WALK_RIGHT);
+                    if(e_data->e_state == IDLE_UP) e_change_state(s_enemy, WALK_UP);
+                    return;
+                }
+            break;
+        }
     if(e_data->frmskip_wait > 0){
         e_data->frmskip_wait--;
     }else{
@@ -504,6 +513,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
     switch(e_sprite_type){
         case SpriteSkeleton:
         case SpriteSkeletonshield:
+        case SpriteSkeletoncerberus:
         case SpriteLostsoul:
         case SpriteTartarus:
         case SpriteShadow:

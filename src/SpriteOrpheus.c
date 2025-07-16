@@ -196,7 +196,7 @@ void UPDATE() {
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
         if(orpheus_info->ow_state != ATTACK){
-            if((orpheus_hitted == 0 && orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 30){
+            if((orpheus_hitted == 0 && orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 50){
                 if(orpheus_hit_countdown){
                     orpheus_hitted = 0;
                     orpheus_hit_countdown = 0;
@@ -237,6 +237,7 @@ void UPDATE() {
             if(orpheus_info->ow_state == ATTACK){
                 switch(iospr->type){
                     case SpriteSkeleton:
+                    case SpriteSkeletoncerberus:
                     case SpriteInfernalimp:
                     case SpriteLostsoul:
                     case SpriteSentinel:
@@ -288,6 +289,7 @@ void UPDATE() {
                         case SpriteGhost:
                         case SpriteDog:
                         case SpriteSkeleton:
+                        case SpriteSkeletoncerberus:
                         case SpriteBlade:
                         case SpriteFireball:
                         case SpriteSentinel:
@@ -640,10 +642,6 @@ void orpheus_update_position() BANKED{
                         THIS->y -= orpheus_info->vy;
                     }
                     switch(orpheus_info->tile_collision){
-                        /*case 66u://PIT, INSTANT DEATH!
-                            orpheus_hp = 0;
-                            redraw_hud = 1u;
-                        break;*/
                         case 6u://PREV MAP
                             case 7u:
                             case 8u:
