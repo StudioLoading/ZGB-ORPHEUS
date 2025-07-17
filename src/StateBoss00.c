@@ -18,6 +18,9 @@
 #define BOSS_BREATH_MAX 24
 #define BOSS_BREATH_MED 16
 #define BOSS_BREATH_MIN 10
+#define BOSS_BREATH_MAX_RIGHT 20
+#define BOSS_BREATH_MED_RIGHT 14
+#define BOSS_BREATH_MIN_RIGHT 8
 
 IMPORT_MAP(mapbosscharon);
 IMPORT_MAP(mapbosscerberus);
@@ -26,14 +29,14 @@ IMPORT_MAP(hudmap);
 DECLARE_MUSIC(battle);
 
 
-const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,20,66,
+const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
 75,76,
 //here the hit tiles
-113, 114, 115, 120,
+
 //prev
 6,7,8,2,
 //next
-88,90,92,94,96,98,100,102,104,113,114,115,116,117,118,
+88,90,92,94,96,98,100,102,104,
 0};
 const UINT8 coll_s_hades005[] = {0};
 
@@ -52,6 +55,15 @@ INT8 boss_breath_counter = 0;
 INT8 boss_breath_counter_max = 0;
 INT8 boss_breath_verse = 1;//1 low, 2 low, -1 up, -2up
 UINT8 boss_breath_flag = 0u;
+INT8 boss_breath_counter_right = 0;
+INT8 boss_breath_counter_max_right = 0;
+INT8 boss_breath_verse_right = 1;//1 low, 2 low, -1 up, -2up
+UINT8 boss_breath_flag_right = 0u;
+Sprite* s_skeletoncerberus = 0;
+UINT16 boss_cerberus_startpos_x_left = ((UINT16) 7u << 3);
+UINT16 boss_cerberus_startpos_y_left =((UINT16) 3u << 3) + 4u;
+UINT16 boss_cerberus_startpos_x_right = ((UINT16) 10u << 3);
+UINT16 boss_cerberus_startpos_y_right =((UINT16) 3u << 3) + 4u;
 
 void boss_manage_death_charon() BANKED;
 
@@ -143,6 +155,10 @@ void START() {
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
 		boss_breath_flag = 0u;
+		boss_breath_counter_right = 0;
+		boss_breath_counter_max_right = BOSS_BREATH_MAX_RIGHT;
+		boss_breath_verse_right = 1;
+		boss_breath_flag_right = 0u;
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -182,7 +198,7 @@ void UPDATE() {
 			}
 		break;
 	}
-	//BREATHS COUNTER
+	//BREATHS COUNTER LEFT
 	if(boss_breath_flag == 0){
 		boss_breath_counter++;
 		if(boss_breath_counter >= boss_breath_counter_max){
@@ -213,6 +229,37 @@ void UPDATE() {
 			}
 		}
 	}
+	//BREATHS COUNTER RIGHT
+	if(boss_breath_flag_right == 0){
+		boss_breath_counter_right++;
+		if(boss_breath_counter_right >= boss_breath_counter_max_right){
+			boss_breath_counter_right = 0;
+			if(boss_breath_verse_right == 1){
+				boss_breath_verse_right = 2;
+			}else if(boss_breath_verse_right == 2){
+				boss_breath_verse_right = -2;
+			}else if(boss_breath_verse_right == -2){
+				boss_breath_verse_right = -1;
+			}else if(boss_breath_verse_right == -1){
+				boss_breath_verse_right = 0;
+			}else if(boss_breath_verse_right == 0){
+				boss_breath_verse_right = 1;
+			}
+			boss_breath_flag_right = 1u;
+			switch(boss_hp_current){
+				case 1: case 2:
+					if(boss_breath_counter_max_right != BOSS_BREATH_MIN_RIGHT){
+						boss_breath_counter_max_right = BOSS_BREATH_MIN_RIGHT;
+					}
+				break;
+				case 3: case 4:
+					if(boss_breath_counter_max_right != BOSS_BREATH_MED_RIGHT){
+						boss_breath_counter_max_right = BOSS_BREATH_MED_RIGHT;
+					}
+				break;
+			}
+		}
+	}
 	//COMMON SPAWNING
 		if(spawned_enemy_counter == 0){
 			spawn_common_wait++;
@@ -220,9 +267,9 @@ void UPDATE() {
 				spawn_common_wait = 0u;
 				switch(current_map){
 					case BOSS_CERBERUS:{
-						Sprite* s_enemy = SpriteManagerAdd(SpriteSkeletoncerberus, ((UINT16) 12u << 3), ((UINT16) 12u << 3));
-						e_configure(s_enemy);
-						e_change_state(s_enemy, IDLE_DOWN);
+						s_skeletoncerberus = SpriteManagerAdd(SpriteSkeletoncerberus, ((UINT16) 2u << 3), ((UINT16) 8u << 3));
+						e_configure(s_skeletoncerberus);
+						e_change_state(s_skeletoncerberus, IDLE_DOWN);
 					}break;
 				}
 				//change max interval according to boss hp

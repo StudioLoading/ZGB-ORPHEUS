@@ -452,6 +452,7 @@ void orpheus_check_tile_overlapping() BANKED{
         tile = GetScrollTile((THIS->x + 10) >> 3, (THIS->y+16) >> 3);
     }
     switch(current_state){
+        case StateBoss00:
         case StateHades00:
             if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
                 orpheus_change_state(THIS, HIT);

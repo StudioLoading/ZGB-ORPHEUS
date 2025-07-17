@@ -13,14 +13,15 @@
 
 const UINT8 a_skeletoncerberus_hidden[] = {1, 0};
 const UINT8 a_skeletoncerberus_up[] = {2, 1, 2};
-const UINT8 a_skeletoncerberus_down[] = {2, 3, 4};
-const UINT8 a_skeletoncerberus_h[] = {2, 5, 6};
-const UINT8 a_skeletoncerberus_repelled[] = {4, 1,5,3,6};
-const UINT8 a_skeletoncerberus_river[] = {1, 7};
+const UINT8 a_skeletoncerberus_down[] = {2, 1,2};
+const UINT8 a_skeletoncerberus_h[] = {2, 1,2};
+const UINT8 a_skeletoncerberus_repelled[] = {4, 0,1,0,2};
+const UINT8 a_skeletoncerberus_river[] = {1, 3};
 
 UINT8 is_skeletoncerberus_in_river = 0u;
 UINT8 skeletoncerberus_floating = 0u;
 UINT8 skeletoncerberus_frmskip = 0u;
+UINT8 is_skeletoncerberus_taken = 0u;
 
 extern MACROMAP current_map;
 extern UINT8 river_verse;
@@ -47,6 +48,7 @@ void START(){
     is_skeletoncerberus_in_river = 0u;
     skeletoncerberus_floating = 0u;
     skeletoncerberus_frmskip = 0u;
+    is_skeletoncerberus_taken = 0u;
 }
 
 void UPDATE(){
@@ -57,40 +59,39 @@ void UPDATE(){
     if(is_skeletoncerberus_in_river == 0){
         e_management(THIS);
         e_check_sprite_collision(THIS);
+    }else if(is_skeletoncerberus_taken == 2){return;}
+    
+    UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+    if(tile == 0){
+        tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+14) >> 3);
     }
-    if(current_map == BOSS_CERBERUS){
-        UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
-        if(tile == 0){
-            tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+14) >> 3);
+    if(tile >= 106u && tile <= 109u){//into the river!
+        if(is_skeletoncerberus_in_river == 0){
+            is_skeletoncerberus_in_river = 1u;
         }
-        if(tile >= 106u && tile <= 109u){//into the river!
-            if(is_skeletoncerberus_in_river == 0){
-                is_skeletoncerberus_in_river = 1u;
-            }
-            SetSpriteAnim(THIS, a_skeletoncerberus_river, 1u);
+        SetSpriteAnim(THIS, a_skeletoncerberus_river, 1u);
+    }
+    if(is_skeletoncerberus_in_river == 1){
+        skeletoncerberus_floating++;
+        if(skeletoncerberus_floating == 16){
+            THIS->y--;
         }
-        if(is_skeletoncerberus_in_river == 1){
-            skeletoncerberus_floating++;
-            if(skeletoncerberus_floating == 16){
-                THIS->y--;
-            }
-            if(skeletoncerberus_floating == 31){
-                THIS->y++;
-                skeletoncerberus_floating = 0u;
-            }
-            skeletoncerberus_frmskip++;
-            if(tile != 9u && tile != 19u){
-                if(skeletoncerberus_frmskip == 2){
-                    skeletoncerberus_frmskip = 0;
-                    if(river_verse == 0){//to the left
-                        THIS->x--;
-                    }else if(river_verse == 1){//to the right
-                        THIS->x++;
-                    }
+        if(skeletoncerberus_floating == 31){
+            THIS->y++;
+            skeletoncerberus_floating = 0u;
+        }
+        skeletoncerberus_frmskip++;
+        if(tile != 9u && tile != 19u){
+            if(skeletoncerberus_frmskip == 2){
+                skeletoncerberus_frmskip = 0;
+                if(river_verse == 0){//to the left
+                    THIS->x--;
+                }else if(river_verse == 1){//to the right
+                    THIS->x++;
                 }
-            }else{
-                e_change_state(THIS, DIE);
             }
+        }else{
+            e_change_state(THIS, DIE);
         }
     }
 }

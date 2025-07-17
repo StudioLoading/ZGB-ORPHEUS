@@ -49,7 +49,7 @@ struct CerberusInfo{
 	SPRITE_STATES e_state;
 	INT8 vx;
 	INT8 vy;
-    INT8 wait;
+    UINT8 wait;
 	INT8 frmskip;
 	INT8 frmskip_max;
 	INT8 head_config;
@@ -66,6 +66,14 @@ struct EnemyInfo{
 	UINT8 frmskip;
 };
 
+typedef enum{
+	NOTE_MOV_NONE,
+	NOTE_MOV_SIN,
+	NOTE_MOV_H,
+	NOTE_MOV_V,
+	NOTE_MOV_D
+}NOTE_MOVEMENT_TYPE;
+
 struct NoteInfo{
 	UINT8 is_enemy;
 	INT8 vx;
@@ -73,6 +81,7 @@ struct NoteInfo{
 	UINT8 wait;
 	INT8 frmskip;
 	INT8 frmskip_max;
+	NOTE_MOVEMENT_TYPE movement;
 };
 
 typedef enum{

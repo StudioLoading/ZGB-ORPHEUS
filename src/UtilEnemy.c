@@ -55,7 +55,7 @@ void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
 void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED;
 void e_destroy(Sprite* s_enemy) BANKED;
-void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED;
+Sprite* e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny, NOTE_MOVEMENT_TYPE arg_movement_type) BANKED;
 ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_attack(UINT8 arg_sprite_type) BANKED;
@@ -258,7 +258,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             switch(e_sprite_type){
                 case SpriteLostsoul:
                 case SpriteBanshee:
-                    e_spawn_hitnote(s_enemy->x + 2, s_enemy->y + 4);
+                    e_spawn_hitnote(s_enemy->x + 2, s_enemy->y + 4, NOTE_MOV_SIN);
                 break;
                 case SpriteOoze:
                 case SpriteSiren:
@@ -473,7 +473,7 @@ ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED
     return result;
 }
 
-void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED{
+Sprite* e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny, NOTE_MOVEMENT_TYPE arg_movement_type) BANKED{
     Sprite* s_hitnote = SpriteManagerAdd(SpriteOrpheusnote, arg_spawnx, arg_spawny);
     s_hitnote->lim_x = arg_spawnx;
     s_hitnote->lim_y = arg_spawny;
@@ -487,10 +487,11 @@ void e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny) BANKED{
     if(arg_spawny > s_orpheus->y){ 
         e_hitnotedata->vy = -1;
     }
+    e_hitnotedata->movement = arg_movement_type;
     e_hitnotedata->wait = 0u;
 	e_hitnotedata->frmskip = 0;
 	e_hitnotedata->frmskip_max = 8;
-
+    return s_hitnote;
 }
 
 void e_check_sprite_collision(Sprite* s_enemy) BANKED{

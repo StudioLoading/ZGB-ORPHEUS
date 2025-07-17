@@ -55,21 +55,34 @@ void UPDATE() {
         }
         break;
         case 1u:{//ENEMY NOTE
-            //SIN MOVEMENT
-                notedata->frmskip++;
-                if(notedata->frmskip >= notedata->frmskip_max){
-                    notedata->frmskip = 0;
-                    UINT8 cos_position = notedata->wait + 64u;
-                    THIS->x = THIS->lim_x + ((sine_wave[cos_position]) >> 3);
-                    THIS->y = THIS->lim_y + ((sine_wave[notedata->wait]) >> 3);
-                    notedata->wait += 32;
-                    THIS->lim_x += notedata->vx;
-                    THIS->lim_y += notedata->vy;
+            notedata->frmskip++;
+            if(notedata->frmskip >= notedata->frmskip_max){
+                UINT8 note_tile_coll = 0u;
+                switch(notedata->movement){
+                    case NOTE_MOV_SIN:
+                        UINT8 cos_position = notedata->wait + 64u;
+                        THIS->x = THIS->lim_x + ((sine_wave[cos_position]) >> 3);
+                        THIS->y = THIS->lim_y + ((sine_wave[notedata->wait]) >> 3);
+                        notedata->wait += 32;
+                        THIS->lim_x += notedata->vx;
+                        THIS->lim_y += notedata->vy;
+                    break;
+                    case NOTE_MOV_D:
+                        note_tile_coll = TranslateSprite(THIS, notedata->vx << delta_time, notedata->vy << delta_time);
+                    break;
+                    case NOTE_MOV_H:
+                        note_tile_coll = TranslateSprite(THIS, notedata->vx << delta_time, 0);
+                    break;
+                    case NOTE_MOV_V:
+                        note_tile_coll = TranslateSprite(THIS, 0, notedata->vy << delta_time);
+                    break;
                 }
-            //CHECK LIMITS
-                if(THIS->y < 24u || THIS->y > 128u || THIS->x < 8u || THIS->x > 144u){
-                    SpriteManagerRemoveSprite(THIS);
-                }
+                notedata->frmskip = 0;
+                //CHECK LIMITS
+                    if(THIS->y < 24u || THIS->y > 128u || THIS->x < 8u || THIS->x > 144u || note_tile_coll){
+                        SpriteManagerRemoveSprite(THIS);
+                    }
+            }
             //SPRITE COLLISION
             UINT8 scroll_enote_tile;
             Sprite* ienotespr;
@@ -77,6 +90,7 @@ void UPDATE() {
                 if(CheckCollision(THIS, ienotespr)) {
                     if(ienotespr->type == SpriteOrpheus){
                         orpheus_change_state(s_orpheus, HIT);
+                        SpriteManagerRemoveSprite(THIS);
                     }
                 }
             }
