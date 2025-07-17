@@ -41,7 +41,6 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
 const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
-Sprite* s_cerberus_body = 0;
 Sprite* s_cerberus_headcenter = 0;
 Sprite* s_cerberus_headleft = 0;
 Sprite* s_cerberus_headright = 0;
@@ -64,8 +63,11 @@ UINT16 boss_cerberus_startpos_x_left = ((UINT16) 7u << 3);
 UINT16 boss_cerberus_startpos_y_left =((UINT16) 3u << 3) + 4u;
 UINT16 boss_cerberus_startpos_x_right = ((UINT16) 10u << 3);
 UINT16 boss_cerberus_startpos_y_right =((UINT16) 3u << 3) + 4u;
+UINT16 boss_cerberus_startpos_x_center = ((UINT16) 8u << 3);
+UINT16 boss_cerberus_startpos_y_center = ((UINT16) 3u << 3) + 1;
 
 void boss_manage_death_charon() BANKED;
+void boss_manage_death_cerberus() BANKED;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -134,7 +136,6 @@ void START() {
 				s_cerberus_headleft = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 7u << 3), ((UINT16) 3u << 3) + 4);
 				struct CerberusInfo* headleft_info = (struct CerberusInfo*)s_cerberus_headleft->custom_data;
 				headleft_info->head_config = 1;
-				//s_cerberus_body = SpriteManagerAdd(SpriteCerberusbody, ((UINT16) 11u << 3), ((UINT16) 5u << 3) + 2u);
 				/*Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
 				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
 				heart_data->item_type = HEART;
@@ -147,10 +148,9 @@ void START() {
 		spawn_common_wait = 0u;
 		spawn_common_wait_max = 600u;
 		spawned_enemy_counter = 0u;
-		boss_hp_current = 5;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 5;
+		boss_hp_current = 1;
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -193,6 +193,9 @@ void UPDATE() {
 				switch(current_map){
 					case BOSS_CHARON: 
 						boss_manage_death_charon();
+					break;
+					case BOSS_CERBERUS: 
+						boss_manage_death_cerberus();
 					break;
 				}
 			}
@@ -346,6 +349,38 @@ void boss_manage_death_charon() BANKED{
 		case 0u:{
 			boss_intro = 0;//reset
 			prepare_dialog(BOSS_CHARON_BEATED);
+			SetState(StateCartel);
+		}break;
+	}
+}
+
+
+void boss_manage_death_cerberus() BANKED{
+	switch(death_countdown){
+		case 140u:
+			spawn_death_animation(70u, 46u);
+		break;
+		case 130u:
+			spawn_death_animation(63u, 48u);
+		break;
+		case 100u:
+			spawn_death_animation(52u, 46u);
+		break;
+		case 80u:
+			spawn_death_animation(78u, 47u);
+		break;
+		case 60u:
+			spawn_death_animation(68u, 44u);
+		break;
+		case 45u:
+			spawn_death_animation(63u, 44u);
+		break;
+		case 30u:
+			spawn_death_animation(52u, 42u);
+		break;
+		case 0u:{
+			boss_intro = 0;//reset
+			prepare_dialog(BOSS_CERBERUS_BEATED);
 			SetState(StateCartel);
 		}break;
 	}

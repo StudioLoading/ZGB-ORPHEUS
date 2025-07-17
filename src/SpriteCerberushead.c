@@ -24,12 +24,16 @@ const UINT8 a_cerberusheadleft[] = {1, 3};
 const UINT8 a_cerberusheadleft_preattack[] = {1, 3};
 const UINT8 a_cerberusheadleft_attack[] = {1, 2};
 const UINT8 a_cerberusheadright[] = {1, 1};
+const UINT8 a_cerberusheadcentral[] = {1, 5};
+const UINT8 a_cerberusheadcentral_preattack[] = {1, 2};
+const UINT8 a_cerberusheadcentral_attack[] = {1, 2};
 const UINT8 a_cerberusheadright_walkdown[] = {1, 5};
 const UINT8 a_cerberusheadright_preattack[] = {1, 1};
-const UINT8 a_cerberusheadright_attack[] = {1, 6};
+const UINT8 a_cerberusheadright_attack[] = {1, 4};
 const UINT8 a_cerberushead_bite[] = {1, 2};
 const UINT8 a_cerberusheadleft_hit[] = {2, 0,3};
 const UINT8 a_cerberusheadright_hit[] = {2, 1,5};
+const UINT8 a_cerberusheadcentral_hit[] = {2, 0,2};
 const UINT8 a_cerberushead_dead[] = {1, 4};
 
 UINT8 cerberus_walking_frmskip_x_current = 0u;
@@ -49,7 +53,11 @@ extern UINT16 boss_cerberus_startpos_x_left;
 extern UINT16 boss_cerberus_startpos_y_left;
 extern UINT16 boss_cerberus_startpos_x_right;
 extern UINT16 boss_cerberus_startpos_y_right;
+extern UINT16 boss_cerberus_startpos_x_center;
+extern UINT16 boss_cerberus_startpos_y_center;
 extern UINT8 redraw_hud;
+extern UINT8 boss_intro;
+extern UINT8 death_countdown;
 
 void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) BANKED;
 void cerberus_update_wait(Sprite* arg_cerberus_head) BANKED;
@@ -58,6 +66,7 @@ void cerberus_walk_to(Sprite* arg_s_cerberus, UINT16 arg_final_posx, UINT16 arg_
 
 extern Sprite* e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny, NOTE_MOVEMENT_TYPE arg_movement_type) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
 
 /*
 CerberusInfo{
@@ -96,8 +105,19 @@ void UPDATE() {
             head_info->wait = ATTACK_WAIT_MAX_RIGHT;
             head_info->head_config = 5;
         break;
+        case 3: //set central
+            SetSpriteAnim(THIS, a_cerberusheadcentral, 1);
+            head_info->wait = ATTACK_WAIT_MIN;
+            head_info->head_config = 7;
+        break;
         case 4: //is left
         case 6: //is right walking
+        case 7: //is central
+            if(head_info->head_config == 4 && boss_hp_current <= 3 && head_info->e_state != DIE){
+                THIS->y += 3;
+                cerberus_change_state(THIS, DIE);
+                return;
+            }
             switch(head_info->e_state){
                 case GENERIC_IDLE:
                     if(boss_breath_flag){
@@ -137,14 +157,19 @@ void UPDATE() {
                             cerberus_walk_to(THIS, boss_cerberus_startpos_x_left, boss_cerberus_startpos_y_left);
                         }else if(head_info->head_config == 6){
                             cerberus_walk_to(THIS, boss_cerberus_startpos_x_right, boss_cerberus_startpos_y_right);
-                        }
+                        }else if(head_info->head_config == 7){
+                            cerberus_walk_to(THIS, boss_cerberus_startpos_x_center, boss_cerberus_startpos_y_center);
+                        }                        
                     }else{
                         if(head_info->head_config == 4){
                             THIS->x = boss_cerberus_startpos_x_left;
                             THIS->y = boss_cerberus_startpos_y_left;
-                        }else{
+                        }else if(head_info->head_config == 6){
                             THIS->x = boss_cerberus_startpos_x_right;
                             THIS->y = boss_cerberus_startpos_y_right;
+                        }else if(head_info->head_config == 7){
+                            THIS->x = boss_cerberus_startpos_x_center;
+                            THIS->y = boss_cerberus_startpos_y_center;
                         }
                         cerberus_change_state(THIS, HIT);
                     }
@@ -152,50 +177,63 @@ void UPDATE() {
                 case HIT:
                     head_info->wait--;
                     if(head_info->wait == 0){
-                        if(boss_hp_current == 3 || boss_hp_current == 1){
+                        if(boss_hp_current == 3){
                             THIS->y += 3;
                             cerberus_change_state(THIS, DIE);
-                        }else{
+                        }else if(boss_hp_current > 0){
                             cerberus_change_state(THIS, GENERIC_IDLE);
+                        }else{
+                            cerberus_change_state(THIS, DIE);
                         }
+                    }
+                break;
+                case DIE:
+                    if(boss_intro < 4){
+                        boss_intro = 4;
+                        death_countdown = 160u;
                     }
                 break;
             }
         break;
         case 5: //is right
-            switch(head_info->e_state){
-                case GENERIC_IDLE:
-                    if(boss_breath_flag_right){
-                        THIS->y += boss_breath_verse_right;
-                        boss_breath_flag_right = 0;
-                    }
-                    head_info->frmskip++;
-                    if(head_info->frmskip == head_info->frmskip_max){
-                        head_info->frmskip = 0;
-                    }
-                    head_info->wait--;
-                    if(head_info->wait == 0){
-                        cerberus_change_state(THIS, PREATTACK_DOWN);
-                    }
-                break;
-                case PREATTACK_DOWN:
-                    head_info->wait--;
-                    if(head_info->wait == 0){
-                        cerberus_change_state(THIS, ATTACK);
-                    }
-                break;
-                case ATTACK:
-                    head_info->wait--;
-                    if(head_info->wait == 0){
-                        cerberus_change_state(THIS, GENERIC_IDLE);
-                    }
-                break;
-                case WALK_DOWN:
-                    head_info->wait--;
-                    if(head_info->wait == 0){
-                        cerberus_change_state(THIS, GENERIC_IDLE);
-                    }
-                break;
+            if(boss_hp_current == 1 && head_info->e_state != DIE){
+                THIS->y += 3;
+                cerberus_change_state(THIS, DIE);
+            }else{
+                switch(head_info->e_state){
+                    case GENERIC_IDLE:
+                        if(boss_breath_flag_right){
+                            THIS->y += boss_breath_verse_right;
+                            boss_breath_flag_right = 0;
+                        }
+                        head_info->frmskip++;
+                        if(head_info->frmskip == head_info->frmskip_max){
+                            head_info->frmskip = 0;
+                        }
+                        head_info->wait--;
+                        if(head_info->wait == 0){
+                            cerberus_change_state(THIS, PREATTACK_DOWN);
+                        }
+                    break;
+                    case PREATTACK_DOWN:
+                        head_info->wait--;
+                        if(head_info->wait == 0){
+                            cerberus_change_state(THIS, ATTACK);
+                        }
+                    break;
+                    case ATTACK:
+                        head_info->wait--;
+                        if(head_info->wait == 0){
+                            cerberus_change_state(THIS, GENERIC_IDLE);
+                        }
+                    break;
+                    case WALK_DOWN:
+                        head_info->wait--;
+                        if(head_info->wait == 0){
+                            cerberus_change_state(THIS, GENERIC_IDLE);
+                        }
+                    break;
+                }
             }
         break;
     }
@@ -293,8 +331,11 @@ void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) 
                 case 4://is left
                     SetSpriteAnim(arg_s_cerberus, a_cerberusheadleft_preattack, 1);
                 break;
-                case 5://is center
+                case 5://is right
                     SetSpriteAnim(arg_s_cerberus, a_cerberusheadright_preattack, 1);
+                break;
+                case 7://is central
+                    SetSpriteAnim(arg_s_cerberus, a_cerberusheadcentral_preattack, 1);
                 break;
             }
         break;
@@ -307,37 +348,53 @@ void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) 
                 case 5://is right
                     SetSpriteAnim(arg_s_cerberus, a_cerberusheadright_attack, 1u);
                 break;
+                case 7://is central
+                    SetSpriteAnim(arg_s_cerberus, a_cerberusheadcentral_attack, 1u);
+                break;
             }
             Sprite* s_hitnote = 0;
             switch(head_info->head_config){
-                case 4://is left
+                case 4:{//is left
                     s_hitnote = e_spawn_hitnote(arg_s_cerberus->x + 4u, arg_s_cerberus->y + 16u, NOTE_MOV_D);
-                break;
-                case 5://is right
-                    s_hitnote = e_spawn_hitnote(arg_s_cerberus->x + 16u, arg_s_cerberus->y + 16u, NOTE_MOV_D);
+                    struct NoteInfo* e_hitnotedata = (struct NoteInfo*) s_hitnote->custom_data;
+                    INT8 calculated_note_vx = 0;
+                    INT8 calculated_note_vy = 2;
+                    cerberus_calculate_note_v(arg_s_cerberus, &calculated_note_vx, &calculated_note_vy);
+                    e_hitnotedata->vx = calculated_note_vx;
+                    e_hitnotedata->vy = calculated_note_vy;
+                    e_hitnotedata->frmskip_max = 4;
+                }break;
+                case 5:{//is right
+                    s_hitnote = e_spawn_hitnote(arg_s_cerberus->x + 16u, arg_s_cerberus->y + 16u, NOTE_MOV_SIN);
+                    struct NoteInfo* e_hitnotedata = (struct NoteInfo*) s_hitnote->custom_data;
+                    INT8 calculated_note_vx = 0;
+                    INT8 calculated_note_vy = 2;
+                    cerberus_calculate_note_v(arg_s_cerberus, &calculated_note_vx, &calculated_note_vy);
+                    e_hitnotedata->vx = calculated_note_vx;
+                    e_hitnotedata->vy = calculated_note_vy;
+                    e_hitnotedata->frmskip_max = 4;
+                }break;
+                case 7://is central
+                    spawn_ball(SpriteFireball, arg_s_cerberus->x + 16u, arg_s_cerberus->y + 16u, J_DOWN);
                 break;
             }
-            struct NoteInfo* e_hitnotedata = (struct NoteInfo*) s_hitnote->custom_data;
-            INT8 calculated_note_vx = 0;
-            INT8 calculated_note_vy = 2;
-            cerberus_calculate_note_v(arg_s_cerberus, &calculated_note_vx, &calculated_note_vy);
-            e_hitnotedata->vx = calculated_note_vx;
-            e_hitnotedata->vy = calculated_note_vy;
-            e_hitnotedata->frmskip_max = 4;
         }break;
         case GENERIC_IDLE:
             cerberus_update_wait(arg_s_cerberus);
             switch(head_info->head_config){
                 case 4://is left
-                    SetSpriteAnim(THIS, a_cerberusheadleft, 1);
+                    SetSpriteAnim(arg_s_cerberus, a_cerberusheadleft, 1);
                 break;
                 case 5://is right
-                    SetSpriteAnim(THIS, a_cerberusheadright, 1);
+                    SetSpriteAnim(arg_s_cerberus, a_cerberusheadright, 1);
+                break;
+                case 7://is cental
+                    SetSpriteAnim(arg_s_cerberus, a_cerberusheadcentral, 1);
                 break;
             }
         break;
         case WALK_UP:
-            head_info->wait = 30;
+            head_info->wait = 20;
             switch(head_info->head_config){
                 case 4://is left
                 case 6://is right walking
@@ -352,6 +409,9 @@ void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) 
             head_info->wait = 100;
             e_change_state(s_skeletoncerberus, DIE);
             SetSpriteAnim(arg_s_cerberus, a_cerberusheadleft_hit, 40u);
+            if(head_info->head_config == 7){
+                SetSpriteAnim(arg_s_cerberus, a_cerberusheadcentral_hit, 40u);
+            }
             boss_hp_current--;
             redraw_hud = 1;
             if(head_info->head_config == 6){
@@ -375,8 +435,23 @@ void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) 
             }
         break;
         case DIE:
-            if(head_info->head_config == 4){
-                SetSpriteAnim(arg_s_cerberus, a_cerberushead_dead, 1);
+            if(head_info->head_config == 4){//is left
+                set_bkg_tile_xy(7, 4,102);
+                set_bkg_tile_xy(7, 5,103);
+                set_bkg_tile_xy(8, 4,104);
+                set_bkg_tile_xy(8, 5,105);
+                SpriteManagerRemoveSprite(arg_s_cerberus);
+            }
+            if(head_info->head_config == 5){//is right
+                set_bkg_tile_xy(10, 4,102);
+                set_bkg_tile_xy(10, 5,103);
+                set_bkg_tile_xy(11, 4,104);
+                set_bkg_tile_xy(11, 5,105);
+                Sprite* s_cerberushead_central = SpriteManagerAdd(SpriteCerberushead, arg_s_cerberus->x, arg_s_cerberus->y);
+                struct CerberusInfo* headcentral_info = (struct CerberusInfo*)s_cerberushead_central->custom_data;
+                headcentral_info->head_config = 3;
+                headcentral_info->e_state = GENERIC_IDLE;
+                SpriteManagerRemoveSprite(arg_s_cerberus);
             }
         break;
     }

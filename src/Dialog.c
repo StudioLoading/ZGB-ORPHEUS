@@ -228,6 +228,21 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d11, "UNDER HIS FULL   ", 21);
             memcpy(d12, "CONTROL.         ", 21);
         break;
+        case BOSS_CERBERUS_BEATED:
+            memcpy(d0, "CERBERUS:         ", 21);
+            memcpy(d1, "YOU BEATED ME     ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+            memcpy(d11, "                  ", 21);
+            memcpy(d12, "                  ", 21);
+        break;
     }
     return 0u;
 }

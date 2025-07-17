@@ -50,7 +50,6 @@ _SPRITE_DMG(SpriteWyrmling, enemywyrmling)\
 _SPRITE_DMG(SpriteDevourer, enemydevourer)\
 _SPRITE_DMG(SpriteRevenant, enemyrevenant)\
 _SPRITE_DMG(SpriteMinion, enemyminion)\
-_SPRITE_DMG(SpriteCerberusbody, cerberusbody)\
 _SPRITE_DMG(SpriteCerberushead, cerberushead)\
 _SPRITE_DMG(SpriteSkeletoncerberus, enemyskeletorcerberus)\
 SPRITE_DEF_END
