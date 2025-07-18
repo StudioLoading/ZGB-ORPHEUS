@@ -15,7 +15,7 @@ const UINT8 a_skeletoncerberus_hidden[] = {1, 0};
 const UINT8 a_skeletoncerberus_up[] = {2, 1, 2};
 const UINT8 a_skeletoncerberus_down[] = {2, 1,2};
 const UINT8 a_skeletoncerberus_h[] = {2, 1,2};
-const UINT8 a_skeletoncerberus_repelled[] = {4, 0,1,0,2};
+const UINT8 a_skeletoncerberus_repelled[] = {4, 0,1,2};
 const UINT8 a_skeletoncerberus_river[] = {1, 3};
 
 UINT8 is_skeletoncerberus_in_river = 0u;
@@ -115,7 +115,7 @@ void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANK
             SetSpriteAnim(s_enemy, a_skeletoncerberus_h, 8);
         break;
         case HIT:
-            SetSpriteAnim(s_enemy, a_skeletoncerberus_repelled, 12);
+            SetSpriteAnim(s_enemy, a_skeletoncerberus_repelled, 24);
         break;
     }
     if(is_current_map_on_boss()){

@@ -28,6 +28,7 @@ _SPRITE_DMG(SpriteBlock, block)\
 _SPRITE_DMG(SpriteSkeleton, enemyskeletor)\
 _SPRITE_DMG(SpriteSkeletonshield, enemyskeletorshield)\
 _SPRITE_DMG(SpriteInfernalimp, enemyinfernalimp)\
+_SPRITE_DMG(SpriteImpminos, enemyimpminos)\
 _SPRITE_DMG(SpriteLostsoul, enemylostsoul)\
 _SPRITE_DMG(SpriteGhost, ghost)\
 _SPRITE_DMG(SpriteDeath, death)\
@@ -54,6 +55,7 @@ _SPRITE_DMG(SpriteCerberushead, cerberushead)\
 _SPRITE_DMG(SpriteSkeletoncerberus, enemyskeletorcerberus)\
 _SPRITE_DMG(SpriteMinosscale, minosscale)\
 _SPRITE_DMG(SpriteMinosplate, minosplate)\
+_SPRITE_DMG(SpriteMinosbalanceshadow, minosbalanceshadow)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

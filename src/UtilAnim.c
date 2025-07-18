@@ -14,6 +14,7 @@ IMPORT_TILES(maphades002ta7);
 IMPORT_TILES(maphades003t);
 
 IMPORT_TILES(mapbosscerberust);
+IMPORT_TILES(mapbossminost);
 
 
 void set_banked_bkg_data(UINT8 first_tile, UINT8 nb_tiles, struct TilesInfo* t, UINT8 bank) NONBANKED {
@@ -23,16 +24,19 @@ void set_banked_bkg_data(UINT8 first_tile, UINT8 nb_tiles, struct TilesInfo* t, 
 	SWITCH_ROM(save);
 }
 
-void Anim_0() BANKED{
+void AnimFire_0() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002t, BANK(maphades002t));//fire
 }
-void Anim_1() BANKED{
+void AnimFire_Minos0() BANKED{
+	set_banked_bkg_data(84u, 4u, &mapbossminost, BANK(mapbossminost));//fire
+}
+void AnimFire_1() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002ta1, BANK(maphades002ta1));//fire
 }
-void Anim_2() BANKED{
+void AnimFire_2() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002ta2, BANK(maphades002ta2));//fire
 }
-void Anim_3() BANKED{
+void AnimFire_3() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002ta3, BANK(maphades002ta3));//fire
 }
 
@@ -54,6 +58,9 @@ void Anim_Opendoors() BANKED{
 	set_banked_bkg_data(88u, 18u, &maphades002ta1, BANK(maphades002ta1));//exit door tiles of all types
 }
 
+void Anim_Minos_0() BANKED{
+	set_banked_bkg_data(106u, 7u, &mapbossminost, BANK(mapbossminost));//
+}
 void Anim_Cerberus_0() BANKED{
 	set_banked_bkg_data(106u, 7u, &mapbosscerberust, BANK(mapbosscerberust));//river
 }

@@ -42,6 +42,7 @@ extern void devourer_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKE
 extern void revenant_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void minion_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -141,6 +142,9 @@ void e_update_anim(Sprite* arg_s_enemy) BANKED{
         case SpriteSkeletoncerberus:
             skeletoncerberus_update_anim(arg_s_enemy, e_data->e_state);
         break;
+        case SpriteImpminos:
+            impminos_update_anim(arg_s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -176,7 +180,7 @@ UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED{
 void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
     UINT8 e_sprite_type = s_enemy->type;
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
-    if(e_data->e_state == new_state){
+    if(e_data->e_state == new_state || e_data->e_state == FROZEN){
         return;
     }
     switch(new_state){
@@ -230,6 +234,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 break;
                 case SpriteMinion:
                 case SpriteInfernalimp:
+                case SpriteImpminos:
                     e_data->wait = 80u;
                 break;
             }
@@ -437,6 +442,7 @@ ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKE
     ENEMY_REACTION result = ENEMY_REACT_NONE;
     switch(arg_sprite_type){
         case SpriteInfernalimp:
+        case SpriteImpminos:
         case SpriteSentinel:
         case SpriteMagma:{
             result = ENEMY_REACT_PASSTHROUGH;
@@ -527,6 +533,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
             }
         break;
         case SpriteInfernalimp:
+        case SpriteImpminos:
         case SpriteOoze:
         case SpriteSiren:
         case SpriteBanshee:

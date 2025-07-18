@@ -8,19 +8,19 @@
 
 #include "custom_datas.h"
 
-#define FRMSKIP_MAX 8<<3
-#define PLATEPOSX_10 8<<3
+#define FRMSKIP_MAX 8
+#define PLATEPOSX_10 6<<3
 #define PLATEPOSY_10 8<<3
-#define PLATEPOSX_11 8<<3
+#define PLATEPOSX_11 11<<3
 #define PLATEPOSY_11 14<<3
-#define PLATEPOSX_20 14<<3
-#define PLATEPOSY_20 9<<3
-#define PLATEPOSX_21 8<<3
-#define PLATEPOSY_21 9<<3
-#define PLATEPOSX_30 14<<3
-#define PLATEPOSY_30 12<<3
-#define PLATEPOSX_31 8<<3
-#define PLATEPOSY_31 12<<3
+#define PLATEPOSX_20 4<<3
+#define PLATEPOSY_20 8<<3
+#define PLATEPOSX_21 13<<3
+#define PLATEPOSY_21 8<<3
+#define PLATEPOSX_30 4<<3
+#define PLATEPOSY_30 13<<3
+#define PLATEPOSX_31 13<<3
+#define PLATEPOSY_31 13<<3
 
 const UINT8 a_minosscale_hidden[] = {1, 0};
 const UINT8 a_minosscale_idle[] = {1, 1};
@@ -60,7 +60,7 @@ void START() {
     minosscale_data->frmskip_wait = 0;
     minosscale_init_posx = THIS->x;
     minosscale_init_posy = THIS->y;
-    platepos_counter = 1u;
+    platepos_counter = 0u;
 }
 
 void UPDATE() {
@@ -113,10 +113,12 @@ void UPDATE() {
 
 void minosscale_change_state(Sprite* arg_s_minosscale, SPRITE_STATES arg_new_state) BANKED{
     struct EnemyInfo* scale_info = (struct EnemyInfo*)arg_s_minosscale->custom_data;
+    if(scale_info->e_state == arg_new_state){return;}
     switch(arg_new_state){
         case GENERIC_IDLE:
-            THIS->x = minosscale_init_posx;
-            THIS->y = minosscale_init_posy;
+            arg_s_minosscale->x = minosscale_init_posx;
+            arg_s_minosscale->y = minosscale_init_posy;
+            scale_info->wait = 254u; 
         break;
         case GENERIC_WALK:
             scale_info->wait = 100u;
@@ -124,14 +126,14 @@ void minosscale_change_state(Sprite* arg_s_minosscale, SPRITE_STATES arg_new_sta
         break;
         case WALK_UP:
             scale_info->wait = 100u;
-            arg_s_minosscale->y += 4u;
+            arg_s_minosscale->y += 6u;
             SetSpriteAnim(arg_s_minosscale, a_minosscale_preattack, 40u);
         break;
         case ATTACK:
             SetSpriteAnim(arg_s_minosscale, a_minosscale_idle, 1u);
             scale_info->wait = 200u;
             arg_s_minosscale->y += 6u;
-            spawn_death_animation(arg_s_minosscale->x, arg_s_minosscale->y + 24u);
+            spawn_death_animation(arg_s_minosscale->x, arg_s_minosscale->y + 20u);
             minosscale_spawn_plates();
         break;
     }   
@@ -140,23 +142,23 @@ void minosscale_change_state(Sprite* arg_s_minosscale, SPRITE_STATES arg_new_sta
 
 void minosscale_spawn_plates() BANKED{
     switch(platepos_counter){
+        case 0u:
+            SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_10, PLATEPOSY_10);
+            SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_11, PLATEPOSY_11);
+        break;
         case 1u:
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_10, PLATEPOSY_10);
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_11, PLATEPOSY_11);
+            SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_20, PLATEPOSY_20);
+            SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_21, PLATEPOSY_21);
         break;
         case 2u:
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_20, PLATEPOSY_20);
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_21, PLATEPOSY_21);
-        break;
-        case 3u:
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_30, PLATEPOSY_30);
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_31, PLATEPOSY_31);
-        break;
-        default:
-            platepos_counter = 0u;
+            SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_30, PLATEPOSY_30);
+            SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_31, PLATEPOSY_31);
         break;
     }
     platepos_counter++;
+    if(platepos_counter > 2){
+        platepos_counter = 0u;
+    }
 }
 
 void minos_scale_rotation(Sprite* arg_s_minosscale) BANKED{

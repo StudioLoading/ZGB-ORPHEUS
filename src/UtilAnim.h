@@ -1,10 +1,11 @@
 #include <gb/gb.h>
 
 
-void Anim_0() BANKED;
-void Anim_1() BANKED;
-void Anim_2() BANKED;
-void Anim_3() BANKED;
+void AnimFire_Minos0() BANKED;
+void AnimFire_0() BANKED;
+void AnimFire_1() BANKED;
+void AnimFire_2() BANKED;
+void AnimFire_3() BANKED;
 
 void Anim_Spike_0() BANKED;
 void Anim_Spike_1() BANKED;
@@ -13,6 +14,7 @@ void Anim_Spike_3() BANKED;
 
 void Anim_Opendoors() BANKED;
 void Anim_Cerberus_0() BANKED;
+void Anim_Minos_0() BANKED;
 void Anim_Charon_0() BANKED;
 void Anim_Charon_1() BANKED;
 void Anim_Charon_2() BANKED;

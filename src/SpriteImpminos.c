@@ -1,0 +1,138 @@
+#include "Banks/SetAutoBank.h"
+
+#include "SGB.h"
+#include "BankManager.h"
+#include "ZGBMain.h"
+#include "Keys.h"
+#include "Palette.h"
+#include "Scroll.h"
+#include "Sprite.h"
+#include "SpriteManager.h"
+
+#include "custom_datas.h"
+
+const UINT8 a_impminos_hidden[] = {1, 0};
+const UINT8 a_impminos_up[] = {2, 1, 2};
+const UINT8 a_impminos_down[] = {2, 3, 4};
+const UINT8 a_impminos_h[] = {2, 5, 6};
+const UINT8 a_impminos_repelled[] = {4, 1,5,3,6};
+
+Sprite* s_plate = 0;
+UINT8 flag_move_up = 0;
+
+extern UINT8 flag_impminos_alive;
+
+extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void e_management(Sprite* s_enemy) BANKED;
+extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
+extern void e_destroy(Sprite* s_enemy) BANKED;
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+
+
+void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+void impminos_check_sprite_collision(Sprite* s_enemy) BANKED;
+
+
+void START(){
+    SetSpriteAnim(THIS, a_impminos_hidden, 6);
+    struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+    e_data->frmskip = 2u;
+    e_start(e_data, IDLE_DOWN);
+    if(_cpu != CGB_TYPE){
+        OBP1_REG = PAL_DEF(0, 0, 1, 3);
+        SPRITE_SET_PALETTE(THIS,1);
+    }
+    e_change_state(THIS, WALK_DOWN);
+    s_plate = 0;
+    flag_move_up = 0;
+    flag_impminos_alive = 1u;
+}
+
+void UPDATE(){
+    struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+    if(e_data->e_configured == 0){
+        return;
+    }
+    if(e_data->e_state != FROZEN){
+        e_management(THIS);
+    }else{
+        struct EnemyInfo* plate_data = (struct EnemyInfo*) s_plate->custom_data;
+        if(plate_data->e_state == WALK_UP || plate_data->e_state == GENERIC_IDLE){
+            if(flag_move_up == 0){
+                flag_move_up = 1;
+                SetSpriteAnim(THIS, a_impminos_repelled, 24u);
+            }
+            THIS->x = s_plate->x;
+            THIS->y = s_plate->y - 24u;
+        }
+        if(flag_move_up && plate_data->wait > 30){
+            THIS->y--;
+        }
+    }
+    impminos_check_sprite_collision(THIS);
+}
+
+
+void impminos_check_sprite_collision(Sprite* s_enemy) BANKED{
+    UINT8 scroll_e_tile;
+    Sprite* iespr;
+    SPRITEMANAGER_ITERATE(scroll_e_tile, iespr) {
+        if(CheckCollision(s_enemy, iespr)) {
+            switch(iespr->type){
+                case SpriteOrpheus:
+                case SpriteOrpheuslyre:{
+                    struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
+                    if(e_data->e_state != FROZEN){
+                        orpheus_change_state(iespr, HIT);
+                    }
+                }break;
+                case SpriteMinosplate:
+                    struct EnemyInfo* plate_data = (struct EnemyInfo*) iespr->custom_data;
+                    if(plate_data->e_state == WALK_DOWN){
+                        e_destroy(s_enemy);
+                    }else if(plate_data->e_state == GENERIC_WALK){
+                        if(plate_data->e_configured == 0u && s_plate == 0){
+                            plate_data->e_configured = 2u;
+                            THIS->x = iespr->x;
+                            THIS->y = iespr->y - 24u;
+                            s_plate = iespr;
+                            e_change_state(s_enemy, FROZEN);
+                        }
+                    }
+                break;
+            }
+        }
+    }
+}
+
+void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
+    switch(new_state){
+        case IDLE_UP: case WALK_UP: 
+            SetSpriteAnim(s_enemy, a_impminos_up, 10);
+        break;
+        case IDLE_DOWN: case WALK_DOWN:
+            SetSpriteAnim(s_enemy, a_impminos_down, 10);
+        break;
+        case IDLE_LEFT: case WALK_LEFT:
+            s_enemy->mirror = V_MIRROR;
+            SetSpriteAnim(s_enemy, a_impminos_h, 10);
+        break;
+        case IDLE_RIGHT: case WALK_RIGHT: 
+            s_enemy->mirror = NO_MIRROR;
+            SetSpriteAnim(s_enemy, a_impminos_h, 10);
+        break;
+        case HIT:
+            SetSpriteAnim(s_enemy, a_impminos_repelled, 16);
+        break;
+    }
+}
+
+void DESTROY(){
+    flag_impminos_alive = 0u;
+    if(THIS->y < 4){//being launched by a minos plate
+        THIS->x = ((UINT16) 9u << 3);
+        THIS->y = ((UINT16) 4u << 3);
+    }
+    e_destroy(THIS);
+}

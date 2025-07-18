@@ -15,6 +15,7 @@
 #include "UtilAnim.h"
 
 #define ANIM_COUNTER_MAX 84
+#define ANIMFIRE_COUNTER_MAX 32
 #define BOSS_BREATH_MAX 24
 #define BOSS_BREATH_MED 16
 #define BOSS_BREATH_MIN 10
@@ -60,12 +61,15 @@ INT8 boss_breath_counter_max_right = 0;
 INT8 boss_breath_verse_right = 1;//1 low, 2 low, -1 up, -2up
 UINT8 boss_breath_flag_right = 0u;
 Sprite* s_skeletoncerberus = 0;
+Sprite* s_impminos = 0;
+UINT8 flag_impminos_alive = 0u;
 UINT16 boss_cerberus_startpos_x_left = ((UINT16) 7u << 3);
 UINT16 boss_cerberus_startpos_y_left =((UINT16) 3u << 3) + 4u;
 UINT16 boss_cerberus_startpos_x_right = ((UINT16) 10u << 3);
 UINT16 boss_cerberus_startpos_y_right =((UINT16) 3u << 3) + 4u;
 UINT16 boss_cerberus_startpos_x_center = ((UINT16) 8u << 3);
 UINT16 boss_cerberus_startpos_y_center = ((UINT16) 3u << 3) + 1;
+UINT8 animfire_counter = 0u;
 
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
@@ -138,7 +142,7 @@ void START() {
 			}break;
 			case BOSS_MINOS:{
 				InitScroll(BANK(mapbossminos), &mapbossminos, coll_t_hades005, coll_s_hades005);
-				SpriteManagerAdd(SpriteMinosscale, ((UINT16) 7u << 3) + 4u, ((UINT16) 4u << 3) - 4u);
+				s_minosscale = SpriteManagerAdd(SpriteMinosscale, ((UINT16) 7u << 3) + 4u, ((UINT16) 4u << 3) - 4u);
 			}break;
 		}
 	//HUD
@@ -288,6 +292,32 @@ void UPDATE() {
 							e_configure(s_skeletoncerberus);
 							e_change_state(s_skeletoncerberus, IDLE_DOWN);
 						}break;
+						case BOSS_MINOS:{
+							UINT16 spawn_impminos_posx = 15u;
+							UINT16 spawn_impminos_posy = 5u;
+							switch(boss_hp_current){
+								case 4:
+									spawn_impminos_posx = 2u;
+								break;
+								case 3:
+									spawn_impminos_posx = 5u;
+									spawn_impminos_posy = 13u;
+								break;
+								case 2:
+									spawn_impminos_posx = 2u;
+									spawn_impminos_posy = 13u;
+								break;
+								case 1:
+									spawn_impminos_posx = 9u;
+									spawn_impminos_posy = 9u;
+								break;
+							}
+							if(flag_impminos_alive == 0){
+ 								s_impminos = SpriteManagerAdd(SpriteImpminos, (spawn_impminos_posx << 3) + 3u, (spawn_impminos_posy << 3));
+								e_configure(s_impminos);
+								e_change_state(s_impminos, IDLE_DOWN);
+							}
+						}break;
 					}
 					//change max interval according to boss hp
 						switch(boss_hp_current){
@@ -318,6 +348,23 @@ void UPDATE() {
 			}
 		}
 	*/
+	//ANIM FIRE
+		if(current_map == BOSS_MINOS){
+			animfire_counter++;
+			if(animfire_counter >= ANIMFIRE_COUNTER_MAX){
+				animfire_counter = 0u;
+			}
+			switch(animfire_counter){
+				case 0u: AnimFire_Minos0();
+				break;
+				case 8u: AnimFire_1();
+				break;
+				case 16u: AnimFire_2();
+				break;
+				case 24u: AnimFire_3();
+				break;
+			}
+		}
 	//ANIMS
 		anim_counter++;
 		if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
@@ -325,7 +372,19 @@ void UPDATE() {
 		}
 		if(river_verse == 0){//to the left
 			switch(anim_counter){
-				case 0u: Anim_Cerberus_0(); break;
+				case 0u:{
+					switch(current_map){
+						case BOSS_CHARON:
+							Anim_Charon_0();
+						break;
+						case BOSS_CERBERUS:
+							Anim_Cerberus_0();
+						break; 
+						case BOSS_MINOS:
+							Anim_Minos_0();
+						break;
+					}
+				}break;
 				case 12u: Anim_Charon_1(); break;
 				case 24u: Anim_Charon_2(); break;
 				case 36u: Anim_Charon_3(); break;
@@ -336,7 +395,19 @@ void UPDATE() {
 			}
 		}else{
 			switch(anim_counter){
-				case 0u: Anim_Cerberus_0(); break;
+				case 0u: 
+					switch(current_map){
+						case BOSS_CHARON:
+							Anim_Charon_0();
+						break;
+						case BOSS_CERBERUS:
+							Anim_Cerberus_0();
+						break; 
+						case BOSS_MINOS:
+							Anim_Minos_0();
+						break;
+					}
+				break;
 				case 12u: Anim_Charon_7(); break;
 				case 24u: Anim_Charon_6(); break;
 				case 36u: Anim_Charon_5(); break;
@@ -368,7 +439,6 @@ void boss_manage_death_charon() BANKED{
 		}break;
 	}
 }
-
 
 void boss_manage_death_cerberus() BANKED{
 	switch(death_countdown){

@@ -292,13 +292,13 @@ void level_common_update_play() BANKED{
 				anim_counter = 0u;
 			}
 			switch(anim_counter){
-				case 0u: Anim_0();
+				case 0u: AnimFire_0();
 				break;
-				case 8u: Anim_1();
+				case 8u: AnimFire_1();
 				break;
-				case 16u: Anim_2();
+				case 16u: AnimFire_2();
 				break;
-				case 24u: Anim_3();
+				case 24u: AnimFire_3();
 				break;
 			}
 		}

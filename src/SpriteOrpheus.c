@@ -195,7 +195,7 @@ void UPDATE() {
         }
         if(tutorial_go == 0){return;}
         new_state = orpheus_info->ow_state;
-        if(orpheus_info->ow_state != ATTACK){
+        if(orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != FROZEN){
             if((orpheus_hitted == 0 && orpheus_info->ow_state != HIT) || orpheus_hit_countdown < 50){
                 if(orpheus_hit_countdown){
                     orpheus_hitted = 0;
@@ -239,6 +239,7 @@ void UPDATE() {
                     case SpriteSkeleton:
                     case SpriteSkeletoncerberus:
                     case SpriteInfernalimp:
+                    case SpriteImpminos:
                     case SpriteLostsoul:
                     case SpriteSentinel:
                     case SpriteShadow:
@@ -268,6 +269,15 @@ void UPDATE() {
             }else{
                 if(CheckCollision(THIS, iospr)) {
                     switch(iospr->type){
+                        case SpriteMinosplate:{
+                            struct EnemyInfo* plate_data = (struct EnemyInfo*) iospr->custom_data;
+                            if(plate_data->e_state == GENERIC_WALK && plate_data->e_configured == 0u){
+                                plate_data->e_configured = 1u;
+                                THIS->x = iospr->x;
+                                THIS->y = iospr->y - 12u;
+                                orpheus_change_state(THIS, FROZEN);
+                            }
+                        }break;
                         case SpriteLyre:
                         case SpriteItem:
                             orpheus_pickup(iospr);
@@ -290,6 +300,7 @@ void UPDATE() {
                         case SpriteDog:
                         case SpriteSkeleton:
                         case SpriteSkeletoncerberus:
+                        case SpriteInfernalimp:
                         case SpriteBlade:
                         case SpriteFireball:
                         case SpriteSentinel:
@@ -307,7 +318,9 @@ void UPDATE() {
                                 if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
                                     push_vy = e_data->vy;
                                 }
-                                orpheus_change_state(THIS, HIT);
+                                if(e_data->e_state != FROZEN){
+                                    orpheus_change_state(THIS, HIT);
+                                }
                             }
                         break;
                         case SpriteOrpheusnote:{
@@ -589,6 +602,12 @@ void orpheus_behave() BANKED{
                 return;
             }
         break;
+        case FROZEN:
+            orpheus_wait--;
+            if(orpheus_wait == 0){
+                orpheus_change_state(THIS, IDLE_DOWN);
+            }
+        break;
     }
 }
 
@@ -809,6 +828,9 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
                 spawn_death_animation(arg_s_orpheus->x, arg_s_orpheus->y);
             }
         }break;
+        case FROZEN:
+            orpheus_wait = 40u;
+        break;
     }
     orpheus_info->ow_state = arg_new_state;
 }
