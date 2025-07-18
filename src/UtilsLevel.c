@@ -125,7 +125,7 @@ extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
-
+extern UINT8 is_current_map_on_boss() BANKED;
 
 void level_common_start() BANKED{
 	//SCROLL LIMITS
@@ -178,6 +178,12 @@ void reset_maps() BANKED{
 		next_map = HADES_SEVEN;
 		prev_map = HADES_SIX;
 		max_map = HADES_SIX;
+	}else if(current_map <= BOSS_MINOS){
+		solved_map = BOSS_CERBERUS;
+		current_map = HADES_ELEVEN;
+		next_map = HADES_TWELVE;
+		prev_map = HADES_ELEVEN;
+		max_map = HADES_ELEVEN;
 	}
 }
 
@@ -280,7 +286,7 @@ void level_common_update_play() BANKED{
 			UpdateHUD();
 		}
 	// tiles animation
-		if(current_map > TUTORIAL && current_map != BOSS_CHARON && current_map != BOSS_CERBERUS){
+		if(current_map > TUTORIAL && !is_current_map_on_boss()){
 			anim_counter++;
 			if(anim_counter >= ANIM_COUNTER_MAX){
 				anim_counter = 0u;
@@ -551,7 +557,7 @@ void UpdateHUD() BANKED{
 			UPDATE_HUD_TILE(6,2,54);
 		}
 	//BOSS HP
-		if(current_map == BOSS_CHARON || current_map == BOSS_CERBERUS){
+		if(is_current_map_on_boss()){
 			INT8 idx_bosshp = 0;
 			UPDATE_HUD_TILE(6,0,0);
 			for(idx_bosshp = 0; idx_bosshp < boss_hp_current; idx_bosshp++){
@@ -758,6 +764,21 @@ void go_to_next_map() BANKED{
 			break;
 			case BOSS_CERBERUS:
 				prev_map = HADES_TEN;
+				next_map = HADES_ELEVEN;
+				orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;
+				next_state = StateBoss00;
+				a_walk_counter_y = -18;
+			break;
+			case HADES_TWELVE:
+				prev_map = HADES_ELEVEN;
+				next_map = BOSS_MINOS;
+				orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+				orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+				next_state = StateHades00;
+			break;
+			case BOSS_MINOS:
+				prev_map = HADES_TWELVE;
 				next_map = HADES_ELEVEN;
 				orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
 				orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;

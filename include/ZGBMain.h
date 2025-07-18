@@ -52,6 +52,8 @@ _SPRITE_DMG(SpriteRevenant, enemyrevenant)\
 _SPRITE_DMG(SpriteMinion, enemyminion)\
 _SPRITE_DMG(SpriteCerberushead, cerberushead)\
 _SPRITE_DMG(SpriteSkeletoncerberus, enemyskeletorcerberus)\
+_SPRITE_DMG(SpriteMinosscale, minosscale)\
+_SPRITE_DMG(SpriteMinosplate, minosplate)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

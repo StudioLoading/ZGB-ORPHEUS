@@ -23,6 +23,7 @@ void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 void spawn_ball(UINT8 arg_type, UINT16 arg_spawnball_x, UINT16 arg_spawnball_y, UINT8 arg_direction) BANKED;
 void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
+UINT8 is_current_map_on_boss() BANKED;
 
 void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
     set_bkg_tile_xy(x, y, t);
@@ -38,8 +39,20 @@ void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED{
 	dskull_data->e_configured = 1u;
 }
 
+UINT8 is_current_map_on_boss() BANKED{
+    UINT8 result = 0u;
+    switch(current_map){
+        case BOSS_CHARON:
+        case BOSS_CERBERUS:
+        case BOSS_MINOS:
+            result = 1u;
+        break;
+    }
+    return result;
+}
+
 void spawn_ball(UINT8 arg_type, UINT16 arg_spawnball_x, UINT16 arg_spawnball_y, UINT8 arg_direction) BANKED{
-	if(spawned_ball == 0u || current_map == BOSS_CERBERUS){
+	if(spawned_ball == 0u || is_current_map_on_boss()){
 		flag_button_pushable = 0u;
 		Sprite* s_ball = SpriteManagerAdd(arg_type, arg_spawnball_x, arg_spawnball_y);
 		struct EnemyInfo* ball_data = (struct EnemyInfo*) s_ball->custom_data;

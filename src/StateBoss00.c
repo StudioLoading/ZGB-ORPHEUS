@@ -24,6 +24,7 @@
 
 IMPORT_MAP(mapbosscharon);
 IMPORT_MAP(mapbosscerberus);
+IMPORT_MAP(mapbossminos);
 IMPORT_MAP(hudmap);
 //IMPORT_TILES(font);
 DECLARE_MUSIC(battle);
@@ -41,9 +42,9 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
 const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
-Sprite* s_cerberus_headcenter = 0;
 Sprite* s_cerberus_headleft = 0;
 Sprite* s_cerberus_headright = 0;
+Sprite* s_minosscale = 0;
 UINT16 end_demo_counter = 600u;
 UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play; 4 boss dead
 UINT16 spawn_common_wait = 0u;
@@ -128,19 +129,16 @@ void START() {
 			}break;
 			case BOSS_CERBERUS:{
 				InitScroll(BANK(mapbosscerberus), &mapbosscerberus, coll_t_hades005, coll_s_hades005);
-				s_cerberus_headcenter = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 8u << 3), ((UINT16) 3u << 3) + 1);
-					struct CerberusInfo* headcenter_info = (struct CerberusInfo*)s_cerberus_headcenter->custom_data;
+				s_cerberus_headright = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 8u << 3), ((UINT16) 3u << 3) + 1);
+					struct CerberusInfo* headcenter_info = (struct CerberusInfo*)s_cerberus_headright->custom_data;
 					headcenter_info->head_config = 2;
-				/*s_cerberus_headright = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 10u << 3) - 2u, ((UINT16) 3u << 3) + 4);
-					struct CerberusInfo* headright_info = (struct CerberusInfo*)s_cerberus_headright->custom_data;
-					headright_info->head_config = 3;*/
 				s_cerberus_headleft = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 7u << 3), ((UINT16) 3u << 3) + 4);
 				struct CerberusInfo* headleft_info = (struct CerberusInfo*)s_cerberus_headleft->custom_data;
 				headleft_info->head_config = 1;
-				/*Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
-				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
-				heart_data->item_type = HEART;
-				heart_data->i_configured = 1u;*/
+			}break;
+			case BOSS_MINOS:{
+				InitScroll(BANK(mapbossminos), &mapbossminos, coll_t_hades005, coll_s_hades005);
+				SpriteManagerAdd(SpriteMinosscale, ((UINT16) 7u << 3) + 4u, ((UINT16) 4u << 3) - 4u);
 			}break;
 		}
 	//HUD
@@ -180,6 +178,9 @@ void UPDATE() {
 				case BOSS_CERBERUS: 
 					prepare_dialog(BOSS_CERBERUS_INTRO);
 				break;
+				case BOSS_MINOS: 
+					prepare_dialog(BOSS_MINOS_INTRO);
+				break;
 			}
 			SetState(StateCartel);
 			boss_intro = 3;
@@ -196,6 +197,9 @@ void UPDATE() {
 						boss_manage_death_charon();
 					break;
 					case BOSS_CERBERUS: 
+						boss_manage_death_cerberus();
+					break;
+					case BOSS_MINOS: 
 						boss_manage_death_cerberus();
 					break;
 				}

@@ -54,6 +54,7 @@ void UPDATE(){
         switch(current_map){
             case BOSS_CHARON:
             case BOSS_CERBERUS:
+            case BOSS_MINOS:
                 SetState(StateBoss00);
             break;
             default:
