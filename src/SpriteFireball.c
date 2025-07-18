@@ -14,8 +14,11 @@ const UINT8 a_fireball[] = {1, 1};
 INT8 fireball_mirroring = 10;
 UINT8 spawned_ball = 0u;
 
+extern UINT8 is_skeletoncerberus_in_river;
+
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 
 void START() {
     THIS->lim_x = 10u;
@@ -65,8 +68,8 @@ void UPDATE() {
                     if(CheckCollision(THIS, ifbspr)) {
                         if(ifbspr->type == SpriteOrpheus){
                             orpheus_change_state(ifbspr, HIT);
-                        }else if(ifbspr->type != SpriteFireball && ifbspr->type != SpriteBlade && ifbspr->type != SpriteDeath && ifbspr->type != SpriteOrpheusnote
-                        && ifbspr->type != SpriteStone){
+                        }else if(is_enemy(ifbspr->type)){
+                            if(ifbspr->type == SpriteSkeletoncerberus && is_skeletoncerberus_in_river == 0)
                             e_destroy(ifbspr);
                         }
                     }

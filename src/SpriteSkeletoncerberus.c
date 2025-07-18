@@ -31,6 +31,7 @@ extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void e_management(Sprite* s_enemy) BANKED;
 extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
+extern void boss_invert_river_verse() BANKED;
 
 void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
@@ -128,5 +129,6 @@ void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANK
 }
 
 void DESTROY(){
+    boss_invert_river_verse();
     e_destroy(THIS);
 }

@@ -68,6 +68,7 @@ UINT16 boss_cerberus_startpos_y_center = ((UINT16) 3u << 3) + 1;
 
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
+void boss_invert_river_verse() BANKED;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -150,7 +151,7 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 1;
+		boss_hp_current = 5;
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -264,24 +265,34 @@ void UPDATE() {
 		}
 	}
 	//COMMON SPAWNING
-		if(spawned_enemy_counter == 0){
-			spawn_common_wait++;
-			if(spawn_common_wait >= spawn_common_wait_max){
-				spawn_common_wait = 0u;
-				switch(current_map){
-					case BOSS_CERBERUS:{
-						s_skeletoncerberus = SpriteManagerAdd(SpriteSkeletoncerberus, ((UINT16) 2u << 3), ((UINT16) 8u << 3));
-						e_configure(s_skeletoncerberus);
-						e_change_state(s_skeletoncerberus, IDLE_DOWN);
-					}break;
-				}
-				//change max interval according to boss hp
-					switch(boss_hp_current){
-						case 1: spawn_common_wait_max = 255u; break;
-						case 2: spawn_common_wait_max = 400u; break;
-						case 3: spawn_common_wait_max = 600u; break;
-						default: spawn_common_wait_max = 1000u; break;
+		if(boss_intro < 4){
+			if(spawned_enemy_counter == 0 || spawned_enemy_counter > 20){
+				spawned_enemy_counter = 0;
+				spawn_common_wait++;
+				if(spawn_common_wait >= spawn_common_wait_max){
+					spawn_common_wait = 0u;
+					switch(current_map){
+						case BOSS_CERBERUS:{
+							UINT16 spawn_skeletoncerberus_posx = 5u;
+							UINT16 spawn_skeletoncerberus_posy = 12u;
+							switch(boss_hp_current){
+								case 4: case 2:
+									spawn_skeletoncerberus_posx = 12u;
+								break;
+							}
+							s_skeletoncerberus = SpriteManagerAdd(SpriteSkeletoncerberus, (spawn_skeletoncerberus_posx << 3) + 3u, (spawn_skeletoncerberus_posy << 3));
+							e_configure(s_skeletoncerberus);
+							e_change_state(s_skeletoncerberus, IDLE_DOWN);
+						}break;
 					}
+					//change max interval according to boss hp
+						switch(boss_hp_current){
+							case 1: spawn_common_wait_max = 160u; break;
+							case 2: spawn_common_wait_max = 250u; break;
+							case 3: spawn_common_wait_max = 400u; break;
+							default: spawn_common_wait_max = 700u; break;
+						}
+				}
 			}
 		}
 	//GHOSTS
@@ -383,5 +394,13 @@ void boss_manage_death_cerberus() BANKED{
 			prepare_dialog(BOSS_CERBERUS_BEATED);
 			SetState(StateCartel);
 		}break;
+	}
+}
+
+void boss_invert_river_verse() BANKED{
+	if(river_verse == 0){
+		river_verse = 1;
+	}else{
+		river_verse = 0;
 	}
 }

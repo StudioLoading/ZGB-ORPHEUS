@@ -40,6 +40,7 @@ UINT8 cerberus_walking_frmskip_x_current = 0u;
 UINT8 cerberus_walking_frmskip_y_current = 0u;
 INT16 cerberus_delta_walking_delta_x = 0;
 INT16 cerberus_delta_walking_delta_y = 0;
+UINT8 cerberus_central_fireball_dir = 0u;
 
 extern UINT8 boss_breath_flag;
 extern INT8 boss_breath_verse;
@@ -85,6 +86,7 @@ void START() {
     head_info->frmskip = 0;
     head_info->frmskip_max = FRMSKIPMAX_MAX;
     head_info->e_state = GENERIC_IDLE;
+    cerberus_central_fireball_dir = 0u;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
         SPRITE_SET_PALETTE(THIS,1);
@@ -252,7 +254,7 @@ void UPDATE() {
                     INT16 delta_ch_sk_x = (INT16)THIS->x - (UINT16)ichspr->x;
                     INT16 delta_ch_sk_y = (UINT16)ichspr->y - (INT16)THIS->y;
                     if(delta_ch_sk_y < 44){
-                        if(delta_ch_sk_x < 8 && delta_ch_sk_x > -8){
+                        if(delta_ch_sk_x < 10 && delta_ch_sk_x > -10){
                             if(is_skeletoncerberus_taken == 0){
                                 is_skeletoncerberus_taken = 1u;
                                 cerberus_change_state(THIS, WALK_DOWN);
@@ -368,14 +370,36 @@ void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) 
                     s_hitnote = e_spawn_hitnote(arg_s_cerberus->x + 16u, arg_s_cerberus->y + 16u, NOTE_MOV_SIN);
                     struct NoteInfo* e_hitnotedata = (struct NoteInfo*) s_hitnote->custom_data;
                     INT8 calculated_note_vx = 0;
-                    INT8 calculated_note_vy = 2;
+                    INT8 calculated_note_vy = 1;
                     cerberus_calculate_note_v(arg_s_cerberus, &calculated_note_vx, &calculated_note_vy);
                     e_hitnotedata->vx = calculated_note_vx;
                     e_hitnotedata->vy = calculated_note_vy;
                     e_hitnotedata->frmskip_max = 4;
                 }break;
                 case 7://is central
-                    spawn_ball(SpriteFireball, arg_s_cerberus->x + 16u, arg_s_cerberus->y + 16u, J_DOWN);
+                    switch(cerberus_central_fireball_dir){
+                        case 0u:
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN + J_RIGHT);
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN + J_LEFT);
+                        break;
+                        case 1u:{
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN);
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN + J_RIGHT);
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN + J_LEFT);
+                        }break;
+                        case 2u:
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN);
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN + J_LEFT);
+                        break;
+                        case 3u:
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN);
+                            spawn_ball(SpriteFireball, arg_s_cerberus->x + 8u, arg_s_cerberus->y + 16u, J_DOWN + J_RIGHT);
+                        break;
+                    }
+                    cerberus_central_fireball_dir++;
+                    if(cerberus_central_fireball_dir > 3){
+                        cerberus_central_fireball_dir = 0u;
+                    }
                 break;
             }
         }break;
@@ -465,13 +489,13 @@ void cerberus_calculate_note_v(Sprite* arg_s_cerberus, INT8* arg_vx, INT8* arg_v
     }
     if(delta_x > 16){
         *arg_vx = -2;
-        *arg_vy = 2;
+        *arg_vy = 1;
     }else if(delta_x > 8){
         *arg_vx = -1;
-        *arg_vy = 3;
+        *arg_vy = 2;
     }else if(delta_x > 4){
         *arg_vx = -1;
-        *arg_vy = 4;
+        *arg_vy = 3;
     }
     if(arg_s_cerberus->x < s_orpheus->x){
         *arg_vx = -*arg_vx;
@@ -493,16 +517,19 @@ void cerberus_update_wait(Sprite* arg_cerberus_head) BANKED{
                 break;
             }
         break;
-        case 5://is center
+        case 5://is right
             head_info->wait = ATTACK_WAIT_MAX_RIGHT;
             switch(boss_hp_current){
                 case 4: case 3:
                     head_info->wait = ATTACK_WAIT_MED_RIGHT;
                 break;
-                case 2: case 1:
+                case 2:
                     head_info->wait = ATTACK_WAIT_MIN_RIGHT;
                 break;
             }
+        break;
+        case 7://is central
+            head_info->wait = ATTACK_WAIT_MIN_RIGHT;
         break;
     }
 }
