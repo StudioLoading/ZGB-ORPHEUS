@@ -19,13 +19,16 @@ void START() {
 
 void UPDATE() {
     struct EnemyInfo* balanceshadow_data = (struct EnemyInfo*) THIS->custom_data;
-    if(balanceshadow_data->wait <= 100u){
+    if(balanceshadow_data->wait <= 100u || balanceshadow_data->wait > 250u){
         balanceshadow_data->wait--;
         if(balanceshadow_data->wait == 0u){
             SpriteManagerAdd(SpriteMinosplate, THIS->x, 0);
             balanceshadow_data->wait = 101u;
         }
-}
+    }
+    else{
+        SpriteManagerRemoveSprite(THIS);
+    }
 }
 
 void DESTROY() {

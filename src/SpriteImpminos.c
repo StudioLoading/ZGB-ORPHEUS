@@ -64,7 +64,7 @@ void UPDATE(){
                 SetSpriteAnim(THIS, a_impminos_repelled, 24u);
             }
             THIS->x = s_plate->x;
-            THIS->y = s_plate->y - 24u;
+            THIS->y = s_plate->y - 20u;
         }
         if(flag_move_up && plate_data->wait > 30){
             THIS->y--;
@@ -95,7 +95,7 @@ void impminos_check_sprite_collision(Sprite* s_enemy) BANKED{
                         if(plate_data->e_configured == 0u && s_plate == 0){
                             plate_data->e_configured = 2u;
                             THIS->x = iespr->x;
-                            THIS->y = iespr->y - 24u;
+                            THIS->y = iespr->y - 20u;
                             s_plate = iespr;
                             e_change_state(s_enemy, FROZEN);
                         }
