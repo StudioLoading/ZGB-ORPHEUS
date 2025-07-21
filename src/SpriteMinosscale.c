@@ -183,18 +183,18 @@ void minosscale_spawn_shadows() BANKED{
 
 void minosscale_spawn_plates() BANKED{
     switch(platepos_counter){
-        case 0u:
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_10, 0);
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_11, 0);
-        break;
-        case 1u:
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_20, 0);
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_21, 0);
-        break;
-        case 2u:
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_30, 0);
-            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_31, 0);
-        break;
+        case 0u:{
+            Sprite* s_plate_0 = SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_10, 0);
+            Sprite* s_plate_1 = SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_11, 0);
+        }break;
+        case 1u:{
+            Sprite* s_plate_0 = SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_20, 0);
+            Sprite* s_plate_1 = SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_21, 0);
+        }break;
+        case 2u:{
+            Sprite* s_plate_0 = SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_30, 0);
+            Sprite* s_plate_1 = SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_31, 0);
+        }break;
     }
 }
 

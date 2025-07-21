@@ -51,12 +51,6 @@ void START() {
 void UPDATE() {
     struct EnemyInfo* plate_data = (struct EnemyInfo*) THIS->custom_data;
     switch(plate_data->e_state){
-        case GENERIC_IDLE://loading
-            plate_data->wait--;
-            if(plate_data->wait == 0){
-                minosplate_change_state(THIS, GENERIC_WALK);
-            }
-        break;
         case GENERIC_WALK://wait for heavy
             plate_data->frmskip_wait++;
             if(plate_data->frmskip_wait >= plate_data->frmskip){
@@ -75,22 +69,18 @@ void UPDATE() {
             }
         break;
         case WALK_UP:
-            plate_data->frmskip_wait++;
-            if(plate_data->frmskip_wait >= plate_data->frmskip){
-                plate_data->wait++;
-                switch(plate_data->e_configured){
-                    case 0u: //nothing
-                    case 1u: //common over
-                        THIS->x += plate_data->vx;
-                        THIS->y += plate_data->vy;
-                    break;
-                    case 2u: //Orpheus over
-                    break;
-                }
-                if(plate_data->wait == 60u){
-                    minosscale_change_state(s_minosscale, GENERIC_IDLE);
-                    SpriteManagerRemoveSprite(THIS);
-                }
+            switch(plate_data->e_configured){
+                case 0u: //nothing
+                case 2u: //common over
+                    THIS->x += plate_data->vx;
+                    THIS->y += plate_data->vy;
+                break;
+                case 1u: //Orpheus over
+                    plate_data->wait++;
+                    if(plate_data->wait >= 60){
+                        SpriteManagerRemoveSprite(THIS);
+                    }
+                break;
             }
         break;
         case WALK_DOWN:{
@@ -112,7 +102,7 @@ void UPDATE() {
                         case SpriteMinosbalanceshadow:
                             THIS->y = imsspr->y;
                             SpriteManagerRemoveSprite(imsspr);
-                            minosplate_change_state(THIS, GENERIC_IDLE);
+                            minosplate_change_state(THIS, GENERIC_WALK);
                         break;
                         default:
                             THIS->y += plate_data->vy;
@@ -148,6 +138,7 @@ void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state
 }
 
 void DESTROY() {
+    minosscale_change_state(s_minosscale, GENERIC_IDLE);
     if(THIS->unique_id == s_plate->unique_id){
         s_plate = 0;
     }
@@ -157,7 +148,9 @@ void DESTROY() {
     SPRITEMANAGER_ITERATE(scroll_mp_tile, impspr) {
         switch(impspr->type){
             case SpriteMinosplate:{
-                SpriteManagerRemoveSprite(impspr);
+                if(impspr->unique_id != THIS->unique_id){
+                    //SpriteManagerRemoveSprite(impspr);
+                }
             }
         }
     }

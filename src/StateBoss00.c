@@ -74,7 +74,7 @@ UINT8 animfire_counter = 0u;
 UINT8 animboss_hit_flag = 0u;
 UINT8 animboss_hit_counter = 0u;
 INT8 animboss_hit = 0u;
-INT8 animboss_hit_max = 20;
+INT8 animboss_hit_max = 10;
 
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
@@ -228,7 +228,7 @@ void UPDATE() {
 		break;
 	}
 	//BOSS HIT
-		if(animboss_hit_flag){
+		if(animboss_hit_flag || boss_hp_current == 0){
 			animboss_hit++;
 			if(animboss_hit >= animboss_hit_max){
 				animboss_hit = 0;
@@ -243,7 +243,12 @@ void UPDATE() {
 						Anim_Hit_Minos_0();
 					break;
 					case 5:
-						animboss_hit_flag = 0u;
+						if(boss_hp_current == 0){
+							animboss_hit_counter = 0;
+						}else{
+							Anim_Breath_Minos_0();
+							animboss_hit_flag = 0u;
+						}
 					break;
 				}
 			}
@@ -294,7 +299,7 @@ void UPDATE() {
 			}break;
 			case BOSS_MINOS:
 				boss_breath_counter++;
-				if(animboss_hit_flag == 0 && boss_breath_counter >= boss_breath_counter_max){
+				if(animboss_hit_flag == 0 && boss_hp_current && boss_breath_counter >= boss_breath_counter_max){
 					boss_breath_counter = 0;
 					boss_update_breath_verse_and_max();
 					struct EnemyInfo* minosscale_data = (struct EnemyInfo*) s_minosscale->custom_data;
@@ -318,10 +323,9 @@ void UPDATE() {
 								bossminos_breath_flag = 0u;
 							break;
 						}
-					}else{
+					}else{//altrimenti spalanca gli occhi
 						Anim_Breath_Minos_2();
 					}
-					//altrimenti spalanca gli occhi
 				}
 			break;
 		}
