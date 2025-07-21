@@ -23,3 +23,9 @@ void Anim_Charon_4() BANKED;
 void Anim_Charon_5() BANKED;
 void Anim_Charon_6() BANKED;
 void Anim_Charon_7() BANKED;
+
+void Anim_Breath_Minos_0() BANKED;
+void Anim_Breath_Minos_1() BANKED;
+void Anim_Breath_Minos_2() BANKED;
+void Anim_Hit_Minos_0() BANKED;
+void Anim_Hit_Minos_1() BANKED;

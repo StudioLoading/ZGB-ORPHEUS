@@ -56,6 +56,7 @@ INT8 boss_breath_counter = 0;
 INT8 boss_breath_counter_max = 0;
 INT8 boss_breath_verse = 1;//1 low, 2 low, -1 up, -2up
 UINT8 boss_breath_flag = 0u;
+UINT8 bossminos_breath_flag = 0u;
 INT8 boss_breath_counter_right = 0;
 INT8 boss_breath_counter_max_right = 0;
 INT8 boss_breath_verse_right = 1;//1 low, 2 low, -1 up, -2up
@@ -70,10 +71,17 @@ UINT16 boss_cerberus_startpos_y_right =((UINT16) 3u << 3) + 4u;
 UINT16 boss_cerberus_startpos_x_center = ((UINT16) 8u << 3);
 UINT16 boss_cerberus_startpos_y_center = ((UINT16) 3u << 3) + 1;
 UINT8 animfire_counter = 0u;
+UINT8 animboss_hit_flag = 0u;
+UINT8 animboss_hit_counter = 0u;
+INT8 animboss_hit = 0u;
+INT8 animboss_hit_max = 20;
 
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
+void boss_manage_death_minos() BANKED;
 void boss_invert_river_verse() BANKED;
+void boss_update_breath_verse_and_max() BANKED;
+void boss_hit() BANKED;
 
 extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
@@ -96,6 +104,7 @@ extern INT8 a_walk_counter_y;
 extern UINT8 death_countdown;
 extern INT8 boss_hp_current;
 extern INT8 boss_hp_max;
+extern UINT8 redraw_hud;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -143,17 +152,21 @@ void START() {
 			case BOSS_MINOS:{
 				InitScroll(BANK(mapbossminos), &mapbossminos, coll_t_hades005, coll_s_hades005);
 				s_minosscale = SpriteManagerAdd(SpriteMinosscale, ((UINT16) 7u << 3) + 4u, ((UINT16) 4u << 3) - 4u);
+				bossminos_breath_flag = 0u;
+				boss_breath_flag = 0u;
+				boss_breath_counter = 0;
+				boss_breath_counter_max = BOSS_BREATH_MAX;
 			}break;
 		}
 	//HUD
         INIT_HUD(hudmap);
 	//VARS
 		spawn_common_wait = 0u;
-		spawn_common_wait_max = 600u;
+		spawn_common_wait_max = 300u;
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 5;
+		boss_hp_current = 1;
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -162,6 +175,7 @@ void START() {
 		boss_breath_counter_max_right = BOSS_BREATH_MAX_RIGHT;
 		boss_breath_verse_right = 1;
 		boss_breath_flag_right = 0u;
+		animboss_hit_flag = 0;
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -186,14 +200,17 @@ void UPDATE() {
 					prepare_dialog(BOSS_MINOS_INTRO);
 				break;
 			}
-			SetState(StateCartel);
 			boss_intro = 3;
+			SetState(StateCartel);
 		}break;
 		case 0://on Orpheus death!
 		case 3:
 			level_common_update_play();
 		break;
 		case 4:	//DEATH COOLDOWN BEFORE CHANGING SCREEN
+			if(boss_hp_current){
+			    boss_hp_current = 0;
+			}
 			if(death_countdown){
 				death_countdown--;
 				switch(current_map){
@@ -204,74 +221,112 @@ void UPDATE() {
 						boss_manage_death_cerberus();
 					break;
 					case BOSS_MINOS: 
-						boss_manage_death_cerberus();
+						boss_manage_death_minos();
 					break;
 				}
 			}
 		break;
 	}
-	//BREATHS COUNTER LEFT
-	if(boss_breath_flag == 0){
-		boss_breath_counter++;
-		if(boss_breath_counter >= boss_breath_counter_max){
-			boss_breath_counter = 0;
-			if(boss_breath_verse == 1){
-				boss_breath_verse = 2;
-			}else if(boss_breath_verse == 2){
-				boss_breath_verse = -2;
-			}else if(boss_breath_verse == -2){
-				boss_breath_verse = -1;
-			}else if(boss_breath_verse == -1){
-				boss_breath_verse = 0;
-			}else if(boss_breath_verse == 0){
-				boss_breath_verse = 1;
-			}
-			boss_breath_flag = 1u;
-			switch(boss_hp_current){
-				case 1: case 2:
-					if(boss_breath_counter_max != BOSS_BREATH_MIN){
-						boss_breath_counter_max = BOSS_BREATH_MIN;
-					}
-				break;
-				case 3: case 4:
-					if(boss_breath_counter_max != BOSS_BREATH_MED){
-						boss_breath_counter_max = BOSS_BREATH_MED;
-					}
-				break;
+	//BOSS HIT
+		if(animboss_hit_flag){
+			animboss_hit++;
+			if(animboss_hit >= animboss_hit_max){
+				animboss_hit = 0;
+				animboss_hit_counter++;
+				switch(animboss_hit_counter){
+					case 1:
+					case 3:
+						Anim_Hit_Minos_1();
+					break;
+					case 2:
+					case 4:
+						Anim_Hit_Minos_0();
+					break;
+					case 5:
+						animboss_hit_flag = 0u;
+					break;
+				}
 			}
 		}
-	}
-	//BREATHS COUNTER RIGHT
-	if(boss_breath_flag_right == 0){
-		boss_breath_counter_right++;
-		if(boss_breath_counter_right >= boss_breath_counter_max_right){
-			boss_breath_counter_right = 0;
-			if(boss_breath_verse_right == 1){
-				boss_breath_verse_right = 2;
-			}else if(boss_breath_verse_right == 2){
-				boss_breath_verse_right = -2;
-			}else if(boss_breath_verse_right == -2){
-				boss_breath_verse_right = -1;
-			}else if(boss_breath_verse_right == -1){
-				boss_breath_verse_right = 0;
-			}else if(boss_breath_verse_right == 0){
-				boss_breath_verse_right = 1;
-			}
-			boss_breath_flag_right = 1u;
-			switch(boss_hp_current){
-				case 1: case 2:
-					if(boss_breath_counter_max_right != BOSS_BREATH_MIN_RIGHT){
-						boss_breath_counter_max_right = BOSS_BREATH_MIN_RIGHT;
+	//BREATH BOSS
+		switch(current_map){
+			case BOSS_CERBERUS:{
+				//BREATHS COUNTER LEFT
+					if(boss_breath_flag == 0){
+						boss_breath_counter++;
+						if(boss_breath_counter >= boss_breath_counter_max){
+							boss_breath_counter = 0;
+							boss_update_breath_verse_and_max();
+							boss_breath_flag = 1u;
+						}
 					}
-				break;
-				case 3: case 4:
-					if(boss_breath_counter_max_right != BOSS_BREATH_MED_RIGHT){
-						boss_breath_counter_max_right = BOSS_BREATH_MED_RIGHT;
+				//BREATHS COUNTER RIGHT
+					if(boss_breath_flag_right == 0){
+						boss_breath_counter_right++;
+						if(boss_breath_counter_right >= boss_breath_counter_max_right){
+							boss_breath_counter_right = 0;
+							if(boss_breath_verse_right == 1){
+								boss_breath_verse_right = 2;
+							}else if(boss_breath_verse_right == 2){
+								boss_breath_verse_right = -2;
+							}else if(boss_breath_verse_right == -2){
+								boss_breath_verse_right = -1;
+							}else if(boss_breath_verse_right == -1){
+								boss_breath_verse_right = 0;
+							}else if(boss_breath_verse_right == 0){
+								boss_breath_verse_right = 1;
+							}
+							boss_breath_flag_right = 1u;
+							switch(boss_hp_current){
+								case 1: case 2:
+									if(boss_breath_counter_max_right != BOSS_BREATH_MIN_RIGHT){
+										boss_breath_counter_max_right = BOSS_BREATH_MIN_RIGHT;
+									}
+								break;
+								case 3: case 4:
+									if(boss_breath_counter_max_right != BOSS_BREATH_MED_RIGHT){
+										boss_breath_counter_max_right = BOSS_BREATH_MED_RIGHT;
+									}
+								break;
+							}
+						}
 					}
-				break;
-			}
+			}break;
+			case BOSS_MINOS:
+				boss_breath_counter++;
+				if(animboss_hit_flag == 0 && boss_breath_counter >= boss_breath_counter_max){
+					boss_breath_counter = 0;
+					boss_update_breath_verse_and_max();
+					struct EnemyInfo* minosscale_data = (struct EnemyInfo*) s_minosscale->custom_data;
+					switch(boss_breath_flag){
+						case 0u:
+							boss_breath_flag = 1u;
+						break;
+						case 1u:
+							boss_breath_flag = 0u;
+						break;
+					}
+					//se minosscale GENERIC_IDLE molleggia
+					if(minosscale_data->e_state == GENERIC_IDLE){
+						switch(bossminos_breath_flag){
+							case 0u: //goes down
+								Anim_Breath_Minos_1();
+								bossminos_breath_flag = 1u;
+							break;
+							case 1u: //back up
+								Anim_Breath_Minos_0();
+								bossminos_breath_flag = 0u;
+							break;
+						}
+					}else{
+						Anim_Breath_Minos_2();
+					}
+					//altrimenti spalanca gli occhi
+				}
+			break;
 		}
-	}
+	
+
 	//COMMON SPAWNING
 		if(boss_intro < 4){
 			if(spawned_enemy_counter == 0 || spawned_enemy_counter > 20){
@@ -293,29 +348,18 @@ void UPDATE() {
 							e_change_state(s_skeletoncerberus, IDLE_DOWN);
 						}break;
 						case BOSS_MINOS:{
-							UINT16 spawn_impminos_posx = 15u;
-							UINT16 spawn_impminos_posy = 5u;
+							UINT16 spawn_impminos_posx = 3u;
+							UINT16 spawn_impminos_posy = 4u;
 							switch(boss_hp_current){
 								case 4:
-									spawn_impminos_posx = 2u;
-								break;
-								case 3:
-									spawn_impminos_posx = 5u;
-									spawn_impminos_posy = 13u;
-								break;
 								case 2:
-									spawn_impminos_posx = 2u;
-									spawn_impminos_posy = 13u;
-								break;
-								case 1:
-									spawn_impminos_posx = 9u;
-									spawn_impminos_posy = 9u;
+									spawn_impminos_posx = 16u;
 								break;
 							}
 							if(flag_impminos_alive == 0){
- 								s_impminos = SpriteManagerAdd(SpriteImpminos, (spawn_impminos_posx << 3) + 3u, (spawn_impminos_posy << 3));
+ 								s_impminos = SpriteManagerAdd(SpriteImpminos, (spawn_impminos_posx << 3), (spawn_impminos_posy << 3));
 								e_configure(s_impminos);
-								e_change_state(s_impminos, IDLE_DOWN);
+								e_change_state(s_impminos, WALK_DOWN);
 							}
 						}break;
 					}
@@ -365,59 +409,99 @@ void UPDATE() {
 				break;
 			}
 		}
-	//ANIMS
-		anim_counter++;
-		if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
-			anim_counter = 0u;
+	//ANIMS RIVER
+		if(current_map != BOSS_MINOS){
+			anim_counter++;
+			if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
+				anim_counter = 0u;
+			}
+			if(river_verse == 0){//to the left
+				switch(anim_counter){
+					case 0u:{
+						switch(current_map){
+							case BOSS_CHARON:
+								Anim_Charon_0();
+							break;
+							case BOSS_CERBERUS:
+								Anim_Cerberus_0();
+							break; 
+							case BOSS_MINOS:
+								Anim_Minos_0();
+							break;
+						}
+					}break;
+					case 12u: Anim_Charon_1(); break;
+					case 24u: Anim_Charon_2(); break;
+					case 36u: Anim_Charon_3(); break;
+					case 48u: Anim_Charon_4(); break;
+					case 60u: Anim_Charon_5(); break;
+					case 72u: Anim_Charon_6(); break;
+					case 84u: Anim_Charon_7(); break;
+				}
+			}else{
+				switch(anim_counter){
+					case 0u: 
+						switch(current_map){
+							case BOSS_CHARON:
+								Anim_Charon_0();
+							break;
+							case BOSS_CERBERUS:
+								Anim_Cerberus_0();
+							break; 
+							case BOSS_MINOS:
+								Anim_Minos_0();
+							break;
+						}
+					break;
+					case 12u: Anim_Charon_7(); break;
+					case 24u: Anim_Charon_6(); break;
+					case 36u: Anim_Charon_5(); break;
+					case 48u: Anim_Charon_4(); break;
+					case 60u: Anim_Charon_3(); break;
+					case 72u: Anim_Charon_2(); break;
+					case 84u: Anim_Charon_1(); break;
+				}
+			}
 		}
-		if(river_verse == 0){//to the left
-			switch(anim_counter){
-				case 0u:{
-					switch(current_map){
-						case BOSS_CHARON:
-							Anim_Charon_0();
-						break;
-						case BOSS_CERBERUS:
-							Anim_Cerberus_0();
-						break; 
-						case BOSS_MINOS:
-							Anim_Minos_0();
-						break;
-					}
-				}break;
-				case 12u: Anim_Charon_1(); break;
-				case 24u: Anim_Charon_2(); break;
-				case 36u: Anim_Charon_3(); break;
-				case 48u: Anim_Charon_4(); break;
-				case 60u: Anim_Charon_5(); break;
-				case 72u: Anim_Charon_6(); break;
-				case 84u: Anim_Charon_7(); break;
-			}
-		}else{
-			switch(anim_counter){
-				case 0u: 
-					switch(current_map){
-						case BOSS_CHARON:
-							Anim_Charon_0();
-						break;
-						case BOSS_CERBERUS:
-							Anim_Cerberus_0();
-						break; 
-						case BOSS_MINOS:
-							Anim_Minos_0();
-						break;
-					}
-				break;
-				case 12u: Anim_Charon_7(); break;
-				case 24u: Anim_Charon_6(); break;
-				case 36u: Anim_Charon_5(); break;
-				case 48u: Anim_Charon_4(); break;
-				case 60u: Anim_Charon_3(); break;
-				case 72u: Anim_Charon_2(); break;
-				case 84u: Anim_Charon_1(); break;
-			}
+}
 
+void boss_hit() BANKED{
+	animboss_hit_flag = 1u;
+	boss_hp_current--;
+	redraw_hud = 1;
+	if(boss_hp_current <= 0){
+		boss_hp_current = 0;
+		if(boss_intro < 4){
+			boss_intro = 4;
+			death_countdown = 160u;
 		}
+	}
+}
+
+void boss_update_breath_verse_and_max() BANKED{
+	if(boss_breath_verse == 1){
+		boss_breath_verse = 2;
+	}else if(boss_breath_verse == 2){
+		boss_breath_verse = -2;
+	}else if(boss_breath_verse == -2){
+		boss_breath_verse = -1;
+	}else if(boss_breath_verse == -1){
+		boss_breath_verse = 0;
+	}else if(boss_breath_verse == 0){
+		boss_breath_verse = 1;
+	}
+	switch(boss_hp_current){
+		case 1: case 2:
+			if(boss_breath_counter_max != BOSS_BREATH_MIN){
+				boss_breath_counter_max = BOSS_BREATH_MIN;
+			}
+		break;
+		case 3: case 4:
+			if(boss_breath_counter_max != BOSS_BREATH_MED){
+				boss_breath_counter_max = BOSS_BREATH_MED;
+			}
+		break;
+	}
 }
 
 void boss_manage_death_charon() BANKED{
@@ -466,6 +550,37 @@ void boss_manage_death_cerberus() BANKED{
 		case 0u:{
 			boss_intro = 0;//reset
 			prepare_dialog(BOSS_CERBERUS_BEATED);
+			SetState(StateCartel);
+		}break;
+	}
+}
+
+void boss_manage_death_minos() BANKED{
+	switch(death_countdown){
+		case 140u:
+			spawn_death_animation(76u, 47u);
+		break;
+		case 130u:
+			spawn_death_animation(68u, 49u);
+		break;
+		case 100u:
+			spawn_death_animation(58u, 47u);
+		break;
+		case 80u:
+			spawn_death_animation(83u, 48u);
+		break;
+		case 60u:
+			spawn_death_animation(74u, 45u);
+		break;
+		case 45u:
+			spawn_death_animation(69u, 45u);
+		break;
+		case 30u:
+			spawn_death_animation(59u, 44u);
+		break;
+		case 0u:{
+			boss_intro = 0;//reset
+			prepare_dialog(BOSS_MINOS_BEATED);
 			SetState(StateCartel);
 		}break;
 	}

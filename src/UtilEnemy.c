@@ -180,7 +180,7 @@ UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED{
 void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
     UINT8 e_sprite_type = s_enemy->type;
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
-    if(e_data->e_state == new_state || e_data->e_state == FROZEN){
+    if(e_data->e_state == new_state || e_data->e_state == FROZEN && new_state != DIE){
         return;
     }
     switch(new_state){

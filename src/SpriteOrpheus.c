@@ -80,6 +80,7 @@ extern INT8 restart_current_map;
 extern UINT8 show_cartel;
 extern UINT8 boss_intro;
 extern UINT8 spikes_hit_flag;
+extern UINT8 boss_minos_flag_orpheus_on_plate;
 
 void orpheus_behave() BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -276,6 +277,9 @@ void UPDATE() {
                                 THIS->x = iospr->x;
                                 THIS->y = iospr->y - 12u;
                                 orpheus_change_state(THIS, FROZEN);
+                                if(boss_minos_flag_orpheus_on_plate == 0u){
+                                    boss_minos_flag_orpheus_on_plate = 1u;
+                                }
                             }
                         }break;
                         case SpriteLyre:

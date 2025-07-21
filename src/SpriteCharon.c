@@ -51,13 +51,13 @@ extern UINT16 boat_walk_left_limit;
 extern SONG song_selection;
 extern UINT8 boss_intro;
 extern UINT8 death_countdown;
-extern UINT8 redraw_hud;
 
 void charon_change_state(SPRITE_STATES arg_new_state) BANKED;
 void charon_preattack_move(UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
 
 extern void boat_turn() BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+extern void boss_hit() BANKED;
 
 void START() {
     charon_attack_type = 0u;
@@ -231,8 +231,7 @@ void UPDATE() {
                     charon_info.tile_collision = TranslateSprite(THIS, charon_info.vx << delta_time, 0);
                     if(charon_info.tile_collision){//hit
                         charon_info.wait = 0;
-                        boss_hp_current--;
-                        redraw_hud = 1;
+                        boss_hit();
                         SetSpriteAnim(THIS, a_charon_hit, 60u);
                         spawn_death_animation(THIS->x + 8u, THIS->y + 20u);
                         if(boss_hp_current <= 0){
@@ -275,7 +274,6 @@ void UPDATE() {
                     charon_frmskip_current = charon_frmskip_max;
                     charon_preattack_move(72u, 40u);
                     if(THIS->x == 72u && boss_intro != 4){
-                        boss_intro = 4;
                         death_countdown = 160u;
                         SpriteManagerRemoveSprite(s_charon_hand_left);
                         SpriteManagerRemoveSprite(s_charon_hand_right);

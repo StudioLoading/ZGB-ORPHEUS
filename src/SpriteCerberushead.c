@@ -56,9 +56,6 @@ extern UINT16 boss_cerberus_startpos_x_right;
 extern UINT16 boss_cerberus_startpos_y_right;
 extern UINT16 boss_cerberus_startpos_x_center;
 extern UINT16 boss_cerberus_startpos_y_center;
-extern UINT8 redraw_hud;
-extern UINT8 boss_intro;
-extern UINT8 death_countdown;
 
 void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) BANKED;
 void cerberus_update_wait(Sprite* arg_cerberus_head) BANKED;
@@ -68,6 +65,7 @@ void cerberus_walk_to(Sprite* arg_s_cerberus, UINT16 arg_final_posx, UINT16 arg_
 extern Sprite* e_spawn_hitnote(INT16 arg_spawnx, UINT16 arg_spawny, NOTE_MOVEMENT_TYPE arg_movement_type) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
+extern void boss_hit() BANKED;
 
 /*
 CerberusInfo{
@@ -190,10 +188,6 @@ void UPDATE() {
                     }
                 break;
                 case DIE:
-                    if(boss_intro < 4){
-                        boss_intro = 4;
-                        death_countdown = 160u;
-                    }
                 break;
             }
         break;
@@ -436,8 +430,7 @@ void cerberus_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) 
             if(head_info->head_config == 7){
                 SetSpriteAnim(arg_s_cerberus, a_cerberusheadcentral_hit, 40u);
             }
-            boss_hp_current--;
-            redraw_hud = 1;
+            boss_hit();
             if(head_info->head_config == 6){
                 SpriteManagerRemoveSprite(arg_s_cerberus);
             }

@@ -35,6 +35,8 @@ extern UINT8 boss_breath_flag;
 extern INT8 boss_breath_verse;
 extern UINT8 boss_breath_flag_right;
 extern INT8 boss_breath_verse_right;
+extern UINT8 death_countdown;
+extern INT8 boss_hp_current;
 /*
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;
@@ -47,8 +49,11 @@ extern INT8 boss_breath_verse_right;
  */
 void minosscale_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) BANKED;
 void minos_scale_rotation(Sprite* arg_s_minosscale) BANKED;
+void minosscale_spawn_shadows() BANKED;
+void minosscale_spawn_plates() BANKED;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+extern void minosscale_spawn_puffs(Sprite* arg_s_minosscale) BANKED;
 
 void START() {
     THIS->lim_x = 1000u;
@@ -127,20 +132,39 @@ void minosscale_change_state(Sprite* arg_s_minosscale, SPRITE_STATES arg_new_sta
         case WALK_UP:
             scale_info->wait = 100u;
             arg_s_minosscale->y += 6u;
+            arg_s_minosscale->mirror = NO_MIRROR;
             SetSpriteAnim(arg_s_minosscale, a_minosscale_preattack, 40u);
+            minosscale_spawn_shadows();
         break;
         case ATTACK:
+            arg_s_minosscale->mirror = NO_MIRROR;
             SetSpriteAnim(arg_s_minosscale, a_minosscale_idle, 1u);
             scale_info->wait = 200u;
             arg_s_minosscale->y += 6u;
-            spawn_death_animation(arg_s_minosscale->x, arg_s_minosscale->y + 20u);
+            minosscale_spawn_puffs(arg_s_minosscale);
+            //spawn_death_animation(arg_s_minosscale->x, arg_s_minosscale->y + 20u);
             minosscale_spawn_plates();
+            platepos_counter++;
+            if(platepos_counter > 2){
+                platepos_counter = 0u;
+            }
         break;
     }   
     scale_info->e_state = arg_new_state;
 }
 
-void minosscale_spawn_plates() BANKED{
+void minosscale_spawn_puffs(Sprite* arg_s_minosscale) BANKED{
+    Sprite* s_puff_left_0 = SpriteManagerAdd(SpriteDeath, arg_s_minosscale->x, arg_s_minosscale->y + 20u);
+    struct EnemyInfo* pl0_data = (struct EnemyInfo*)s_puff_left_0->custom_data;
+    pl0_data->tile_collision = DEATH_PUFF_LEFT_0;
+    pl0_data->e_configured = 1u;
+    Sprite* s_puff_right_0 = SpriteManagerAdd(SpriteDeath, arg_s_minosscale->x, arg_s_minosscale->y + 20u);
+    struct EnemyInfo* pr0_data = (struct EnemyInfo*)s_puff_right_0->custom_data;
+    pr0_data->tile_collision = DEATH_PUFF_RIGHT_0;
+    pr0_data->e_configured = 1u;
+}
+
+void minosscale_spawn_shadows() BANKED{
     switch(platepos_counter){
         case 0u:
             SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_10, PLATEPOSY_10);
@@ -155,9 +179,22 @@ void minosscale_spawn_plates() BANKED{
             SpriteManagerAdd(SpriteMinosbalanceshadow, PLATEPOSX_31, PLATEPOSY_31);
         break;
     }
-    platepos_counter++;
-    if(platepos_counter > 2){
-        platepos_counter = 0u;
+}
+
+void minosscale_spawn_plates() BANKED{
+    switch(platepos_counter){
+        case 0u:
+            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_10, 0);
+            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_11, 0);
+        break;
+        case 1u:
+            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_20, 0);
+            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_21, 0);
+        break;
+        case 2u:
+            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_30, 0);
+            SpriteManagerAdd(SpriteMinosplate, PLATEPOSX_31, 0);
+        break;
     }
 }
 

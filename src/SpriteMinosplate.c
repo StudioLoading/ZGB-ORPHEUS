@@ -12,6 +12,8 @@
 const UINT8 a_minosplate_load[] = {2, 0,1};
 const UINT8 a_minosplate[] = {1, 1};
 
+UINT8 boss_minos_flag_orpheus_on_plate = 0u;
+
 extern Sprite* s_minosscale;
 extern Sprite* s_plate;
 
@@ -43,6 +45,7 @@ void START() {
     plate_data->e_configured = 0u;
     plate_data->frmskip_wait = 0;
     plate_data->frmskip = 4;
+    boss_minos_flag_orpheus_on_plate = 0u;
 }
 
 void UPDATE() {
@@ -55,16 +58,20 @@ void UPDATE() {
             }
         break;
         case GENERIC_WALK://wait for heavy
-            plate_data->wait--;
+            plate_data->frmskip_wait++;
+            if(plate_data->frmskip_wait >= plate_data->frmskip){
+                plate_data->frmskip_wait = 0;
+                plate_data->wait--;
+            }
             if(plate_data->wait == 0){
                 switch(plate_data->e_configured){
                     case 0u: //nothing
-                    case 1u: //common over
+                    case 2u: //common over
+                        minosplate_change_state(THIS, WALK_UP);
                     break;
-                    case 2u: //Orpheus over
+                    case 1u: //Orpheus over
                     break;
                 }
-                minosplate_change_state(THIS, WALK_UP);
             }
         break;
         case WALK_UP:
@@ -80,40 +87,40 @@ void UPDATE() {
                     case 2u: //Orpheus over
                     break;
                 }
-                if(plate_data->wait == 40u){
+                if(plate_data->wait == 60u){
                     minosscale_change_state(s_minosscale, GENERIC_IDLE);
                     SpriteManagerRemoveSprite(THIS);
                 }
             }
         break;
         case WALK_DOWN:{
+            /*
             plate_data->frmskip_wait++;
             if(plate_data->frmskip_wait >= plate_data->frmskip){
-                plate_data->vy = 1;
-                TranslateSprite(THIS, 0, 1 << delta_time);
-                UINT8 scroll_ms_tile;
-                Sprite* imsspr;
-                SPRITEMANAGER_ITERATE(scroll_ms_tile, imsspr) {
-                    if(CheckCollision(THIS, imsspr)) {
-                        switch(imsspr->type){
-                            case SpriteOrpheus:
-                                orpheus_change_state(imsspr, HIT);
-                            break;
-                            case SpriteMinosbalanceshadow:
-                                SpriteManagerRemoveSprite(imsspr);
-                                THIS->y = imsspr->y;
-                                minosplate_change_state(THIS, GENERIC_IDLE);
-                            break;
-                            default:
-                                THIS->y++;
-                                if(is_enemy(imsspr)){
-                                    e_destroy(imsspr);
-                                }
-                            break;
-                        }
+                plate_data->frmskip_wait = 0;
+            */
+            plate_data->vy = 1;
+            TranslateSprite(THIS, 0, plate_data->vy << delta_time);
+            UINT8 scroll_ms_tile;
+            Sprite* imsspr;
+            SPRITEMANAGER_ITERATE(scroll_ms_tile, imsspr) {
+                if(CheckCollision(THIS, imsspr)) {
+                    switch(imsspr->type){
+                        case SpriteOrpheus:
+                            //orpheus_change_state(imsspr, HIT);
+                        break;
+                        case SpriteMinosbalanceshadow:
+                            THIS->y = imsspr->y;
+                            SpriteManagerRemoveSprite(imsspr);
+                            minosplate_change_state(THIS, GENERIC_IDLE);
+                        break;
+                        default:
+                            THIS->y += plate_data->vy;
+                        break;
                     }
                 }
             }
+            //}
         }break;
     }
 }
@@ -126,7 +133,7 @@ void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state
             //SetSpriteAnim(THIS, a_minosplate_load, 24u);
         break;
         case GENERIC_WALK:
-            plate_data->wait = 250u;
+            plate_data->wait = 80u;
             SetSpriteAnim(arg_s_cerberus, a_minosplate, 1u);
         break;
         case WALK_UP:
@@ -141,5 +148,17 @@ void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state
 }
 
 void DESTROY() {
-    s_plate = 0;
+    if(THIS->unique_id == s_plate->unique_id){
+        s_plate = 0;
+    }
+    //destroy all the plates!
+    UINT8 scroll_mp_tile;
+    Sprite* impspr;
+    SPRITEMANAGER_ITERATE(scroll_mp_tile, impspr) {
+        switch(impspr->type){
+            case SpriteMinosplate:{
+                SpriteManagerRemoveSprite(impspr);
+            }
+        }
+    }
 }

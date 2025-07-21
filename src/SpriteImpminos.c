@@ -21,6 +21,9 @@ Sprite* s_plate = 0;
 UINT8 flag_move_up = 0;
 
 extern UINT8 flag_impminos_alive;
+extern INT8 boss_hp_current;
+extern UINT8 spawned_enemy_counter;
+extern UINT8 boss_minos_flag_orpheus_on_plate;
 
 extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -28,7 +31,7 @@ extern void e_management(Sprite* s_enemy) BANKED;
 extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
-
+extern void boss_hit() BANKED;
 
 void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 void impminos_check_sprite_collision(Sprite* s_enemy) BANKED;
@@ -38,6 +41,9 @@ void START(){
     SetSpriteAnim(THIS, a_impminos_hidden, 6);
     struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
     e_data->frmskip = 2u;
+    if(boss_hp_current < 3){
+        e_data->frmskip = 1u;
+    }
     e_start(e_data, IDLE_DOWN);
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -63,11 +69,25 @@ void UPDATE(){
                 flag_move_up = 1;
                 SetSpriteAnim(THIS, a_impminos_repelled, 24u);
             }
-            THIS->x = s_plate->x;
-            THIS->y = s_plate->y - 20u;
+            THIS->x = s_plate->x - 4u;
+            THIS->y = s_plate->y - 18u;
         }
         if(flag_move_up && plate_data->wait > 30){
             THIS->y--;
+            if(THIS->y < 40u){
+                THIS->y--;
+            }
+        }
+        if(THIS->y < 3u){
+            struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+            if(e_data->e_state == FROZEN){//being launched by a minos plate
+                if(boss_minos_flag_orpheus_on_plate == 1u){
+                    THIS->x = ((UINT16) 9 << 3);
+                    THIS->y = ((UINT16) 3 << 3);
+                    boss_hit();
+                    e_change_state(THIS, DIE);
+                }
+            }
         }
     }
     impminos_check_sprite_collision(THIS);
@@ -89,13 +109,11 @@ void impminos_check_sprite_collision(Sprite* s_enemy) BANKED{
                 }break;
                 case SpriteMinosplate:
                     struct EnemyInfo* plate_data = (struct EnemyInfo*) iespr->custom_data;
-                    if(plate_data->e_state == WALK_DOWN){
-                        e_destroy(s_enemy);
-                    }else if(plate_data->e_state == GENERIC_WALK){
+                    if(plate_data->e_state == GENERIC_WALK){
                         if(plate_data->e_configured == 0u && s_plate == 0){
                             plate_data->e_configured = 2u;
-                            THIS->x = iespr->x;
-                            THIS->y = iespr->y - 20u;
+                            THIS->x = iespr->x - 4u;
+                            THIS->y = iespr->y - 18u;
                             s_plate = iespr;
                             e_change_state(s_enemy, FROZEN);
                         }
@@ -123,16 +141,13 @@ void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             SetSpriteAnim(s_enemy, a_impminos_h, 10);
         break;
         case HIT:
+        case FROZEN:
             SetSpriteAnim(s_enemy, a_impminos_repelled, 16);
         break;
     }
 }
 
 void DESTROY(){
-    flag_impminos_alive = 0u;
-    if(THIS->y < 4){//being launched by a minos plate
-        THIS->x = ((UINT16) 9u << 3);
-        THIS->y = ((UINT16) 4u << 3);
-    }
+    flag_impminos_alive = 0;
     e_destroy(THIS);
 }
