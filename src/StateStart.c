@@ -33,11 +33,11 @@ UINT8 tutorial_go = 1u; //TODO 0
 UINT8 tutorial_hades_entrance = 1u; // TODO 0
 UINT8 tutorial_get_lyre = 1u; // TODO 0
 
-MACROMAP solved_map = BOSS_CERBERUS; //TODO NONE
-MACROMAP current_map = HADES_11; //TODO TUTORIAL
-MACROMAP next_map = HADES_12; //TODO HADES_00
-MACROMAP prev_map = BOSS_CERBERUS; //TODO NONE
-MACROMAP max_map = HADES_11; //TODO TUTORIAL
+MACROMAP solved_map = HADES_20; //TODO NONE
+MACROMAP current_map = BOSS_AEACUS; //TODO TUTORIAL
+MACROMAP next_map = HADES_21; //TODO HADES_00
+MACROMAP prev_map = HADES_20; //TODO NONE
+MACROMAP max_map = BOSS_AEACUS; //TODO TUTORIAL
 UINT8 has_lyre = 1; //TODO 0
 
 UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 3) - 4u;
@@ -76,6 +76,7 @@ void START(){
         case BOSS_CHARON:
         case BOSS_CERBERUS:
         case BOSS_MINOS:
+        case BOSS_AEACUS:
 			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
 			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4;
             SetState(StateBoss00);

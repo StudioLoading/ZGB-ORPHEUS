@@ -26,6 +26,7 @@
 IMPORT_MAP(mapbosscharon);
 IMPORT_MAP(mapbosscerberus);
 IMPORT_MAP(mapbossminos);
+IMPORT_MAP(mapbossaeacus);
 IMPORT_MAP(hudmap);
 //IMPORT_TILES(font);
 DECLARE_MUSIC(battle);
@@ -79,6 +80,7 @@ INT8 animboss_hit_max = 10;
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
 void boss_manage_death_minos() BANKED;
+void boss_manage_death_aeacus() BANKED;
 void boss_invert_river_verse() BANKED;
 void boss_update_breath_verse_and_max() BANKED;
 void boss_hit() BANKED;
@@ -105,6 +107,7 @@ extern UINT8 death_countdown;
 extern INT8 boss_hp_current;
 extern INT8 boss_hp_max;
 extern UINT8 redraw_hud;
+extern UINT8 flag_button_repushable;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -157,6 +160,12 @@ void START() {
 				boss_breath_counter = 0;
 				boss_breath_counter_max = BOSS_BREATH_MAX;
 			}break;
+			case BOSS_AEACUS:{
+				InitScroll(BANK(mapbossaeacus), &mapbossaeacus, coll_t_hades005, coll_s_hades005);
+				Sprite* s_aeacus_wing_left = SpriteManagerAdd(SpriteAeacuswing, 8u, 16u);
+				Sprite* s_aeacus_wing_right = SpriteManagerAdd(SpriteAeacuswing, 42u, 16u);
+				s_aeacus_wing_right->mirror = V_MIRROR;
+			}break;
 		}
 	//HUD
         INIT_HUD(hudmap);
@@ -176,6 +185,7 @@ void START() {
 		boss_breath_verse_right = 1;
 		boss_breath_flag_right = 0u;
 		animboss_hit_flag = 0;
+		flag_button_repushable = 1u;
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -198,6 +208,9 @@ void UPDATE() {
 				break;
 				case BOSS_MINOS: 
 					prepare_dialog(BOSS_MINOS_INTRO);
+				break;
+				case BOSS_AEACUS: 
+					prepare_dialog(BOSS_AEACUS_INTRO);
 				break;
 			}
 			boss_intro = 3;
@@ -223,6 +236,9 @@ void UPDATE() {
 					case BOSS_MINOS: 
 						boss_manage_death_minos();
 					break;
+					case BOSS_AEACUS: 
+						boss_manage_death_aeacus();
+					break;
 				}
 			}
 		break;
@@ -236,17 +252,29 @@ void UPDATE() {
 				switch(animboss_hit_counter){
 					case 1:
 					case 3:
-						Anim_Hit_Minos_1();
+						switch(current_map){
+							case BOSS_MINOS:
+								Anim_Hit_Minos_1();
+							break;
+						}
 					break;
 					case 2:
 					case 4:
-						Anim_Hit_Minos_0();
+						switch(current_map){
+							case BOSS_MINOS:
+								Anim_Hit_Minos_0();
+							break;
+						}
 					break;
 					case 5:
 						if(boss_hp_current == 0){
 							animboss_hit_counter = 0;
 						}else{
-							Anim_Breath_Minos_0();
+							switch(current_map){
+								case BOSS_MINOS:
+									Anim_Breath_Minos_0();
+								break;
+							}
 							animboss_hit_flag = 0u;
 						}
 					break;
@@ -414,7 +442,7 @@ void UPDATE() {
 			}
 		}
 	//ANIMS RIVER
-		if(current_map != BOSS_MINOS){
+		if(current_map != BOSS_MINOS && current_map != BOSS_AEACUS){
 			anim_counter++;
 			if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
 				anim_counter = 0u;
@@ -585,6 +613,38 @@ void boss_manage_death_minos() BANKED{
 		case 0u:{
 			boss_intro = 0;//reset
 			prepare_dialog(BOSS_MINOS_BEATED);
+			SetState(StateCartel);
+		}break;
+	}
+}
+
+
+void boss_manage_death_aeacus() BANKED{
+	switch(death_countdown){
+		case 140u:
+			spawn_death_animation(16u, 32u);
+		break;
+		case 130u:
+			spawn_death_animation(20u, 30u);
+		break;
+		case 100u:
+			spawn_death_animation(24u, 31u);
+		break;
+		case 80u:
+			spawn_death_animation(28u, 28u);
+		break;
+		case 60u:
+			spawn_death_animation(32u, 32u);
+		break;
+		case 45u:
+			spawn_death_animation(40u, 36u);
+		break;
+		case 30u:
+			spawn_death_animation(44u, 38u);
+		break;
+		case 0u:{
+			boss_intro = 0;//reset
+			prepare_dialog(BOSS_AEACUS_BEATED);
 			SetState(StateCartel);
 		}break;
 	}

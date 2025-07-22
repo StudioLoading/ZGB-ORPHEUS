@@ -196,15 +196,29 @@ void reset_maps() BANKED{
 void level_common_update_play() BANKED{
 	// check button draw
 		if(evaluate_button){
-			if(current_map == HADES_06){
+			if(current_map == HADES_06 || current_map == BOSS_AEACUS){
 				if(trap_button_pressed < current_map || 
 					(flag_button_repushable && repushable_button_cooldown == REPUSHABLE_BUTTON_COOLDOWN_MAX)
 				){//SET IT PUSHABLE
 					flag_button_pushable = 1u;
 					repushable_button_cooldown--;
-					draw_button(12, 11, 67u);
+					switch(current_map){
+						case HADES_06:
+							draw_button(12, 11, 67u);
+						break;
+						case BOSS_AEACUS:
+							draw_button(16, 14, 67u);
+						break;
+					}
 				}else{//SET IT PUSHED
-					draw_button(12, 11, 71u);
+					switch(current_map){
+						case HADES_06:
+							draw_button(12, 11, 71u);
+						break;
+						case BOSS_AEACUS:
+							draw_button(16, 14, 71u);
+						break;
+					}
 				}
 			}
 			evaluate_button = 0u;
@@ -219,6 +233,10 @@ void level_common_update_play() BANKED{
 				switch(current_map){
 					case HADES_06:
 						spawn_ball(SpriteStone, 36u, 28u, J_DOWN);
+					break;
+					case BOSS_AEACUS:
+						spawn_ball(SpriteFireball, 96u, 24u, J_DOWN);
+						flag_button_pushable = 0;
 					break;
 				}
 			}

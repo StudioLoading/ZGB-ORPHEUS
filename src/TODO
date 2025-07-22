@@ -36,7 +36,7 @@ New-QRCodeURI -URI 'https://www.youtube.com/@bolognanerd/streams' -Width 16 -Out
 
 
 GIF TO PNG FRAMES
-ffmpeg -i C:\ZGB-2023.0\ZGB-ORPHEUS\other\PIXELART\fire-fireball.gif C:\ZGB-2023.0\ZGB-ORPHEUS\other\PIXELART\fireball_%d.png
+ffmpeg -i C:\ZGB-2023.0\ZGB-ORPHEUS\other\PIXELART\wing.gif C:\ZGB-2023.0\ZGB-ORPHEUS\other\PIXELART\wing_%d.png
 ffmpeg -framerate 10 -i C:\ZGB-2023.0\ZGB-VIATRIUMPHALIS\other\output_%01d.png -vf format=gray C:\ZGB-2023.0\ZGB-VIATRIUMPHALIS\other\output_grayscale.gif
 
 

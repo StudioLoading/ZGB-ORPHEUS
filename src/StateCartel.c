@@ -32,6 +32,9 @@ extern unsigned char d10[];
 
 extern MACROMAP current_map;
 
+extern UINT8 is_current_map_on_boss() BANKED;
+
+
 void START(){
     InitScroll(BANK(mapcartel), &mapcartel, 0, 0);
     INIT_FONT(fontbw, PRINT_BKG);
@@ -51,15 +54,10 @@ void START(){
 
 void UPDATE(){
     if(KEY_TICKED(J_A)){
-        switch(current_map){
-            case BOSS_CHARON:
-            case BOSS_CERBERUS:
-            case BOSS_MINOS:
-                SetState(StateBoss00);
-            break;
-            default:
-                SetState(StateHades00);
-            break;
+        if(is_current_map_on_boss()){
+            SetState(StateBoss00);
+        }else{
+            SetState(StateHades00);
         }
     }
 }
