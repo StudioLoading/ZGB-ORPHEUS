@@ -14,10 +14,11 @@ const UINT8 a_minosplate[] = {1, 1};
 
 UINT8 boss_minos_flag_orpheus_on_plate = 0u;
 
+extern Sprite* s_orpheus;
 extern Sprite* s_minosscale;
 extern Sprite* s_plate;
 
-extern void minosscale_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) BANKED;
+extern void minosscale_change_state(Sprite* arg_s_minosplate, SPRITE_STATES arg_new_state) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
@@ -32,7 +33,7 @@ extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 	UINT8 e_configured;
 	UINT8 frmskip;
  */
-void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) BANKED;
+void minosplate_change_state(Sprite* arg_s_minosplate, SPRITE_STATES arg_new_state) BANKED;
 
 
 void START() {
@@ -115,8 +116,8 @@ void UPDATE() {
     }
 }
 
-void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state) BANKED{
-    struct EnemyInfo* plate_data = (struct EnemyInfo*) arg_s_cerberus->custom_data;
+void minosplate_change_state(Sprite* arg_s_minosplate, SPRITE_STATES arg_new_state) BANKED{
+    struct EnemyInfo* plate_data = (struct EnemyInfo*) arg_s_minosplate->custom_data;
     switch(arg_new_state){
         case GENERIC_IDLE:
             plate_data->wait = 10u;
@@ -124,7 +125,7 @@ void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state
         break;
         case GENERIC_WALK:
             plate_data->wait = 80u;
-            SetSpriteAnim(arg_s_cerberus, a_minosplate, 1u);
+            SetSpriteAnim(arg_s_minosplate, a_minosplate, 1u);
         break;
         case WALK_UP:
             plate_data->wait = 0u;
@@ -132,6 +133,19 @@ void minosplate_change_state(Sprite* arg_s_cerberus, SPRITE_STATES arg_new_state
             plate_data->frmskip = 4;
             plate_data->vy = -1;
             plate_data->vx = 0;
+            //se sto per salire Orpheus è troppo lontano, anche se c'ero salito sopra, metti e_configuration = 0
+            if(plate_data->e_configured == 1u){
+                INT16 plateorpheus_deltax = (INT16)s_orpheus->x - (UINT16)arg_s_minosplate->x;
+                INT16 plateorpheus_delta_y = (INT16)arg_s_minosplate->y - (INT16)s_orpheus->y;
+                if(plateorpheus_deltax < 0 || plateorpheus_deltax > 10){
+                    plate_data->e_configured = 0;
+                    boss_minos_flag_orpheus_on_plate = 0u;
+                }
+                if(plateorpheus_delta_y > 5){
+                    plate_data->e_configured = 0;
+                    boss_minos_flag_orpheus_on_plate = 0u;
+                }
+            }
         break;
     }
     plate_data->e_state = arg_new_state;
@@ -149,7 +163,12 @@ void DESTROY() {
         switch(impspr->type){
             case SpriteMinosplate:{
                 if(impspr->unique_id != THIS->unique_id){
-                    //SpriteManagerRemoveSprite(impspr);
+                    struct EnemyInfo* plate_data = (struct EnemyInfo*) THIS->custom_data;
+                    if(plate_data->e_configured == 1u){//Orpheus over
+                        SpriteManagerRemoveSprite(impspr);
+                    }else{
+                        minosplate_change_state(impspr, WALK_UP);
+                    }
                 }
             }
         }

@@ -166,7 +166,7 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 1;
+		boss_hp_current = 5;//TODO 5
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -378,7 +378,7 @@ void UPDATE() {
 			}
 		}
 	//GHOSTS
-	/*	if(current_map == HADES_THREE){
+	/*	if(current_map == HADES_03){
 			if(idle_countdown < 10 && idle_countdown > 0){
 				UINT16 ghost_spawnx = ((UINT16) 19u << 3);
 				INT8 ghost_vx = -1;

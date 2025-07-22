@@ -33,11 +33,11 @@ UINT8 tutorial_go = 1u; //TODO 0
 UINT8 tutorial_hades_entrance = 1u; // TODO 0
 UINT8 tutorial_get_lyre = 1u; // TODO 0
 
-MACROMAP solved_map = HADES_TEN; //TODO NONE
-MACROMAP current_map = BOSS_MINOS; //TODO TUTORIAL
-MACROMAP next_map = HADES_ELEVEN; //TODO HADES_ZERO
-MACROMAP prev_map = HADES_TEN; //TODO NONE
-MACROMAP max_map = BOSS_MINOS; //TODO TUTORIAL
+MACROMAP solved_map = BOSS_CERBERUS; //TODO NONE
+MACROMAP current_map = HADES_11; //TODO TUTORIAL
+MACROMAP next_map = HADES_12; //TODO HADES_00
+MACROMAP prev_map = BOSS_CERBERUS; //TODO NONE
+MACROMAP max_map = HADES_11; //TODO TUTORIAL
 UINT8 has_lyre = 1; //TODO 0
 
 UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 3) - 4u;
@@ -53,7 +53,7 @@ UINT8 tutorial_get_lyre = 0;
 
 MACROMAP solved_map = MAP_NONE;
 MACROMAP current_map = TUTORIAL;
-MACROMAP next_map = HADES_ZERO;
+MACROMAP next_map = HADES_00;
 MACROMAP prev_map = MAP_NONE;
 MACROMAP max_map = TUTORIAL;
 UINT8 has_lyre = 0;
@@ -73,28 +73,18 @@ void START(){
         case TUTORIAL:
             SetState(StateTutorial);
         break;
-        case HADES_ZERO:
-        case HADES_ONE:
-        case HADES_TWO:
-        case HADES_THREE:
-        case HADES_FOUR:
-        case HADES_FIVE:
-        case HADES_SIX:
-        case HADES_SEVEN:
-        case HADES_EIGHT:
-        case HADES_NINE:
-        case HADES_TEN:
-			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
-			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4;
-            a_walk_counter_y = 0;
-            SetState(StateHades00);
-        break;
         case BOSS_CHARON:
         case BOSS_CERBERUS:
         case BOSS_MINOS:
 			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
 			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4;
             SetState(StateBoss00);
+        break;
+        default://all stages
+			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
+			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4;
+            a_walk_counter_y = 0;
+            SetState(StateHades00);
         break;
     }
 

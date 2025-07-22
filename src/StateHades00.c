@@ -26,6 +26,16 @@ IMPORT_MAP(maphades007);
 IMPORT_MAP(maphades008);
 IMPORT_MAP(maphades009);
 IMPORT_MAP(maphades010);
+IMPORT_MAP(maphades011);
+IMPORT_MAP(maphades012);
+IMPORT_MAP(maphades013);
+IMPORT_MAP(maphades014);
+IMPORT_MAP(maphades015);
+IMPORT_MAP(maphades016);
+IMPORT_MAP(maphades017);
+IMPORT_MAP(maphades018);
+IMPORT_MAP(maphades019);
+IMPORT_MAP(maphades020);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
 
@@ -89,13 +99,13 @@ void START() {
 			item_spawned_by_common.spawned = 0;
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 			switch(current_map){
-				case HADES_ONE:{
+				case HADES_01:{
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 5u << 3), ((UINT16) 8u << 3) + 3u);
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
 					block00_data->i_configured = 1u;
 				}break;
-				case HADES_TWO:{
+				case HADES_02:{
 					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
 						Sprite* s_key = SpriteManagerAdd(SpriteItem, ((UINT16) 17u << 3), ((UINT16) 15u << 3) - 3u);
 						struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
@@ -103,12 +113,12 @@ void START() {
 						key_data->i_configured = 1u;
 					}
 				}break;
-				case HADES_THREE:{
+				case HADES_03:{
 					area_enemy_counter = 1;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
 					e_configure(e_enemy);
 				}break;
-				case HADES_FOUR:{
+				case HADES_04:{
 					area_enemy_counter = 3;
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1);
@@ -119,7 +129,7 @@ void START() {
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
 					e_configure(e_skeleton3);
 				}break;
-				case HADES_FIVE:{
+				case HADES_05:{
 					area_enemy_counter = 1;
 					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
 					e_configure(e_dog);
@@ -128,20 +138,20 @@ void START() {
 					item_spawned_by_common.spawned = 0;
 				}break;
 				//BOSS CHARON
-				case HADES_SIX:{
+				case HADES_06:{
 					area_enemy_counter = 1;
 					/*Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1);*/
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton2);
 				}break;
-				case HADES_SEVEN:{
+				case HADES_07:{
 				}break;
-				case HADES_EIGHT:{
+				case HADES_08:{
 				}break;
-				case HADES_NINE:{
+				case HADES_09:{
 				}break;
-				case HADES_TEN:{
+				case HADES_10:{
 				}break;
 				//BOSS CERBERUS
 			}
@@ -150,42 +160,71 @@ void START() {
 		}
 	//INITSCROLL
 		switch(current_map){
-			case HADES_ZERO: 
+			case HADES_00: 
 				InitScroll(BANK(maphades000), &maphades000, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_ONE: 
+			case HADES_01: 
 				InitScroll(BANK(maphades001), &maphades001, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_TWO: 
+			case HADES_02: 
 				InitScroll(BANK(maphades002), &maphades002, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_THREE: 
+			case HADES_03: 
 				InitScroll(BANK(maphades003), &maphades003, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_FOUR:
+			case HADES_04:
 				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_FIVE:
+			case HADES_05:
 				InitScroll(BANK(maphades006), &maphades004, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_SIX:
+			case HADES_06:
 				InitScroll(BANK(maphades006), &maphades006, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_SEVEN:
+			case HADES_07:
 				InitScroll(BANK(maphades007), &maphades007, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_EIGHT:
+			case HADES_08:
 				InitScroll(BANK(maphades008), &maphades008, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_NINE:
+			case HADES_09:
 				InitScroll(BANK(maphades009), &maphades009, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_TEN:
+			case HADES_10:
 				InitScroll(BANK(maphades010), &maphades010, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_11:
+				InitScroll(BANK(maphades011), &maphades011, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_12:
+				InitScroll(BANK(maphades012), &maphades012, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_13:
+				InitScroll(BANK(maphades013), &maphades013, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_14:
+				InitScroll(BANK(maphades014), &maphades014, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_15:
+				InitScroll(BANK(maphades015), &maphades015, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_16:
+				InitScroll(BANK(maphades016), &maphades016, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_17:
+				InitScroll(BANK(maphades017), &maphades017, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_18:
+				InitScroll(BANK(maphades018), &maphades018, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_19:
+				InitScroll(BANK(maphades019), &maphades019, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_20:
+				InitScroll(BANK(maphades020), &maphades020, coll_t_hades001, coll_s_hades001);
 			break;
 		}
 	//HUD
-        //INIT_FONT(font, PRINT_WIN);
         INIT_HUD(hudmap);
 	//EXIT DOORS OPEN
 		if(solved_map >= current_map){
@@ -196,7 +235,7 @@ void START() {
 			PlayMusic(danger, 1);
 			hades_music_started = 1;
 		}
-		if(current_map == HADES_SIX){
+		if(current_map == HADES_06){
 			flag_button_repushable = 1u;
 		}
 }
@@ -217,16 +256,16 @@ void UPDATE() {
 	//DIALOGS
 		if(show_cartel){
 			switch(current_map){
-				case HADES_ZERO:
+				case HADES_00:
 					prepare_dialog(HADES_WELCOME);
 				break;
-				case HADES_ONE:
+				case HADES_01:
 					prepare_dialog(HADES_MOVE_BLOCK);
 				break;
-				case HADES_TWO:
+				case HADES_02:
 					prepare_dialog(HADES_USE_KEY);
 				break;
-				case HADES_THREE:
+				case HADES_03:
 					prepare_dialog(HADES_KILL_ENEMY);
 				break;
 			}
@@ -234,7 +273,7 @@ void UPDATE() {
 			SetState(StateCartel);
 		}
 	//BLOCK MANAGEMENT
-		if(current_map == HADES_ONE){
+		if(current_map == HADES_01){
 			if(init_block_button == 0){
 				if(button_pressed == 1 || solved_map >= current_map){
 					draw_button(1u, 15u, 71u);
@@ -259,7 +298,7 @@ void UPDATE() {
 			}
 		}
 	//GHOSTS
-		if(current_map > HADES_TWO && current_map < BOSS_CHARON){
+		if(current_map > HADES_02 && current_map < BOSS_CHARON){
 			if(in_dialog == 0 && idle_countdown < 10 && idle_countdown > 0){
 				UINT16 ghost_spawnx = ((UINT16) 19u << 3);
 				INT8 ghost_vx = -1;

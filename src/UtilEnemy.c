@@ -245,7 +245,9 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             }
         break;
         case DIE:
-            area_enemy_counter--;
+            if(area_enemy_counter){
+                area_enemy_counter--;
+            }
             spawned_enemy_counter--;
             SpriteManagerRemoveSprite(s_enemy);
             spawn_death_animation(s_enemy->x, s_enemy->y);

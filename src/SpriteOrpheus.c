@@ -107,9 +107,10 @@ void START() {
     orpheus_info->tile_collision = 0u;
     orpheus_info->ow_state = IDLE_DOWN;
     orpheus_info->charming = 0;
-    new_state = GENERIC_IDLE;
-    orpheus_change_state(THIS, IDLE_DOWN);
-    if(tutorial_go == 0 || (current_map == HADES_ZERO && THIS->y > 50u)){
+    //new_state = GENERIC_IDLE;
+    //orpheus_change_state(THIS, IDLE_DOWN);
+    orpheus_change_state(THIS, new_state);//set on go_to_prev..go_to_next...
+    if(tutorial_go == 0 || (current_map == HADES_00 && THIS->y > 50u)){
         SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
         orpheus_change_state(THIS, IDLE_UP);
     }
@@ -227,7 +228,9 @@ void UPDATE() {
                 }
 			}
         }
-        orpheus_change_state(THIS, new_state);
+        if(new_state != orpheus_info->ow_state){
+            orpheus_change_state(THIS, new_state);
+        }
     //BEHAVE
         orpheus_behave();
     //SPRITE COLLISION
