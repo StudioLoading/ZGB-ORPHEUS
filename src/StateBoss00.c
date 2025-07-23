@@ -162,9 +162,10 @@ void START() {
 			}break;
 			case BOSS_AEACUS:{
 				InitScroll(BANK(mapbossaeacus), &mapbossaeacus, coll_t_hades005, coll_s_hades005);
-				Sprite* s_aeacus_wing_left = SpriteManagerAdd(SpriteAeacuswing, 8u, 16u);
-				Sprite* s_aeacus_wing_right = SpriteManagerAdd(SpriteAeacuswing, 42u, 16u);
+				Sprite* s_aeacus_wing_left = SpriteManagerAdd(SpriteAeacuswing, 8u, 18u);
+				Sprite* s_aeacus_wing_right = SpriteManagerAdd(SpriteAeacuswing, 42u, 18u);
 				s_aeacus_wing_right->mirror = V_MIRROR;
+				Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 40u, 72u);
 			}break;
 		}
 	//HUD
@@ -618,20 +619,26 @@ void boss_manage_death_minos() BANKED{
 	}
 }
 
-
 void boss_manage_death_aeacus() BANKED{
+	UINT8 scroll_aea_tile;
+	Sprite* iaeaspr;
+	SPRITEMANAGER_ITERATE(scroll_aea_tile, iaeaspr) {
+		if(iaeaspr->type == SpriteAeacusblade){
+			SpriteManagerRemoveSprite(iaeaspr);
+		}
+	}
 	switch(death_countdown){
 		case 140u:
 			spawn_death_animation(16u, 32u);
 		break;
 		case 130u:
-			spawn_death_animation(20u, 30u);
+			//spawn_death_animation(20u, 30u);
 		break;
 		case 100u:
 			spawn_death_animation(24u, 31u);
 		break;
 		case 80u:
-			spawn_death_animation(28u, 28u);
+			//spawn_death_animation(28u, 28u);
 		break;
 		case 60u:
 			spawn_death_animation(32u, 32u);

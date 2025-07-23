@@ -49,6 +49,8 @@
 #define SPAWNY_HADES004_OUT 13
 #define SPAWNX_BOSSCHARON_IN 9
 #define SPAWNY_BOSSCHARON_IN 15
+#define SPAWNX_BOSSAEACUS_IN 4
+#define SPAWNY_BOSSAEACUS_IN 15
 
 Sprite* s_camera;
 Sprite* s_orpheus;
@@ -835,7 +837,7 @@ void go_to_next_map() BANKED{
 			prev_map = HADES_15;
 			next_map = HADES_16;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 2u;
 			next_state = StateBoss00;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -18;
@@ -879,6 +881,15 @@ void go_to_next_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			next_state = StateHades00;
 			new_state = IDLE_RIGHT;
+		break;
+		case BOSS_AEACUS:
+			prev_map = HADES_20;
+			next_map = HADES_21;
+			orpheus_spawnx = ((UINT16) SPAWNX_BOSSAEACUS_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_BOSSAEACUS_IN << 3);
+			next_state = StateBoss00;
+			new_state = IDLE_UP;
+			a_walk_counter_y = -16;
 		break;
 	}
 	SetState(next_state);

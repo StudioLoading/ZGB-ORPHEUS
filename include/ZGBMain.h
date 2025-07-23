@@ -57,6 +57,7 @@ _SPRITE_DMG(SpriteMinosscale, minosscale)\
 _SPRITE_DMG(SpriteMinosplate, minosplate)\
 _SPRITE_DMG(SpriteMinosbalanceshadow, minosbalanceshadow)\
 _SPRITE_DMG(SpriteAeacuswing, aeacuswing)\
+_SPRITE_DMG(SpriteAeacusblade, aeacusblade)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"
