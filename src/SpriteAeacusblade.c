@@ -26,6 +26,7 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
 void aeacusblade_check_sprite_coll(Sprite* arg_s_aeacusblade) BANKED;
 
 extern void boss_hit() BANKED;
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
 void START() {
     THIS->lim_x = THIS->x;
@@ -84,8 +85,14 @@ void aeacusblade_check_sprite_coll(Sprite* arg_s_aeacusblade) BANKED{
         Sprite* iablspr;
         SPRITEMANAGER_ITERATE(scroll_abl_tile, iablspr) {
             if(CheckCollision(arg_s_aeacusblade, iablspr)) {
-                if(iablspr->type == SpriteAeacuswing){
-                    aeacusblade_change_state(arg_s_aeacusblade, GENERIC_IDLE);
+                switch(iablspr->type){
+                    case SpriteAeacuswing:
+                        aeacusblade_change_state(arg_s_aeacusblade, GENERIC_IDLE);
+                    break;
+                    case SpriteOrpheus:
+                    case SpriteOrpheuslyre:
+                            orpheus_change_state(iablspr, HIT);
+                    break;
                 }
             }
         } 
