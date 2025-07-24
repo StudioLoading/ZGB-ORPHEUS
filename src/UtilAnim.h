@@ -1,6 +1,7 @@
 #include <gb/gb.h>
 
 
+void AnimFire_Aeacus0() BANKED;
 void AnimFire_Minos0() BANKED;
 void AnimFire_0() BANKED;
 void AnimFire_1() BANKED;
@@ -29,3 +30,6 @@ void Anim_Breath_Minos_1() BANKED;
 void Anim_Breath_Minos_2() BANKED;
 void Anim_Hit_Minos_0() BANKED;
 void Anim_Hit_Minos_1() BANKED;
+
+void Anim_Breath_Aeacus_0() BANKED;
+void Anim_Breath_Aeacus_1() BANKED;

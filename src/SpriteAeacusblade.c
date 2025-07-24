@@ -10,16 +10,14 @@
 #include "CircleMath.h"
 
 
-const UINT8 a_aeacusblade_v[] = {1, 1};
 const UINT8 a_aeacusblade_v_blink[] = {4, 1,1,1,0};
-const UINT8 a_aeacusblade_fly[] = {5, 1,1,1,2,3};
-const UINT8 a_aeacusblade_hit[] = {2, 0,1};
 const UINT8 a_aeacusblade_rotating[] = {8, 1,2,3,2,1,2,3,2};
+const UINT8 a_aeacusblade_hidden[] = {1, 0};
 
 extern INT8 boss_hp_current;
+extern UINT8 flag_aeacus_scimitar;
 
 UINT8 old_frame = 10u;
-INT8 aeacusblade_ray = 30;
 
 void aeacusblade_rotation(Sprite* arg_s_aeacusblade) BANKED;
 void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_state) BANKED;
@@ -38,7 +36,9 @@ void START() {
     blade_data->frmskip = 8;
     blade_data->wait = 80u;
     blade_data->vx = 0;
-    blade_data->e_configured = 0;
+    blade_data->e_configured = 0;//H;V;CLOCK;COUNTERCLOCK;
+    flag_aeacus_scimitar = 1u;
+    old_frame = 10u;
     if(_cpu != CGB_TYPE){
         SPRITE_SET_PALETTE(THIS,1);
     }
@@ -54,26 +54,40 @@ void UPDATE() {
             }
         break;
         case GENERIC_WALK:
-            aeacusblade_rotation(THIS);
-            blade_data->frmskip_wait++;
-            if(blade_data->frmskip_wait >= blade_data->frmskip){
-                blade_data->frmskip_wait = 0;
-                UINT8 cos_position = blade_data->wait + 64u;
-                UINT16 new_posx = 64u + ((sine_wave[cos_position]) / 3);
-                UINT16 new_posy = 72u + ((sine_wave[blade_data->wait]) / 3);
-                if(blade_data->vx < 8){
-                    blade_data->vx++;
-                    THIS->x = new_posx;
-                    THIS->y = new_posy;
-                }else{
-                    INT16 vx = (INT16)new_posx - (INT16)THIS->x;
-                    INT16 vy = (INT16)new_posy - (INT16)THIS->y;
-                    UINT8 aeacusblade_coll = TranslateSprite(THIS, vx << delta_time, vy << delta_time);
-                    if(vx || vy){
-                        aeacusblade_check_sprite_coll(THIS);
+            switch(blade_data->e_configured){
+                case 0: break;
+                case 1://HORIZONTAL
+                break;
+                case 2u://VERTICAL
+                break;
+                case 3u://CLOCK
+                case 4u://COUNTERCLOCK
+                    aeacusblade_rotation(THIS);
+                    blade_data->frmskip_wait++;
+                    if(blade_data->frmskip_wait >= blade_data->frmskip){
+                        blade_data->frmskip_wait = 0;
+                        UINT8 cos_position = blade_data->wait + 64u;
+                        UINT16 new_posx = 64u + ((sine_wave[cos_position]) / 3);
+                        UINT16 new_posy = 72u + ((sine_wave[blade_data->wait]) / 3);
+                        if(blade_data->vx < 8){
+                            blade_data->vx++;
+                            THIS->x = new_posx;
+                            THIS->y = new_posy;
+                        }else{
+                            INT16 vx = (INT16)new_posx - (INT16)THIS->x;
+                            INT16 vy = (INT16)new_posy - (INT16)THIS->y;
+                            UINT8 aeacusblade_coll = TranslateSprite(THIS, vx << delta_time, vy << delta_time);
+                            if(vx || vy){
+                                aeacusblade_check_sprite_coll(THIS);
+                            }
+                        }
+                        if(blade_data->e_configured == 3){//CLOCKWISE
+                            blade_data->wait = blade_data->wait + 2 + ((5 - boss_hp_current) << 3);
+                        }else if(blade_data->e_configured == 4){//COUNTERCLOCK
+                            blade_data->wait = blade_data->wait - (2 + ((5 - boss_hp_current) << 3));
+                        }
                     }
-                }
-                blade_data->wait = blade_data->wait + 2 + ((5 - boss_hp_current) << 3);
+                break;
             }
         break;
     }
@@ -87,7 +101,8 @@ void aeacusblade_check_sprite_coll(Sprite* arg_s_aeacusblade) BANKED{
             if(CheckCollision(arg_s_aeacusblade, iablspr)) {
                 switch(iablspr->type){
                     case SpriteAeacuswing:
-                        aeacusblade_change_state(arg_s_aeacusblade, GENERIC_IDLE);
+                        SpriteManagerRemoveSprite(THIS);
+                        //aeacusblade_change_state(arg_s_aeacusblade, JUMP);
                     break;
                     case SpriteOrpheus:
                     case SpriteOrpheuslyre:
@@ -113,8 +128,18 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
         break;
         case GENERIC_WALK:
             arg_s_aeacusblade->mirror = NO_MIRROR;
-            blade_data->wait = 200u;
+            if(blade_data->e_configured == 3){
+                blade_data->wait = 200u;
+            }else if(blade_data->e_configured == 4){
+                blade_data->wait = 160u;
+            }
             SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_rotating, 32u);
+        break;
+        case JUMP:
+            arg_s_aeacusblade->mirror = NO_MIRROR;
+            arg_s_aeacusblade->x = arg_s_aeacusblade->lim_x;
+            arg_s_aeacusblade->y = arg_s_aeacusblade->lim_y;
+            SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_hidden, 1u);
         break;
         case WALK_UP:
         break;
@@ -153,4 +178,5 @@ void aeacusblade_rotation(Sprite* arg_s_aeacusblade) BANKED{
 }
 
 void DESTROY() {
+    flag_aeacus_scimitar = 0u;
 }

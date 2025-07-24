@@ -48,11 +48,15 @@ void UPDATE() {
                 if(THIS->mirror == NO_MIRROR ){
                     THIS->mirror = V_MIRROR;
                     if(fireball_data->e_configured < 2){//if it's not superfireball
-                        SPRITE_SET_PALETTE(THIS,0);
+                        if(_cpu != CGB_TYPE){
+                            SPRITE_SET_PALETTE(THIS,0);
+                        }
                     }
                 }else{
                     THIS->mirror = NO_MIRROR;
-                    SPRITE_SET_PALETTE(THIS,1);
+                    if(_cpu != CGB_TYPE){
+                        SPRITE_SET_PALETTE(THIS,1);
+                    }
                 }
                 fireball_mirroring = 10;
             }

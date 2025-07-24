@@ -259,6 +259,7 @@ void level_common_update_play() BANKED{
 			restart_current_map++;
 			if(restart_current_map >= 250u){
 				orpheus_hp = 4;
+				a_walk_counter_y = 0;
 				restart_current_map = 0u;
 				reset_maps();
 				SetState(StateHades00);

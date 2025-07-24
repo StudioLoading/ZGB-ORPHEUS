@@ -1,0 +1,256 @@
+#include "Banks/SetAutoBank.h"
+
+#include "ZGBMain.h"
+#include "Palette.h"
+#include "Scroll.h"
+#include "Sprite.h"
+#include "SpriteManager.h"
+
+#include "custom_datas.h"
+
+#define AEACUSBODY_WAIT_MAX 200
+#define AEACUSBODY_WAIT_MID 100
+#define AEACUSBODY_WAIT_MIN 40
+
+#define AEACUSBODY_WATCH_MAX 100
+#define AEACUSBODY_WATCH_MID 80
+#define AEACUSBODY_WATCH_MIN 60
+
+const UINT8 a_aeacusbody_hidden[] = {1, 0};
+const UINT8 a_aeacusbody_down[] = {1, 1};
+const UINT8 a_aeacusbody_look[] = {14, 5,4,5,4,3,3,2,2,4,4,3,3,2,2};
+const UINT8 a_aeacusbody_hit[] = {2, 0,1};
+
+UINT8 aeabody_idle_wait = 0u;
+UINT8 aeabody_idle_wait_max = AEACUSBODY_WAIT_MAX;
+
+AEACUS_PHASE aeacus_phase = AEA_IDLE;
+UINT8 flag_aeacus_scimitar = 0u;
+UINT16 saved_orpheus_posx = 0u;
+UINT16 saved_orpheus_posy = 0u;
+UINT8 aeacusbody_walking_frmskip_x_current = 0u;
+UINT8 aeacusbody_walking_frmskip_y_current = 0u;
+INT16 aeacusbody_delta_walking_delta_x = 0;
+INT16 aeacusbody_delta_walking_delta_y = 0;
+UINT8 aeacusbody_arrived = 0u;
+UINT8 aeacusbody_arrived_back = 0u;
+
+extern INT8 boss_hp_current;
+extern Sprite* s_orpheus;
+
+void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_state) BANKED;
+void aea_change_state(Sprite* arg_s_aeacusbody) BANKED;
+UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
+
+/*
+	SPRITE_STATES e_state;
+	UINT8 tile_collision;
+	INT8 vx;
+	INT8 vy;
+    UINT8 wait;
+	UINT8 frmskip_wait;
+	UINT8 e_configured;
+	UINT8 frmskip;
+ */
+void START() {
+    THIS->lim_x = THIS->x;
+    THIS->lim_y = THIS->y;
+    aeacusbody_change_state(THIS, JUMP);
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)THIS->custom_data;
+    aeacusbody_data->e_configured = 1;
+    aeacusbody_data->frmskip_wait = 0;
+    aeacusbody_data->frmskip = 2u;
+    aeacusbody_data->vx = 0;
+    aeacusbody_data->vy = 0;
+    aeacusbody_arrived = 0u;
+    aeacusbody_arrived_back = 0u;
+    aea_change_state(AEA_IDLE);
+}
+
+void UPDATE() {
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)THIS->custom_data;
+    if(aeacusbody_data->e_configured == 0){
+        return;
+    }
+    switch(aeacus_phase){
+        case AEA_IDLE:
+            aeabody_idle_wait++;
+            if(aeabody_idle_wait >= aeabody_idle_wait_max){
+                aea_change_state(THIS);
+            }
+        break;
+        case AEA_BODY_WATCH:
+            aeabody_idle_wait++;
+            if(aeabody_idle_wait >= aeabody_idle_wait_max){
+                aea_change_state(THIS);
+            }
+        break;
+        case AEA_BODY_FLY:{
+            aeacusbody_data->frmskip_wait++;
+            if(aeacusbody_data->frmskip_wait >= aeacusbody_data->frmskip){
+                aeacusbody_data->frmskip_wait = 0;
+                if(aeacusbody_arrived == 0){
+                    aeacusbody_arrived = aeacusbody_move_to_point(THIS, saved_orpheus_posx, saved_orpheus_posy);
+                    if(aeacusbody_arrived){
+                        aeacusbody_data->frmskip = 1;
+                    }
+                }else{
+                    aeacusbody_arrived_back = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                }
+            }
+            if(aeacusbody_arrived && aeacusbody_arrived_back){
+                aea_change_state(THIS);
+            }
+        }break;
+        case AEA_SCIMITAR_HORIZONTAL:
+        case AEA_SCIMITAR_COUNTERCLOCK:
+        case AEA_SCIMITAR_VERTICAL:
+        case AEA_SCIMITAR_CLOCK:
+            if(flag_aeacus_scimitar == 0){
+                aea_change_state(THIS);
+            }
+        break;
+    }
+}
+
+UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED{
+    //arrived??
+    INT16 delta_to_final_x = (INT16)aea_s_aeacusbody->x - (INT16)arg_final_posx;
+    if(delta_to_final_x < 0){
+        delta_to_final_x = -delta_to_final_x;
+    }
+    INT16 delta_to_final_y = (INT16)aea_s_aeacusbody->y - (INT16)arg_final_posy;
+    if(delta_to_final_y < 0){
+        delta_to_final_y = -delta_to_final_y;
+    }
+    if(delta_to_final_x < 3 && delta_to_final_y < 3){
+        return 1u;
+    }
+    UINT8 result_arrived = 0u;
+    INT8 delta_walking_delta_x_verse = 1;
+    if(aea_s_aeacusbody->x > arg_final_posx){
+        delta_walking_delta_x_verse = -1;
+    }
+    INT8 delta_walking_delta_y_verse = 1;
+    if(aea_s_aeacusbody->y > arg_final_posy){
+        delta_walking_delta_y_verse = -1;
+    }
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)aea_s_aeacusbody->custom_data;
+    aeacusbody_data->vx = 1 * delta_walking_delta_x_verse;
+    aeacusbody_data->vy = 1 * delta_walking_delta_y_verse;
+    INT8 actual_aeabody_vx = aeacusbody_data->vx;
+    INT8 actual_aeabody_vy = aeacusbody_data->vy;
+    INT8 delta_factor_y = 0;
+    INT8 delta_factor_x = 0;
+    if(aeacusbody_delta_walking_delta_x > aeacusbody_delta_walking_delta_y){
+        delta_factor_y = aeacusbody_delta_walking_delta_x / aeacusbody_delta_walking_delta_y;
+        INT16 r_y = aeacusbody_delta_walking_delta_x % aeacusbody_delta_walking_delta_y;
+        if(r_y > (aeacusbody_delta_walking_delta_y >> 1)){
+            delta_factor_y += delta_factor_y;
+        }
+    }else{
+        delta_factor_x = aeacusbody_delta_walking_delta_y / aeacusbody_delta_walking_delta_x;
+        INT16 r_x = aeacusbody_delta_walking_delta_y % aeacusbody_delta_walking_delta_x;
+        if(r_x > (aeacusbody_delta_walking_delta_x >> 1)){
+            delta_factor_x += delta_factor_x;
+        }
+    }
+    //e scopro ogni quanti x deve fare una y
+    INT8 cerberus_walking_frmskip_x_max = delta_factor_x;
+    INT8 cerberus_walking_frmskip_y_max = delta_factor_y;
+    if(delta_factor_y < 0){
+        cerberus_walking_frmskip_y_max = -delta_factor_y;
+    }
+    if(delta_factor_x < 0){
+        cerberus_walking_frmskip_x_max = -delta_factor_x;    
+    }
+    if(cerberus_walking_frmskip_x_max > 0 && (INT8)aeacusbody_walking_frmskip_x_current < cerberus_walking_frmskip_x_max){//ecco che devo fare una y
+        actual_aeabody_vx = 0;
+    }
+    if(cerberus_walking_frmskip_y_max > 0 && (INT8)aeacusbody_walking_frmskip_y_current < cerberus_walking_frmskip_y_max){
+        actual_aeabody_vy = 0;
+    }
+    if((INT8)aeacusbody_walking_frmskip_x_current == cerberus_walking_frmskip_x_max){
+        aeacusbody_walking_frmskip_x_current = 0;
+    }
+    if((INT8)aeacusbody_walking_frmskip_y_current == cerberus_walking_frmskip_y_max){
+        aeacusbody_walking_frmskip_y_current = 0;
+    }
+    aeacusbody_walking_frmskip_x_current++;
+    aeacusbody_walking_frmskip_y_current++;
+    if(actual_aeabody_vx != 0 || actual_aeabody_vy != 0){
+        UINT8 aeacusbody_coll_tile = TranslateSprite(aea_s_aeacusbody, actual_aeabody_vx << delta_time, actual_aeabody_vy << delta_time);
+        if(aeacusbody_coll_tile){
+            aea_s_aeacusbody->x += actual_aeabody_vx;
+            aea_s_aeacusbody->y += actual_aeabody_vy;
+        }
+    }
+    return result_arrived;
+}
+
+void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
+    AEACUS_PHASE aea_new_phase = AEA_IDLE;
+    switch(boss_hp_current){
+        case 5:
+            switch(aeacus_phase){
+                case AEA_IDLE:{
+                    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 34u, 24u);
+                    struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
+                    blade_data->e_configured = 3;
+                    aea_new_phase = AEA_SCIMITAR_CLOCK;
+                }break;
+                case AEA_SCIMITAR_CLOCK:{
+                    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 30u, 28u);
+                    struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
+                    blade_data->e_configured = 4;
+                    aea_new_phase = AEA_SCIMITAR_COUNTERCLOCK;
+                }break;
+                case AEA_SCIMITAR_COUNTERCLOCK:{
+                    aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
+                    aeabody_idle_wait = 0;
+                    aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
+                    saved_orpheus_posx = s_orpheus->x + 4;
+                    saved_orpheus_posy = s_orpheus->y + 8;
+                    aea_new_phase = AEA_BODY_WATCH;
+                }break;
+                case AEA_BODY_WATCH:{
+                    aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
+                    aeabody_idle_wait = 0;
+                    aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
+                    aea_new_phase = AEA_BODY_FLY;
+                }break;
+                case AEA_BODY_FLY:{
+                    aeacusbody_arrived = 0u;
+                    aeacusbody_arrived_back = 0u;
+                    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
+                    aeacusbody_data->frmskip = 4u;
+                }break;
+            }
+        break;
+    }
+    aeacus_phase = aea_new_phase;
+}
+
+void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_state) BANKED{
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)s_arg_aeacusbody->custom_data;
+    if(aeacusbody_data->e_state == arg_new_state){
+        return;
+    }
+    switch(arg_new_state){
+        case JUMP:
+            s_arg_aeacusbody->x = s_arg_aeacusbody->lim_x;
+            s_arg_aeacusbody->y = s_arg_aeacusbody->lim_y;
+            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_hidden, 1);
+        break;
+        case PREATTACK_DOWN:
+            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_look, 8u);
+        break;
+        case ATTACK:
+            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_down, 1u);
+        break;
+    }
+    aeacusbody_data->e_state = arg_new_state;
+}
+
+void DESTROY() {
+}

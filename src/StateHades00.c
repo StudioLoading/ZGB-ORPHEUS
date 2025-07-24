@@ -154,6 +154,30 @@ void START() {
 				case HADES_10:{
 				}break;
 				//BOSS CERBERUS
+				case HADES_11:{
+				}break;
+				case HADES_12:{
+				}break;
+				case HADES_13:{
+				}break;
+				case HADES_14:{
+				}break;
+				case HADES_15:{
+				}break;
+				//BOSS MINOS
+				case HADES_16:{
+				}break;
+				case HADES_17:{
+				}break;
+				case HADES_18:{
+				}break;
+				case HADES_19:{
+				}break;
+				case HADES_20:{
+				}break;
+				//BOSS AEACUS
+				case HADES_21:{
+				}break;
 			}
 		}else{
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);

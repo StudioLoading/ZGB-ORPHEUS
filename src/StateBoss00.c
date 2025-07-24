@@ -47,6 +47,9 @@ Sprite* s_charon = 0;
 Sprite* s_cerberus_headleft = 0;
 Sprite* s_cerberus_headright = 0;
 Sprite* s_minosscale = 0;
+Sprite* s_aeacus_wing_left = 0;
+Sprite* s_aeacus_wing_right = 0;
+Sprite* s_awacus_body = 0;
 UINT16 end_demo_counter = 600u;
 UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play; 4 boss dead
 UINT16 spawn_common_wait = 0u;
@@ -162,10 +165,12 @@ void START() {
 			}break;
 			case BOSS_AEACUS:{
 				InitScroll(BANK(mapbossaeacus), &mapbossaeacus, coll_t_hades005, coll_s_hades005);
-				Sprite* s_aeacus_wing_left = SpriteManagerAdd(SpriteAeacuswing, 8u, 18u);
-				Sprite* s_aeacus_wing_right = SpriteManagerAdd(SpriteAeacuswing, 42u, 18u);
-				s_aeacus_wing_right->mirror = V_MIRROR;
-				Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 40u, 72u);
+				s_aeacus_wing_left = SpriteManagerAdd(SpriteAeacuswing, 8u, 18u);
+				s_aeacus_wing_right = SpriteManagerAdd(SpriteAeacuswing, 40u, 18u);
+				s_awacus_body = SpriteManagerAdd(SpriteAeacusbody, 32u, 18u);			    struct EnemyInfo* aeacuswing_left_data = (struct EnemyInfo*)s_aeacus_wing_left->custom_data;
+				aeacuswing_left_data->e_configured = 1u;
+				struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
+				aeacuswing_right_data->e_configured = 2u;
 			}break;
 		}
 	//HUD
@@ -356,6 +361,37 @@ void UPDATE() {
 						Anim_Breath_Minos_2();
 					}
 				}
+			break;			
+			case BOSS_AEACUS:
+				boss_breath_counter++;
+				if(animboss_hit_flag == 0 && boss_hp_current && boss_breath_counter >= boss_breath_counter_max){
+					boss_breath_counter = 0;
+					boss_update_breath_verse_and_max();
+					switch(boss_breath_flag){
+						case 0u:
+							boss_breath_flag = 1u;
+						break;
+						case 1u:
+							boss_breath_flag = 0u;
+						break;
+					}
+					//struct EnemyInfo* minosscale_data = (struct EnemyInfo*) s_minosscale->custom_data;
+					//se minosscale GENERIC_IDLE molleggia
+					//if(minosscale_data->e_state == GENERIC_IDLE){
+						switch(bossminos_breath_flag){
+							case 0u: //goes down
+								Anim_Breath_Aeacus_1();
+								bossminos_breath_flag = 1u;
+							break;
+							case 1u: //back up
+								Anim_Breath_Aeacus_0();
+								bossminos_breath_flag = 0u;
+							break;
+						}
+					//}else{//altrimenti spalanca gli occhi
+					//	Anim_Breath_Minos_2();
+					//}
+				}
 			break;
 		}
 	
@@ -426,13 +462,18 @@ void UPDATE() {
 		}
 	*/
 	//ANIM FIRE
-		if(current_map == BOSS_MINOS){
+		if(current_map == BOSS_MINOS || current_map == BOSS_AEACUS){
 			animfire_counter++;
 			if(animfire_counter >= ANIMFIRE_COUNTER_MAX){
 				animfire_counter = 0u;
 			}
 			switch(animfire_counter){
-				case 0u: AnimFire_Minos0();
+				case 0u:
+					if(current_map == BOSS_MINOS){
+						AnimFire_Minos0();
+					}else if(current_map == BOSS_AEACUS){
+						AnimFire_Aeacus0();
+					}
 				break;
 				case 8u: AnimFire_1();
 				break;
