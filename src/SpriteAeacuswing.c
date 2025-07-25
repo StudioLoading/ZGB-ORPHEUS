@@ -70,7 +70,7 @@ void UPDATE() {
             }
         }break;
         case 4u:{//right closed
-            THIS->x = s_awacus_body->x - 2;
+            THIS->x = s_awacus_body->x - 5;
             THIS->y = s_awacus_body->y + 9u;
             THIS->mirror = H_MIRROR;
             SetSpriteAnim(THIS, a_aeacuswing_covered, 1u);

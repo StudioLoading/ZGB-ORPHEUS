@@ -9,8 +9,14 @@
 #include "custom_datas.h"
 #include "CircleMath.h"
 
+#define SCIMITAR_H_POSX 17
+#define SCIMITAR_H_POSY 6
+#define SCIMITAR_V_POSX 3
+#define SCIMITAR_V_POSY 14
 
-const UINT8 a_aeacusblade_v_blink[] = {4, 1,1,1,0};
+
+const UINT8 a_aeacusblade_v[] = {1, 1};
+const UINT8 a_aeacusblade_h[] = {1, 3};
 const UINT8 a_aeacusblade_rotating[] = {8, 1,2,3,2,1,2,3,2};
 const UINT8 a_aeacusblade_hidden[] = {1, 0};
 
@@ -26,6 +32,7 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
 void aeacusblade_check_sprite_coll(Sprite* arg_s_aeacusblade) BANKED;
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
 
 void START() {
     THIS->lim_x = THIS->x;
@@ -37,6 +44,7 @@ void START() {
     blade_data->frmskip = 8;
     blade_data->wait = 80u;
     blade_data->vx = 0;
+    blade_data->vy = 0;
     blade_data->e_configured = 0;//H;V;CLOCK;COUNTERCLOCK;
     flag_aeacus_scimitar = 1u;
     old_frame = 10u;
@@ -57,10 +65,30 @@ void UPDATE() {
         case GENERIC_WALK:
             switch(blade_data->e_configured){
                 case 0: break;
-                case 1://HORIZONTAL
-                break;
-                case 2u://VERTICAL
-                break;
+                case 1:{//HORIZONTAL
+                    if(blade_data->vy == 0){
+                        blade_data->vy = aeacusbody_move_to_point(THIS, SCIMITAR_H_POSX << 3, SCIMITAR_H_POSY << 3);
+                    }else{
+                        aeacusblade_rotation(THIS);
+                        SetSpriteAnim(THIS, a_aeacusblade_rotating, 32u);
+                        UINT8 arrived = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                        if(arrived){
+                            SpriteManagerRemoveSprite(THIS);
+                        }
+                    }
+                }break;
+                case 2u:{//VERTICAL
+                    if(blade_data->vy == 0){
+                        blade_data->vy = aeacusbody_move_to_point(THIS, SCIMITAR_V_POSX << 3, SCIMITAR_V_POSY << 3);
+                    }else{
+                        SetSpriteAnim(THIS, a_aeacusblade_rotating, 32u);
+                        aeacusblade_rotation(THIS);
+                        UINT8 arrived = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                        if(arrived){
+                            SpriteManagerRemoveSprite(THIS);
+                        }
+                    }
+                }break;
                 case 3u://CLOCK
                 case 4u://COUNTERCLOCK
                     aeacusblade_rotation(THIS);
@@ -128,12 +156,22 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
         break;
         case GENERIC_WALK:
             arg_s_aeacusblade->mirror = NO_MIRROR;
-            if(blade_data->e_configured == 3){
-                blade_data->wait = 200u;
-            }else if(blade_data->e_configured == 4){
-                blade_data->wait = 160u;
+            switch(blade_data->e_configured){
+                case 1:
+                    SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_h, 1u);
+                break;
+                case 2:
+                    arg_s_aeacusblade->mirror = HV_MIRROR;
+                    SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_v, 1u);
+                break;
+                case 3:
+                    blade_data->wait = 200u;
+                    SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_rotating, 32u);
+                case 4:
+                    blade_data->wait = 160u;
+                    SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_rotating, 32u);
+                break;
             }
-            SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_rotating, 32u);
             struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
             aeacuswing_right_data->wait = 0;
             struct EnemyInfo* aeacuswing_left_data = (struct EnemyInfo*)s_aeacus_wing_left->custom_data;
