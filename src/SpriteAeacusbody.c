@@ -20,6 +20,7 @@ const UINT8 a_aeacusbody_hidden[] = {1, 0};
 const UINT8 a_aeacusbody_down[] = {1, 1};
 const UINT8 a_aeacusbody_look[] = {14, 5,4,5,4,3,3,2,2,4,4,3,3,2,2};
 const UINT8 a_aeacusbody_hit[] = {2, 0,1};
+const UINT8 a_aeacusbody_attack[] = {2, 5,1};
 
 UINT8 aeabody_idle_wait = 0u;
 UINT8 aeabody_idle_wait_max = AEACUSBODY_WAIT_MAX;
@@ -37,11 +38,18 @@ UINT8 aeacusbody_arrived_back = 0u;
 
 extern INT8 boss_hp_current;
 extern Sprite* s_orpheus;
+extern Sprite* s_aeacus_wing_left;
+extern Sprite* s_aeacus_wing_right;
 
 void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_state) BANKED;
-void aea_change_state(Sprite* arg_s_aeacusbody) BANKED;
 UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
 
+void aea_change_state(Sprite* arg_s_aeacusbody) BANKED;
+AEACUS_PHASE aea_move_to_watch(Sprite* arg_s_aeacusbody) BANKED;
+AEACUS_PHASE aea_move_to_scimitar_clock( Sprite* arg_s_aeacusbody) BANKED;
+AEACUS_PHASE aea_move_to_scimitar_counterclock( Sprite* arg_s_aeacusbody) BANKED;
+AEACUS_PHASE aea_move_to_fly(Sprite* arg_s_aeacusbody) BANKED;
+AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED;
 /*
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;
@@ -55,16 +63,16 @@ UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, 
 void START() {
     THIS->lim_x = THIS->x;
     THIS->lim_y = THIS->y;
-    aeacusbody_change_state(THIS, JUMP);
     struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)THIS->custom_data;
     aeacusbody_data->e_configured = 1;
+    aeacusbody_data->e_state = GENERIC_IDLE;
     aeacusbody_data->frmskip_wait = 0;
     aeacusbody_data->frmskip = 2u;
     aeacusbody_data->vx = 0;
     aeacusbody_data->vy = 0;
     aeacusbody_arrived = 0u;
     aeacusbody_arrived_back = 0u;
-    aea_change_state(AEA_IDLE);
+    aeacusbody_change_state(THIS, JUMP);
 }
 
 void UPDATE() {
@@ -194,41 +202,71 @@ void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
         case 5:
             switch(aeacus_phase){
                 case AEA_IDLE:{
-                    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 34u, 24u);
-                    struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
-                    blade_data->e_configured = 3;
-                    aea_new_phase = AEA_SCIMITAR_CLOCK;
+                    aea_new_phase = aea_move_to_scimitar_clock(arg_s_aeacusbody);
                 }break;
                 case AEA_SCIMITAR_CLOCK:{
-                    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 30u, 28u);
-                    struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
-                    blade_data->e_configured = 4;
-                    aea_new_phase = AEA_SCIMITAR_COUNTERCLOCK;
+                    aea_new_phase = aea_move_to_scimitar_counterclock(arg_s_aeacusbody);
                 }break;
                 case AEA_SCIMITAR_COUNTERCLOCK:{
-                    aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
-                    aeabody_idle_wait = 0;
-                    aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
-                    saved_orpheus_posx = s_orpheus->x + 4;
-                    saved_orpheus_posy = s_orpheus->y + 8;
-                    aea_new_phase = AEA_BODY_WATCH;
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
                 }break;
                 case AEA_BODY_WATCH:{
-                    aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
-                    aeabody_idle_wait = 0;
-                    aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
-                    aea_new_phase = AEA_BODY_FLY;
+                    aea_new_phase = aea_move_to_fly(arg_s_aeacusbody);
                 }break;
                 case AEA_BODY_FLY:{
-                    aeacusbody_arrived = 0u;
-                    aeacusbody_arrived_back = 0u;
-                    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
-                    aeacusbody_data->frmskip = 4u;
+                    aea_new_phase = aea_move_to_idle(arg_s_aeacusbody);
                 }break;
             }
         break;
     }
     aeacus_phase = aea_new_phase;
+}
+
+AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED{
+    aeacusbody_arrived = 0u;
+    aeacusbody_arrived_back = 0u;
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
+    aeacusbody_data->frmskip = 4u;
+    aeacusbody_change_state(arg_s_aeacusbody, JUMP);
+    return AEA_IDLE;
+}
+
+AEACUS_PHASE aea_move_to_fly(Sprite* arg_s_aeacusbody) BANKED{
+    aeacusbody_change_state(arg_s_aeacusbody, ATTACK);
+    aeabody_idle_wait = 0;
+    aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
+    return AEA_BODY_FLY;
+}
+
+AEACUS_PHASE aea_move_to_watch(Sprite* arg_s_aeacusbody) BANKED{
+    aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
+    aeabody_idle_wait = 0;
+    aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
+    saved_orpheus_posx = s_orpheus->x + 4;
+    saved_orpheus_posy = s_orpheus->y - 4;
+    return AEA_BODY_WATCH;
+}
+
+AEACUS_PHASE aea_move_to_scimitar_clock(Sprite* arg_s_aeacusbody) BANKED{
+    struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
+    aeacuswing_right_data->wait = 1;
+    aeacuswing_right_data->e_configured = 4u;
+    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 35u, 24u);
+    s_aeacus_blade->mirror = H_MIRROR;
+    struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
+    blade_data->e_configured = 3;
+    return AEA_SCIMITAR_CLOCK;
+}
+
+AEACUS_PHASE aea_move_to_scimitar_counterclock( Sprite* arg_s_aeacusbody) BANKED{
+    struct EnemyInfo* aeacuswing_left_data = (struct EnemyInfo*)s_aeacus_wing_left->custom_data;
+    aeacuswing_left_data->wait = 1;
+    aeacuswing_left_data->e_configured = 3u;
+    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 31u, 29u);
+    s_aeacus_blade->mirror = H_MIRROR;
+    struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
+    blade_data->e_configured = 4;
+    return AEA_SCIMITAR_COUNTERCLOCK;
 }
 
 void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_state) BANKED{
@@ -240,13 +278,13 @@ void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_sta
         case JUMP:
             s_arg_aeacusbody->x = s_arg_aeacusbody->lim_x;
             s_arg_aeacusbody->y = s_arg_aeacusbody->lim_y;
-            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_hidden, 1);
+            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_down, 1);
         break;
         case PREATTACK_DOWN:
             SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_look, 8u);
         break;
         case ATTACK:
-            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_down, 1u);
+            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_attack, 64u);
         break;
     }
     aeacusbody_data->e_state = arg_new_state;

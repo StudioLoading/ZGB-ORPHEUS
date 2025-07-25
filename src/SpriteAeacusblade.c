@@ -16,6 +16,8 @@ const UINT8 a_aeacusblade_hidden[] = {1, 0};
 
 extern INT8 boss_hp_current;
 extern UINT8 flag_aeacus_scimitar;
+extern Sprite* s_aeacus_wing_left;
+extern Sprite* s_aeacus_wing_right;
 
 UINT8 old_frame = 10u;
 
@@ -29,7 +31,7 @@ extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_st
 void START() {
     THIS->lim_x = THIS->x;
     THIS->lim_y = THIS->y;
-    SetSpriteAnim(THIS, a_aeacusblade_v_blink, 12u);
+    SetSpriteAnim(THIS, a_aeacusblade_hidden, 12u);
     struct EnemyInfo* blade_data = (struct EnemyInfo*) THIS->custom_data;
     blade_data->e_state = GENERIC_IDLE;
     blade_data->frmskip_wait = 0;
@@ -82,9 +84,9 @@ void UPDATE() {
                             }
                         }
                         if(blade_data->e_configured == 3){//CLOCKWISE
-                            blade_data->wait = blade_data->wait + 2 + ((5 - boss_hp_current) << 3);
+                            blade_data->wait = blade_data->wait + 5 + ((5 - boss_hp_current) << 3);
                         }else if(blade_data->e_configured == 4){//COUNTERCLOCK
-                            blade_data->wait = blade_data->wait - (2 + ((5 - boss_hp_current) << 3));
+                            blade_data->wait = blade_data->wait - (5 + ((5 - boss_hp_current) << 3));
                         }
                     }
                 break;
@@ -121,7 +123,7 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
             arg_s_aeacusblade->mirror = NO_MIRROR;
             arg_s_aeacusblade->x = arg_s_aeacusblade->lim_x;
             arg_s_aeacusblade->y = arg_s_aeacusblade->lim_y;
-            SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_v_blink, 12u);
+            SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_hidden, 12u);
             blade_data->wait = 80u;
             blade_data->vx = 0;
             boss_hit();
@@ -134,6 +136,10 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
                 blade_data->wait = 160u;
             }
             SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_rotating, 32u);
+            struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
+            aeacuswing_right_data->wait = 0;
+            struct EnemyInfo* aeacuswing_left_data = (struct EnemyInfo*)s_aeacus_wing_left->custom_data;
+            aeacuswing_left_data->wait = 0;
         break;
         case JUMP:
             arg_s_aeacusblade->mirror = NO_MIRROR;
