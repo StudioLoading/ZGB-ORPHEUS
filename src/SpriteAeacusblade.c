@@ -25,7 +25,6 @@ void aeacusblade_rotation(Sprite* arg_s_aeacusblade) BANKED;
 void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_state) BANKED;
 void aeacusblade_check_sprite_coll(Sprite* arg_s_aeacusblade) BANKED;
 
-extern void boss_hit() BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
 void START() {
@@ -126,7 +125,6 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
             SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_hidden, 12u);
             blade_data->wait = 80u;
             blade_data->vx = 0;
-            boss_hit();
         break;
         case GENERIC_WALK:
             arg_s_aeacusblade->mirror = NO_MIRROR;
@@ -153,6 +151,18 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
         break;
     }   
     blade_data->e_state = arg_new_state;
+    //CHECK COLLISION
+    
+    //SPRITE COLLISION
+        UINT8 scroll_abl_tile;
+        Sprite* iablspr;
+        SPRITEMANAGER_ITERATE(scroll_abl_tile, iablspr) {
+            if(CheckCollision(THIS, iablspr)) {
+                if(iablspr->type == SpriteOrpheus){
+                    orpheus_change_state(iablspr, HIT);
+                }
+            }
+        }
 }
 
 void aeacusblade_rotation(Sprite* arg_s_aeacusblade) BANKED{

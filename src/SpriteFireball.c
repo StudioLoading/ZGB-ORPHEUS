@@ -15,10 +15,16 @@ INT8 fireball_mirroring = 10;
 UINT8 spawned_ball = 0u;
 
 extern UINT8 is_skeletoncerberus_in_river;
+extern AEACUS_PHASE aeacus_phase;
+extern Sprite* s_awacus_body;
+extern AEACUS_PHASE aeacus_phase;
 
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
+extern UINT8 is_boss(UINT8 arg_sprite_type) BANKED;
+extern void boss_hit() BANKED;
+extern AEACUS_PHASE aea_move_to_hit(Sprite* arg_s_aeacusbody) BANKED;
 
 void START() {
     THIS->lim_x = 10u;
@@ -72,6 +78,12 @@ void UPDATE() {
                     if(CheckCollision(THIS, ifbspr)) {
                         if(ifbspr->type == SpriteOrpheus){
                             orpheus_change_state(ifbspr, HIT);
+                        }else if(is_boss(ifbspr->type)){
+                            if(ifbspr->type == SpriteAeacusbody){
+                                aeacus_phase = aea_move_to_hit(s_awacus_body);
+                            }else{
+                                boss_hit();
+                            }
                         }else if(is_enemy(ifbspr->type)){
                             if(ifbspr->type == SpriteSkeletoncerberus && is_skeletoncerberus_in_river == 0)
                             e_destroy(ifbspr);

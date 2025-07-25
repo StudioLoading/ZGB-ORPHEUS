@@ -23,6 +23,7 @@ void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 void spawn_ball(UINT8 arg_type, UINT16 arg_spawnball_x, UINT16 arg_spawnball_y, UINT8 arg_direction) BANKED;
 void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
+UINT8 is_boss(UINT8 arg_sprite_type) BANKED;
 UINT8 is_current_map_on_boss() BANKED;
 
 void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED{
@@ -98,6 +99,20 @@ UINT8 is_enemy(UINT8 arg_sprite_type) BANKED{
         case SpriteRevenant:
         case SpriteMinion:
         case SpriteMinosscale:
+        case SpriteAeacusbody:
+        case SpriteAeacusblade:
+            result = 1u;
+        break;
+    }
+    return result;
+}
+
+UINT8 is_boss(UINT8 arg_sprite_type) BANKED{
+    UINT8 result = 0u;
+    switch(arg_sprite_type){
+        case SpriteCerberushead:
+        case SpriteMinosscale:
+        case SpriteAeacusbody:
             result = 1u;
         break;
     }

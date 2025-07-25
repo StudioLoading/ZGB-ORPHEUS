@@ -182,6 +182,7 @@ typedef enum{
     AEA_SCIMITAR_COUNTERCLOCK,
     AEA_BODY_WATCH,
     AEA_BODY_FLY,
+	AEA_HIT
 }AEACUS_PHASE;
 
 #endif

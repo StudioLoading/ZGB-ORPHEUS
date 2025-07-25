@@ -41,7 +41,7 @@ extern Sprite* s_orpheus;
 extern Sprite* s_aeacus_wing_left;
 extern Sprite* s_aeacus_wing_right;
 
-void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_state) BANKED;
+void aeacusbody_change_state(Sprite* arg_s_aeacusbody, SPRITE_STATES arg_new_state) BANKED;
 UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
 
 void aea_change_state(Sprite* arg_s_aeacusbody) BANKED;
@@ -50,6 +50,10 @@ AEACUS_PHASE aea_move_to_scimitar_clock( Sprite* arg_s_aeacusbody) BANKED;
 AEACUS_PHASE aea_move_to_scimitar_counterclock( Sprite* arg_s_aeacusbody) BANKED;
 AEACUS_PHASE aea_move_to_fly(Sprite* arg_s_aeacusbody) BANKED;
 AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED;
+AEACUS_PHASE aea_move_to_hit(Sprite* arg_s_aeacusbody) BANKED;
+
+extern void boss_hit() BANKED;
+
 /*
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;
@@ -116,6 +120,15 @@ void UPDATE() {
         case AEA_SCIMITAR_CLOCK:
             if(flag_aeacus_scimitar == 0){
                 aea_change_state(THIS);
+            }
+        break;
+        case AEA_HIT:
+            aeabody_idle_wait++;
+            if(aeabody_idle_wait > aeabody_idle_wait_max){
+                //force going back
+                aeacusbody_arrived = 1;
+                aeacusbody_arrived_back = 0;
+                aeacus_phase = aea_move_to_fly(THIS);
             }
         break;
     }
@@ -222,6 +235,15 @@ void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
     aeacus_phase = aea_new_phase;
 }
 
+AEACUS_PHASE aea_move_to_hit(Sprite* arg_s_aeacusbody) BANKED{
+    if(aeacus_phase == AEA_HIT){ return AEA_HIT; }
+    boss_hit();
+    aeabody_idle_wait = 0u;
+    aeabody_idle_wait_max = 40;
+    aeacusbody_change_state(arg_s_aeacusbody, HIT);
+    return AEA_HIT;
+}
+
 AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED{
     aeacusbody_arrived = 0u;
     aeacusbody_arrived_back = 0u;
@@ -269,22 +291,25 @@ AEACUS_PHASE aea_move_to_scimitar_counterclock( Sprite* arg_s_aeacusbody) BANKED
     return AEA_SCIMITAR_COUNTERCLOCK;
 }
 
-void aeacusbody_change_state(Sprite* s_arg_aeacusbody, SPRITE_STATES arg_new_state) BANKED{
-    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)s_arg_aeacusbody->custom_data;
+void aeacusbody_change_state(Sprite* arg_s_aeacusbody, SPRITE_STATES arg_new_state) BANKED{
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
     if(aeacusbody_data->e_state == arg_new_state){
         return;
     }
     switch(arg_new_state){
         case JUMP:
-            s_arg_aeacusbody->x = s_arg_aeacusbody->lim_x;
-            s_arg_aeacusbody->y = s_arg_aeacusbody->lim_y;
-            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_down, 1);
+            arg_s_aeacusbody->x = arg_s_aeacusbody->lim_x;
+            arg_s_aeacusbody->y = arg_s_aeacusbody->lim_y;
+            SetSpriteAnim(arg_s_aeacusbody, a_aeacusbody_down, 1);
         break;
         case PREATTACK_DOWN:
-            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_look, 8u);
+            SetSpriteAnim(arg_s_aeacusbody, a_aeacusbody_look, 8u);
         break;
         case ATTACK:
-            SetSpriteAnim(s_arg_aeacusbody, a_aeacusbody_attack, 64u);
+            SetSpriteAnim(arg_s_aeacusbody, a_aeacusbody_attack, 64u);
+        break;
+        case HIT:
+            SetSpriteAnim(arg_s_aeacusbody, a_aeacusbody_hit, 40u);
         break;
     }
     aeacusbody_data->e_state = arg_new_state;
