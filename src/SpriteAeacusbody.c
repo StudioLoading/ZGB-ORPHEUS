@@ -106,7 +106,7 @@ void UPDATE() {
                 if(aeacusbody_arrived == 0){
                     aeacusbody_arrived = aeacusbody_move_to_point(THIS, saved_orpheus_posx, saved_orpheus_posy);
                     if(aeacusbody_arrived){
-                        aeacusbody_data->frmskip = 1;
+                        aeacusbody_data->frmskip = 0;
                     }
                 }else{
                     aeacusbody_arrived_back = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
@@ -130,6 +130,7 @@ void UPDATE() {
                 //force going back
                 aeacusbody_arrived = 1;
                 aeacusbody_arrived_back = 0;
+                aeacusbody_data->e_configured = 1;
                 aeacus_phase = aea_move_to_fly(THIS);
             }
         break;
@@ -205,6 +206,7 @@ UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, 
 
 void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
     AEACUS_PHASE aea_new_phase = AEA_IDLE;
+    struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
     switch(boss_hp_current){
         case 5:
             switch(aeacus_phase){
@@ -244,6 +246,87 @@ void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
                 }break;
             }
         break;
+        case 3:{
+            switch(aeacus_phase){
+                case AEA_IDLE:{
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                }break;
+                case AEA_BODY_WATCH:{
+                    aea_new_phase = aea_move_to_fly(arg_s_aeacusbody);
+                }break;
+                case AEA_BODY_FLY:{
+                    aeacusbody_data->e_configured++;
+                    switch(aeacusbody_data->e_configured){
+                        case 2:
+                            aea_new_phase = aea_move_to_scimitar_clock(arg_s_aeacusbody);
+                        break;
+                        case 3:
+                            aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                        break;
+                        default:
+                            aeacusbody_data->e_configured = 1;
+                            aea_new_phase = aea_move_to_idle(arg_s_aeacusbody);
+                        break;
+                    }
+                }break;
+                case AEA_SCIMITAR_CLOCK:{
+                    aea_new_phase = aea_move_to_scimitar_h(arg_s_aeacusbody);
+                }break;
+                case AEA_SCIMITAR_HORIZONTAL:{
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                }break;
+            }
+        }break;
+        case 2:{
+            switch(aeacus_phase){
+                case AEA_IDLE:{
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                }break;
+                case AEA_BODY_WATCH:{
+                    aea_new_phase = aea_move_to_fly(arg_s_aeacusbody);
+                }break;                
+                case AEA_BODY_FLY:{
+                    aeacusbody_data->e_configured++;
+                    switch(aeacusbody_data->e_configured){
+                        case 2:
+                            aea_new_phase = aea_move_to_scimitar_clock(arg_s_aeacusbody);
+                        break;
+                        case 3:
+                            aea_new_phase = aea_move_to_scimitar_counterclock(arg_s_aeacusbody);
+                        break;
+                        case 4:
+                            aea_new_phase = aea_move_to_scimitar_h(arg_s_aeacusbody);
+                        break;
+                        case 5:
+                            aea_new_phase = aea_move_to_scimitar_v(arg_s_aeacusbody);
+                        break;
+                        default:
+                            aeacusbody_data->e_configured = 1;
+                            aea_new_phase = aea_move_to_idle(arg_s_aeacusbody);
+                        break;
+                    }
+                }break;
+                case AEA_SCIMITAR_HORIZONTAL:
+                case AEA_SCIMITAR_VERTICAL:
+                case AEA_SCIMITAR_CLOCK:
+                case AEA_SCIMITAR_COUNTERCLOCK:{
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                }break;
+            }
+        }break;
+        case 1:{
+            switch(aeacus_phase){
+                case AEA_IDLE:{
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                }break;
+                case AEA_BODY_WATCH:{
+                    aea_new_phase = aea_move_to_fly(arg_s_aeacusbody);
+                }break;                
+                case AEA_BODY_FLY:{
+                    aea_new_phase = aea_move_to_idle(arg_s_aeacusbody);
+                }break;
+            }
+        }break;
     }
     aeacus_phase = aea_new_phase;
 }
@@ -261,7 +344,7 @@ AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED{
     aeacusbody_arrived = 0u;
     aeacusbody_arrived_back = 0u;
     struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
-    aeacusbody_data->frmskip = 4u;
+    aeacusbody_data->frmskip = boss_hp_current - 1;
     aeacusbody_change_state(arg_s_aeacusbody, JUMP);
     return AEA_IDLE;
 }
@@ -275,6 +358,8 @@ AEACUS_PHASE aea_move_to_fly(Sprite* arg_s_aeacusbody) BANKED{
 
 AEACUS_PHASE aea_move_to_watch(Sprite* arg_s_aeacusbody) BANKED{
     aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
+    aeacusbody_arrived = 0u;
+    aeacusbody_arrived_back = 0u;
     aeabody_idle_wait = 0;
     aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
     saved_orpheus_posx = s_orpheus->x + 4u;

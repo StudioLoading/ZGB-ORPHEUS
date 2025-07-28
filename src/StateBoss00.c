@@ -181,7 +181,7 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 4;//TODO 5
+		boss_hp_current = 5;//TODO 5
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -670,25 +670,25 @@ void boss_manage_death_aeacus() BANKED{
 	}
 	switch(death_countdown){
 		case 140u:
-			spawn_death_animation(16u, 32u);
+			spawn_death_animation(s_awacus_body->x, s_awacus_body->y + 16);
 		break;
 		case 130u:
 			//spawn_death_animation(20u, 30u);
 		break;
 		case 100u:
-			spawn_death_animation(24u, 31u);
+			spawn_death_animation(s_awacus_body->x - 3, s_awacus_body->y + 12);
 		break;
 		case 80u:
 			//spawn_death_animation(28u, 28u);
 		break;
 		case 60u:
-			spawn_death_animation(32u, 32u);
+			spawn_death_animation(s_awacus_body->x - 4, s_awacus_body->y + 28);
 		break;
 		case 45u:
-			spawn_death_animation(40u, 36u);
+			spawn_death_animation(s_awacus_body->x - 6u, s_awacus_body->y + 12);
 		break;
 		case 30u:
-			spawn_death_animation(44u, 38u);
+			spawn_death_animation(s_awacus_body->x + 2u, s_awacus_body->y + 16);
 		break;
 		case 0u:{
 			boss_intro = 0;//reset

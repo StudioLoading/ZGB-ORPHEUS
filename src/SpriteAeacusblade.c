@@ -41,7 +41,7 @@ void START() {
     struct EnemyInfo* blade_data = (struct EnemyInfo*) THIS->custom_data;
     blade_data->e_state = GENERIC_IDLE;
     blade_data->frmskip_wait = 0;
-    blade_data->frmskip = 8;
+    blade_data->frmskip = boss_hp_current + 3;
     blade_data->wait = 80u;
     blade_data->vx = 0;
     blade_data->vy = 0;
@@ -111,9 +111,9 @@ void UPDATE() {
                             }
                         }
                         if(blade_data->e_configured == 3){//CLOCKWISE
-                            blade_data->wait = blade_data->wait + 5 + ((5 - boss_hp_current) << 3);
+                            blade_data->wait = blade_data->wait + 5 + ((3 - boss_hp_current) << 3);
                         }else if(blade_data->e_configured == 4){//COUNTERCLOCK
-                            blade_data->wait = blade_data->wait - (5 + ((5 - boss_hp_current) << 3));
+                            blade_data->wait = blade_data->wait - (5 + ((3 - boss_hp_current) << 3));
                         }
                     }
                 break;
