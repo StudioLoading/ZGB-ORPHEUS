@@ -98,7 +98,7 @@ void UPDATE() {
                         UINT8 cos_position = blade_data->wait + 64u;
                         UINT16 new_posx = 64u + ((sine_wave[cos_position]) / 3);
                         UINT16 new_posy = 72u + ((sine_wave[blade_data->wait]) / 3);
-                        if(blade_data->vx < 8){
+                        if(blade_data->vx < (boss_hp_current + 3)){
                             blade_data->vx++;
                             THIS->x = new_posx;
                             THIS->y = new_posy;

@@ -121,6 +121,7 @@ extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void UpdateHUD() BANKED;
 
 void START() {
 	level_common_start();
@@ -181,7 +182,7 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 5;//TODO 5
+		boss_hp_current = 1;//TODO 5
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -227,6 +228,9 @@ void UPDATE() {
 			level_common_update_play();
 		break;
 		case 4:	//DEATH COOLDOWN BEFORE CHANGING SCREEN
+			if(redraw_hud){
+				UpdateHUD();
+			}
 			if(boss_hp_current){
 			    boss_hp_current = 0;
 			}
