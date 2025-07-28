@@ -181,7 +181,7 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 5;//TODO 5
+		boss_hp_current = 4;//TODO 5
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;

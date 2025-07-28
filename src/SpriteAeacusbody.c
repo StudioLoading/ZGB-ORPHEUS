@@ -241,6 +241,9 @@ void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
                 case AEA_SCIMITAR_VERTICAL:{
                     aea_new_phase = aea_move_to_scimitar_h(arg_s_aeacusbody);
                 }break;
+                case AEA_SCIMITAR_HORIZONTAL:{
+                    aea_new_phase = aea_move_to_watch(arg_s_aeacusbody);
+                }break;
                 case AEA_BODY_WATCH:{
                     aea_new_phase = aea_move_to_fly(arg_s_aeacusbody);
                 }break;
