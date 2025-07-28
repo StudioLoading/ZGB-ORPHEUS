@@ -138,15 +138,15 @@ void UPDATE() {
 
 UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED{
     //arrived??
-    INT16 delta_to_final_x = (INT16)aea_s_aeacusbody->x - (INT16)arg_final_posx;
-    if(delta_to_final_x < 0){
-        delta_to_final_x = -delta_to_final_x;
+    aeacusbody_delta_walking_delta_x = (INT16)arg_final_posx - (INT16)aea_s_aeacusbody->x;
+    if(aeacusbody_delta_walking_delta_x < 0){
+        aeacusbody_delta_walking_delta_x = -aeacusbody_delta_walking_delta_x;
     }
-    INT16 delta_to_final_y = (INT16)aea_s_aeacusbody->y - (INT16)arg_final_posy;
-    if(delta_to_final_y < 0){
-        delta_to_final_y = -delta_to_final_y;
+    aeacusbody_delta_walking_delta_y = (INT16)arg_final_posy - (INT16)aea_s_aeacusbody->y;
+    if(aeacusbody_delta_walking_delta_y < 0){
+        aeacusbody_delta_walking_delta_y = -aeacusbody_delta_walking_delta_y;
     }
-    if(delta_to_final_x < 3 && delta_to_final_y < 3){
+    if(aeacusbody_delta_walking_delta_x < 3 && aeacusbody_delta_walking_delta_y < 3){
         return 1u;
     }
     UINT8 result_arrived = 0u;
@@ -169,39 +169,31 @@ UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, 
         delta_factor_y = aeacusbody_delta_walking_delta_x / aeacusbody_delta_walking_delta_y;
         INT16 r_y = aeacusbody_delta_walking_delta_x % aeacusbody_delta_walking_delta_y;
         if(r_y > (aeacusbody_delta_walking_delta_y >> 1)){
-            delta_factor_y += delta_factor_y;
+            delta_factor_y += (delta_factor_y + (delta_factor_y >> 2));
         }
     }else{
         delta_factor_x = aeacusbody_delta_walking_delta_y / aeacusbody_delta_walking_delta_x;
         INT16 r_x = aeacusbody_delta_walking_delta_y % aeacusbody_delta_walking_delta_x;
         if(r_x > (aeacusbody_delta_walking_delta_x >> 1)){
-            delta_factor_x += delta_factor_x;
+            delta_factor_x += (delta_factor_x + (delta_factor_x >> 2));
         }
     }
     //e scopro ogni quanti x deve fare una y
-    INT8 cerberus_walking_frmskip_x_max = delta_factor_x;
-    INT8 cerberus_walking_frmskip_y_max = delta_factor_y;
-    if(delta_factor_y < 0){
-        cerberus_walking_frmskip_y_max = -delta_factor_y;
-    }
-    if(delta_factor_x < 0){
-        cerberus_walking_frmskip_x_max = -delta_factor_x;    
-    }
-    if(cerberus_walking_frmskip_x_max > 0 && (INT8)aeacusbody_walking_frmskip_x_current < cerberus_walking_frmskip_x_max){//ecco che devo fare una y
+    if(delta_factor_x > 0 && (INT8)aeacusbody_walking_frmskip_x_current < delta_factor_x){//ecco che devo fare una y
         actual_aeabody_vx = 0;
     }
-    if(cerberus_walking_frmskip_y_max > 0 && (INT8)aeacusbody_walking_frmskip_y_current < cerberus_walking_frmskip_y_max){
+    if(delta_factor_y > 0 && (INT8)aeacusbody_walking_frmskip_y_current < delta_factor_y){
         actual_aeabody_vy = 0;
     }
-    if((INT8)aeacusbody_walking_frmskip_x_current == cerberus_walking_frmskip_x_max){
+    if((INT8)aeacusbody_walking_frmskip_x_current == delta_factor_x){
         aeacusbody_walking_frmskip_x_current = 0;
     }
-    if((INT8)aeacusbody_walking_frmskip_y_current == cerberus_walking_frmskip_y_max){
+    if((INT8)aeacusbody_walking_frmskip_y_current == delta_factor_y){
         aeacusbody_walking_frmskip_y_current = 0;
     }
     aeacusbody_walking_frmskip_x_current++;
     aeacusbody_walking_frmskip_y_current++;
-    if(actual_aeabody_vx != 0 || actual_aeabody_vy != 0){
+    if(actual_aeabody_vx || actual_aeabody_vy){
         UINT8 aeacusbody_coll_tile = TranslateSprite(aea_s_aeacusbody, actual_aeabody_vx << delta_time, actual_aeabody_vy << delta_time);
         if(aeacusbody_coll_tile){
             aea_s_aeacusbody->x += actual_aeabody_vx;
@@ -285,8 +277,13 @@ AEACUS_PHASE aea_move_to_watch(Sprite* arg_s_aeacusbody) BANKED{
     aeacusbody_change_state(arg_s_aeacusbody, PREATTACK_DOWN);
     aeabody_idle_wait = 0;
     aeabody_idle_wait_max = AEACUSBODY_WATCH_MAX;
-    saved_orpheus_posx = s_orpheus->x + 4;
-    saved_orpheus_posy = s_orpheus->y - 4;
+    saved_orpheus_posx = s_orpheus->x + 4u;
+    saved_orpheus_posy = s_orpheus->y - 8u;
+    if(s_orpheus->y < 10u){
+        saved_orpheus_posy = 1u;
+    }
+    aeacusbody_walking_frmskip_x_current = 0;
+    aeacusbody_walking_frmskip_y_current = 0;
     return AEA_BODY_WATCH;
 }
 
@@ -305,7 +302,7 @@ AEACUS_PHASE aea_move_to_scimitar_h(Sprite* arg_s_aeacusbody) BANKED{
     struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
     aeacuswing_right_data->wait = 1;
     aeacuswing_right_data->e_configured = 4u;
-    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 35u, 27u);
+    Sprite* s_aeacus_blade = SpriteManagerAdd(SpriteAeacusblade, 35u, 40u);
     struct EnemyInfo* blade_data = (struct EnemyInfo*) s_aeacus_blade->custom_data;
     blade_data->e_configured = 1;
     return AEA_SCIMITAR_HORIZONTAL;
