@@ -84,6 +84,10 @@ UINT8 evaluate_button = 1u;//0 normal, 1 init, 2 force pressed
 UINT8 flag_button_repushable = 0u;
 UINT16 repushable_button_cooldown = REPUSHABLE_BUTTON_COOLDOWN_MAX;
 UINT8 flag_button_pushable = 1u;
+UINT8 flag_paused = 0u;
+
+UINT8 paused_first_line[20];
+UINT8 paused_second_line[20];
 
 extern UINT8 has_lyre;
 extern UINT16 orpheus_spawnx;
@@ -196,6 +200,136 @@ void reset_maps() BANKED{
 }
 
 void level_common_update_play() BANKED{
+	//paused
+		if(KEY_TICKED(J_START) && !is_current_map_on_boss() && orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != HIT){
+			if(flag_paused == 0){
+				flag_paused = 1u;
+				paused_first_line[0] = GetScrollTile(0, 11);
+				paused_first_line[1] = GetScrollTile(1, 11);
+				paused_first_line[2] = GetScrollTile(2, 11);
+				paused_first_line[3] = GetScrollTile(3, 11);
+				paused_first_line[4] = GetScrollTile(4, 11);
+				paused_first_line[5] = GetScrollTile(5, 11);
+				paused_first_line[6] = GetScrollTile(6, 11);
+				paused_first_line[7] = GetScrollTile(7, 11);
+				paused_first_line[8] = GetScrollTile(8, 11);
+				paused_first_line[9] = GetScrollTile(9, 11);
+				paused_first_line[10] = GetScrollTile(10, 11);
+				paused_first_line[11] = GetScrollTile(11, 11);
+				paused_first_line[12] = GetScrollTile(12, 11);
+				paused_first_line[13] = GetScrollTile(13, 11);
+				paused_first_line[14] = GetScrollTile(14, 11);
+				paused_first_line[15] = GetScrollTile(15, 11);
+				paused_first_line[16] = GetScrollTile(16, 11);
+				paused_first_line[17] = GetScrollTile(17, 11);
+				paused_first_line[18] = GetScrollTile(18, 11);
+				paused_first_line[19] = GetScrollTile(19, 11);
+				paused_second_line[0] = GetScrollTile(0, 12);
+				paused_second_line[1] = GetScrollTile(1, 12);
+				paused_second_line[2] = GetScrollTile(2, 12);
+				paused_second_line[3] = GetScrollTile(3, 12);
+				paused_second_line[4] = GetScrollTile(4, 12);
+				paused_second_line[5] = GetScrollTile(5, 12);
+				paused_second_line[6] = GetScrollTile(6, 12);
+				paused_second_line[7] = GetScrollTile(7, 12);
+				paused_second_line[8] = GetScrollTile(8, 12);
+				paused_second_line[9] = GetScrollTile(9, 12);
+				paused_second_line[10] = GetScrollTile(10, 12);
+				paused_second_line[11] = GetScrollTile(11, 12);
+				paused_second_line[12] = GetScrollTile(12, 12);
+				paused_second_line[13] = GetScrollTile(13, 12);
+				paused_second_line[14] = GetScrollTile(14, 12);
+				paused_second_line[15] = GetScrollTile(15, 12);
+				paused_second_line[16] = GetScrollTile(16, 12);
+				paused_second_line[17] = GetScrollTile(17, 12);
+				paused_second_line[18] = GetScrollTile(18, 12);
+				paused_second_line[19] = GetScrollTile(19, 12);
+				UpdateMapTile(0, 0, 11, 0, 0, 0);
+				UpdateMapTile(0, 1, 11, 0, 0, 0);
+				UpdateMapTile(0, 2, 11, 0, 0, 0);
+				UpdateMapTile(0, 3, 11, 0, 0, 0);
+				UpdateMapTile(0, 4, 11, 0, 0, 0);
+				UpdateMapTile(0, 5, 11, 0, 0, 0);
+				UpdateMapTile(0, 6, 11, 0, 0, 0);
+				UpdateMapTile(0, 7, 11, 0, 0, 0);
+				UpdateMapTile(0, 8, 11, 0, 106, 0);
+				UpdateMapTile(0, 9, 11, 0, 108, 0);
+				UpdateMapTile(0, 10, 11, 0, 110, 0);
+				UpdateMapTile(0, 11, 11, 0, 112, 0);
+				UpdateMapTile(0, 12, 11, 0, 114, 0);
+				UpdateMapTile(0, 13, 11, 0, 120, 0);
+				UpdateMapTile(0, 14, 11, 0, 0, 0);
+				UpdateMapTile(0, 15, 11, 0, 0, 0);
+				UpdateMapTile(0, 16, 11, 0, 0, 0);
+				UpdateMapTile(0, 17, 11, 0, 0, 0);
+				UpdateMapTile(0, 18, 11, 0, 0, 0);
+				UpdateMapTile(0, 19, 11, 0, 0, 0);
+				UpdateMapTile(0, 0, 12, 0, 0, 0);
+				UpdateMapTile(0, 1, 12, 0, 0, 0);
+				UpdateMapTile(0, 2, 12, 0, 0, 0);
+				UpdateMapTile(0, 3, 12, 0, 0, 0);
+				UpdateMapTile(0, 4, 12, 0, 0, 0);
+				UpdateMapTile(0, 5, 12, 0, 0, 0);
+				UpdateMapTile(0, 6, 12, 0, 0, 0);
+				UpdateMapTile(0, 7, 12, 0, 0, 0);
+				UpdateMapTile(0, 8, 12, 0, 107, 0);
+				UpdateMapTile(0, 9, 12, 0, 109, 0);
+				UpdateMapTile(0, 10, 12, 0, 111, 0);
+				UpdateMapTile(0, 11, 12, 0, 113, 0);
+				UpdateMapTile(0, 12, 12, 0, 115, 0);
+				UpdateMapTile(0, 13, 12, 0, 121, 0);
+				UpdateMapTile(0, 14, 12, 0, 0, 0);
+				UpdateMapTile(0, 15, 12, 0, 0, 0);
+				UpdateMapTile(0, 16, 12, 0, 0, 0);
+				UpdateMapTile(0, 17, 12, 0, 0, 0);
+				UpdateMapTile(0, 18, 12, 0, 0, 0);
+				UpdateMapTile(0, 19, 12, 0, 0, 0);
+			}else{
+				flag_paused = 0u;
+				UpdateMapTile(0, 0, 11, 0, paused_first_line[0], 0);
+				UpdateMapTile(0, 1, 11, 0, paused_first_line[1], 0);
+				UpdateMapTile(0, 2, 11, 0, paused_first_line[2], 0);
+				UpdateMapTile(0, 3, 11, 0, paused_first_line[3], 0);
+				UpdateMapTile(0, 4, 11, 0, paused_first_line[4], 0);
+				UpdateMapTile(0, 5, 11, 0, paused_first_line[5], 0);
+				UpdateMapTile(0, 6, 11, 0, paused_first_line[6], 0);
+				UpdateMapTile(0, 7, 11, 0, paused_first_line[7], 0);
+				UpdateMapTile(0, 8, 11, 0, paused_first_line[8], 0);
+				UpdateMapTile(0, 9, 11, 0, paused_first_line[9], 0);
+				UpdateMapTile(0, 10, 11, 0, paused_first_line[10], 0);
+				UpdateMapTile(0, 11, 11, 0, paused_first_line[11], 0);
+				UpdateMapTile(0, 12, 11, 0, paused_first_line[12], 0);
+				UpdateMapTile(0, 13, 11, 0, paused_first_line[13], 0);
+				UpdateMapTile(0, 14, 11, 0, paused_first_line[14], 0);
+				UpdateMapTile(0, 15, 11, 0, paused_first_line[15], 0);
+				UpdateMapTile(0, 16, 11, 0, paused_first_line[16], 0);
+				UpdateMapTile(0, 17, 11, 0, paused_first_line[17], 0);
+				UpdateMapTile(0, 18, 11, 0, paused_first_line[18], 0);
+				UpdateMapTile(0, 19, 11, 0, paused_first_line[19], 0);
+
+				UpdateMapTile(0, 0, 12, 0, paused_second_line[0], 0);
+				UpdateMapTile(0, 1, 12, 0, paused_second_line[1], 0);
+				UpdateMapTile(0, 2, 12, 0, paused_second_line[2], 0);
+				UpdateMapTile(0, 3, 12, 0, paused_second_line[3], 0);
+				UpdateMapTile(0, 4, 12, 0, paused_second_line[4], 0);
+				UpdateMapTile(0, 5, 12, 0, paused_second_line[5], 0);
+				UpdateMapTile(0, 6, 12, 0, paused_second_line[6], 0);
+				UpdateMapTile(0, 7, 12, 0, paused_second_line[7], 0);
+				UpdateMapTile(0, 8, 12, 0, paused_second_line[8], 0);
+				UpdateMapTile(0, 9, 12, 0, paused_second_line[9], 0);
+				UpdateMapTile(0, 10, 12, 0, paused_second_line[10], 0);
+				UpdateMapTile(0, 11, 12, 0, paused_second_line[11], 0);
+				UpdateMapTile(0, 12, 12, 0, paused_second_line[12], 0);
+				UpdateMapTile(0, 13, 12, 0, paused_second_line[13], 0);
+				UpdateMapTile(0, 14, 12, 0, paused_second_line[14], 0);
+				UpdateMapTile(0, 15, 12, 0, paused_second_line[15], 0);
+				UpdateMapTile(0, 16, 12, 0, paused_second_line[16], 0);
+				UpdateMapTile(0, 17, 12, 0, paused_second_line[17], 0);
+				UpdateMapTile(0, 18, 12, 0, paused_second_line[18], 0);
+				UpdateMapTile(0, 19, 12, 0, paused_second_line[19], 0);
+			}
+		}
+		if(flag_paused){ return; }
 	// check button draw
 		if(evaluate_button){
 			if(current_map == HADES_06 || current_map == BOSS_AEACUS){
@@ -397,11 +531,9 @@ void move_camera() BANKED{
 
 void UpdateHUD() BANKED{
 	redraw_hud = 0;
+	INT8 idx = 0;
+	//PAUSED
 	//STRUCTURE
-		INT8 idx = 0;
-		/*for(idx = 0; idx <= 19; idx++){
-			UPDATE_HUD_TILE(idx,0,57);
-		}*/
 		UPDATE_HUD_TILE(0,1,25);
 		UPDATE_HUD_TILE(0,2,26);
 		UPDATE_HUD_TILE(5,1,47);
@@ -590,7 +722,7 @@ void UpdateHUD() BANKED{
 	}
 
 
-	void init_write_dialog(UINT8 nlines) BANKED{
+void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
 	dialog_ready = 0u; 
     writing_line = 1u;

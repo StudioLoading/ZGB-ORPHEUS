@@ -14,6 +14,7 @@ const UINT8 a_stone[] = {1, 0};
 INT8 stone_mirroring = 10;
 extern UINT8 spawned_ball;
 extern PUSHING orpheus_pushing;
+extern UINT8 flag_paused;
 
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -37,6 +38,7 @@ void START() {
 }
 
 void UPDATE() {
+    if(flag_paused){ return; }
     struct EnemyInfo* stone_data = (struct EnemyInfo*) THIS->custom_data;
     switch(stone_data->e_configured){
         case 0: return; break;

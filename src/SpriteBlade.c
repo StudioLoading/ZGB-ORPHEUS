@@ -11,6 +11,8 @@
 
 const UINT8 a_blade[] = {4, 0,1,2,3};
 
+extern UINT8 flag_paused;
+
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
@@ -30,6 +32,7 @@ void START() {
 }
 
 void UPDATE() {
+    if(flag_paused){ return; }
     struct NoteInfo* bladedata = (struct NoteInfo*) THIS->custom_data;
     bladedata->frmskip++;
     SPRITE_SET_PALETTE(THIS,1);

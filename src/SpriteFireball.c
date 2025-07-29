@@ -18,6 +18,7 @@ extern UINT8 is_skeletoncerberus_in_river;
 extern AEACUS_PHASE aeacus_phase;
 extern Sprite* s_awacus_body;
 extern AEACUS_PHASE aeacus_phase;
+extern UINT8 flag_paused;
 
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -44,6 +45,7 @@ void START() {
 }
 
 void UPDATE() {
+    if(flag_paused){ return; }
     struct EnemyInfo* fireball_data = (struct EnemyInfo*) THIS->custom_data;
     switch(fireball_data->e_configured){
         case 0: return; break;

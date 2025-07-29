@@ -78,6 +78,7 @@ extern UINT8 area_enemy_counter;
 extern UINT8 changing_map;
 extern UINT8 sprite_stack_top;
 extern UINT8 flag_button_repushable;
+extern UINT8 flag_paused;
 
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void level_common_start() BANKED;
@@ -268,6 +269,7 @@ void UPDATE() {
 	if(tutorial_go > 0){
 		level_common_update_play();
 	}
+	if(flag_paused){ return; }
 	//DEATH COOLDOWN BEFORE CHANGING SCREEN
 		if(death_countdown){
 			death_countdown--;

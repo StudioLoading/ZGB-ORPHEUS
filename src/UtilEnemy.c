@@ -22,6 +22,7 @@ extern UINT8 area_enemy_counter;
 extern UINT8 in_dialog;
 extern struct ItemSpawnedByCommon item_spawned_by_common;
 extern UINT8 spawned_enemy_counter;
+extern UINT8 flag_paused;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -289,7 +290,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
 }
 
 void e_management(Sprite* s_enemy) BANKED{
-    if(in_dialog) return;
+    if(in_dialog){ return; }
+    if(flag_paused){ return; }
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 
@@ -349,8 +351,6 @@ void e_management(Sprite* s_enemy) BANKED{
             }
     }else{
         e_data->wait++;//USING AS RANDOM TO CLOCKWISE TURNING
-        //ripristino frameskip
-        //e_data->frmskip = 12u;
         if(e_data->e_state == ATTACK){
             if(e_data->wait > 100){
                 e_change_state(s_enemy, WALK_DOWN);

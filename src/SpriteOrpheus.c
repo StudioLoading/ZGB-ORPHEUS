@@ -81,6 +81,7 @@ extern UINT8 show_cartel;
 extern UINT8 boss_intro;
 extern UINT8 spikes_hit_flag;
 extern UINT8 boss_minos_flag_orpheus_on_plate;
+extern UINT8 flag_paused;
 
 void orpheus_behave() BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -140,6 +141,7 @@ void UPDATE() {
         return;
     }
     if(orpheus_info == 0){ return; }
+    if(flag_paused){ return; }
     //CHECK DEATH
         if(orpheus_info->ow_state == DIE){ return; }
         if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
