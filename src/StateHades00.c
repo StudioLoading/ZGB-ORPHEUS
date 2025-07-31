@@ -59,7 +59,7 @@ Sprite* s_block_01;
 Sprite* s_blade;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
-UINT8 death_countdown = 160u;
+UINT8 death_countdown = 0u;
 struct ItemSpawnedByCommon item_spawned_by_common;
 
 extern UINT8 in_dialog;

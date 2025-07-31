@@ -1,8 +1,3 @@
-- BOSS FIGHT caronte
-
-POST DEMO
-- PAUSE - freezzare tutto scrivendo PAUSED sulla HUD al centro in alto, come le note di BOSS e musica in pausa
-- mentre sono in hit_cooldown e mi muovo, ma mi scontro, ho altra hit e invece dovrei ancora essere invulnerabile. serve un nuovo cooldown di invulnerabilità che mi assicuri movimento incolume per tot tempo dopo prima hit
 - effetto camera tremble
 - il common strippa quando si muove diagonale
 - GOLEM
@@ -15,9 +10,11 @@ POST DEMO
 - FADE OUT IN BLACK
     posso farlo a mano andando a pistolare le palette, muovendo progressivamente i colori in nero dal DARKER al LIGHTER tutto valorizzandoli a DARKER
 - SCHERMATA DI SCELTA TASTI: J_A e J_B devon essere J_ATK J_INT
-- RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
 - CREDIT screen potrei far atterrare la piuma di kibou in posizione
-
+- bgm
+- musichette delle song
+- PAUSE - sfx e musica in pausa
+- RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
 
 
 

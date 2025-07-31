@@ -16,6 +16,7 @@
 #define COUNTDOWN_SKIP_ATTRACT 2
 #define COUNTDOWN_SKIP_REPELL 4
 #define COUNTDOWN_SKIP_SLEEP 8
+#define INVULNERABILITY 40
 
 UINT8 J_INT=J_A;//0x10;
 UINT8 J_ATK=J_B;//0x20;
@@ -62,6 +63,7 @@ UINT8 inertia_y = 0u;
 UINT16 idle_countdown = 800u;
 Sprite* s_lyre = 0;
 PUSHING orpheus_pushing = PUSH_NONE;
+UINT8 orpheus_invulnerable = 0u;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -82,6 +84,7 @@ extern UINT8 boss_intro;
 extern UINT8 spikes_hit_flag;
 extern UINT8 boss_minos_flag_orpheus_on_plate;
 extern UINT8 flag_paused;
+extern UINT8 flag_camera_shake;
 
 void orpheus_behave() BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -142,6 +145,9 @@ void UPDATE() {
     }
     if(orpheus_info == 0){ return; }
     if(flag_paused){ return; }
+    if(orpheus_invulnerable){
+        orpheus_invulnerable--;
+    }
     //CHECK DEATH
         if(orpheus_info->ow_state == DIE){ return; }
         if(orpheus_hp <= 0 && orpheus_info->ow_state != DIE){
@@ -794,7 +800,11 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             if(orpheus_info->ow_state != ATTACK){
                 orpheus_state_before = orpheus_info->ow_state;
             }
-            orpheus_hit();
+            if(orpheus_invulnerable == 0){
+                orpheus_invulnerable = INVULNERABILITY;
+                flag_camera_shake = 1u;
+                orpheus_hit();
+            }
         break;
         case ATTACK:
             countdown = 0;
