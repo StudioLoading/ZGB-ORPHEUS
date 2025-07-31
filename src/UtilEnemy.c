@@ -44,6 +44,7 @@ extern void revenant_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKE
 extern void minion_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -146,6 +147,9 @@ void e_update_anim(Sprite* arg_s_enemy) BANKED{
         case SpriteImpminos:
             impminos_update_anim(arg_s_enemy, e_data->e_state);
         break;
+        case SpriteRadamanthus:
+            radamanthus_update_anim(arg_s_enemy, e_data->e_state);
+        break;
     }
 }
 
@@ -219,6 +223,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteShadow:
                 case SpriteSerpent:
                 case SpriteDevourer:
+                case SpriteRadamanthus:
                     e_data->wait = 160u;
                 break;
                 case SpriteLostsoul:
@@ -530,6 +535,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteFrost:
         case SpriteSerpent:
         case SpriteDevourer:
+        case SpriteRadamanthus:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, 0);
             }

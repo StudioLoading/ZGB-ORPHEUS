@@ -101,6 +101,7 @@ UINT8 is_enemy(UINT8 arg_sprite_type) BANKED{
         case SpriteMinosscale:
         case SpriteAeacusbody:
         case SpriteAeacusblade:
+        case SpriteRadamanthus:
             result = 1u;
         break;
     }

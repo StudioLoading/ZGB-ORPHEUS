@@ -259,6 +259,7 @@ void UPDATE() {
                     case SpriteSerpent:
                     case SpriteDevourer:
                     case SpriteRevenant:
+                    case SpriteRadamanthus:
                         e_change_state(iospr, HIT);
                     break;
                     case SpriteTartarus:
