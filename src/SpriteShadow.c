@@ -1,9 +1,7 @@
 #include "Banks/SetAutoBank.h"
 
-#include "SGB.h"
 #include "BankManager.h"
 #include "ZGBMain.h"
-#include "Keys.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"

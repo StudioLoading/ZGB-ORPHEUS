@@ -1,9 +1,7 @@
 #include "Banks/SetAutoBank.h"
 
-#include "SGB.h"
 #include "BankManager.h"
 #include "ZGBMain.h"
-#include "Keys.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -176,6 +174,7 @@ UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED{
         case SpriteMagma:
         case SpriteFrost:
         case SpriteMinion:
+        case SpriteRadamanthus:
             result = 1u;
         break;
     }
@@ -223,7 +222,6 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteShadow:
                 case SpriteSerpent:
                 case SpriteDevourer:
-                case SpriteRadamanthus:
                     e_data->wait = 160u;
                 break;
                 case SpriteLostsoul:
@@ -241,6 +239,7 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteMinion:
                 case SpriteInfernalimp:
                 case SpriteImpminos:
+                case SpriteRadamanthus:
                     e_data->wait = 80u;
                 break;
             }
@@ -535,7 +534,6 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteFrost:
         case SpriteSerpent:
         case SpriteDevourer:
-        case SpriteRadamanthus:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, 0);
             }
@@ -554,6 +552,7 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         break;
         case SpriteDog:
         case SpriteSentinel:
+        case SpriteRadamanthus:
             if(e_data->e_state != HIT){
                 e_turn(s_enemy, TURN_COUNTERCLOCKWISE);
             }
@@ -591,18 +590,18 @@ void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED{
         switch(wise){
             case TURN_CLOCKWISE:
                 switch(e_data->e_state){
-                    case IDLE_DOWN: case WALK_DOWN: e_change_state(s_enemy, IDLE_LEFT); break;
-                    case IDLE_LEFT: case WALK_LEFT: e_change_state(s_enemy, IDLE_UP); break;
-                    case IDLE_UP: case WALK_UP: e_change_state(s_enemy, IDLE_RIGHT); break;
-                    case IDLE_RIGHT: case WALK_RIGHT: e_change_state(s_enemy, IDLE_DOWN); break;
+                    case IDLE_DOWN: case WALK_DOWN: s_enemy->x -=2; e_change_state(s_enemy, IDLE_LEFT); break;
+                    case IDLE_LEFT: case WALK_LEFT: s_enemy->x +=2; e_change_state(s_enemy, IDLE_UP); break;
+                    case IDLE_UP: case WALK_UP: s_enemy->x +=2; e_change_state(s_enemy, IDLE_RIGHT); break;
+                    case IDLE_RIGHT: case WALK_RIGHT: s_enemy->x -=2; e_change_state(s_enemy, IDLE_DOWN); break;
                 }
             break;
             case TURN_COUNTERCLOCKWISE:        
                 switch(e_data->e_state){
-                    case IDLE_DOWN: case WALK_DOWN: e_change_state(s_enemy, IDLE_RIGHT); break;
-                    case IDLE_LEFT: case WALK_LEFT: e_change_state(s_enemy, IDLE_DOWN); break;
-                    case IDLE_UP: case WALK_UP: e_change_state(s_enemy, IDLE_LEFT); break;
-                    case IDLE_RIGHT: case WALK_RIGHT: e_change_state(s_enemy, IDLE_UP); break;
+                    case IDLE_DOWN: case WALK_DOWN: s_enemy->x -=2; e_change_state(s_enemy, IDLE_RIGHT); break;
+                    case IDLE_LEFT: case WALK_LEFT: s_enemy->x +=2; e_change_state(s_enemy, IDLE_DOWN); break;
+                    case IDLE_UP: case WALK_UP: s_enemy->x -=2; e_change_state(s_enemy, IDLE_LEFT); break;
+                    case IDLE_RIGHT: case WALK_RIGHT: s_enemy->x -=2; e_change_state(s_enemy, IDLE_UP); break;
                 }
             break;
             case TURN_OPPOSITE:

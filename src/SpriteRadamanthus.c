@@ -3,7 +3,6 @@
 #include "SGB.h"
 #include "BankManager.h"
 #include "ZGBMain.h"
-#include "Keys.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -13,7 +12,7 @@
 
 const UINT8 a_radamanthus_hidden[] = {1, 0};
 const UINT8 a_radamanthus_up[] = {2, 1, 2};
-const UINT8 a_radamanthus_down[] = {2, 1,2};
+const UINT8 a_radamanthus_down[] = {4, 3,4,3,5};
 const UINT8 a_radamanthus_h[] = {2, 1,2};
 const UINT8 a_radamanthus_repelled[] = {4, 0,1};
 

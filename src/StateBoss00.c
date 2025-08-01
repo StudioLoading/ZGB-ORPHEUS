@@ -84,6 +84,7 @@ void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
 void boss_manage_death_minos() BANKED;
 void boss_manage_death_aeacus() BANKED;
+void boss_manage_death_radamanthus() BANKED;
 void boss_invert_river_verse() BANKED;
 void boss_update_breath_verse_and_max() BANKED;
 void boss_hit() BANKED;
@@ -218,6 +219,9 @@ void UPDATE() {
 				break;
 				case BOSS_AEACUS: 
 					prepare_dialog(BOSS_AEACUS_INTRO);
+				break;
+				case BOSS_HADES: 
+					prepare_dialog(BOSS_HADES_INTRO);
 				break;
 			}
 			boss_intro = 3;

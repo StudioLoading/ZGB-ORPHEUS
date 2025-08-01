@@ -36,6 +36,7 @@ IMPORT_MAP(maphades017);
 IMPORT_MAP(maphades018);
 IMPORT_MAP(maphades019);
 IMPORT_MAP(maphades020);
+IMPORT_MAP(maphades026);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
 
@@ -145,8 +146,6 @@ void START() {
 					e_configure(e_skeleton1);
 					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton2);*/
-					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteRadamanthus, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
-					e_configure(e_skeleton2);*/
 				}break;
 				case HADES_07:{
 				}break;
@@ -181,6 +180,23 @@ void START() {
 				//BOSS AEACUS
 				case HADES_21:{
 				}break;
+				case HADES_22:{
+				}break;
+				case HADES_23:{
+				}break;
+				case HADES_24:{
+				}break;
+				case HADES_25:{
+				}break;
+				case HADES_26:{//BOSS RADAMANTHUS
+					area_enemy_counter = 1;
+					Sprite* s_radamanthus = SpriteManagerAdd(SpriteRadamanthus, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					e_configure(s_radamanthus);
+				}break;
+				case HADES_27:{
+				}break;
+				//BOSS HADES
+				//END GAME
 			}
 		}else{
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
@@ -249,6 +265,9 @@ void START() {
 			break;
 			case HADES_20:
 				InitScroll(BANK(maphades020), &maphades020, coll_t_hades001, coll_s_hades001);
+			break;
+			case HADES_26:
+				InitScroll(BANK(maphades026), &maphades026, coll_t_hades001, coll_s_hades001);
 			break;
 		}
 	//HUD

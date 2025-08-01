@@ -3,8 +3,6 @@
 #include "SGB.h"
 #include "BankManager.h"
 #include "ZGBMain.h"
-#include "Fade.h"
-#include "Keys.h"
 #include "Scroll.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
@@ -101,7 +99,6 @@ UINT8 is_enemy(UINT8 arg_sprite_type) BANKED{
         case SpriteMinosscale:
         case SpriteAeacusbody:
         case SpriteAeacusblade:
-        case SpriteRadamanthus:
             result = 1u;
         break;
     }
@@ -114,6 +111,7 @@ UINT8 is_boss(UINT8 arg_sprite_type) BANKED{
         case SpriteCerberushead:
         case SpriteMinosscale:
         case SpriteAeacusbody:
+        case SpriteRadamanthus:
             result = 1u;
         break;
     }

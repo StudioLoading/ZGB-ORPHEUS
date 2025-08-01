@@ -236,6 +236,12 @@ void reset_maps() BANKED{
 		next_map = HADES_17;
 		prev_map = BOSS_MINOS;
 		max_map = HADES_16;
+	}else{
+		solved_map = BOSS_AEACUS;
+		current_map = HADES_21;
+		next_map = HADES_22;
+		prev_map = BOSS_AEACUS;
+		max_map = HADES_21;
 	}
 }
 
@@ -765,7 +771,8 @@ void UpdateHUD() BANKED{
 	}
 
 
-void init_write_dialog(UINT8 nlines) BANKED{
+
+	void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
 	dialog_ready = 0u; 
     writing_line = 1u;
@@ -1067,6 +1074,64 @@ void go_to_next_map() BANKED{
 			new_state = IDLE_UP;
 			a_walk_counter_y = -16;
 		break;
+		case HADES_21:{
+			prev_map = BOSS_AEACUS;
+			next_map = HADES_22;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case HADES_22:{
+			prev_map = HADES_21;
+			next_map = HADES_23;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case HADES_23:{
+			prev_map = HADES_22;
+			next_map = HADES_24;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case HADES_24:{
+			prev_map = HADES_23;
+			next_map = HADES_25;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case HADES_25:{
+			prev_map = HADES_24;
+			next_map = HADES_26;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case HADES_26:{
+			prev_map = HADES_25;
+			next_map = HADES_27;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			new_state = IDLE_DOWN;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case BOSS_HADES:
+			prev_map = HADES_26;
+			next_map = END_GAME;
+			orpheus_spawnx = ((UINT16) SPAWNX_BOSSAEACUS_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_BOSSAEACUS_IN << 3);
+			next_state = StateBoss00;
+			new_state = IDLE_UP;
+			a_walk_counter_y = -16;
+		break;
 	}
 	SetState(next_state);
 }
@@ -1232,8 +1297,64 @@ void go_to_prev_map() BANKED{
 			next_state = StateHades00;
 		break;
 		case HADES_20:
+			prev_map = HADES_19;
+			next_map = BOSS_AEACUS;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_21:
 			prev_map = BOSS_AEACUS;
-			next_map = HADES_21;
+			next_map = HADES_22;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_22:
+			prev_map = HADES_21;
+			next_map = HADES_23;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_23:
+			prev_map = HADES_22;
+			next_map = HADES_24;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_24:
+			prev_map = HADES_23;
+			next_map = HADES_25;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_25:
+			prev_map = HADES_24;
+			next_map = HADES_26;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_26://RADAMANTHUS
+			prev_map = HADES_25;
+			next_map = HADES_27;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case HADES_27:
+			prev_map = HADES_26;
+			next_map = BOSS_HADES;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			next_state = StateHades00;
+		break;
+		case BOSS_HADES:
+			prev_map = HADES_26;
+			next_map = END_GAME;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
 			next_state = StateHades00;

@@ -1,19 +1,18 @@
-- il common strippa quando si muove diagonale
-- GOLEM
-	Tartarus, Magma, Frost
-	dovrebbero diventare invulnerabili alle sfere, sennò che razza di golem sono? Però sempre vulnerabili alle supersfere. Quelle restano invincibili.
+- meccanica di "piove un mattone in testa a Radamanthus quando batte contro una parete"
+- Hades
 - hitbox degli enemy da aggiornare
 	considera che i minion sono i più piccoli e i golem sono i più grandi
-- HADES 5
-	ho pistolato cose sullo spawn degli item su nemico. è diventata una struct che viene settata all'inizio di ogni mappa nuova. è li che setto chi, morendo, spawna cose.
-- FADE OUT IN BLACK
-    posso farlo a mano andando a pistolare le palette, muovendo progressivamente i colori in nero dal DARKER al LIGHTER tutto valorizzandoli a DARKER
 - SCHERMATA DI SCELTA TASTI: J_A e J_B devon essere J_ATK J_INT
 - CREDIT screen potrei far atterrare la piuma di kibou in posizione
 - bgm
 - musichette delle song
 - PAUSE - sfx e musica in pausa
 - RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
+
+POTENZIALI PROBLEMI - da verificare in fase di test:
+- il common strippa quando si muove diagonale
+- HADES 5
+	ho pistolato cose sullo spawn degli item su nemico. è diventata una struct che viene settata all'inizio di ogni mappa nuova. è li che setto chi, morendo, spawna cose.
 
 
 
