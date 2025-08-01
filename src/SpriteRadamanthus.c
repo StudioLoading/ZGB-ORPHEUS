@@ -14,7 +14,7 @@ const UINT8 a_radamanthus_hidden[] = {1, 0};
 const UINT8 a_radamanthus_up[] = {2, 1, 2};
 const UINT8 a_radamanthus_down[] = {4, 3,4,3,5};
 const UINT8 a_radamanthus_h[] = {2, 1,2};
-const UINT8 a_radamanthus_repelled[] = {4, 0,1};
+const UINT8 a_radamanthus_repelled[] = {6, 0,1,0,3,0,2};
 
 extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -28,7 +28,7 @@ void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 void START(){
     SetSpriteAnim(THIS, a_radamanthus_hidden, 6);
     struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
-    e_data->frmskip = 4u;
+    e_data->frmskip = 1u;
     e_start(e_data, IDLE_DOWN);
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -63,7 +63,7 @@ void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
             SetSpriteAnim(s_enemy, a_radamanthus_h, 8);
         break;
         case HIT:
-            SetSpriteAnim(s_enemy, a_radamanthus_repelled, 12);
+            SetSpriteAnim(s_enemy, a_radamanthus_repelled, 24);
         break;
     }
 }

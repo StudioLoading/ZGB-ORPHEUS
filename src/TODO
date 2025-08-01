@@ -35,6 +35,9 @@ GIF TO PNG FRAMES
 ffmpeg -i C:\ZGB-2023.0\ZGB-ORPHEUS\other\PIXELART\wyvern.gif C:\ZGB-2023.0\ZGB-ORPHEUS\other\PIXELART\wyvern_%d.png
 ffmpeg -framerate 10 -i C:\ZGB-2023.0\ZGB-VIATRIUMPHALIS\other\output_%01d.png -vf format=gray C:\ZGB-2023.0\ZGB-VIATRIUMPHALIS\other\output_grayscale.gif
 
+POSTE PACCHI
+06 4526 3160
+poi i tasti 2 2 1
 
 ZGB HACKS:
 Sprite.h

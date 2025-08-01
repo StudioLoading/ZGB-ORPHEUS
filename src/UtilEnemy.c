@@ -188,6 +188,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
         return;
     }
     switch(new_state){
+        case GENERIC_WALK:
+            new_state = WALK_DOWN;
         case WALK_DOWN: 
             e_data->wait = 0;
             e_data->vx = 0;
@@ -239,8 +241,10 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
                 case SpriteMinion:
                 case SpriteInfernalimp:
                 case SpriteImpminos:
-                case SpriteRadamanthus:
                     e_data->wait = 80u;
+                break;
+                case SpriteRadamanthus:
+                    e_data->wait = 20u;
                 break;
             }
         break;
@@ -378,29 +382,49 @@ void e_management(Sprite* s_enemy) BANKED{
         e_data->frmskip_wait--;
     }else{
         e_data->frmskip_wait = e_data->frmskip;
-        //CHANGE DIRECTION
-            INT16 delta_y = (INT16)s_enemy->y - (INT16)s_orpheus->y; 
-            INT16 delta_x = (INT16)s_enemy->x - (INT16)s_orpheus->x;
+        //FORCE DIRECTION TO ORPHEUS
+            UINT16 delta_y = 0;
+            UINT16 delta_x = 0;
+            UINT8 flag_is_enemy_upper = 1u;
+            UINT8 flag_is_enemy_lower = 0u;
+            UINT8 flag_is_enemy_lefter = 1u;
+            UINT8 flag_is_enemy_righter = 0u;
+            delta_y = (INT16)s_orpheus->y - (INT16)s_enemy->y;
+            if(s_enemy->y > s_orpheus->y){
+                delta_y = (INT16)s_enemy->y - (INT16)s_orpheus->y;
+                flag_is_enemy_upper = 0;
+                flag_is_enemy_lower = 1;
+            }
+            delta_x = (INT16)s_orpheus->x - (INT16)s_enemy->x;
+            if(s_enemy->x > s_orpheus->x){
+                delta_x = (INT16)s_enemy->x - (INT16)s_orpheus->x;
+                flag_is_enemy_lefter = 0;
+                flag_is_enemy_righter = 1;
+            }
             switch (e_data->e_state){
                 case WALK_LEFT:
                 case WALK_RIGHT:
                     if(e_data->wait < 30){//check if Orpheus is over or above enemy
-                        if(delta_y > 40){//enemy molto sotto orpheus
-                            e_change_state(s_enemy, WALK_UP);
-                        }else if(delta_y < -40){//enemy molto sopra orpheus
-                            e_change_state(s_enemy, WALK_DOWN);
+                        if(delta_y > 30u){
+                            if(flag_is_enemy_upper){
+                                e_change_state(s_enemy, WALK_DOWN);
+                            }else if(flag_is_enemy_lower){
+                                e_change_state(s_enemy, WALK_UP);
+                            }
                         }
                     }
                 break;
                 case WALK_UP:
                 case WALK_DOWN:
-                    //if(e_data->wait < 30){//check if Orpheus is over or above enemy
-                        if(delta_x > 40){//enemy molto a destra di orpheus
-                            e_change_state(s_enemy, WALK_LEFT);
-                        }else if(delta_x < -40){//enemy molto a sinistra di orpheus
-                            e_change_state(s_enemy, WALK_RIGHT);
+                    if(e_data->wait < 30){//check if Orpheus is over or above enemy
+                        if(delta_x > 30u){
+                            if(flag_is_enemy_righter){
+                                e_change_state(s_enemy, WALK_LEFT);
+                            }else if(flag_is_enemy_lefter){
+                                e_change_state(s_enemy, WALK_RIGHT);
+                            }                            
                         }
-                    //}
+                    }
                 break;
             }
         //TRANSLATE SPRITE
@@ -554,7 +578,12 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteSentinel:
         case SpriteRadamanthus:
             if(e_data->e_state != HIT){
-                e_turn(s_enemy, TURN_COUNTERCLOCKWISE);
+                e_data->e_configured++;
+                if(e_data->e_configured % 2){
+                    e_turn(s_enemy, TURN_COUNTERCLOCKWISE);
+                }else{
+                    e_turn(s_enemy, 0);
+                }
             }
         break;
     }
