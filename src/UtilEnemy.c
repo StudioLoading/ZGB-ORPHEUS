@@ -313,7 +313,7 @@ void e_management(Sprite* s_enemy) BANKED{
     }
     if(e_data->e_state == HIT){
         //ADD SPEED BY FRAMESKIP DECREASING
-            e_data->frmskip = 4u;
+            //e_data->frmskip = 2u;
         //MIRROR FOR ROUNDING ANIMATION
             if(s_enemy->anim_frame == 3){
                 s_enemy->mirror = V_MIRROR;

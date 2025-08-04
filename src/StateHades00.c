@@ -58,6 +58,7 @@ UINT8 dialog_skeleton_lyre = 0u;
 Sprite* s_block_00;
 Sprite* s_block_01;
 Sprite* s_blade;
+Sprite* s_radamanthusshadow = 0;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
 UINT8 death_countdown = 0u;
@@ -192,6 +193,10 @@ void START() {
 					area_enemy_counter = 1;
 					Sprite* s_radamanthus = SpriteManagerAdd(SpriteRadamanthus, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(s_radamanthus);
+					s_radamanthusshadow = SpriteManagerAdd(SpriteRadamanthusshadow,((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					struct EnemyInfo* shadow_data = (struct EnemyInfo*) s_radamanthusshadow->custom_data;
+					shadow_data->tile_collision = MOVEMENT_DIAGONAL_NWSE;
+					shadow_data->e_configured = 1;
 				}break;
 				case HADES_27:{
 				}break;

@@ -35,8 +35,6 @@ extern UINT8 boss_breath_flag;
 extern INT8 boss_breath_verse;
 extern UINT8 boss_breath_flag_right;
 extern INT8 boss_breath_verse_right;
-extern UINT8 death_countdown;
-extern INT8 boss_hp_current;
 /*
 	SPRITE_STATES e_state;
 	UINT8 tile_collision;

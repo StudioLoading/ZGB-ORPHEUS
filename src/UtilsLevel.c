@@ -94,7 +94,8 @@ UINT8 paused_first_line[20];
 UINT8 paused_second_line[20];
 
 UINT8 camera_shake_wait = 0u;
-UINT8 flag_camera_shake = 0u;
+UINT8 flag_camera_shake_v = 0u;
+UINT8 flag_camera_shake_h = 0u;
 UINT8 camera_shake_frmskip = 0u;
 UINT8 camera_shake_frmskip_max = CAMERA_SHAKE_FRMSKIP_MAX_INIT;
 
@@ -135,7 +136,7 @@ void go_to_next_map() BANKED;
 void go_to_prev_map() BANKED;
 void solve_current_map() BANKED;
 void reset_maps() BANKED;
-void camera_shake() BANKED;
+void camera_shake_v() BANKED;
 
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
@@ -143,7 +144,7 @@ extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 extern UINT8 is_current_map_on_boss() BANKED;
 
-void camera_shake() BANKED{
+void camera_shake_v() BANKED{
 	camera_shake_frmskip++;
 	if(camera_shake_frmskip >= camera_shake_frmskip_max){
 		camera_shake_frmskip = 0;
@@ -159,7 +160,31 @@ void camera_shake() BANKED{
 			}
 		}else{
 			scroll_target->y = camera_spawny;
-			flag_camera_shake = 0u;
+			flag_camera_shake_v = 0u;
+			camera_shake_wait = 0;
+			camera_shake_frmskip = 0u;
+			camera_shake_frmskip_max = CAMERA_SHAKE_FRMSKIP_MAX_INIT;
+		}
+	}
+}
+
+void camera_shake_h() BANKED{
+	camera_shake_frmskip++;
+	if(camera_shake_frmskip >= camera_shake_frmskip_max){
+		camera_shake_frmskip = 0;
+		camera_shake_wait++;
+		if(camera_shake_wait < CAMERA_SHAKE_DURATION){
+			if(camera_shake_wait < 6){
+				camera_shake_frmskip_max = camera_shake_wait;
+			}
+			if(camera_shake_wait % 2){
+				scroll_bkg(2,0);
+			}else{
+				scroll_bkg(-2,0);
+			}
+		}else{
+			scroll_target->x = camera_spawnx;
+			flag_camera_shake_h = 0u;
 			camera_shake_wait = 0;
 			camera_shake_frmskip = 0u;
 			camera_shake_frmskip_max = CAMERA_SHAKE_FRMSKIP_MAX_INIT;
@@ -169,7 +194,8 @@ void camera_shake() BANKED{
 
 void level_common_start() BANKED{
 	//CAMERA SHAKE
-		flag_camera_shake = 0u;
+		flag_camera_shake_v = 0u;
+		flag_camera_shake_h = 0u;
 		camera_shake_wait = 0u;
 		camera_shake_frmskip = 0u;
 		camera_shake_frmskip_max = CAMERA_SHAKE_FRMSKIP_MAX_INIT;
@@ -247,8 +273,11 @@ void reset_maps() BANKED{
 
 void level_common_update_play() BANKED{
 	//camera shake
-		if(flag_camera_shake){
-			camera_shake();
+		if(flag_camera_shake_v){
+			camera_shake_v();
+		}
+		if(flag_camera_shake_h){
+			camera_shake_h();
 		}
 	// paused
 		if(KEY_TICKED(J_START) && !is_current_map_on_boss() && orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != HIT){
@@ -457,7 +486,7 @@ void level_common_update_play() BANKED{
 			return;
 		}
 	// orpheus_scroll_deltay
-		if(flag_camera_shake == 0){
+		if(flag_camera_shake_v == 0 && flag_camera_shake_h == 0){
 			INT16 orpheus_scroll_deltay = s_orpheus->y - scroll_target->y;
 			if(orpheus_scroll_deltay < -72){
 				move_camera_up = 1;
@@ -531,7 +560,7 @@ void level_common_update_play() BANKED{
 			}
 		}
 	// solve current map
-	if(!is_current_map_on_boss()){
+	if(!is_current_map_on_boss() || current_map == HADES_26){
 		solve_current_map();//TEST always solve
 	}
 	//TODO uncomment herebelow
@@ -767,12 +796,13 @@ void UpdateHUD() BANKED{
 				UPDATE_HUD_TILE(7+idx_bosshp,0,60);
 			}
 			UPDATE_HUD_TILE(7+boss_hp_max,0,0);
+			UPDATE_HUD_TILE(8+boss_hp_max,0,0);
 		}
-	}
+}
 
 
 
-	void init_write_dialog(UINT8 nlines) BANKED{
+void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
 	dialog_ready = 0u; 
     writing_line = 1u;

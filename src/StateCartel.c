@@ -54,7 +54,7 @@ void START(){
 
 void UPDATE(){
     if(KEY_TICKED(J_A)){
-        if(is_current_map_on_boss()){
+        if(is_current_map_on_boss() && current_map != HADES_26){
             SetState(StateBoss00);
         }else{
             SetState(StateHades00);

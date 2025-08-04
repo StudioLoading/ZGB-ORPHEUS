@@ -45,6 +45,7 @@ UINT8 is_current_map_on_boss() BANKED{
         case BOSS_CERBERUS:
         case BOSS_MINOS:
         case BOSS_AEACUS:
+        case HADES_26:
             result = 1u;
         break;
     }
@@ -99,6 +100,7 @@ UINT8 is_enemy(UINT8 arg_sprite_type) BANKED{
         case SpriteMinosscale:
         case SpriteAeacusbody:
         case SpriteAeacusblade:
+        case SpriteRadamanthus:
             result = 1u;
         break;
     }

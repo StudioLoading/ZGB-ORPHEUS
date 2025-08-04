@@ -553,7 +553,7 @@ void boss_hit() BANKED{
 	redraw_hud = 1;
 	if(boss_hp_current <= 0){
 		boss_hp_current = 0;
-		if(boss_intro < 4){
+		if(boss_intro < 4 && current_map != HADES_26){
 			boss_intro = 4;
 			death_countdown = 160u;
 		}
