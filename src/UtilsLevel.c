@@ -560,20 +560,21 @@ void level_common_update_play() BANKED{
 			}
 		}
 	// solve current map
-	if(!is_current_map_on_boss() || current_map == HADES_26){
-		solve_current_map();//TEST always solve
-	}
-	//TODO uncomment herebelow
-	/*switch(current_map){
-			case HADES_03:
-			case HADES_04:
-			case HADES_06:
-				if(changing_map == 0u && solved_map < current_map && area_enemy_counter == 0){
-					solve_current_map();
-				}
-			break;
+		//TODO delete herebelow
+		if(!is_current_map_on_boss()){
+			solve_current_map();//TEST always solve
 		}
-	*/
+		//TODO uncomment herebelow
+		/*switch(current_map){
+				case HADES_03:
+				case HADES_04:
+				case HADES_06:
+					if(changing_map == 0u && solved_map < current_map && area_enemy_counter == 0){
+						solve_current_map();
+					}
+				break;
+			}
+		*/
 }
 
 void move_camera() BANKED{

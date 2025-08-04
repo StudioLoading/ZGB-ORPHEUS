@@ -32,7 +32,7 @@ void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 void START(){
     SetSpriteAnim(THIS, a_radamanthus_hidden, 6);
     struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
-    e_data->frmskip = 1u;
+    e_data->frmskip = 2u;
     e_start(e_data, IDLE_DOWN);
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -45,6 +45,18 @@ void START(){
 
 void UPDATE(){
     struct EnemyInfo* e_data = (struct EnemyInfo*) THIS->custom_data;
+    switch(boss_hp_current){
+        case 1:
+            if(e_data->frmskip != 0){
+                e_data->frmskip = 0;
+            }
+        break;
+        case 2:
+            if(e_data->frmskip != 1u){
+                e_data->frmskip = 1u;
+            }
+        break;
+    }
     if(e_data->e_configured == 0){
         return;
     }
