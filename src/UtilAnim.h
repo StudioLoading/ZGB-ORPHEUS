@@ -3,6 +3,7 @@
 
 void AnimFire_Aeacus0() BANKED;
 void AnimFire_Minos0() BANKED;
+void AnimFire_Hades0() BANKED;
 void AnimFire_0() BANKED;
 void AnimFire_1() BANKED;
 void AnimFire_2() BANKED;
@@ -33,3 +34,7 @@ void Anim_Hit_Minos_1() BANKED;
 
 void Anim_Breath_Aeacus_0() BANKED;
 void Anim_Breath_Aeacus_1() BANKED;
+
+void Anim_Breath_Hades_0() BANKED;
+void Anim_Breath_Hades_1() BANKED;
+void Anim_Breath_Hades_2() BANKED;

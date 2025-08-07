@@ -801,8 +801,6 @@ void UpdateHUD() BANKED{
 		}
 }
 
-
-
 void init_write_dialog(UINT8 nlines) BANKED{
     wait_char = MAX_WAIT_CHAR;
 	dialog_ready = 0u; 
@@ -1145,7 +1143,7 @@ void go_to_next_map() BANKED{
 			next_state = StateHades00;
 			new_state = IDLE_DOWN;
 		}break;
-		case HADES_26:{
+		case HADES_26:{//RADAMANTHUS
 			prev_map = HADES_25;
 			next_map = HADES_27;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
@@ -1154,8 +1152,17 @@ void go_to_next_map() BANKED{
 			next_state = StateHades00;
 			new_state = IDLE_DOWN;
 		}break;
-		case BOSS_HADES:
+		case HADES_27:{
 			prev_map = HADES_26;
+			next_map = BOSS_HADES;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			new_state = IDLE_DOWN;
+			next_state = StateHades00;
+			new_state = IDLE_DOWN;
+		}break;
+		case BOSS_HADES:
+			prev_map = HADES_27;
 			next_map = END_GAME;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSAEACUS_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSAEACUS_IN << 3);

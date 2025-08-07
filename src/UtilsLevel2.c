@@ -45,6 +45,7 @@ UINT8 is_current_map_on_boss() BANKED{
         case BOSS_CERBERUS:
         case BOSS_MINOS:
         case BOSS_AEACUS:
+        case BOSS_HADES:
         case HADES_26:
             result = 1u;
         break;

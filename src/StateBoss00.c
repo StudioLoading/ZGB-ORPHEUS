@@ -27,6 +27,7 @@ IMPORT_MAP(mapbosscharon);
 IMPORT_MAP(mapbosscerberus);
 IMPORT_MAP(mapbossminos);
 IMPORT_MAP(mapbossaeacus);
+IMPORT_MAP(mapbosshades);
 IMPORT_MAP(hudmap);
 //IMPORT_TILES(font);
 DECLARE_MUSIC(battle);
@@ -50,6 +51,9 @@ Sprite* s_minosscale = 0;
 Sprite* s_aeacus_wing_left = 0;
 Sprite* s_aeacus_wing_right = 0;
 Sprite* s_awacus_body = 0;
+Sprite* s_hades_skull = 0;
+Sprite* s_hades_claw_left = 0;
+Sprite* s_hades_claw_right = 0;
 UINT16 end_demo_counter = 600u;
 UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play; 4 boss dead
 UINT16 spawn_common_wait = 0u;
@@ -85,6 +89,7 @@ void boss_manage_death_cerberus() BANKED;
 void boss_manage_death_minos() BANKED;
 void boss_manage_death_aeacus() BANKED;
 void boss_manage_death_radamanthus() BANKED;
+void boss_manage_death_hades() BANKED;
 void boss_invert_river_verse() BANKED;
 void boss_update_breath_verse_and_max() BANKED;
 void boss_hit() BANKED;
@@ -160,10 +165,6 @@ void START() {
 			case BOSS_MINOS:{
 				InitScroll(BANK(mapbossminos), &mapbossminos, coll_t_hades005, coll_s_hades005);
 				s_minosscale = SpriteManagerAdd(SpriteMinosscale, ((UINT16) 7u << 3) + 4u, ((UINT16) 4u << 3) - 4u);
-				bossminos_breath_flag = 0u;
-				boss_breath_flag = 0u;
-				boss_breath_counter = 0;
-				boss_breath_counter_max = BOSS_BREATH_MAX;
 			}break;
 			case BOSS_AEACUS:{
 				InitScroll(BANK(mapbossaeacus), &mapbossaeacus, coll_t_hades005, coll_s_hades005);
@@ -174,6 +175,13 @@ void START() {
 				struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
 				aeacuswing_right_data->e_configured = 2u;
 			}break;
+			case BOSS_HADES:{
+				InitScroll(BANK(mapbosshades), &mapbosshades, coll_t_hades005, coll_s_hades005);
+				s_hades_skull = SpriteManagerAdd(SpriteHadesskull, 64u, 18u);
+				s_hades_claw_left = SpriteManagerAdd(SpriteHadesclaw, 38u, 36u);
+				s_hades_claw_right = SpriteManagerAdd(SpriteHadesclaw, 44u + 46, 36u);
+				s_hades_claw_right->mirror = V_MIRROR;
+			}break;
 		}
 	//HUD
         INIT_HUD(hudmap);
@@ -183,7 +191,11 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 1;//TODO 5
+		boss_hp_current = 5;
+		if(current_map == BOSS_HADES){
+			boss_hp_max = 8;
+			boss_hp_current = 8;
+		}
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -194,6 +206,7 @@ void START() {
 		boss_breath_flag_right = 0u;
 		animboss_hit_flag = 0;
 		flag_button_repushable = 1u;
+		bossminos_breath_flag = 0u;
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -252,6 +265,9 @@ void UPDATE() {
 					break;
 					case BOSS_AEACUS: 
 						boss_manage_death_aeacus();
+					break;
+					case BOSS_HADES:
+						boss_manage_death_hades();
 					break;
 				}
 			}
@@ -344,7 +360,6 @@ void UPDATE() {
 				if(animboss_hit_flag == 0 && boss_hp_current && boss_breath_counter >= boss_breath_counter_max){
 					boss_breath_counter = 0;
 					boss_update_breath_verse_and_max();
-					struct EnemyInfo* minosscale_data = (struct EnemyInfo*) s_minosscale->custom_data;
 					switch(boss_breath_flag){
 						case 0u:
 							boss_breath_flag = 1u;
@@ -354,6 +369,7 @@ void UPDATE() {
 						break;
 					}
 					//se minosscale GENERIC_IDLE molleggia
+					struct EnemyInfo* minosscale_data = (struct EnemyInfo*)s_minosscale->custom_data; 
 					if(minosscale_data->e_state == GENERIC_IDLE){
 						switch(bossminos_breath_flag){
 							case 0u: //goes down
@@ -369,7 +385,7 @@ void UPDATE() {
 						Anim_Breath_Minos_2();
 					}
 				}
-			break;			
+			break;
 			case BOSS_AEACUS:
 				boss_breath_counter++;
 				if(animboss_hit_flag == 0 && boss_hp_current && boss_breath_counter >= boss_breath_counter_max){
@@ -383,24 +399,53 @@ void UPDATE() {
 							boss_breath_flag = 0u;
 						break;
 					}
-					//struct EnemyInfo* minosscale_data = (struct EnemyInfo*) s_minosscale->custom_data;
-					//se minosscale GENERIC_IDLE molleggia
-					//if(minosscale_data->e_state == GENERIC_IDLE){
-						switch(bossminos_breath_flag){
-							case 0u: //goes down
-								Anim_Breath_Aeacus_1();
-								bossminos_breath_flag = 1u;
-							break;
-							case 1u: //back up
-								Anim_Breath_Aeacus_0();
-								bossminos_breath_flag = 0u;
-							break;
-						}
-					//}else{//altrimenti spalanca gli occhi
-					//	Anim_Breath_Minos_2();
-					//}
+					switch(bossminos_breath_flag){
+						case 0u: //goes down
+							Anim_Breath_Aeacus_1();
+							bossminos_breath_flag = 1u;
+						break;
+						case 1u: //back up
+							Anim_Breath_Aeacus_0();
+							bossminos_breath_flag = 0u;
+						break;
+					}
 				}
 			break;
+			case BOSS_HADES:{
+				struct EnemyInfo* hadesskull_data = (struct EnemyInfo*)s_hades_skull->custom_data; 
+				boss_breath_counter++;
+				if(animboss_hit_flag == 0 && boss_hp_current && boss_breath_counter >= boss_breath_counter_max){
+					boss_breath_counter = 0;
+					boss_update_breath_verse_and_max();
+					switch(boss_breath_flag){
+						case 0u:
+							boss_breath_flag = 1u;
+						break;
+						case 1u:
+							boss_breath_flag = 2u;
+						break;
+						case 2u:
+							boss_breath_flag = 0u;
+						break;
+					}
+					//se GENERIC_IDLE molleggia
+					if(hadesskull_data->e_state == GENERIC_IDLE){
+						switch(boss_breath_flag){
+							case 0u: //goes down
+								Anim_Breath_Hades_1();
+							break;
+							case 1u: //back up
+								Anim_Breath_Hades_2();
+							break;
+							case 2u:
+								Anim_Breath_Hades_0();
+							break;
+						}
+					}else{//altrimenti spalanca gli occhi
+						//Anim_Breath_Minos_2();
+					}
+				}
+			}break;
 		}
 	
 
@@ -470,7 +515,7 @@ void UPDATE() {
 		}
 	*/
 	//ANIM FIRE
-		if(current_map == BOSS_MINOS || current_map == BOSS_AEACUS){
+		if(current_map == BOSS_MINOS || current_map == BOSS_AEACUS || current_map == BOSS_HADES){
 			animfire_counter++;
 			if(animfire_counter >= ANIMFIRE_COUNTER_MAX){
 				animfire_counter = 0u;
@@ -481,6 +526,8 @@ void UPDATE() {
 						AnimFire_Minos0();
 					}else if(current_map == BOSS_AEACUS){
 						AnimFire_Aeacus0();
+					}else if(current_map == BOSS_HADES){
+						AnimFire_Hades0();
 					}
 				break;
 				case 8u: AnimFire_1();
@@ -492,7 +539,7 @@ void UPDATE() {
 			}
 		}
 	//ANIMS RIVER
-		if(current_map != BOSS_MINOS && current_map != BOSS_AEACUS){
+		if(current_map != BOSS_MINOS && current_map != BOSS_AEACUS && current_map != BOSS_HADES){
 			anim_counter++;
 			if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
 				anim_counter = 0u;
@@ -712,4 +759,8 @@ void boss_invert_river_verse() BANKED{
 	}else{
 		river_verse = 0;
 	}
+}
+
+void boss_manage_death_hades() BANKED{
+
 }

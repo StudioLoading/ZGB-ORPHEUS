@@ -62,6 +62,8 @@ _SPRITE_DMG(SpriteAeacusbody, aeacusbody)\
 _SPRITE_DMG(SpriteRadamanthus, radamanthus)\
 _SPRITE_DMG(SpriteRadamanthusshadow, radamanthusshadow)\
 _SPRITE_DMG(SpriteRadamanthusbrick, radamanthusbrick)\
+_SPRITE_DMG(SpriteHadesskull, hadesskull)\
+_SPRITE_DMG(SpriteHadesclaw, hadesclaw)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

@@ -21,6 +21,9 @@ IMPORT_TILES(mapbossminost03);
 IMPORT_TILES(mapbossminost04);
 IMPORT_TILES(mapbossaeacust);
 IMPORT_TILES(mapbossaeacust01);
+IMPORT_TILES(mapbosshadest);
+IMPORT_TILES(mapbosshadest01);
+IMPORT_TILES(mapbosshadest02);
 
 
 void set_banked_bkg_data(UINT8 first_tile, UINT8 nb_tiles, struct TilesInfo* t, UINT8 bank) NONBANKED {
@@ -50,9 +53,21 @@ void Anim_Breath_Minos_2() BANKED{
 void Anim_Hit_Minos_0() BANKED{
 	set_banked_bkg_data(96u, 15u, &mapbossminost04, BANK(mapbossminost04));//minos hit
 }
-
 void Anim_Hit_Minos_1() BANKED{
 	set_banked_bkg_data(96u, 15u, &mapbossminost03, BANK(mapbossminost03));//minos hit
+}
+
+void Anim_Breath_Hades_0() BANKED{
+	set_banked_bkg_data(96u, 16u, &mapbosshadest, BANK(mapbosshadest));//hades breath
+	set_banked_bkg_data(32u, 16u, &mapbosshadest, BANK(mapbosshadest));//hades breath
+}
+void Anim_Breath_Hades_1() BANKED{
+	set_banked_bkg_data(96u, 16u, &mapbosshadest01, BANK(mapbosshadest01));//hades breath
+	set_banked_bkg_data(32u, 16u, &mapbosshadest01, BANK(mapbosshadest01));//hades breath
+}
+void Anim_Breath_Hades_2() BANKED{
+	set_banked_bkg_data(96u, 16u, &mapbosshadest02, BANK(mapbosshadest02));//hades breath
+	set_banked_bkg_data(32u, 16u, &mapbosshadest02, BANK(mapbosshadest02));//hades breath
 }
 
 void AnimFire_0() BANKED{
@@ -60,6 +75,9 @@ void AnimFire_0() BANKED{
 }
 void AnimFire_Aeacus0() BANKED{
 	set_banked_bkg_data(84u, 4u, &mapbossaeacust, BANK(mapbossaeacust));//fire
+}
+void AnimFire_Hades0() BANKED{
+	set_banked_bkg_data(84u, 4u, &mapbosshadest, BANK(mapbosshadest));//fire
 }
 void AnimFire_Minos0() BANKED{
 	set_banked_bkg_data(84u, 4u, &mapbossminost, BANK(mapbossminost));//fire
