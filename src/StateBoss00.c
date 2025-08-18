@@ -117,6 +117,10 @@ extern INT8 boss_hp_current;
 extern INT8 boss_hp_max;
 extern UINT8 redraw_hud;
 extern UINT8 flag_button_repushable;
+extern UINT16 final_left_posx;
+extern UINT16 final_left_posy;
+extern UINT16 final_right_posx;
+extern UINT16 final_right_posy;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -181,6 +185,11 @@ void START() {
 				s_hades_claw_left = SpriteManagerAdd(SpriteHadesclaw, 38u, 36u);
 				s_hades_claw_right = SpriteManagerAdd(SpriteHadesclaw, 44u + 46, 36u);
 				s_hades_claw_right->mirror = V_MIRROR;
+				
+				final_left_posx = s_hades_claw_left->x - 16u;
+				final_left_posy = s_hades_claw_left->y; 
+				final_right_posx = s_hades_claw_right->x + 16u;
+				final_right_posy = s_hades_claw_right->y; 
 			}break;
 		}
 	//HUD

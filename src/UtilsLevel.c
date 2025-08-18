@@ -55,6 +55,8 @@
 #define SPAWNY_BOSSCHARON_IN 15
 #define SPAWNX_BOSSAEACUS_IN 4
 #define SPAWNY_BOSSAEACUS_IN 15
+#define SPAWNX_BOSSHADES_IN 9
+#define SPAWNY_BOSSHADES_IN 15
 
 Sprite* s_camera;
 Sprite* s_orpheus;
@@ -789,15 +791,28 @@ void UpdateHUD() BANKED{
 	//BOSS HP
 		if(is_current_map_on_boss()){
 			INT8 idx_bosshp = 0;
-			UPDATE_HUD_TILE(6,0,0);
-			for(idx_bosshp = 0; idx_bosshp < boss_hp_current; idx_bosshp++){
-				UPDATE_HUD_TILE(7+idx_bosshp,0,59);
+			switch(boss_hp_max){
+				case 5:{
+					UPDATE_HUD_TILE(6,0,0);
+					for(idx_bosshp = 0; idx_bosshp < boss_hp_current; idx_bosshp++){
+						UPDATE_HUD_TILE(7+idx_bosshp,0,59);
+					}
+					for(;idx_bosshp < boss_hp_max; idx_bosshp++){
+						UPDATE_HUD_TILE(7+idx_bosshp,0,60);
+					}
+					UPDATE_HUD_TILE(7+boss_hp_max,0,0);
+				}break;
+				case 8:{
+					UPDATE_HUD_TILE(5,0,0);
+					for(idx_bosshp = 0; idx_bosshp < boss_hp_current; idx_bosshp++){
+						UPDATE_HUD_TILE(6+idx_bosshp,0,59);
+					}
+					for(;idx_bosshp < boss_hp_max; idx_bosshp++){
+						UPDATE_HUD_TILE(6+idx_bosshp,0,60);
+					}
+					UPDATE_HUD_TILE(6+boss_hp_max,0,0);
+				}break;
 			}
-			for(;idx_bosshp < boss_hp_max; idx_bosshp++){
-				UPDATE_HUD_TILE(7+idx_bosshp,0,60);
-			}
-			UPDATE_HUD_TILE(7+boss_hp_max,0,0);
-			UPDATE_HUD_TILE(8+boss_hp_max,0,0);
 		}
 }
 
@@ -1164,8 +1179,8 @@ void go_to_next_map() BANKED{
 		case BOSS_HADES:
 			prev_map = HADES_27;
 			next_map = END_GAME;
-			orpheus_spawnx = ((UINT16) SPAWNX_BOSSAEACUS_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_BOSSAEACUS_IN << 3);
+			orpheus_spawnx = ((UINT16) SPAWNX_BOSSHADES_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_BOSSHADES_IN << 3);
 			next_state = StateBoss00;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -16;
