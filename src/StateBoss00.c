@@ -42,6 +42,18 @@ const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
 //next
 88,90,92,94,96,98,100,102,104,
 0};
+
+const UINT8 coll_t_hades[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
+75,76,
+//here the hit tiles
+32,33,34,35,36,38,40,41,42,43,44,46,
+96,97,98,99,100,102,104,105,106,107,107,110,
+//prev
+6,7,8,2,
+//next
+88,90,92,94,
+0};
+
 const UINT8 coll_s_hades005[] = {0};
 
 Sprite* s_charon = 0;
@@ -72,6 +84,7 @@ UINT8 boss_breath_flag_right = 0u;
 Sprite* s_skeletoncerberus = 0;
 Sprite* s_impminos = 0;
 UINT8 flag_impminos_alive = 0u;
+UINT8 flag_hades_summon = 0u;
 UINT16 boss_cerberus_startpos_x_left = ((UINT16) 7u << 3);
 UINT16 boss_cerberus_startpos_y_left =((UINT16) 3u << 3) + 4u;
 UINT16 boss_cerberus_startpos_x_right = ((UINT16) 10u << 3);
@@ -121,6 +134,8 @@ extern UINT16 final_left_posx;
 extern UINT16 final_left_posy;
 extern UINT16 final_right_posx;
 extern UINT16 final_right_posy;
+extern UINT16 saved_orpheus_posx;
+extern UINT16 saved_orpheus_posy;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -132,6 +147,8 @@ extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void UpdateHUD() BANKED;
+extern void hades_regerate_claws() BANKED;
+
 
 void START() {
 	level_common_start();
@@ -180,16 +197,9 @@ void START() {
 				aeacuswing_right_data->e_configured = 2u;
 			}break;
 			case BOSS_HADES:{
-				InitScroll(BANK(mapbosshades), &mapbosshades, coll_t_hades005, coll_s_hades005);
+				InitScroll(BANK(mapbosshades), &mapbosshades, coll_t_hades, coll_s_hades005);
 				s_hades_skull = SpriteManagerAdd(SpriteHadesskull, 64u, 18u);
-				s_hades_claw_left = SpriteManagerAdd(SpriteHadesclaw, 38u, 36u);
-				s_hades_claw_right = SpriteManagerAdd(SpriteHadesclaw, 44u + 46, 36u);
-				s_hades_claw_right->mirror = V_MIRROR;
-				
-				final_left_posx = s_hades_claw_left->x - 16u;
-				final_left_posy = s_hades_claw_left->y; 
-				final_right_posx = s_hades_claw_right->x + 16u;
-				final_right_posy = s_hades_claw_right->y; 
+				hades_regerate_claws();				
 			}break;
 		}
 	//HUD
@@ -216,6 +226,8 @@ void START() {
 		animboss_hit_flag = 0;
 		flag_button_repushable = 1u;
 		bossminos_breath_flag = 0u;
+		flag_impminos_alive = 0u;
+		flag_hades_summon = 0u;
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -462,11 +474,11 @@ void UPDATE() {
 		if(boss_intro < 4){
 			if(spawned_enemy_counter == 0 || spawned_enemy_counter > 20){
 				spawned_enemy_counter = 0;
-				spawn_common_wait++;
-				if(spawn_common_wait >= spawn_common_wait_max){
-					spawn_common_wait = 0u;
-					switch(current_map){
-						case BOSS_CERBERUS:{
+				switch(current_map){
+					case BOSS_CERBERUS:{
+						spawn_common_wait++;
+						if(spawn_common_wait >= spawn_common_wait_max){
+							spawn_common_wait = 0u;
 							UINT16 spawn_skeletoncerberus_posx = 5u;
 							UINT16 spawn_skeletoncerberus_posy = 12u;
 							switch(boss_hp_current){
@@ -477,8 +489,12 @@ void UPDATE() {
 							s_skeletoncerberus = SpriteManagerAdd(SpriteSkeletoncerberus, (spawn_skeletoncerberus_posx << 3) + 3u, (spawn_skeletoncerberus_posy << 3));
 							e_configure(s_skeletoncerberus);
 							e_change_state(s_skeletoncerberus, IDLE_DOWN);
-						}break;
-						case BOSS_MINOS:{
+						}
+					}break;
+					case BOSS_MINOS:{
+						spawn_common_wait++;
+						if(spawn_common_wait >= spawn_common_wait_max){
+							spawn_common_wait = 0u;
 							UINT16 spawn_impminos_posx = 3u;
 							UINT16 spawn_impminos_posy = 4u;
 							switch(boss_hp_current){
@@ -488,20 +504,28 @@ void UPDATE() {
 								break;
 							}
 							if(flag_impminos_alive == 0){
- 								s_impminos = SpriteManagerAdd(SpriteImpminos, (spawn_impminos_posx << 3), (spawn_impminos_posy << 3));
+								s_impminos = SpriteManagerAdd(SpriteImpminos, (spawn_impminos_posx << 3), (spawn_impminos_posy << 3));
 								e_configure(s_impminos);
 								e_change_state(s_impminos, WALK_DOWN);
 							}
-						}break;
-					}
-					//change max interval according to boss hp
-						switch(boss_hp_current){
-							case 1: spawn_common_wait_max = 160u; break;
-							case 2: spawn_common_wait_max = 250u; break;
-							case 3: spawn_common_wait_max = 400u; break;
-							default: spawn_common_wait_max = 700u; break;
 						}
+					}break;
+					case BOSS_HADES:{
+						if(flag_hades_summon){
+							Sprite* s_e_hades = SpriteManagerAdd(SpriteMinion, saved_orpheus_posx, saved_orpheus_posy);
+							e_configure(s_e_hades);
+							flag_hades_summon = 0u;
+						}
+					}break;
 				}
+				//change max interval according to boss hp
+					switch(boss_hp_current){
+						case 1: spawn_common_wait_max = 160u; break;
+						case 2: spawn_common_wait_max = 250u; break;
+						case 3: spawn_common_wait_max = 400u; break;
+						default: spawn_common_wait_max = 700u; break;
+					}
+				
 			}
 		}
 	//GHOSTS

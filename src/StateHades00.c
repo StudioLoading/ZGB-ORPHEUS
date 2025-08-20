@@ -145,8 +145,6 @@ void START() {
 					area_enemy_counter = 1;
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1);
-					/*Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
-					e_configure(e_skeleton2);*/
 				}break;
 				case HADES_07:{
 				}break;

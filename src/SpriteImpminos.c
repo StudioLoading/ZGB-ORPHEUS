@@ -21,7 +21,6 @@ UINT8 flag_move_up = 0;
 
 extern UINT8 flag_impminos_alive;
 extern INT8 boss_hp_current;
-extern UINT8 spawned_enemy_counter;
 extern UINT8 boss_minos_flag_orpheus_on_plate;
 
 extern void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED;

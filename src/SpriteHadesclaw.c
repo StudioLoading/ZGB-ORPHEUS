@@ -12,6 +12,7 @@
 #define CLAW_RAY 0 
 
 const UINT8 a_hadesclaw[] = {1, 1};
+const UINT8 a_hadesclaw_hidden[] = {1, 0};
 const UINT8 a_hadesclaw_blink[] = {2, 0,1};
 
 UINT16 final_left_posx = 0u;
@@ -27,8 +28,14 @@ extern INT8 boss_hp_current;
 extern Sprite* s_orpheus;
 extern UINT16 saved_orpheus_posx;
 extern UINT16 saved_orpheus_posy;
+extern UINT8 spawned_enemy_counter;
+extern struct OrpheusInfo* orpheus_info;
+extern SONG song_selection;
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
+extern void boss_hit() BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 void hadesclaw_check_overlapping_and_spritecollision(Sprite* arg_s_claw) BANKED;
 void hadesclaw_change_state(Sprite* arg_s_claw) BANKED;
@@ -41,6 +48,9 @@ HADESCLAW_STATE hadesclaw_move_to_clockwise(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_counterclockwise(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_idle(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_wait(Sprite* arg_s_claw) BANKED;
+HADESCLAW_STATE hadesclaw_move_to_summon(Sprite* arg_s_claw) BANKED;
+HADESCLAW_STATE hadesclaw_move_to_hit(Sprite* arg_s_claw) BANKED;
+HADESCLAW_STATE hadesclaw_move_to_hidden(Sprite* arg_s_claw) BANKED;
 
 void START() {
     THIS->lim_x = THIS->x;
@@ -51,6 +61,7 @@ void START() {
     hadesclaw_data->frmskip = 8;
     hadesclaw_data->frmskip_wait = 0;
     hadesclaw_data->vx = 0;
+    hadesclaw_data->vy = 0;
     hadesclaw_data->wait = 200;
     
 }
@@ -58,6 +69,17 @@ void START() {
 void UPDATE() {
     struct EnemyInfo* hadesclaw_data = (struct EnemyInfo*)THIS->custom_data; 
     switch(hadesclaw_data->e_state){
+        case HADESCLAW_HIT:{
+            if(hadesclaw_data->wait){
+                hadesclaw_data->wait--;
+                if(hadesclaw_data->wait == 0){
+                    hadesclaw_data->e_state = hadesclaw_move_to_hidden(THIS);
+                }
+            }
+        }break;
+        case HADESCLAW_HIDDEN:{
+
+        }break;
         case HADESCLAW_WAIT:
         case HADESCLAW_IDLE:{
             hadesclaw_data->frmskip_wait++;
@@ -116,7 +138,34 @@ void UPDATE() {
                 hadesclaw_data->wait = hadesclaw_data->wait - (10 - boss_hp_current);
             }
         }break;
+        case HADESCLAW_SUMMON:{
+            hadesclaw_data->frmskip_wait++;
+            if(hadesclaw_data->frmskip_wait >= hadesclaw_data->frmskip){
+                hadesclaw_data->frmskip_wait = 0;
+                THIS->y--;
+            }
+            if(THIS->y < 32u){
+                hadesclaw_change_state(THIS);
+            }
+        }break;
     }
+    //CHECK HIT
+        if(orpheus_info->charming == 1 && hadesclaw_data->e_state != HADESCLAW_HIT && hadesclaw_data->e_state != HADESCLAW_IDLE && hadesclaw_data->e_state != HADESCLAW_WAIT){
+            switch(song_selection){
+                case SLEEP:{
+                    UINT8 tile = GetScrollTile((THIS->x + 3) >> 3, (THIS->y+7) >> 3);
+                    if(tile == 0){
+                        tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+5) >> 3); 
+                    } if(tile == 0){
+                        tile = GetScrollTile((THIS->x + 11) >> 3, (THIS->y+4) >> 3); 
+                    }
+                    ENEMY_REACTION is_over_fire = e_is_damaged_by_fire(tile, SpriteHadesclaw);
+                    if(is_over_fire == ENEMY_REACT_DIE && hadesclaw_data->vy == 0){
+                        hadesclaw_data->e_state = hadesclaw_move_to_hit(THIS);
+                    }
+                }break;
+            }
+        }
 }
 
 void hadesclaw_rotate(Sprite* arg_s_claw) BANKED{
@@ -169,42 +218,112 @@ void hadesclaw_check_overlapping_and_spritecollision(Sprite* arg_s_claw) BANKED{
 void hadesclaw_change_state(Sprite* arg_s_claw) BANKED{
     HADESCLAW_STATE claw_new_state = HADESCLAW_IDLE;
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
-    switch(boss_hp_current){
-        case 8:
-            switch(hades_state){
-                case HADES_CLAW_DEATHLY_HUG:
-                    switch(claw_data->e_state){
-                        case HADESCLAW_IDLE:
-                            if(arg_s_claw->mirror == NO_MIRROR){
-                                claw_new_state = hadesclaw_move_to_walk_left(arg_s_claw);
-                            }else if(arg_s_claw->mirror == V_MIRROR){
-                                claw_new_state = hadesclaw_move_to_walk_right(arg_s_claw);
-                            }
-                        break;
-                        case HADESCLAW_WALK_LEFT:
-                        case HADESCLAW_WALK_RIGHT:
-                            claw_new_state = hadesclaw_move_to_preattack(arg_s_claw);
-                        break;
-                        case HADESCLAW_PREATTACK:
-                            if(arg_s_claw->mirror == NO_MIRROR){
-                                claw_new_state = hadesclaw_move_to_counterclockwise(arg_s_claw);
-                            }else if(arg_s_claw->mirror == V_MIRROR){
-                                claw_new_state = hadesclaw_move_to_clockwise(arg_s_claw);
-                            }
-                        break;
-                        case HADESCLAW_CLOCKWISE:
-                        case HADESCLAW_COUNTERCLOCKWISE:
-                            claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
-                        break;
-                        case HADESCLAW_WAIT:
-                            claw_new_state = hadesclaw_move_to_idle(arg_s_claw);
-                        break;
+    if(claw_data->vy){ return; }
+    switch(hades_state){
+        case HADES_CLAW_LEFT_CIRCLE:{
+            if(arg_s_claw->mirror == NO_MIRROR){
+                switch(claw_data->e_state){
+                    case HADESCLAW_IDLE:
+                        claw_new_state = hadesclaw_move_to_walk_left(arg_s_claw);
+                    break;
+                    case HADESCLAW_WALK_LEFT:
+                        claw_new_state = hadesclaw_move_to_preattack(arg_s_claw);
+                    break;
+                    case HADESCLAW_PREATTACK:
+                        claw_new_state = hadesclaw_move_to_counterclockwise(arg_s_claw);
+                    break;
+                    case HADESCLAW_COUNTERCLOCKWISE:
+                        claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
+                    break;
+                }
+            }
+        }break;
+        case HADES_CLAW_RIGHT_CIRCLE:{
+            if(arg_s_claw->mirror == V_MIRROR){
+                switch(claw_data->e_state){
+                    case HADESCLAW_IDLE:
+                        claw_new_state = hadesclaw_move_to_walk_right(arg_s_claw);
+                    break;
+                    case HADESCLAW_WALK_RIGHT:
+                        claw_new_state = hadesclaw_move_to_preattack(arg_s_claw);
+                    break;
+                    case HADESCLAW_PREATTACK:
+                        claw_new_state = hadesclaw_move_to_clockwise(arg_s_claw);
+                    break;
+                    case HADESCLAW_CLOCKWISE:
+                        claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
+                    break;
+                }
+            }
+        }break;
+        case HADES_CLAW_DEATHLY_HUG:{
+            switch(claw_data->e_state){
+                case HADESCLAW_IDLE:
+                    if(arg_s_claw->mirror == NO_MIRROR){
+                        claw_new_state = hadesclaw_move_to_walk_left(arg_s_claw);
+                    }else if(arg_s_claw->mirror == V_MIRROR){
+                        claw_new_state = hadesclaw_move_to_walk_right(arg_s_claw);
                     }
                 break;
+                case HADESCLAW_WALK_LEFT:
+                case HADESCLAW_WALK_RIGHT:
+                    claw_new_state = hadesclaw_move_to_preattack(arg_s_claw);
+                break;
+                case HADESCLAW_PREATTACK:
+                    if(arg_s_claw->mirror == NO_MIRROR){
+                        claw_new_state = hadesclaw_move_to_counterclockwise(arg_s_claw);
+                    }else if(arg_s_claw->mirror == V_MIRROR){
+                        claw_new_state = hadesclaw_move_to_clockwise(arg_s_claw);
+                    }
+                break;
+                case HADESCLAW_CLOCKWISE:
+                case HADESCLAW_COUNTERCLOCKWISE:
+                    claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
+                break;
+                case HADESCLAW_WAIT:
+                    //claw_new_state = hadesclaw_move_to_idle(arg_s_claw);
+                break;
             }
-        break;
+        }break;
+        case HADES_SUMMON:{
+            switch(claw_data->e_state){
+                case HADESCLAW_IDLE:{
+                    if(spawned_enemy_counter == 0){
+                        claw_new_state = hadesclaw_move_to_summon(arg_s_claw);
+                    }else{
+                        claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
+                    }
+                }break;
+                case HADESCLAW_SUMMON:{
+                    claw_new_state = hadesclaw_move_to_preattack(arg_s_claw);
+                }break;
+                case HADESCLAW_PREATTACK:{
+                    claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
+                }break;
+            }
+        }break;
     }
     claw_data->e_state = claw_new_state;
+}
+
+HADESCLAW_STATE hadesclaw_move_to_hidden(Sprite* arg_s_claw) BANKED{
+    SetSpriteAnim(arg_s_claw, a_hadesclaw_hidden, 8u);
+    struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
+    SetSpriteAnim(arg_s_claw, a_hadesclaw_hidden, 1);
+    return HADESCLAW_HIDDEN;
+}
+
+HADESCLAW_STATE hadesclaw_move_to_hit(Sprite* arg_s_claw) BANKED{
+    SetSpriteAnim(arg_s_claw, a_hadesclaw_blink, 8u);
+    struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
+    if(claw_data->vy == 0){
+        SetSpriteAnim(arg_s_claw, a_hadesclaw_blink, 12);
+        boss_hit();
+        spawn_death_animation(arg_s_claw->x + 10u, arg_s_claw->y + 8u);
+        claw_data->wait = 100u;
+        claw_data->vy = 1;
+    }
+    return HADESCLAW_HIT;
 }
 
 HADESCLAW_STATE hadesclaw_move_to_wait(Sprite* arg_s_claw) BANKED{
@@ -213,6 +332,13 @@ HADESCLAW_STATE hadesclaw_move_to_wait(Sprite* arg_s_claw) BANKED{
     arg_s_claw->y = arg_s_claw->lim_y;
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     claw_data->frmskip = boss_hp_current;
+    claw_data->frmskip_wait = 0;
+    claw_data->wait = 100;
+    if(arg_s_claw->mirror == H_MIRROR){
+        arg_s_claw->mirror = NO_MIRROR;
+    }else if(arg_s_claw->mirror == HV_MIRROR){
+        arg_s_claw->mirror = V_MIRROR;
+    }
     return HADESCLAW_WAIT;
 }
 HADESCLAW_STATE hadesclaw_move_to_idle(Sprite* arg_s_claw) BANKED{
@@ -221,6 +347,7 @@ HADESCLAW_STATE hadesclaw_move_to_idle(Sprite* arg_s_claw) BANKED{
     arg_s_claw->y = arg_s_claw->lim_y;
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     claw_data->frmskip = boss_hp_current;
+    claw_data->frmskip_wait = 0;
     return HADESCLAW_IDLE;
 }
 HADESCLAW_STATE hadesclaw_move_to_counterclockwise(Sprite* arg_s_claw) BANKED{
@@ -231,7 +358,6 @@ HADESCLAW_STATE hadesclaw_move_to_counterclockwise(Sprite* arg_s_claw) BANKED{
     claw_data->vx = 0;
     return HADESCLAW_COUNTERCLOCKWISE;
 }
-
 HADESCLAW_STATE hadesclaw_move_to_clockwise(Sprite* arg_s_claw) BANKED{
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
@@ -240,7 +366,6 @@ HADESCLAW_STATE hadesclaw_move_to_clockwise(Sprite* arg_s_claw) BANKED{
     claw_data->vx = 0;
     return HADESCLAW_CLOCKWISE;
 }
-
 HADESCLAW_STATE hadesclaw_move_to_walk_left(Sprite* arg_s_claw) BANKED{
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
@@ -251,7 +376,6 @@ HADESCLAW_STATE hadesclaw_move_to_walk_right(Sprite* arg_s_claw) BANKED{
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
     return HADESCLAW_WALK_RIGHT;
 }
-
 HADESCLAW_STATE hadesclaw_move_to_preattack(Sprite* arg_s_claw) BANKED{
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     SetSpriteAnim(arg_s_claw, a_hadesclaw_blink, 64u);
@@ -259,6 +383,21 @@ HADESCLAW_STATE hadesclaw_move_to_preattack(Sprite* arg_s_claw) BANKED{
     saved_orpheus_posx = s_orpheus->x;
     saved_orpheus_posy = s_orpheus->y;
     return HADESCLAW_PREATTACK;
+}
+HADESCLAW_STATE hadesclaw_move_to_summon(Sprite* arg_s_claw) BANKED{
+    struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
+    SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
+    arg_s_claw->y = arg_s_claw->lim_y + 3u; 
+    claw_data->wait = 60;
+    claw_data->frmskip = 12;
+    saved_orpheus_posx = s_orpheus->x;
+    saved_orpheus_posy = s_orpheus->y;
+    if(arg_s_claw->mirror == NO_MIRROR){
+        arg_s_claw->mirror = H_MIRROR;
+    }else{
+        arg_s_claw->mirror = HV_MIRROR;
+    }
+    return HADESCLAW_SUMMON;
 }
 
 void DESTROY() {

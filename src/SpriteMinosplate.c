@@ -20,8 +20,6 @@ extern Sprite* s_plate;
 
 extern void minosscale_change_state(Sprite* arg_s_minosplate, SPRITE_STATES arg_new_state) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
-extern void e_destroy(Sprite* s_enemy) BANKED;
-extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 
 /*
 	SPRITE_STATES e_state;
