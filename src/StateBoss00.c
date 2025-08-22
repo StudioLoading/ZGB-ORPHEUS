@@ -213,7 +213,7 @@ void START() {
 		boss_hp_current = 5;
 		if(current_map == BOSS_HADES){
 			boss_hp_max = 8;
-			boss_hp_current = 8;
+			boss_hp_current = 4;//TODO 8
 		}
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
@@ -318,6 +318,7 @@ void UPDATE() {
 						}
 					break;
 					case 5:
+						animboss_hit_counter = 0;
 						if(boss_hp_current == 0){
 							animboss_hit_counter = 0;
 						}else{

@@ -816,17 +816,17 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             switch(song_selection){
                 case ATTRACT://charm
                     countdown_step_currentmax = COUNTDOWN_SKIP_ATTRACT;
-                    orpheus_wait = 120u;
+                    orpheus_wait = 60u;
                     orpheus_attack_cooldown = 120u;
                 break;
                 case REPEL://repell
                     countdown_step_currentmax = COUNTDOWN_SKIP_REPELL;
-                    orpheus_wait = 120u;
+                    orpheus_wait = 100u;
                     orpheus_attack_cooldown = 120u;
                 break;
                 case SLEEP://attract
                     countdown_step_currentmax = COUNTDOWN_SKIP_SLEEP;
-                    orpheus_wait = 120u;
+                    orpheus_wait = 100u;
                     orpheus_attack_cooldown = 200u;
                 break;
             }

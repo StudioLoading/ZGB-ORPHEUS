@@ -9,7 +9,7 @@
 #include "custom_datas.h"
 
 
-const UINT8 a_hadesskull[] = {1, 1};
+const UINT8 a_hadesskull[] = {2, 1,2};
 const UINT8 a_hadesskull_blink[] = {2, 0,1};
 
 extern UINT8 boss_breath_flag;
@@ -22,6 +22,7 @@ extern UINT16 final_left_posx;
 extern UINT16 final_left_posy;
 extern UINT16 final_right_posx;
 extern UINT16 final_right_posy;
+extern UINT8 flag_camera_shake_h;
 
 HADES_STATE hades_state = HADES_IDLE;
 
@@ -30,12 +31,12 @@ void hades_regerate_claws() BANKED;
 void hades_skull_reset_data(Sprite* arg_s_hadesskull) BANKED;
 
 extern void hadesclaw_change_state(Sprite* arg_s_claw) BANKED;
-
+extern void hadesclaw_set_finalposs(UINT16 arg_leftposx, UINT16 arg_leftposy, UINT16 arg_rightposx, UINT16 arg_rightposy) BANKED;
 
 void START() {
     THIS->lim_x = THIS->x;
     THIS->lim_y = THIS->y;
-    SetSpriteAnim(THIS, a_hadesskull, 1u);
+    SetSpriteAnim(THIS, a_hadesskull, 200u);
     hades_skull_reset_data(THIS);
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -48,7 +49,8 @@ void UPDATE() {
     struct EnemyInfo* claw_left_data = (struct EnemyInfo*)s_hades_claw_left->custom_data;
     struct EnemyInfo* claw_right_data = (struct EnemyInfo*)s_hades_claw_right->custom_data;
     switch(boss_hp_current){
-        case 8:{
+        case 8:
+        case 7:{
             switch(hades_state){
                 case HADES_IDLE:{
                     switch(hadesskull_data->e_state){
@@ -75,9 +77,32 @@ void UPDATE() {
                 break;
                 case HADES_CLAW_RIGHT_CIRCLE:
                     if((claw_right_data->e_state == HADESCLAW_WAIT || claw_right_data->e_state == HADESCLAW_HIDDEN) && claw_right_data->wait == 0){
-                        hades_change_state(THIS, HADES_CLAW_DEATHLY_HUG);
+                        hades_change_state(THIS, HADES_IDLE);
                     }
                 break;
+            }
+        }break;
+        case 6:
+        case 5:{
+            switch(hades_state){
+                case HADES_IDLE:{
+                    switch(hadesskull_data->e_state){
+                        case GENERIC_IDLE:
+                            hadesskull_data->frmskip_wait++;
+                            if(hadesskull_data->frmskip_wait == hadesskull_data->frmskip){
+                                hadesskull_data->frmskip_wait = 0;
+                                if(boss_breath_flag){
+                                    THIS->y += boss_breath_verse;
+                                    //boss_breath_flag = 0;
+                                }
+                            }
+                            hadesskull_data->wait--;
+                            if(hadesskull_data->wait == 0){
+                                hades_change_state(THIS, HADES_CLAW_DEATHLY_HUG);
+                            }
+                        break;
+                    }
+                }break;
                 case HADES_CLAW_DEATHLY_HUG:{
                     if((claw_left_data->e_state == HADESCLAW_WAIT || claw_left_data->e_state == HADESCLAW_HIDDEN) && (claw_right_data->e_state == HADESCLAW_WAIT || claw_right_data->e_state == HADESCLAW_HIDDEN) && claw_left_data->wait == 0 && claw_right_data->wait == 0){
                         hades_change_state(THIS, HADES_SUMMON);
@@ -91,13 +116,48 @@ void UPDATE() {
                 }break;
             }
         }break;
-        case 7:{
+        case 4:{
+            switch(hades_state){
+                case HADES_IDLE:{
+                    switch(hadesskull_data->e_state){
+                        case GENERIC_IDLE:
+                            hadesskull_data->frmskip_wait++;
+                            if(hadesskull_data->frmskip_wait == hadesskull_data->frmskip){
+                                hadesskull_data->frmskip_wait = 0;
+                                if(boss_breath_flag){
+                                    THIS->y += boss_breath_verse;
+                                    //boss_breath_flag = 0;
+                                }
+                            }
+                            hadesskull_data->wait--;
+                            if(hadesskull_data->wait == 0){
+                                hades_change_state(THIS, HADES_CLAW_STRAIGHT);
+                            }
+                        break;
+                    }
+                }break;
+                case HADES_CLAW_STRAIGHT:{
+                    if((claw_left_data->e_state == HADESCLAW_WAIT || claw_left_data->e_state == HADESCLAW_HIDDEN) && (claw_right_data->e_state == HADESCLAW_WAIT || claw_right_data->e_state == HADESCLAW_HIDDEN) && claw_left_data->wait == 0 && claw_right_data->wait == 0){
+                        hades_change_state(THIS, HADES_FIREBALL_SINGLE);
+                    }
+                }break;
+                case HADES_FIREBALL_SINGLE:{
+                    if((claw_left_data->e_state == HADESCLAW_WAIT || claw_left_data->e_state == HADESCLAW_HIDDEN) && (claw_right_data->e_state == HADESCLAW_WAIT || claw_right_data->e_state == HADESCLAW_HIDDEN)){
+                        flag_hades_summon = 1u;
+                        hades_change_state(THIS, HADES_IDLE);
+                    }
+                }break;
+            }
         }break;
     }
     //anytime, if both hands are damaged (custom_data->vy==1) force to HADES_IDLE
     if(claw_left_data->vy && claw_right_data->vy){
-        hades_regerate_claws();
+        hades_change_state(THIS, HADES_IDLE);
+        if(boss_hp_current > 1){
+            hades_regerate_claws();
+        }
         hades_skull_reset_data(THIS);
+        flag_camera_shake_h = 1;
     }
 }
 
@@ -110,13 +170,10 @@ void hades_skull_reset_data(Sprite* arg_s_hadesskull) BANKED{
 }
 
 void hades_regerate_claws() BANKED{
-    s_hades_claw_left = SpriteManagerAdd(SpriteHadesclaw, 38u, 36u);
-    s_hades_claw_right = SpriteManagerAdd(SpriteHadesclaw, 44u + 46, 36u);
+    s_hades_claw_left = SpriteManagerAdd(SpriteHadesclaw, 42u, 42u);
+    s_hades_claw_right = SpriteManagerAdd(SpriteHadesclaw, 100u, 42u);
     s_hades_claw_right->mirror = V_MIRROR;
-    final_left_posx = s_hades_claw_left->x - 10u;
-    final_left_posy = s_hades_claw_left->y; 
-    final_right_posx = s_hades_claw_right->x + 10u;
-    final_right_posy = s_hades_claw_right->y; 
+    hadesclaw_set_finalposs(42u - 10u, 42u, 100u + 10u, 42u);
 }
 
 void hades_change_state(Sprite* arg_s_hadesskull, SPRITE_STATES arg_new_state) BANKED{
@@ -128,9 +185,13 @@ void hades_change_state(Sprite* arg_s_hadesskull, SPRITE_STATES arg_new_state) B
     //if(arg_new_state == HADES_SUMMON){
         //start claws from HADESCLAW_IDLE state
         struct EnemyInfo* claw_left_data = (struct EnemyInfo*)s_hades_claw_left->custom_data;
-        claw_left_data->e_state = HADESCLAW_IDLE;
+        if(claw_left_data->e_state != HADESCLAW_HIDDEN){
+            claw_left_data->e_state = HADESCLAW_IDLE;
+        }
         struct EnemyInfo* claw_right_data = (struct EnemyInfo*)s_hades_claw_right->custom_data;
-        claw_right_data->e_state = HADESCLAW_IDLE;
+        if(claw_right_data->e_state != HADESCLAW_HIDDEN){
+            claw_right_data->e_state = HADESCLAW_IDLE;
+        }
     //}
     hadesclaw_change_state(s_hades_claw_left);
     hadesclaw_change_state(s_hades_claw_right);

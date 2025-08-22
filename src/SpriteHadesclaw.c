@@ -31,6 +31,7 @@ extern UINT16 saved_orpheus_posy;
 extern UINT8 spawned_enemy_counter;
 extern struct OrpheusInfo* orpheus_info;
 extern SONG song_selection;
+extern UINT8 orpheus_attack_cooldown;
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
@@ -40,6 +41,8 @@ extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 void hadesclaw_check_overlapping_and_spritecollision(Sprite* arg_s_claw) BANKED;
 void hadesclaw_change_state(Sprite* arg_s_claw) BANKED;
 void hadesclaw_rotate(Sprite* arg_s_claw) BANKED;
+UINT8 hadesclaw_straight(Sprite* arg_s_claw) BANKED;
+void hadesclaw_set_finalposs(UINT16 arg_leftposx, UINT16 arg_leftposy, UINT16 arg_rightposx, UINT16 arg_rightposy) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_walk_left(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_walk_right(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_preattack(Sprite* arg_s_claw) BANKED;
@@ -51,6 +54,8 @@ HADESCLAW_STATE hadesclaw_move_to_wait(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_summon(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_hit(Sprite* arg_s_claw) BANKED;
 HADESCLAW_STATE hadesclaw_move_to_hidden(Sprite* arg_s_claw) BANKED;
+HADESCLAW_STATE hadesclaw_move_to_straight(Sprite* arg_s_claw) BANKED;
+
 
 void START() {
     THIS->lim_x = THIS->x;
@@ -127,7 +132,7 @@ void UPDATE() {
             if(hadesclaw_data->frmskip_wait >= hadesclaw_data->frmskip){
                 hadesclaw_data->frmskip_wait = 0;
                 hadesclaw_rotate(THIS);
-                hadesclaw_data->wait = hadesclaw_data->wait + (10 - boss_hp_current);
+                hadesclaw_data->wait = hadesclaw_data->wait + (9 - boss_hp_current);
             }
         }break;
         case HADESCLAW_COUNTERCLOCKWISE:{
@@ -135,7 +140,17 @@ void UPDATE() {
             if(hadesclaw_data->frmskip_wait >= hadesclaw_data->frmskip){
                 hadesclaw_data->frmskip_wait = 0;
                 hadesclaw_rotate(THIS);
-                hadesclaw_data->wait = hadesclaw_data->wait - (10 - boss_hp_current);
+                hadesclaw_data->wait = hadesclaw_data->wait - (9 - boss_hp_current);
+            }
+        }break;
+        case HADESCLAW_STRAIGHT:{
+            hadesclaw_data->frmskip_wait++;
+            if(hadesclaw_data->frmskip_wait >= hadesclaw_data->frmskip){
+                hadesclaw_data->frmskip_wait = 0;
+                UINT8 go_back = hadesclaw_straight(THIS);
+                if(go_back){
+                    hadesclaw_change_state(THIS);
+                }
             }
         }break;
         case HADESCLAW_SUMMON:{
@@ -150,15 +165,32 @@ void UPDATE() {
         }break;
     }
     //CHECK HIT
-        if(orpheus_info->charming == 1 && hadesclaw_data->e_state != HADESCLAW_HIT && hadesclaw_data->e_state != HADESCLAW_IDLE && hadesclaw_data->e_state != HADESCLAW_WAIT){
+        if(orpheus_attack_cooldown){
+            orpheus_attack_cooldown--;
+        }
+        if(orpheus_info->charming == 1 && orpheus_attack_cooldown > 160u &&
+            hadesclaw_data->e_state != HADESCLAW_HIT && hadesclaw_data->e_state != HADESCLAW_IDLE && hadesclaw_data->e_state != HADESCLAW_WAIT){
             switch(song_selection){
                 case SLEEP:{
-                    UINT8 tile = GetScrollTile((THIS->x + 3) >> 3, (THIS->y+7) >> 3);
-                    if(tile == 0){
-                        tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+5) >> 3); 
-                    } if(tile == 0){
-                        tile = GetScrollTile((THIS->x + 11) >> 3, (THIS->y+4) >> 3); 
+                    UINT8 tile = GetScrollTile((THIS->x + 3) >> 3, (THIS->y+2) >> 3);
+                    if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 3) >> 3, (THIS->y+6) >> 3); 
                     }
+                    /*if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 9) >> 3, (THIS->y+2) >> 3); 
+                    } if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 9) >> 3, (THIS->y+6) >> 3); 
+                    } 
+                    */if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 17) >> 3, (THIS->y+2) >> 3); 
+                    } if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 17) >> 3, (THIS->y+6) >> 3); 
+                    }
+                    /*if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 22) >> 3, (THIS->y+2) >> 3); 
+                    } if(tile == 28){
+                        tile = GetScrollTile((THIS->x + 22) >> 3, (THIS->y+6) >> 3); 
+                    }*/
                     ENEMY_REACTION is_over_fire = e_is_damaged_by_fire(tile, SpriteHadesclaw);
                     if(is_over_fire == ENEMY_REACT_DIE && hadesclaw_data->vy == 0){
                         hadesclaw_data->e_state = hadesclaw_move_to_hit(THIS);
@@ -166,6 +198,33 @@ void UPDATE() {
                 }break;
             }
         }
+}
+
+void hadesclaw_set_finalposs(UINT16 arg_leftposx, UINT16 arg_leftposy, UINT16 arg_rightposx, UINT16 arg_rightposy) BANKED{
+    final_left_posx = arg_leftposx;
+    final_left_posy = arg_leftposy; 
+    final_right_posx = arg_rightposx;
+    final_right_posy = arg_rightposy; 
+}
+
+UINT8 hadesclaw_straight(Sprite* arg_s_claw) BANKED{
+    UINT8 result = 0u;
+    struct EnemyInfo* hadesclaw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
+    UINT8 hadesclaw_tile_coll = TranslateSprite(arg_s_claw, 0, hadesclaw_data->vx << delta_time);
+    if((hadesclaw_tile_coll <= 111u && hadesclaw_tile_coll >= 96u) || 
+        (hadesclaw_tile_coll <= 47u && hadesclaw_tile_coll >= 32u)){
+        if(hadesclaw_data->vx < 0){
+            //go back
+            result = 1u;
+        }else{
+            THIS->y += hadesclaw_data->vx;
+        }
+    }else if(hadesclaw_tile_coll){
+        THIS->y -= 2;
+        hadesclaw_data->vx = -1;
+    }
+    hadesclaw_check_overlapping_and_spritecollision(arg_s_claw);
+    return result;
 }
 
 void hadesclaw_rotate(Sprite* arg_s_claw) BANKED{
@@ -302,14 +361,43 @@ void hadesclaw_change_state(Sprite* arg_s_claw) BANKED{
                 }break;
             }
         }break;
+        case HADES_CLAW_STRAIGHT:{
+            switch(claw_data->e_state){
+                case HADESCLAW_IDLE:{
+                    hadesclaw_set_finalposs(42u + 8u, 50u, 100u - 8, 50);
+                    if(arg_s_claw->mirror == NO_MIRROR){
+                        claw_new_state = hadesclaw_move_to_walk_left(arg_s_claw);
+                    }else if(arg_s_claw->mirror == V_MIRROR){
+                        claw_new_state = hadesclaw_move_to_walk_right(arg_s_claw);
+                    }
+                }break;
+                case HADESCLAW_WALK_LEFT:
+                case HADESCLAW_WALK_RIGHT:
+                    claw_new_state = hadesclaw_move_to_preattack(arg_s_claw);
+                break;
+                case HADESCLAW_PREATTACK:
+                    claw_new_state = hadesclaw_move_to_straight(arg_s_claw);
+                break;
+                case HADESCLAW_STRAIGHT:
+                    claw_new_state = hadesclaw_move_to_wait(arg_s_claw);
+                break;
+            }
+        }break;
     }
     claw_data->e_state = claw_new_state;
 }
 
-HADESCLAW_STATE hadesclaw_move_to_hidden(Sprite* arg_s_claw) BANKED{
-    SetSpriteAnim(arg_s_claw, a_hadesclaw_hidden, 8u);
+HADESCLAW_STATE hadesclaw_move_to_straight(Sprite* arg_s_claw) BANKED{
+    SetSpriteAnim(THIS, a_hadesclaw, 1u);
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
-    SetSpriteAnim(arg_s_claw, a_hadesclaw_hidden, 1);
+    claw_data->frmskip_wait = 0;
+    claw_data->frmskip = 0;
+    claw_data->vx = 2;
+    return HADESCLAW_STRAIGHT;
+}
+
+HADESCLAW_STATE hadesclaw_move_to_hidden(Sprite* arg_s_claw) BANKED{
+    SetSpriteAnim(arg_s_claw, a_hadesclaw_hidden, 1u);
     return HADESCLAW_HIDDEN;
 }
 
@@ -353,8 +441,8 @@ HADESCLAW_STATE hadesclaw_move_to_idle(Sprite* arg_s_claw) BANKED{
 HADESCLAW_STATE hadesclaw_move_to_counterclockwise(Sprite* arg_s_claw) BANKED{
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
-    claw_data->wait = 120u;
-    claw_data->frmskip = 2;
+    claw_data->wait = 130u;
+    claw_data->frmskip = 1;
     claw_data->vx = 0;
     return HADESCLAW_COUNTERCLOCKWISE;
 }
@@ -362,7 +450,7 @@ HADESCLAW_STATE hadesclaw_move_to_clockwise(Sprite* arg_s_claw) BANKED{
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
     claw_data->wait = 20u;
-    claw_data->frmskip = 2;
+    claw_data->frmskip = 1;
     claw_data->vx = 0;
     return HADESCLAW_CLOCKWISE;
 }
@@ -380,8 +468,6 @@ HADESCLAW_STATE hadesclaw_move_to_preattack(Sprite* arg_s_claw) BANKED{
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     SetSpriteAnim(arg_s_claw, a_hadesclaw_blink, 64u);
     claw_data->wait = 40 * boss_hp_current;
-    saved_orpheus_posx = s_orpheus->x;
-    saved_orpheus_posy = s_orpheus->y;
     return HADESCLAW_PREATTACK;
 }
 HADESCLAW_STATE hadesclaw_move_to_summon(Sprite* arg_s_claw) BANKED{
