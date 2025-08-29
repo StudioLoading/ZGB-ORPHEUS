@@ -200,6 +200,8 @@ UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, 
             aea_s_aeacusbody->x += actual_aeabody_vx;
             aea_s_aeacusbody->y += actual_aeabody_vy;
         }
+        aeacusbody_data->vx = actual_aeabody_vx;
+        aeacusbody_data->vy = actual_aeabody_vy;
     }
     return result_arrived;
 }

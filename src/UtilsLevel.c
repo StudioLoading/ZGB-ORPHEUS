@@ -1183,7 +1183,7 @@ void go_to_next_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSHADES_IN << 3);
 			next_state = StateBoss00;
 			new_state = IDLE_UP;
-			a_walk_counter_y = -16;
+			a_walk_counter_y = -10;
 		break;
 	}
 	SetState(next_state);

@@ -67,8 +67,7 @@ void START() {
     hadesclaw_data->frmskip_wait = 0;
     hadesclaw_data->vx = 0;
     hadesclaw_data->vy = 0;
-    hadesclaw_data->wait = 200;
-    
+    hadesclaw_data->wait = 200;    
 }
 
 void UPDATE() {
@@ -78,12 +77,15 @@ void UPDATE() {
             if(hadesclaw_data->wait){
                 hadesclaw_data->wait--;
                 if(hadesclaw_data->wait == 0){
-                    hadesclaw_data->e_state = hadesclaw_move_to_hidden(THIS);
+                    if(boss_hp_current < 3){
+                        SpriteManagerRemoveSprite(THIS);
+                        return;
+                    }
+                    hadesclaw_data->e_state = hadesclaw_move_to_hidden(THIS);       
                 }
             }
         }break;
         case HADESCLAW_HIDDEN:{
-
         }break;
         case HADESCLAW_WAIT:
         case HADESCLAW_IDLE:{
@@ -102,9 +104,18 @@ void UPDATE() {
             hadesclaw_data->frmskip_wait++;
             if(hadesclaw_data->frmskip_wait == hadesclaw_data->frmskip){
                 hadesclaw_data->frmskip_wait = 0;
-                if(THIS->x > final_left_posx){
-                    THIS->x--;
-                }else{
+                UINT8 ready = 0u;
+                if(THIS->y < final_left_posy){
+                    THIS->y++;
+                }
+                if(THIS->x != final_left_posx){
+                    if(THIS->x > final_left_posx){
+                        THIS->x--;
+                    }else{
+                        THIS->x++;
+                    }
+                }
+                if(THIS->y >= final_left_posy && THIS->x == final_left_posx){
                     hadesclaw_change_state(THIS);
                 }
             }
@@ -113,9 +124,17 @@ void UPDATE() {
             hadesclaw_data->frmskip_wait++;
             if(hadesclaw_data->frmskip_wait == hadesclaw_data->frmskip){
                 hadesclaw_data->frmskip_wait = 0;
-                if(THIS->x < final_right_posx){
-                    THIS->x++;
-                }else{
+                if(THIS->y < final_right_posy){
+                    THIS->y++;
+                }
+                if(THIS->x != final_right_posx){
+                    if(THIS->x < final_right_posx){
+                        THIS->x++;
+                    }else{
+                        THIS->x--;
+                    }
+                }
+                if(THIS->y >= final_right_posy && THIS->x == final_right_posx){
                     hadesclaw_change_state(THIS);
                 }
             }
@@ -165,7 +184,7 @@ void UPDATE() {
         }break;
     }
     //CHECK HIT
-        if(orpheus_attack_cooldown){
+        if(orpheus_attack_cooldown){//TODO non mi torna che sia qui!
             orpheus_attack_cooldown--;
         }
         if(orpheus_info->charming == 1 && orpheus_attack_cooldown > 160u &&
@@ -221,7 +240,7 @@ UINT8 hadesclaw_straight(Sprite* arg_s_claw) BANKED{
         }
     }else if(hadesclaw_tile_coll){
         THIS->y -= 2;
-        hadesclaw_data->vx = -1;
+        hadesclaw_data->vx = -2;
     }
     hadesclaw_check_overlapping_and_spritecollision(arg_s_claw);
     return result;
@@ -251,7 +270,7 @@ void hadesclaw_rotate(Sprite* arg_s_claw) BANKED{
 void hadesclaw_check_overlapping_and_spritecollision(Sprite* arg_s_claw) BANKED{
     //TODO check se è attaccato da canzone SLEEP e sta sopra le fiamme
     //se sono sotto una certa y, torna in idle
-        if(arg_s_claw->y < 40u){
+        if(arg_s_claw->y < 38u){
             hadesclaw_change_state(arg_s_claw);
             return;
         }
@@ -266,9 +285,15 @@ void hadesclaw_check_overlapping_and_spritecollision(Sprite* arg_s_claw) BANKED{
                     case SpriteOrpheuslyre:
                         orpheus_change_state(iclblspr, HIT);
                     break;
-                    case SpriteHadesskull:
-                        hadesclaw_change_state(arg_s_claw);
-                    break;
+                    case SpriteHadesskull:{
+                        struct EnemyInfo* hadesclaw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
+                        if(
+                            (hadesclaw_data->e_state == HADESCLAW_STRAIGHT && hadesclaw_data->vx < 0) || 
+                            hadesclaw_data->e_state == HADESCLAW_CLOCKWISE || 
+                            hadesclaw_data->e_state == HADESCLAW_COUNTERCLOCKWISE){
+                            hadesclaw_change_state(arg_s_claw);
+                        }
+                    }break;
                 }
             }
         }
@@ -364,7 +389,7 @@ void hadesclaw_change_state(Sprite* arg_s_claw) BANKED{
         case HADES_CLAW_STRAIGHT:{
             switch(claw_data->e_state){
                 case HADESCLAW_IDLE:{
-                    hadesclaw_set_finalposs(42u + 8u, 50u, 100u - 8, 50);
+                    hadesclaw_set_finalposs(42u + 20u, 48u, 100u - 20u, 48u);
                     if(arg_s_claw->mirror == NO_MIRROR){
                         claw_new_state = hadesclaw_move_to_walk_left(arg_s_claw);
                     }else if(arg_s_claw->mirror == V_MIRROR){
@@ -392,7 +417,7 @@ HADESCLAW_STATE hadesclaw_move_to_straight(Sprite* arg_s_claw) BANKED{
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data;
     claw_data->frmskip_wait = 0;
     claw_data->frmskip = 0;
-    claw_data->vx = 2;
+    claw_data->vx = 4;
     return HADESCLAW_STRAIGHT;
 }
 
@@ -455,11 +480,15 @@ HADESCLAW_STATE hadesclaw_move_to_clockwise(Sprite* arg_s_claw) BANKED{
     return HADESCLAW_CLOCKWISE;
 }
 HADESCLAW_STATE hadesclaw_move_to_walk_left(Sprite* arg_s_claw) BANKED{
+    arg_s_claw->x = arg_s_claw->lim_x;
+    arg_s_claw->y = arg_s_claw->lim_y;
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
     return HADESCLAW_WALK_LEFT;
 }
 HADESCLAW_STATE hadesclaw_move_to_walk_right(Sprite* arg_s_claw) BANKED{
+    arg_s_claw->x = arg_s_claw->lim_x;
+    arg_s_claw->y = arg_s_claw->lim_y;
     struct EnemyInfo* claw_data = (struct EnemyInfo*)arg_s_claw->custom_data; 
     SetSpriteAnim(arg_s_claw, a_hadesclaw, 1u);
     return HADESCLAW_WALK_RIGHT;

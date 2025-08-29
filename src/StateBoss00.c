@@ -96,6 +96,7 @@ UINT8 animboss_hit_flag = 0u;
 UINT8 animboss_hit_counter = 0u;
 INT8 animboss_hit = 0u;
 INT8 animboss_hit_max = 10;
+UINT8 shadow_counter = 0u;
 
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
@@ -136,6 +137,7 @@ extern UINT16 final_right_posx;
 extern UINT16 final_right_posy;
 extern UINT16 saved_orpheus_posx;
 extern UINT16 saved_orpheus_posy;
+extern UINT8 flag_camera_shake_h;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -147,7 +149,7 @@ extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void UpdateHUD() BANKED;
-extern void hades_regerate_claws() BANKED;
+extern void hades_regenerate_claws() BANKED;
 
 
 void START() {
@@ -199,7 +201,7 @@ void START() {
 			case BOSS_HADES:{
 				InitScroll(BANK(mapbosshades), &mapbosshades, coll_t_hades, coll_s_hades005);
 				s_hades_skull = SpriteManagerAdd(SpriteHadesskull, 64u, 18u);
-				hades_regerate_claws();				
+				hades_regenerate_claws();				
 			}break;
 		}
 	//HUD
@@ -210,7 +212,7 @@ void START() {
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
 		boss_hp_max = 5;
-		boss_hp_current = 5;
+		boss_hp_current = 2;
 		if(current_map == BOSS_HADES){
 			boss_hp_max = 8;
 			boss_hp_current = 4;//TODO 8
@@ -231,7 +233,7 @@ void START() {
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
-			a_walk_counter_y = -52;
+			//a_walk_counter_y = -52;
 		}
 }
 
@@ -513,8 +515,10 @@ void UPDATE() {
 					}break;
 					case BOSS_HADES:{
 						if(flag_hades_summon){
-							Sprite* s_e_hades = SpriteManagerAdd(SpriteMinion, saved_orpheus_posx, saved_orpheus_posy);
-							e_configure(s_e_hades);
+							shadow_counter = 60u;
+							Sprite* s_hadesshadow = SpriteManagerAdd(SpriteHadesshadow, saved_orpheus_posx, saved_orpheus_posy);
+							struct EnemyInfo* hadesshadow_data = (struct EnemyInfo*)s_hadesshadow->custom_data; 
+							hadesshadow_data->wait = shadow_counter;
 							flag_hades_summon = 0u;
 						}
 					}break;
@@ -525,8 +529,14 @@ void UPDATE() {
 						case 2: spawn_common_wait_max = 250u; break;
 						case 3: spawn_common_wait_max = 400u; break;
 						default: spawn_common_wait_max = 700u; break;
-					}
-				
+					}	
+			}
+			if(shadow_counter){
+				shadow_counter--;
+				if(shadow_counter == 0){
+					Sprite* s_e_hades = SpriteManagerAdd(SpriteMinion, saved_orpheus_posx, saved_orpheus_posy);
+					e_configure(s_e_hades);
+				}
 			}
 		}
 	//GHOSTS
@@ -629,6 +639,7 @@ void UPDATE() {
 }
 
 void boss_hit() BANKED{
+	flag_camera_shake_h = 1u;
 	animboss_hit_flag = 1u;
 	boss_hp_current--;
 	redraw_hud = 1;

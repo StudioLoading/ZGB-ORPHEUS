@@ -59,6 +59,7 @@ void spawn_ball(UINT8 arg_type, UINT16 arg_spawnball_x, UINT16 arg_spawnball_y, 
 		Sprite* s_ball = SpriteManagerAdd(arg_type, arg_spawnball_x, arg_spawnball_y);
 		struct EnemyInfo* ball_data = (struct EnemyInfo*) s_ball->custom_data;
 		switch(arg_direction){
+            case 0: ball_data->e_state = MOVE_TO_SAVED_ORPHEUS; break; 
 			case J_UP: ball_data->vx = 0; ball_data->vy = -1; break;
 			case J_DOWN: ball_data->vx = 0; ball_data->vy = 1; break;
 			case J_LEFT: ball_data->vx = -1; ball_data->vy = 0; break;
@@ -70,6 +71,14 @@ void spawn_ball(UINT8 arg_type, UINT16 arg_spawnball_x, UINT16 arg_spawnball_y, 
             case (J_DOWN + J_RIGHT):
                 ball_data->vy = 1;
                 ball_data->vx = 1;
+            break;
+            case (J_DOWN + J_DOWN + J_RIGHT):
+                ball_data->vy = 2;
+                ball_data->vx = 1;
+            break;
+            case (J_DOWN + J_DOWN + J_LEFT):
+                ball_data->vy = 2;
+                ball_data->vx = -1;
             break;
 		}
 		ball_data->e_configured = 1;

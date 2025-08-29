@@ -19,6 +19,8 @@ extern AEACUS_PHASE aeacus_phase;
 extern Sprite* s_awacus_body;
 extern AEACUS_PHASE aeacus_phase;
 extern UINT8 flag_paused;
+extern UINT16 saved_orpheus_posx;
+extern UINT16 saved_orpheus_posy;
 
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -26,6 +28,7 @@ extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern UINT8 is_boss(UINT8 arg_sprite_type) BANKED;
 extern void boss_hit() BANKED;
 extern AEACUS_PHASE aea_move_to_hit(Sprite* arg_s_aeacusbody) BANKED;
+extern UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
 
 void START() {
     THIS->lim_x = 10u;
@@ -33,7 +36,7 @@ void START() {
     SetSpriteAnim(THIS, a_fireball, 24u);
     fireball_mirroring = 10;    
     struct EnemyInfo* fireball_data = (struct EnemyInfo*) THIS->custom_data;
-    fireball_data->e_state = GENERIC_WALK;
+    fireball_data->e_state = GENERIC_IDLE;
     fireball_data->e_configured = 0u;
     fireball_data->vx = 0;
     fireball_data->vy = 0;
@@ -68,7 +71,18 @@ void UPDATE() {
                 }
                 fireball_mirroring = 10;
             }
-            UINT8 t_fireball_coll = TranslateSprite(THIS,fireball_data->vx << delta_time, fireball_data->vy << delta_time);
+            UINT8 t_fireball_coll = 0u;
+            switch(fireball_data->e_state){
+                case GENERIC_IDLE:{
+                    t_fireball_coll = TranslateSprite(THIS,fireball_data->vx << delta_time, fireball_data->vy << delta_time);
+                }break;
+                case MOVE_TO_SAVED_ORPHEUS:{
+                    fireball_data->wait = aeacusbody_move_to_point(THIS, saved_orpheus_posx, saved_orpheus_posy);
+                    if(fireball_data->wait){
+                        fireball_data->e_state = GENERIC_IDLE;
+                    }
+                }break;
+            }
             if(t_fireball_coll){
                 THIS->x += fireball_data->vx;
                 THIS->y += fireball_data->vy;

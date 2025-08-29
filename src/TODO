@@ -7,6 +7,7 @@
 - musichette delle song
 - PAUSE - sfx e musica in pausa
 - RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
+- pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
 
 POTENZIALI PROBLEMI - da verificare in fase di test:
 - il common strippa quando si muove diagonale
@@ -28,6 +29,7 @@ New-QRCodeURI -URI 'https://discord.gg/RYPAPk4GpB' -Width 16 -OutPath 'C:\Users\
 New-QRCodeURI -URI 'https://discord.gg/QYkKEMJmY2' -Width 16 -OutPath 'C:\Users\checc\M5S\QR-DISCORD-INFINITO-QR.PNG'
 New-QRCodeURI -URI 'https://bolognanerd.it/corsi/' -Width 16 -OutPath 'C:\Users\checc\BN\QR-CORSI.PNG'
 New-QRCodeURI -URI 'https://www.youtube.com/@bolognanerd/streams' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT.PNG'
+New-QRCodeURI -URI 'https://chat.whatsapp.com/JNWSvei4zt27Is5mqumZIF' -Width 16 -OutPath 'C:\Users\checc\CERSERENO\QR-WhatsApp.PNG'
 
 
 GIF TO PNG FRAMES
@@ -74,9 +76,10 @@ PNG2MAP
 cd C:\ZGB-2023.0\tools\png2map\
 png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\cartel.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\cartel.gbm
 
-GBM TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
-cd C:\Users\checc\GB\ZGB-2023.0\tools\png2gbtiles
-png2gbtiles C:\Users\checc\GB\ZGB-2023.0\ZGB-FA2\res\oweast.gbm -png -c -pal=mypal.pal C:\Users\checc\GB\ZGB-2023.0\tools\png2gbtiles\oweast.png
+GBM GBR TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
+cd C:\ZGB-2023.0\tools\png2gbtiles
+png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\mapshades020.gbm -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades020.png
+png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\mapshades002t.gbm -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades002_TILES.png
 
 maypal.pal file di testo contenente solo le seguenti
 #C6D783

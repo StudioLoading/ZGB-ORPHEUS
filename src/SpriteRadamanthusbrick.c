@@ -25,7 +25,6 @@ struct EnemyInfo{
 
 extern Sprite* s_orpheus;
 extern Sprite* s_radamanthusshadow;
-extern UINT8 flag_camera_shake_h;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void boss_hit() BANKED;
@@ -66,7 +65,6 @@ void UPDATE() {
                 case SpriteRadamanthus:
                     if((s_radamanthusshadow->y - THIS->y) < 16){
                         boss_hit();
-                        flag_camera_shake_h = 1u;
                         SpriteManagerRemoveSprite(THIS);
                     }
                 break;
