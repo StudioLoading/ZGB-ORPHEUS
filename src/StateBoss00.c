@@ -138,6 +138,7 @@ extern UINT16 final_right_posy;
 extern UINT16 saved_orpheus_posx;
 extern UINT16 saved_orpheus_posy;
 extern UINT8 flag_camera_shake_h;
+extern UINT8 flag_camera_shake_v;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -271,7 +272,7 @@ void UPDATE() {
 		case 3:
 			level_common_update_play();
 		break;
-		case 4:	//DEATH COOLDOWN BEFORE CHANGING SCREEN
+		case 4:{//DEATH COOLDOWN BEFORE CHANGING SCREEN
 			if(redraw_hud){
 				UpdateHUD();
 			}
@@ -298,7 +299,7 @@ void UPDATE() {
 					break;
 				}
 			}
-		break;
+		}break;
 	}
 	//BOSS HIT
 		if(animboss_hit_flag || boss_hp_current == 0){
@@ -651,7 +652,8 @@ void boss_hit() BANKED{
 		boss_hp_current = 0;
 		if(boss_intro < 4 && current_map != HADES_26){
 			boss_intro = 4;
-			death_countdown = 160u;
+			flag_camera_shake_v = 1;
+			death_countdown = 250u;
 		}
 	}
 }
@@ -816,26 +818,35 @@ void boss_manage_death_hades() BANKED{
 		s_hades_skull->y = s_hades_skull->lim_y;
 	}
 	switch(death_countdown){
+		case 200u:
+			spawn_death_animation(s_hades_skull->x + 8u, s_hades_skull->y + 16u);
+		break;
+		case 180u:
+			//spawn_death_animation(s_hades_skull->x + 16u, s_hades_skull->y + 8u);
+		break;
+		case 160u:
+			spawn_death_animation(s_hades_skull->x - 4u, s_hades_skull->y + 12u);
+		break;
 		case 140u:
-			spawn_death_animation(s_hades_skull->x, s_hades_skull->y + 16);
+			//spawn_death_animation(s_hades_skull->x + 4u, s_hades_skull->y + 20u);
 		break;
 		case 130u:
-			//spawn_death_animation(20u, 30u);
+			spawn_death_animation(s_hades_skull->x + 16u, s_hades_skull->y + 30u);
 		break;
 		case 100u:
-			spawn_death_animation(s_hades_skull->x - 3, s_hades_skull->y + 12);
+			//spawn_death_animation(s_hades_skull->x + 8u, s_hades_skull->y + 16u);
 		break;
 		case 80u:
-			//spawn_death_animation(28u, 28u);
+			spawn_death_animation(s_hades_skull->x + 20u, s_hades_skull->y + 8u);
 		break;
 		case 60u:
-			spawn_death_animation(s_hades_skull->x - 4, s_hades_skull->y + 28);
+			//spawn_death_animation(s_hades_skull->x - 4u, s_hades_skull->y + 12u);
 		break;
-		case 45u:
-			spawn_death_animation(s_hades_skull->x - 6u, s_hades_skull->y + 12);
+		case 40u:
+			spawn_death_animation(s_hades_skull->x + 8u, s_hades_skull->y + 16u);
 		break;
-		case 30u:
-			spawn_death_animation(s_hades_skull->x + 2u, s_hades_skull->y + 16);
+		case 20u:
+			spawn_death_animation(s_hades_skull->x + 16u, s_hades_skull->y + 26u);
 		break;
 		case 0u:{
 			boss_intro = 0;//reset

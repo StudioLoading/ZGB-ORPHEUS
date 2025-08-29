@@ -11,7 +11,7 @@
 
 const UINT8 a_hadesskull[] = {2, 1,2};
 const UINT8 a_hadesskull_still[] = {1, 3};
-const UINT8 a_hadesskull_dead[] = {2, 2,3};
+const UINT8 a_hadesskull_dead[] = {2, 0,2};
 const UINT8 a_hadesskull_looking[] = {8, 2,1,3,3,3,3,3,3};
 const UINT8 a_hadesskull_blink[] = {2, 0,1};
 
@@ -31,6 +31,7 @@ extern UINT16 saved_orpheus_posy;
 
 HADES_STATE hades_state = HADES_IDLE;
 UINT8 hadesskull_arrived = 0;
+UINT8 removeme = 255u;
 
 void hades_change_state(Sprite* arg_s_hadesskull, SPRITE_STATES arg_new_state) BANKED;
 void hades_regenerate_claws() BANKED;
@@ -40,6 +41,7 @@ extern void hadesclaw_change_state(Sprite* arg_s_claw) BANKED;
 extern void hadesclaw_set_finalposs(UINT16 arg_leftposx, UINT16 arg_leftposy, UINT16 arg_rightposx, UINT16 arg_rightposy) BANKED;
 extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
 extern UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
+extern void boss_hit() BANKED;
 
 void START() {
     THIS->lim_x = THIS->x;
@@ -57,6 +59,13 @@ void START() {
 }
 
 void UPDATE() {
+    if(boss_hp_current == 1){
+        removeme--;
+        if(removeme == 0){
+            boss_hit();
+            removeme = 200u;
+        }
+    }
     struct EnemyInfo* hadesskull_data = (struct EnemyInfo*)THIS->custom_data;
     struct EnemyInfo* claw_left_data = 0;
     struct EnemyInfo* claw_right_data = 0;
@@ -474,7 +483,7 @@ void UPDATE() {
             }
         }break;
         case 0:{
-            SetSpriteAnim(THIS, a_hadesskull_dead, 32u);
+            SetSpriteAnim(THIS, a_hadesskull_dead, 40u);
         }break;
     }
     if(boss_hp_current > 0){
