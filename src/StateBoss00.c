@@ -211,12 +211,6 @@ void START() {
 		spawn_common_wait_max = 300u;
 		spawned_enemy_counter = 0u;
 		PlayMusic(battle, 1);
-		boss_hp_max = 5;
-		boss_hp_current = 2;
-		if(current_map == BOSS_HADES){
-			boss_hp_max = 8;
-			boss_hp_current = 4;//TODO 8
-		}
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;
@@ -239,9 +233,19 @@ void START() {
 
 void UPDATE() {	
 	if(a_walk_counter_y == 0 && boss_intro == 1){
-		boss_intro = 2;
 	}
 	switch(boss_intro){
+		case 1:{
+			if(a_walk_counter_y == 0){
+				boss_hp_max = 5;
+				boss_hp_current = 2;
+				if(current_map == BOSS_HADES){
+					boss_hp_max = 8;
+					boss_hp_current = 1;//TODO 8
+				}
+				boss_intro = 2;
+			}
+		}break;
 		case 2:{
 			switch(current_map){
 				case BOSS_CHARON: 
@@ -807,5 +811,36 @@ void boss_invert_river_verse() BANKED{
 }
 
 void boss_manage_death_hades() BANKED{
-
+	if(s_hades_skull->x != s_hades_skull->lim_x || s_hades_skull->y != s_hades_skull->lim_y){
+		s_hades_skull->x = s_hades_skull->lim_x;
+		s_hades_skull->y = s_hades_skull->lim_y;
+	}
+	switch(death_countdown){
+		case 140u:
+			spawn_death_animation(s_hades_skull->x, s_hades_skull->y + 16);
+		break;
+		case 130u:
+			//spawn_death_animation(20u, 30u);
+		break;
+		case 100u:
+			spawn_death_animation(s_hades_skull->x - 3, s_hades_skull->y + 12);
+		break;
+		case 80u:
+			//spawn_death_animation(28u, 28u);
+		break;
+		case 60u:
+			spawn_death_animation(s_hades_skull->x - 4, s_hades_skull->y + 28);
+		break;
+		case 45u:
+			spawn_death_animation(s_hades_skull->x - 6u, s_hades_skull->y + 12);
+		break;
+		case 30u:
+			spawn_death_animation(s_hades_skull->x + 2u, s_hades_skull->y + 16);
+		break;
+		case 0u:{
+			boss_intro = 0;//reset
+			prepare_dialog(BOSS_HADES_BEATED);
+			SetState(StateCartel);
+		}break;
+	}
 }

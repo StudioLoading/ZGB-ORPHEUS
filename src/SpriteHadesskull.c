@@ -11,6 +11,7 @@
 
 const UINT8 a_hadesskull[] = {2, 1,2};
 const UINT8 a_hadesskull_still[] = {1, 3};
+const UINT8 a_hadesskull_dead[] = {2, 2,3};
 const UINT8 a_hadesskull_looking[] = {8, 2,1,3,3,3,3,3,3};
 const UINT8 a_hadesskull_blink[] = {2, 0,1};
 
@@ -222,7 +223,6 @@ void UPDATE() {
                             }
                             hadesskull_data->wait--;
                             if(hadesskull_data->wait == 0){
-                                flag_hades_summon = 1u;
                                 hades_change_state(THIS, HADES_FIREBALL_DOUBLE);
                             }
                         break;
@@ -244,18 +244,19 @@ void UPDATE() {
                                 saved_orpheus_posx = s_orpheus->x + 4u;
                                 saved_orpheus_posy = s_orpheus->y - 8u;
                                 SetSpriteAnim(THIS, a_hadesskull_looking, 12u);
-                                hadesskull_data->e_state = PREATTACK_DOWN;
+                                hadesskull_data->wait = 160;
+                                hadesskull_data->e_state = WALK_DOWN;
                             }
                         }break;
-                        case PREATTACK_DOWN:
+                        case WALK_DOWN:
                             hadesskull_data->wait--;
                             if(hadesskull_data->wait == 120){
-                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_DOWN + J_RIGHT);
+                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_DOWN + J_LEFT);
                             }
                             if(hadesskull_data->wait == 90){
-                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, 0);
+                                spawn_ball(SpriteFireball, THIS->x + 8u, THIS->y + 24u, J_DOWN);
                             }else if(hadesskull_data->wait == 60){
-                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_DOWN + J_LEFT);
+                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_DOWN + J_RIGHT);
                             }else if(hadesskull_data->wait < 10){
                                 hades_change_state(THIS, HADES_SUMMON);
                             }
@@ -263,19 +264,35 @@ void UPDATE() {
                     }
                 }break;
                 case HADES_SUMMON:{
-                    hadesskull_data->wait--;
-                    if(hadesskull_data->wait > 100){
-                        saved_orpheus_posx = s_orpheus->x + 4u;
-                        saved_orpheus_posy = s_orpheus->y - 8u;
-                        SetSpriteAnim(THIS, a_hadesskull_looking, 12u);
-                    }else if(hadesskull_data->wait == 0){
-                        flag_hades_summon = 1;
-                        SetSpriteAnim(THIS, a_hadesskull_still, 1);
-                        hadesskull_data->vx = 2;
-                        hadesskull_data->vy = 2;
-                        hadesskull_data->frmskip_wait = 0;
-                        hadesskull_data->frmskip = 0;
-                        hades_change_state(THIS, HADES_FIREBALL_QUADRUPLE);
+                    switch(hadesskull_data->e_state){
+                        case GENERIC_IDLE:{
+                            hadesskull_data->frmskip_wait++;
+                            if(hadesskull_data->frmskip_wait == hadesskull_data->frmskip){
+                                hadesskull_data->frmskip_wait = 0;
+                                if(boss_breath_flag){
+                                    THIS->y += boss_breath_verse;
+                                    //boss_breath_flag = 0;
+                                }
+                            }
+                            hadesskull_data->wait--;
+                            if(hadesskull_data->wait == 0){
+                                SetSpriteAnim(THIS, a_hadesskull_looking, 12u);
+                                hadesskull_data->wait = 160;
+                                hadesskull_data->e_state = ATTACK;
+                            }
+                        }break;
+                        case ATTACK:{
+                            hadesskull_data->wait--;
+                            if(hadesskull_data->wait > 60){
+                                saved_orpheus_posx = s_orpheus->x + 4u;
+                                saved_orpheus_posy = s_orpheus->y - 8u;
+                                SetSpriteAnim(THIS, a_hadesskull_looking, 12u);
+                            }else if(hadesskull_data->wait == 0){
+                                flag_hades_summon = 1;
+                                SetSpriteAnim(THIS, a_hadesskull_still, 1);
+                                hades_change_state(THIS, HADES_FIREBALL_QUADRUPLE);
+                            }
+                        }break;
                     }
                 }break;
                 case HADES_FIREBALL_QUADRUPLE:{
@@ -305,13 +322,12 @@ void UPDATE() {
                             }else if(hadesskull_data->wait == 100){
                                 spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_DOWN + J_LEFT);
                             }else if(hadesskull_data->wait == 80){
-                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN);
+                                spawn_ball(SpriteFireball, THIS->x + 8u, THIS->y + 24u, J_DOWN);
                             }else if(hadesskull_data->wait == 60){
-                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_DOWN + J_RIGHT);
+                                spawn_ball(SpriteFireball, THIS->x + 8u, THIS->y + 24u, J_DOWN + J_DOWN + J_RIGHT);
                             }else if(hadesskull_data->wait == 40){
-                                spawn_ball(SpriteFireball, THIS->x + 4u, THIS->y + 24u, J_DOWN + J_RIGHT);
+                                spawn_ball(SpriteFireball, THIS->x + 8u, THIS->y + 24u, J_DOWN + J_RIGHT);
                             }else if(hadesskull_data->wait < 10){
-                                hadesskull_data->e_state = GENERIC_IDLE;
                                 hades_change_state(THIS, HADES_HEADBUTT);
                             }
                         }break;
@@ -355,19 +371,126 @@ void UPDATE() {
                 }break;
             }
         }break;
+        case 1:{
+            switch(hades_state){
+                case HADES_IDLE:{
+                    switch(hadesskull_data->e_state){
+                        case GENERIC_IDLE:
+                            hadesskull_data->frmskip_wait++;
+                            if(hadesskull_data->frmskip_wait == hadesskull_data->frmskip){
+                                hadesskull_data->frmskip_wait = 0;
+                                if(boss_breath_flag){
+                                    THIS->y += boss_breath_verse;
+                                    //boss_breath_flag = 0;
+                                }
+                            }
+                            hadesskull_data->wait--;
+                            if(hadesskull_data->wait > 50){
+                                saved_orpheus_posx = s_orpheus->x + 4u;
+                                saved_orpheus_posy = s_orpheus->y - 8u;
+                                SetSpriteAnim(THIS, a_hadesskull_looking, 12u);
+                            }else if(hadesskull_data->wait == 0){
+                                flag_hades_summon = 1u;
+                                hades_change_state(THIS, HADES_HEADBUTT);
+                            }
+                        break;
+                    }
+                }break;
+                case HADES_HEADBUTT:{
+                    switch(hadesskull_data->e_state){
+                        case GENERIC_IDLE:{
+                            hadesskull_data->frmskip_wait++;
+                            if(hadesskull_data->frmskip_wait == hadesskull_data->frmskip){
+                                hadesskull_data->frmskip_wait = 0;
+                                if(boss_breath_flag){
+                                    THIS->y += boss_breath_verse;
+                                    //boss_breath_flag = 0;
+                                }
+                            }
+                            hadesskull_data->wait--;
+                            if(hadesskull_data->wait > 100){
+                                saved_orpheus_posx = s_orpheus->x + 4u;
+                                saved_orpheus_posy = s_orpheus->y - 8u;
+                                SetSpriteAnim(THIS, a_hadesskull_looking, 12u);
+                            }else if(hadesskull_data->wait == 0){
+                                SetSpriteAnim(THIS, a_hadesskull_still, 12u);
+                                hadesskull_data->e_state = ATTACK;
+                            }
+                        }break;
+                        case WALK_LEFT:{
+                            if(hadesskull_arrived){
+                                hadesskull_data->frmskip_wait = 0;
+                                hadesskull_data->frmskip = 0;
+                                UINT8 hadesskull_arrived_back = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                                if(hadesskull_arrived_back){
+                                    hades_skull_reset_data(THIS);
+                                    hades_change_state(THIS, WALK_DOWN);
+                                }
+                            }else{
+                                hadesskull_arrived = aeacusbody_move_to_point(THIS, 2u << 3, 9u << 3);
+                            }
+                        }break;
+                        case WALK_DOWN:{
+                            if(hadesskull_arrived){
+                                hadesskull_data->frmskip_wait = 0;
+                                hadesskull_data->frmskip = 0;
+                                UINT8 hadesskull_arrived_back = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                                if(hadesskull_arrived_back){
+                                    hades_skull_reset_data(THIS);
+                                    hades_change_state(THIS, WALK_DOWN);
+                                }
+                            }else{
+                                hadesskull_arrived = aeacusbody_move_to_point(THIS, 9u << 3, 14u << 3);
+                            }
+                        }break;
+                        case WALK_RIGHT:{
+                            if(hadesskull_arrived){
+                                hadesskull_data->frmskip_wait = 0;
+                                hadesskull_data->frmskip = 0;
+                                UINT8 hadesskull_arrived_back = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                                if(hadesskull_arrived_back){
+                                    hades_skull_reset_data(THIS);
+                                    hades_change_state(THIS, ATTACK);
+                                }
+                            }else{
+                                hadesskull_arrived = aeacusbody_move_to_point(THIS, 16u << 3, 14u << 3);
+                            }
+                        }break;
+                        case ATTACK:{
+                            if(hadesskull_arrived){
+                                hadesskull_data->frmskip_wait = 0;
+                                hadesskull_data->frmskip = 0;
+                                UINT8 hadesskull_arrived_back = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                                if(hadesskull_arrived_back){
+                                    hades_skull_reset_data(THIS);
+                                    hades_change_state(THIS, HADES_IDLE);
+                                }
+                            }else{
+                                hadesskull_arrived = aeacusbody_move_to_point(THIS, saved_orpheus_posx, saved_orpheus_posy);
+                            }
+                        }break;
+                    }
+                }break;
+            }
+        }break;
+        case 0:{
+            SetSpriteAnim(THIS, a_hadesskull_dead, 32u);
+        }break;
     }
-    //anytime, if both hands are damaged (custom_data->vy==1) force to HADES_IDLE
-    if(claw_left_data && claw_right_data && claw_left_data->vy && claw_right_data->vy){
-        hades_change_state(THIS, HADES_IDLE);
-        if(boss_hp_current > 2){
-            hades_regenerate_claws();
-        }else if(s_hades_claw_left && s_hades_claw_right){
-            SpriteManagerRemoveSprite(s_hades_claw_left);
-            SpriteManagerRemoveSprite(s_hades_claw_right);
-            s_hades_claw_left = 0;
-            s_hades_claw_right = 0;
+    if(boss_hp_current > 0){
+        //anytime, if both hands are damaged (custom_data->vy==1) force to HADES_IDLE
+        if(claw_left_data && claw_right_data && claw_left_data->vy && claw_right_data->vy){
+            hades_change_state(THIS, HADES_IDLE);
+            if(boss_hp_current > 2){
+                hades_regenerate_claws();
+            }else if(s_hades_claw_left && s_hades_claw_right){
+                SpriteManagerRemoveSprite(s_hades_claw_left);
+                SpriteManagerRemoveSprite(s_hades_claw_right);
+                s_hades_claw_left = 0;
+                s_hades_claw_right = 0;
+            }
+            hades_skull_reset_data(THIS);
         }
-        hades_skull_reset_data(THIS);
     }
 }
 
@@ -391,9 +514,11 @@ void hades_regenerate_claws() BANKED{
 }
 
 void hades_change_state(Sprite* arg_s_hadesskull, SPRITE_STATES arg_new_state) BANKED{
+    hadesskull_arrived = 0;
     hades_state = arg_new_state;
     struct EnemyInfo* hadesskull_data = (struct EnemyInfo*)arg_s_hadesskull->custom_data;
-    hadesskull_data->wait = 60 + (boss_hp_current << 3);;
+    hadesskull_data->wait = 60 + (boss_hp_current << 3);
+    hadesskull_data->e_state = GENERIC_IDLE;
     THIS->x = THIS->lim_x;
     THIS->y = THIS->lim_y;
     SetSpriteAnim(arg_s_hadesskull, a_hadesskull, 60u);

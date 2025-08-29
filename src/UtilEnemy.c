@@ -43,6 +43,7 @@ extern void minion_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void boss_hit() BANKED;
 
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
@@ -540,6 +541,12 @@ void e_check_sprite_collision(Sprite* s_enemy) BANKED{
                 case SpriteOrpheuslyre:
                     orpheus_change_state(s_orpheus, HIT);
                 break;
+                case SpriteHadesskull:{
+                    struct EnemyInfo* enemy_data = (struct EnemyInfo*)s_enemy->custom_data;
+                    if(enemy_data->e_state == HIT){
+                        boss_hit();
+                    }
+                }break;
             }
         }
     }
