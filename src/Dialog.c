@@ -58,8 +58,8 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
         case FOUND_LYRE:
             memcpy(d1, "GREAT! WITH MY LYRE ", 21);
             memcpy(d2, "I CAN PLAY DIFFERENT", 21);
-            memcpy(d3, "SONGS TO SCARE,     ", 21);
-            memcpy(d4, "ATTRACT OR REPEL MY ", 21);
+            memcpy(d3, "SONGS TO ATTRACT,   ", 21);
+            memcpy(d4, "SCARE OR REPEL MY   ", 21);
             memcpy(d5, "ENEMIES.            ", 21);
             memcpy(d6, EMPTY_STRING_20, 21);
             return 6u;

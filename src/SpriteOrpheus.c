@@ -18,8 +18,8 @@
 #define COUNTDOWN_SKIP_SLEEP 8
 #define INVULNERABILITY 40
 
-UINT8 J_INT=J_A;//0x10;
-UINT8 J_ATK=J_B;//0x20;
+extern UINT8 J_INT;
+extern UINT8 J_ATK;
 
 const UINT8 a_orpheus_idleup[] = {1, 4};
 const UINT8 a_orpheus_idledown[] = {2, 2, 3};
@@ -85,6 +85,7 @@ extern UINT8 spikes_hit_flag;
 extern UINT8 boss_minos_flag_orpheus_on_plate;
 extern UINT8 flag_paused;
 extern UINT8 flag_camera_shake_v;
+extern UINT8 song_selection_cooldown;
 
 void orpheus_behave() BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -222,7 +223,7 @@ void UPDATE() {
             }
         }
     //INTERACT RELEASED
-        if(KEY_RELEASED(J_INT)){
+        if(KEY_RELEASED(J_INT) && orpheus_pushing != PUSH_NONE){
             orpheus_pushing = PUSH_NONE;
         }
     //ATTACK MANAGEMENT J_ATK
@@ -411,6 +412,7 @@ void UPDATE() {
                                     SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
                                     orpheus_pushing = PUSH_RIGHT;
                                 }else if(KEY_RELEASED(J_INT)){
+                                    song_selection_cooldown = 40u;
                                     block_data->counter_x = 0;
                                     block_data->counter_y = 0;
                                     orpheus_pushing = PUSH_NONE;

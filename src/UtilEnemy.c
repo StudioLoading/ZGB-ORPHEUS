@@ -338,7 +338,7 @@ void e_management(Sprite* s_enemy) BANKED{
                 e_data->vy = e_data->vy*2;
                 e_data->vx = 0;
             }
-            if((delta_y <<1) < delta_x){
+            if((delta_y << 1) < delta_x){
                 e_data->vx = e_data->vx*2;
                 e_data->vy = 0;
             }
@@ -481,7 +481,7 @@ ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKE
         }break;
         default:{
             result = arg_tile == 84u || arg_tile == 85u || arg_tile == 86u || arg_tile == 87u;
-            if(result){
+               if(result){
                 result = ENEMY_REACT_DIE;
             }
         }

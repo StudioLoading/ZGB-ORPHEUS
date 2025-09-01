@@ -32,6 +32,7 @@ UINT8 gate_pushed = 0u;
 UINT8 tutorial_push_button = 0u;
 Sprite* s_gate = 0;
 Sprite* s_butt3 = 0;
+UINT8 dialog_paused = 0u;
 
 extern UINT8 tutorial_go;
 extern UINT8 tutorial_hades_entrance;
@@ -108,7 +109,11 @@ void UPDATE() {
 		}
 	}
 	if(in_dialog){
-		write_dialog();
+		if(dialog_paused){
+			dialog_paused--;
+		}else{
+			write_dialog();
+		}
 	}
 	if(tutorial_go > 0){
 		level_common_update_play();

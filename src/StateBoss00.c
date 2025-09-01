@@ -142,8 +142,6 @@ extern UINT8 flag_camera_shake_v;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
-extern void init_write_dialog(UINT8 nlines) BANKED;
-extern void write_dialog() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;

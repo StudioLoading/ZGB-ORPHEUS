@@ -85,11 +85,10 @@ extern UINT8 flag_paused;
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
-extern void init_write_dialog(UINT8 nlines) BANKED;
-extern void write_dialog() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+extern void solve_current_map() BANKED;
 
 void START() {
 	level_common_start();
@@ -307,6 +306,7 @@ void UPDATE() {
 		if(show_cartel){
 			switch(current_map){
 				case HADES_00:
+					solve_current_map();
 					prepare_dialog(HADES_WELCOME);
 				break;
 				case HADES_01:

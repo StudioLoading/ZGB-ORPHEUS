@@ -31,6 +31,8 @@ extern unsigned char d9[];
 extern unsigned char d10[];
 
 extern MACROMAP current_map;
+extern UINT8 J_ATK;
+extern UINT8 song_selection_cooldown;
 
 extern UINT8 is_current_map_on_boss() BANKED;
 
@@ -53,7 +55,8 @@ void START(){
 }
 
 void UPDATE(){
-    if(KEY_TICKED(J_A)){
+    if(KEY_TICKED(J_ATK)){
+        song_selection_cooldown = 40u;
         if(is_current_map_on_boss() && current_map != HADES_26){
             SetState(StateBoss00);
         }else{

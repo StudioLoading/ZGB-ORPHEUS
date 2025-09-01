@@ -89,11 +89,7 @@ void e_dog_management(Sprite* s_enemy) BANKED{
                 ENEMY_REACTION is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
                 ENEMY_REACTION is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
                 if(is_against_fire == ENEMY_REACT_DIE || is_against_pit == ENEMY_REACT_DIE){
-                    if(e_data->e_state != HIT){
-                        e_turn(s_enemy, 0);
-                    }else{
-                        e_destroy(s_enemy);
-                    }
+                    e_destroy(s_enemy);
                 }
                 e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
                 if(e_data->tile_collision){
