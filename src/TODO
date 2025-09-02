@@ -80,6 +80,9 @@ GBM GBR TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un pain
 cd C:\ZGB-2023.0\tools\png2gbtiles
 png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\mapshades020.gbm -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades020.png
 png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\mapshades002t.gbm -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades002_TILES.png
+png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\sprites\*.gbr -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades002_TILES.png
+for %f in (C:\GB-2023.0\ZGB-ORPHEUS\res\sprites\*.gbr) do png2gbtiles %f -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\%f%.png
+
 
 maypal.pal file di testo contenente solo le seguenti
 #C6D783

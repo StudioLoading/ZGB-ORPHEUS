@@ -243,7 +243,7 @@ void UPDATE() {
 	switch(boss_intro){
 		case 1:{
 			if(a_walk_counter_y == 0){
-				boss_hp_max = 1;//TODO demo change to 5
+				boss_hp_max = 5;
 				if(current_map == BOSS_HADES){
 					boss_hp_max = 8;
 				}

@@ -575,11 +575,11 @@ void level_common_update_play() BANKED{
 			}
 		}
 	// solve current map
-		//TODO test delete herebelow
+		//test start
 		/*if(current_map > TUTORIAL && !is_current_map_on_boss()){
 			solve_current_map();//TEST always solve
 		}*/
-		//TODO uncomment herebelow
+		//test end
 		switch(current_map){
 			case HADES_03:
 			case HADES_04:
