@@ -5,6 +5,7 @@
 #include "ZGBMain.h"
 #include "Fade.h"
 #include "Keys.h"
+#include "Music.h"
 #include "Scroll.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
@@ -81,8 +82,8 @@ UINT8 anim_counter = 0u;
 UINT8 area_enemy_counter = 0u;
 UINT8 changing_map = 0u;
 UINT8 restart_current_map = 0u;
-INT8 boss_hp_max = 0;
-INT8 boss_hp_current = 0;
+INT8 boss_hp_max = 5;
+INT8 boss_hp_current = 5;
 UINT8 spikes_countdown = 255u;
 UINT8 spikes_hit_flag = 0u;
 MACROMAP trap_button_pressed = HADES_00;
@@ -291,6 +292,7 @@ void level_common_update_play() BANKED{
 		if(current_map > TUTORIAL && !is_current_map_on_boss()){
 			if(KEY_TICKED(J_START) && orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != HIT){
 				if(flag_paused == 0){
+					PauseMusic;
 					flag_paused = 1u;
 					paused_first_line[0] = GetScrollTile(0, 11);
 					paused_first_line[1] = GetScrollTile(1, 11);
@@ -373,6 +375,7 @@ void level_common_update_play() BANKED{
 					UpdateMapTile(0, 18, 12, 0, 0, 0);
 					UpdateMapTile(0, 19, 12, 0, 0, 0);
 				}else{
+					ResumeMusic;
 					flag_paused = 0u;
 					UpdateMapTile(0, 0, 11, 0, paused_first_line[0], 0);
 					UpdateMapTile(0, 1, 11, 0, paused_first_line[1], 0);

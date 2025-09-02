@@ -318,6 +318,9 @@ void UPDATE() {
 				case HADES_03:
 					prepare_dialog(HADES_KILL_ENEMY);
 				break;
+				case HADES_04:
+					prepare_dialog(HADES_GUARDS);
+				break;
 			}
 			SaveSprites();
 			SetState(StateCartel);
