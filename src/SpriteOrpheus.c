@@ -121,8 +121,8 @@ void START() {
     }
     orpheus_hitted = 0u;
     orpheus_hit_countdown = 0;
-    a_walk_counter_x = 0;
-    a_walk_counter_y = 0;
+    //a_walk_counter_x = 0;
+    //a_walk_counter_y = 0;
     hit_frameskip = 0;
     hit_frameskip_max = 0;
     orpheus_wait = 0u;
@@ -690,6 +690,7 @@ void orpheus_update_position() BANKED{
                             case 94u: case 96u: case 98u:
                             case 100u: case 102u: case 104u:
                                 if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
+                                    song_selection_cooldown = 40u;
                                     solve_current_map();
                                     redraw_hud = 1;
                                     orpheus_haskey = 0;
@@ -819,12 +820,12 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
                 case ATTRACT://charm
                     countdown_step_currentmax = COUNTDOWN_SKIP_ATTRACT;
                     orpheus_wait = 60u;
-                    orpheus_attack_cooldown = 120u;
+                    orpheus_attack_cooldown = 160u;
                 break;
                 case REPEL://repell
                     countdown_step_currentmax = COUNTDOWN_SKIP_REPELL;
                     orpheus_wait = 100u;
-                    orpheus_attack_cooldown = 120u;
+                    orpheus_attack_cooldown = 160u;
                 break;
                 case SLEEP://attract
                     countdown_step_currentmax = COUNTDOWN_SKIP_SLEEP;

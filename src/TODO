@@ -1,11 +1,11 @@
+- RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
+- nuovo State di presentazione del nuovo bioma a fine boss e dal quale chiamare la go_to_next_map()
 - hitbox degli enemy da aggiornare
 	considera che i minion sono i più piccoli e i golem sono i più grandi
-- SCHERMATA DI SCELTA TASTI: J_A e J_B devon essere J_ATK J_INT
 - CREDIT screen potrei far atterrare la piuma di kibou in posizione
 - bgm
 - musichette delle song
 - PAUSE - sfx e musica in pausa
-- RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
 - pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
 
 POTENZIALI PROBLEMI - da verificare in fase di test:
@@ -29,6 +29,7 @@ New-QRCodeURI -URI 'https://discord.gg/QYkKEMJmY2' -Width 16 -OutPath 'C:\Users\
 New-QRCodeURI -URI 'https://bolognanerd.it/corsi/' -Width 16 -OutPath 'C:\Users\checc\BN\QR-CORSI.PNG'
 New-QRCodeURI -URI 'https://www.youtube.com/@bolognanerd/streams' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT.PNG'
 New-QRCodeURI -URI 'https://chat.whatsapp.com/JNWSvei4zt27Is5mqumZIF' -Width 16 -OutPath 'C:\Users\checc\CERSERENO\QR-WhatsApp.PNG'
+New-QRCodeURI -URI 'https://www.kickstarter.com/projects/studioloading/orpheus-to-hell-and-back-game-boy-cartridge-retrogame' -Width 16 -OutPath 'C:\ZGB-2023.0\ZGB-ORPHEUS\other\KS\QR.png'
 
 
 GIF TO PNG FRAMES
@@ -73,7 +74,7 @@ PAD2 sulla SNES, prendere spunto da:
 
 PNG2MAP
 cd C:\ZGB-2023.0\tools\png2map\
-png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\cartel.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\cartel.gbm
+png2gbtiles.exe C:\ZGB-2023.0\ZGB-ORPHEUS\other\KS\QR_160x144.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\QR.gbm
 
 GBM GBR TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
 cd C:\ZGB-2023.0\tools\png2gbtiles

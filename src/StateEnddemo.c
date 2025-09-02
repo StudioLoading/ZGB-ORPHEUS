@@ -22,13 +22,13 @@ void START() {
 	//MAP
         INIT_FONT(font, PRINT_BKG);
     PRINT(0, 1, "  CONGRATULATIONS!  ");
-    PRINT(0, 8, "YOU COMPLETED THE   ");
-    PRINT(0, 9, "DEMO OF ORPHEUS.    ");
-    PRINT(0, 10, "FOLLOW THE KICKSTART");
-    PRINT(0, 11, "ER PAGE OF THIS     ");
-    PRINT(0, 12, "PROJECT TO STAY UP  ");
-    PRINT(0, 13, "DATED ON ITS DEVELOP");
-    PRINT(0, 14, "MENT!               ");
+    PRINT(0, 8, "YOU COMPLETED THIS  ");
+    PRINT(0, 9, "DEMO. SO THANK YOU!");
+    PRINT(0, 11, "FOLLOW THE  ");
+    PRINT(0, 12, "KICKSTARTER ");
+    PRINT(0, 13, "CAMPAIGN TO ");
+    PRINT(0, 14, "GET GAME    ");
+    PRINT(0, 15, "UPDATES!    ");
     //PlayMusic(intro, 1);
 }
 

@@ -78,11 +78,11 @@ void UPDATE() {
             THIS->x = boat_walk_left_limit;
         }
     //boat_frmskip_max
-        if(boss_hp_current == 4){
+        if(boss_hp_current >= 4 && boat_frmskip_max != BOAT_FRMSKIP_LOW){
+            boat_frmskip_max = BOAT_FRMSKIP_LOW;
+        }else if(boss_hp_current > 2 && boat_frmskip_max != BOAT_FRMSKIP_MID){
             boat_frmskip_max = BOAT_FRMSKIP_MID;
-        }else if(boss_hp_current > 2){
-            boat_frmskip_max = BOAT_FRMSKIP_MAX;
-        }else{//speed up the boat!
+        }else if(boat_frmskip_max != BOAT_FRMSKIP_MAX){//speed up the boat!
             boat_frmskip_max = BOAT_FRMSKIP_MAX;
             //boat_vx = boat_vx * 2;
         }

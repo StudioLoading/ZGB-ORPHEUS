@@ -184,19 +184,17 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d12, "TAGE.             ", 21);
         break;
         case BOSS_CHARON_INTRO:
-            memcpy(d0, "CHARON:           ", 21);
+            memcpy(d0, "THIS IS CHARON:   ", 21);
             memcpy(d1, "YOUR LYRE CAN CON,", 21);
             memcpy(d2, "TROL HIS BOAT FOR ", 21);
             memcpy(d3, "A LIMITED PERIOD  ", 21);
             memcpy(d4, "OF TIME. PUSH HIM ", 21);
             memcpy(d5, "AGAINST THOSE     ", 21);
             memcpy(d6, "STONES!           ", 21);
-            memcpy(d7, "                  ", 21);
-            memcpy(d8, "WHEN HIS HANDS    ", 21);
-            memcpy(d9, "MOVE IN CIRCLES   ", 21);
-            memcpy(d10, "THE BOAT GETS    ", 21);
-            memcpy(d11, "UNDER HIS FULL   ", 21);
-            memcpy(d12, "CONTROL.         ", 21);
+            memcpy(d7, "WHEN HIS HANDS    ", 21);
+            memcpy(d8, "MOVE IN CIRCLES   ", 21);
+            memcpy(d9, "THE BOAT GETS     ", 21);
+            memcpy(d10, "UNDER HIS CONTROL", 21);
         break;
         case BOSS_CHARON_BEATED:
             memcpy(d0, "CHARON:           ", 21);

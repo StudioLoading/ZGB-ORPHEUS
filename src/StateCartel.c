@@ -33,6 +33,7 @@ extern unsigned char d10[];
 extern MACROMAP current_map;
 extern UINT8 J_ATK;
 extern UINT8 song_selection_cooldown;
+extern INT8 boss_hp_current;
 
 extern UINT8 is_current_map_on_boss() BANKED;
 
@@ -58,7 +59,16 @@ void UPDATE(){
     if(KEY_TICKED(J_ATK)){
         song_selection_cooldown = 40u;
         if(is_current_map_on_boss() && current_map != HADES_26){
-            SetState(StateBoss00);
+            //SetState(StateBoss00);//TODO uncomment this
+            //TODO nuovo State di presentazione Nuovo Bioma
+            //dal quale chiamare la go_to_next_map()
+            //TODO remove start
+            if(boss_hp_current == 0){
+                SetState(StateEnddemo);
+            }else{
+                SetState(StateBoss00);
+            }
+            //TODO remove end
         }else{
             SetState(StateHades00);
         }

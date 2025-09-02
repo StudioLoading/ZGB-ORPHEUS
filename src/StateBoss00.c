@@ -29,10 +29,18 @@ IMPORT_MAP(mapbossminos);
 IMPORT_MAP(mapbossaeacus);
 IMPORT_MAP(mapbosshades);
 IMPORT_MAP(hudmap);
-//IMPORT_TILES(font);
 DECLARE_MUSIC(battle);
 
 
+const UINT8 coll_t_charon[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
+75,76,
+//here the hit tiles
+115, 113, 122, 120, 114,
+//prev
+6,7,8,2,
+//next
+88,90,92,94,96,98,100,102,104,
+0};
 const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
 75,76,
 //here the hit tiles
@@ -66,7 +74,6 @@ Sprite* s_awacus_body = 0;
 Sprite* s_hades_skull = 0;
 Sprite* s_hades_claw_left = 0;
 Sprite* s_hades_claw_right = 0;
-UINT16 end_demo_counter = 600u;
 UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show a cutscene; 3 play; 4 boss dead
 UINT16 spawn_common_wait = 0u;
 UINT16 spawn_common_wait_max = 0u;
@@ -168,7 +175,7 @@ void START() {
 	//INITSCROLL & BOSS SPRITES
 		switch(current_map){
 			case BOSS_CHARON:{
-				InitScroll(BANK(mapbosscharon), &mapbosscharon, coll_t_hades005, coll_s_hades005);
+				InitScroll(BANK(mapbosscharon), &mapbosscharon, coll_t_charon, coll_s_hades005);
 				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 5u << 3));
 				Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
 				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
@@ -236,12 +243,11 @@ void UPDATE() {
 	switch(boss_intro){
 		case 1:{
 			if(a_walk_counter_y == 0){
-				boss_hp_max = 5;
-				boss_hp_current = 2;
+				boss_hp_max = 1;//TODO demo change to 5
 				if(current_map == BOSS_HADES){
 					boss_hp_max = 8;
-					boss_hp_current = 1;//TODO 8
 				}
+				boss_hp_current = boss_hp_max;
 				boss_intro = 2;
 			}
 		}break;
@@ -695,7 +701,6 @@ void boss_manage_death_charon() BANKED{
 			SpriteManagerRemoveSprite(s_charon);
 		break;
 		case 0u:{
-			boss_intro = 0;//reset
 			prepare_dialog(BOSS_CHARON_BEATED);
 			SetState(StateCartel);
 		}break;

@@ -118,7 +118,6 @@ extern INT8 a_walk_counter_y;
 extern INT8 orpheus_hp_max;
 extern INT8 orpheus_hp;
 extern INT8 countdown;
-extern INT8 orpheus_power_max;
 extern UINT8 tutorial_go;
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
@@ -236,6 +235,8 @@ void level_common_start() BANKED{
 		flag_button_repushable = 0u;
 		repushable_button_cooldown = REPUSHABLE_BUTTON_COOLDOWN_MAX;
 		flag_button_pushable = 1u;
+		flag_paused = 0u;
+		song_selection_cooldown = 0u;
 }
 
 void reset_maps() BANKED{
@@ -626,27 +627,30 @@ void move_camera() BANKED{
 void UpdateHUD() BANKED{
 	redraw_hud = 0;
 	INT8 idx = 0;
+	UINT8 is_on_boss = is_current_map_on_boss();
 	//STRUCTURE
-		UPDATE_HUD_TILE(0,0,57);
-		UPDATE_HUD_TILE(1,0,57);
-		UPDATE_HUD_TILE(2,0,57);
-		UPDATE_HUD_TILE(3,0,57);
-		UPDATE_HUD_TILE(4,0,57);
-		UPDATE_HUD_TILE(5,0,57);
-		UPDATE_HUD_TILE(6,0,57);
-		UPDATE_HUD_TILE(7,0,57);
-		UPDATE_HUD_TILE(8,0,57);
-		UPDATE_HUD_TILE(9,0,57);
-		UPDATE_HUD_TILE(10,0,57);
-		UPDATE_HUD_TILE(11,0,57);
-		UPDATE_HUD_TILE(12,0,57);
-		UPDATE_HUD_TILE(13,0,57);
-		UPDATE_HUD_TILE(14,0,57);
-		UPDATE_HUD_TILE(15,0,57);
-		UPDATE_HUD_TILE(16,0,57);
-		UPDATE_HUD_TILE(17,0,57);
-		UPDATE_HUD_TILE(18,0,57);
-		UPDATE_HUD_TILE(19,0,57);
+		if(is_on_boss == 0){
+			UPDATE_HUD_TILE(0,0,57);
+			UPDATE_HUD_TILE(1,0,57);
+			UPDATE_HUD_TILE(2,0,57);
+			UPDATE_HUD_TILE(3,0,57);
+			UPDATE_HUD_TILE(4,0,57);
+			UPDATE_HUD_TILE(5,0,57);
+			UPDATE_HUD_TILE(6,0,57);
+			UPDATE_HUD_TILE(7,0,57);
+			UPDATE_HUD_TILE(8,0,57);
+			UPDATE_HUD_TILE(9,0,57);
+			UPDATE_HUD_TILE(10,0,57);
+			UPDATE_HUD_TILE(11,0,57);
+			UPDATE_HUD_TILE(12,0,57);
+			UPDATE_HUD_TILE(13,0,57);
+			UPDATE_HUD_TILE(14,0,57);
+			UPDATE_HUD_TILE(15,0,57);
+			UPDATE_HUD_TILE(16,0,57);
+			UPDATE_HUD_TILE(17,0,57);
+			UPDATE_HUD_TILE(18,0,57);
+			UPDATE_HUD_TILE(19,0,57);
+		}
 		UPDATE_HUD_TILE(0,1,25);
 		UPDATE_HUD_TILE(0,2,26);
 		UPDATE_HUD_TILE(5,1,47);
@@ -821,7 +825,7 @@ void UpdateHUD() BANKED{
 			UPDATE_HUD_TILE(6,2,54);
 		}
 	//BOSS HP
-		if(is_current_map_on_boss()){
+		if(is_on_boss){
 			INT8 idx_bosshp = 0;
 			switch(boss_hp_max){
 				case 5:{
@@ -999,13 +1003,13 @@ void go_to_next_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
-			next_state = StateHades00;
+			next_state = StateEnddemo;
 		break;
 		case BOSS_CHARON:
-			prev_map = HADES_04;
+			prev_map = HADES_05;
 			next_map = END_DEMO;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3);
 			next_state = StateBoss00;
 			a_walk_counter_y = -16;
 		break;
