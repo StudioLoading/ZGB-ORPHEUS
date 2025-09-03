@@ -48,10 +48,12 @@ void write_btns(UINT8 arg_btns_selected) BANKED;
 extern UINT8 stop_music_on_new_state;
 uint8_t sgb_checked = 0;
 extern void manage_sgb_border() BANKED;
+extern void manage_sgb_palette() BANKED;
 
 void START(){
     sgb_checked = sgb_check();
     manage_sgb_border();
+    manage_sgb_palette();
     switch(credit_page_counter){
         case 0u: 
             NR52_REG = 0x80; //Enables sound, you should always setup this first

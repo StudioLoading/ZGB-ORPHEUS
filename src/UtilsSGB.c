@@ -11,18 +11,21 @@
 #include "Print.h"
 
 #include "custom_datas.h"
+#include "sgb_palette.h"
 
 IMPORT_MAP(bordersky);
 IMPORT_MAP(borderflame);
 
+extern UINT8 credit_page_counter;
 extern uint8_t sgb_checked;
 CURRENT_BORDER current_border = BORDER_FLAMES;
 void manage_sgb_border() BANKED;
+void manage_sgb_palette() BANKED;
 
 void manage_sgb_border() BANKED{
-    if(current_state != StateBoss00 && current_border != BORDER_SKY){
+    if(current_state == StateTutorial && current_border != BORDER_SKY){
         current_border = BORDER_SKY;
-    }else if(current_state == StateHades00 && current_border != BORDER_FLAMES){
+    }else if(current_state != StateTutorial && current_border != BORDER_FLAMES){
         current_border = BORDER_FLAMES;
     }
     if(sgb_checked){
@@ -30,6 +33,17 @@ void manage_sgb_border() BANKED{
             case BORDER_SKY: LOAD_SGB_BORDER(bordersky); break;
             case BORDER_FLAMES: LOAD_SGB_BORDER(borderflame); break;
         }
+    }
+}
+
+void manage_sgb_palette() BANKED{
+    switch(credit_page_counter){
+        case 0://Studio Loading & Kibou
+            set_sgb_palette_credits_slkibou();
+        break;
+        case 1://Misu & Sloopy
+            set_sgb_palette_credits_misusloopy();
+        break;
     }
 }
 
