@@ -661,13 +661,6 @@ void orpheus_update_position() BANKED{
             switch(current_state){
                 case StateTutorial:
                     switch(orpheus_info->tile_collision){
-                        case 6u: 
-                        case 30u://CARTEL!
-                            if(KEY_PRESSED(J_INT)){
-                                prepare_dialog(TUTORIAL_PLAY);
-                                SetState(StateCartel);
-                            }
-                        break;
                         case 11u:
                         case 12u:
                             go_to_next_map();

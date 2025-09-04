@@ -1,7 +1,8 @@
 
 DEMO V2:
 - lingua giappa
-
+    - scelta lingua alla titlescreen
+    - prepare_dialog() diventa una scelta fra prepare_dialog_eng() e prepare_dialog_j() a seconda di quanto scelto in titlescreen
 
 
 PRODUZIONE:
@@ -98,6 +99,8 @@ maypal.pal file di testo contenente solo le seguenti
 #11380F
 ovviamente palette del Paint.NET con cui ho fatto il png contiene gli stessi codici, senza # e con FF iniziali per azzerare opacità
 png 160x144
+
+あ=A, い=B, う=C, え=D, お=E, か=F, き=G, く=H, け=I, こ=J, さ=K, し=L, す=M, せ=N, そ=O, た=P, ち=Q, つ=R, て=S, と=T, な=U, に=V, ぬ=W, ね=X, の=Y, は=Z, ひ=0, ふ=1, へ=2, ほ=3, ま=4, み=5, む=6, め=7, も=8, や=9, ゆ=!, よ=', ら=(, り=), る=,, れ=., ろ=:, わ=?, を=-, ず=[, ご=]
 
 
 ROMUSAGE

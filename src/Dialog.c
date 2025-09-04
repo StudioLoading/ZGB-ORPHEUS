@@ -38,11 +38,132 @@ unsigned char get_char(UINT8 arg_writing_line, UINT8 arg_counter_char) BANKED;
 
 UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
+        case FIRSTEVER://JJZ QFB. 4[Z PS]T- 5RIUBT. ZZ JJV EBP. BJC
+            memcpy(d1, "JJZ QFB. 4[Z PS]T- ", 21);
+            memcpy(d2, "5RIUBT. ZZ JJV EBP.", 21);
+            memcpy(d3, "        BJC        ", 21);
+            return 3u;
+        break;
         case MISSING_LYRE:
             memcpy(d1, "MM7UB 4[Z.         ", 21);
             memcpy(d2, "PS]T-   5RIUBT     ", 21);
             memcpy(d3, "                   ", 21);
             return 3u;
+        break;
+        case FOUND_LYRE:
+            memcpy(d1, "PST]T Z EEH Y CP-0I,", 21);
+            memcpy(d2, "SG-QFHV SG-J?HV     ", 21);
+            memcpy(d3, "SG-TEHV             ", 21);
+            return 3u;
+        break;
+        case PUSH_BUTTON:
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "BLV_PTZ T_(`]AH     ", 21);
+            memcpy(d3, "                    ", 21);
+            return 3u;
+        break;
+        case PRESS_INTERACT:
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "   PST]T-T,V Z. EM  ", 21);
+            memcpy(d3, "                    ", 21);
+            return 3u;
+        break;
+        case HADES_ENTRANCE:
+            memcpy(d1, "     JNV. LYT_(     ", 21);
+            memcpy(d2, "       G5-PMI,      ", 21);
+            memcpy(d3, "        4IUB        ", 21);
+            return 3u;
+        break;
+        case HADES_WELCOME:
+            memcpy(d0, "     YCJOM6JO'    ", 21);
+            memcpy(d1, "?PL Z ZZ UV       ", 21);
+            memcpy(d2, "JY F-G6Y Z ZUM    ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "29-QFK            ", 21);
+            memcpy(d5, "J.-T.B Z 2)Y-A    ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "FLJH U.B G5Y      ", 21);
+            memcpy(d8, "AB-8-M            ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
+        case HADES_MOVE_BLOCK:
+            memcpy(d0, "5Q Z BL           ", 21);
+            memcpy(d1, "BL Z EN,          ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "J V LGIL          ", 21);
+            memcpy(d4, "BL-EL LGYCDV      ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
+        case HADES_USE_KEY:
+            memcpy(d0, "TH_( Z FG_        ", 21);
+            memcpy(d1, "FG_Z0(H           ", 21);
+            memcpy(d2, "FG_-8S            ", 21);
+            memcpy(d3, "TH_(-RFD          ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
+        case HADES_KILL_ENEMY:
+            memcpy(d0, "SG]BINTAH         ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "1TCY0-RFD         ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "QCBL: 0V R'B SG   ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                 ", 21);
+        break;
+        case HADES_GUARDS:
+            memcpy(d0, "YJGJ 6MJO'        ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "JBW Z JY29-48,    ", 21);
+            memcpy(d3, "F.,Z29-5SB,       ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "F.,Y7-5'          ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "UVF EFSLB T       ", 21);
+            memcpy(d8, "5.B F., Z ZL,     ", 21);
+            memcpy(d9, "                   ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
+        case HADES_DEATH:
+            memcpy(d0, "6MJO' G5Y 5QZ     ", 21);
+            memcpy(d1, " E?(UB            ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "PEPT Z E4DYCP     ", 21);
+            memcpy(d4, "Z 4DA,            ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "8TV FD, QF(Z 4PA, ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "ABZ 4RRSB,        ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
+        case BOSS_CHARON_INTRO:
+            memcpy(d0, "J.Z 1XY)          ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "G5Y PST]T Z       ", 21);
+            memcpy(d3, "1X-MK,L A9R,      ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "F.-BLV ELRJ:L     ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "S-C]FKT 1X Z      ", 21);
+            memcpy(d8, "F.Y 8Y            ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
         break;
     }
     return 0u;
@@ -98,18 +219,9 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d6, "MAY I FACE!         ", 21);
             return 6u;
         break;
-        case TUTORIAL_PLAY:
-            memcpy(d1, "BY PLAYING MY LYRE  ", 21);
-            memcpy(d2, "I WILL MOVE MY ENE( ", 21);
-            memcpy(d3, "MIES AROUND. LET ME ", 21);
-            memcpy(d4, "PUSH THAT SKELETON  ", 21);
-            memcpy(d5, "INTO THOSE FLAMES!  ", 21);
-            memcpy(d6, EMPTY_STRING_20, 21);
-            return 6u;
-        break;
         case HADES_WELCOME:
             memcpy(d0, "WELCOME, MY SON. I", 21);
-            memcpy(d1, "AM WITH YOU THROGH", 21);
+            memcpy(d1, "TALK TO YOU WITH  ", 21);
             memcpy(d2, "THESE WRITINGS.   ", 21);
             memcpy(d3, "                  ", 21);
             memcpy(d4, "EACH ROOM HAS A   ", 21);
@@ -149,9 +261,9 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
         case HADES_KILL_ENEMY:
             memcpy(d0, "SOME GATES OPEN   ", 21);
             memcpy(d1, "IF AND ONLY IF    ", 21);
-            memcpy(d2, "THER EARE NO      ", 21);
+            memcpy(d2, "THERE ARE NO      ", 21);
             memcpy(d3, "HADES CREATURES   ", 21);
-            memcpy(d4, "AROUND.           ", 21);
+            memcpy(d4, "LEFT AROUND.      ", 21);
             memcpy(d5, "USE THE FATUOUS   ", 21);
             memcpy(d6, "FIRE AT YOUR ADVAN", 21);
             memcpy(d7, "TAGE. BUT BE CARE(", 21);
