@@ -34,10 +34,16 @@ UINT8 intro_page_counter = 0u;
 UINT8 text_wait = 0u;
 UINT8 text_shown = 0u;
 
+extern void manage_sgb_border() BANKED;
+extern void manage_sgb_palette() BANKED;
+
+
 void START(){
     text_shown = 0u;
     switch(intro_page_counter){
         case 0u:
+            manage_sgb_border();
+            manage_sgb_palette();
         case 1u:
 	        InitScroll(BANK(intro0), &intro0, 0, 0);
         break;

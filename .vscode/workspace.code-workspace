@@ -26,7 +26,8 @@
 			"utilsloadsave.h": "c",
 			"vector.h": "c",
 			"zgbmain_init.h": "c",
-			"circlemath.h": "c"
+			"circlemath.h": "c",
+			"sgb_palette.h": "c"
 		}
 	}
 }

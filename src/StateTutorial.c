@@ -17,6 +17,7 @@
 IMPORT_MAP(omapintro);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
+IMPORT_TILES(fontj);
 DECLARE_MUSIC(tutorial);
 
 const UINT8 coll_tiles_intro[] = {4u, 6u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23u, 24u, 25u, 30u, 32u, 33u, 34u, 35u, 36u, 40u, 41u, 51u, 53u, 60u, 61u, 62u, 63u, 64u, 65u, 80u,
@@ -53,6 +54,7 @@ extern void level_common_update_play() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern void write_dialog() BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
+extern UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
@@ -87,7 +89,7 @@ void START() {
 	//INITSCROLL
 		InitScroll(BANK(omapintro), &omapintro, coll_tiles_intro, coll_surface_intro);
 	//HUD
-        INIT_FONT(font, PRINT_BKG);
+        INIT_FONT(fontj, PRINT_BKG);
         INIT_HUD(hudmap);
 	//TUTORIAL INIT OPRHEUS MOVEMENT
 		if(tutorial_go == 0){
@@ -127,7 +129,7 @@ void UPDATE() {
 		if(s_orpheus->y < ((UINT16) 29u << 3)){
 			if(has_lyre == 0){
 				s_orpheus->y += 4u;
-				init_write_dialog(prepare_dialog(MISSING_LYRE));
+				init_write_dialog(prepare_dialog_j(MISSING_LYRE));
 			}else if(gate_pushed == 0 && tutorial_push_button == 0u){
 				s_orpheus->y -= 2u;
 				tutorial_push_button = 1u;

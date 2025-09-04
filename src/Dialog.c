@@ -33,7 +33,20 @@ unsigned char d23[22];
 unsigned char EMPTY_STRING_20[] = "                    ";
 
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
+UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED;
 unsigned char get_char(UINT8 arg_writing_line, UINT8 arg_counter_char) BANKED;
+
+UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED{
+    switch(arg_whostalking){
+        case MISSING_LYRE:
+            memcpy(d1, "MM7UB 4[Z.         ", 21);
+            memcpy(d2, "PS]T-   5RIUBT     ", 21);
+            memcpy(d3, "                   ", 21);
+            return 3u;
+        break;
+    }
+    return 0u;
+}
 
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
@@ -102,7 +115,7 @@ UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d4, "EACH ROOM HAS A   ", 21);
             memcpy(d5, "PUZZLE. SOLVE IT  ", 21);
             memcpy(d6, "TO OPEN THE EXIT  ", 21);
-            memcpy(d7, "DOOR. THE ANSWER  ", 21);
+            memcpy(d7, "DOOR.             ", 21);
             memcpy(d8, "BE WISE, AND YOU  ", 21);
             memcpy(d9, "WILL BRING BACK   ", 21);
             memcpy(d10, "YOUR BELOVED.     ", 21);

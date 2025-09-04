@@ -1,4 +1,10 @@
-- RILASCIARE NUOVA DEMO CHE FINISCA QUANDO SI BATTE CHARON
+
+DEMO V2:
+- lingua giappa
+
+
+
+PRODUZIONE:
 
 - nuovo State di presentazione del nuovo bioma a fine boss e dal quale chiamare la go_to_next_map()
 - hitbox degli enemy da aggiornare
@@ -6,8 +12,8 @@
 - CREDIT screen potrei far atterrare la piuma di kibou in posizione
 - bgm
 - musichette delle song
-- PAUSE - sfx e musica in pausa
 - pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
+
 
 POTENZIALI PROBLEMI - da verificare in fase di test:
 - il common strippa quando si muove diagonale
@@ -98,3 +104,22 @@ ROMUSAGE
 C:\GB\ZGBNEW\tools\romusage-main\bin\romusage.exe C:\GB\ZGBNEW\ZGB-template-master\Debug\ARROWS_Debug.noi -g
 
 DISCORD MARKDOWN: ```c ```
+
+```c
+void manage_sgb_border() BANKED{
+    CURRENT_BORDER old_border = current_border;
+    if(current_state == StateCredit && current_border != BORDER_FLAMES){
+        current_border = BORDER_FLAMES;
+    }else if(current_state == StateIntro && current_border != BORDER_SKY){
+        current_border = BORDER_SKY;
+    }else if(current_state == StateHades00 && current_border != BORDER_FLAMES){
+        current_border = BORDER_FLAMES;
+    }
+    if(old_border != current_border){
+        switch(current_border){
+            case BORDER_SKY: LOAD_SGB_BORDER(bordersky); break;
+            case BORDER_FLAMES: LOAD_SGB_BORDER(borderflame); break;
+        }
+    }
+}
+ ```

@@ -318,7 +318,7 @@ void UPDATE() {
 				case HADES_03:
 					prepare_dialog(HADES_KILL_ENEMY);
 				break;
-				case HADES_04:
+				case HADES_05:
 					prepare_dialog(HADES_GUARDS);
 				break;
 			}

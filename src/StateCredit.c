@@ -51,11 +51,10 @@ extern void manage_sgb_border() BANKED;
 extern void manage_sgb_palette() BANKED;
 
 void START(){
-    sgb_checked = sgb_check();
-    manage_sgb_border();
     manage_sgb_palette();
     switch(credit_page_counter){
         case 0u: 
+            sgb_checked = sgb_check();
             NR52_REG = 0x80; //Enables sound, you should always setup this first
             NR51_REG = 0xFF; //Enables all channels (left and right)
             NR50_REG = 0x77; //Max volumes
@@ -74,15 +73,12 @@ void START(){
             InitScroll(BANK(mapcredit3), &mapcredit3, 0, 0);
         break;
         case 4u:
+            manage_sgb_border();
             InitScroll(BANK(maptitlescreen), &maptitlescreen, 0, 0);
             scroll_target = SpriteManagerAdd(SpriteCamera, 80u, 72u);
         break;
     }
     INIT_FONT(font, PRINT_BKG);
-    if(credit_page_counter == 4){
-        write_menu(99);
-        //write_btns(99);
-    }
     initial_delay_counter = 0u;
     stop_music_on_new_state = 0;
     if(intro_music_started == 0){

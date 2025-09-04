@@ -3,6 +3,7 @@
 
 
 typedef enum{
+	BORDER_NO,
 	BORDER_SKY,
 	BORDER_FLAMES
 }CURRENT_BORDER;

@@ -128,6 +128,7 @@ extern UINT8 spawned_ball;
 extern PUSHING orpheus_pushing;
 extern UINT8 colliding_block;
 extern UINT8 dialog_paused;
+extern uint8_t sgb_checked;
 
 void write_dialog() BANKED;
 void level_common_start() BANKED;
@@ -149,6 +150,8 @@ extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_sp
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 extern UINT8 is_current_map_on_boss() BANKED;
+extern void manage_sgb_border() BANKED;
+extern void manage_sgb_palette() BANKED;
 
 void camera_shake_v() BANKED{
 	camera_shake_frmskip++;
@@ -199,6 +202,13 @@ void camera_shake_h() BANKED{
 }
 
 void level_common_start() BANKED{
+	//SGB
+		if(sgb_checked){
+			if(current_map == HADES_00){
+				manage_sgb_border();
+			}
+			manage_sgb_palette();
+		}
 	//CAMERA SHAKE
 		flag_camera_shake_v = 0u;
 		flag_camera_shake_h = 0u;
@@ -955,7 +965,6 @@ void go_to_next_map() BANKED{
 	current_map = next_map;
 	switch(next_map){
 		case HADES_00:
-			//solved_map = current_map;
 			prev_map = TUTORIAL;
 			next_map = HADES_01;
 			camera_spawnx = ((UINT16) SPAWNX_CAMERA_HADES << 3);
@@ -963,6 +972,7 @@ void go_to_next_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES000_IN << 3);
 			//a_walk_counter_y = -8;
+			new_state = IDLE_LEFT;
 			next_state = StateHades00;
 		break;
 		case HADES_01:
@@ -1005,7 +1015,7 @@ void go_to_next_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
-			next_state = StateEnddemo;
+			next_state = StateHades00;
 		break;
 		case BOSS_CHARON:
 			prev_map = HADES_05;
