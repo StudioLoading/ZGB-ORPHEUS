@@ -204,7 +204,7 @@ void camera_shake_h() BANKED{
 void level_common_start() BANKED{
 	//SGB
 		if(sgb_checked){
-			if(current_map == HADES_00){
+			if(current_map == TUTORIAL){
 				manage_sgb_border();
 			}
 			manage_sgb_palette();

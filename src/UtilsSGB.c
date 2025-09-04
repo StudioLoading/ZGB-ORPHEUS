@@ -31,7 +31,8 @@ void manage_sgb_border() BANKED{
         current_border = BORDER_FLAMES;
     }else if(current_state == StateIntro && current_border != BORDER_SKY){
         current_border = BORDER_SKY;
-    }else if(current_state == StateHades00 && current_border != BORDER_FLAMES){
+    //}else if(current_state == StateHades00 && current_border != BORDER_FLAMES){
+    }else if(current_state == StateTutorial && current_border != BORDER_FLAMES){
         current_border = BORDER_FLAMES;
     }
     if(old_border != current_border){
