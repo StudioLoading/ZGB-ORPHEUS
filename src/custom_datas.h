@@ -8,6 +8,17 @@ typedef enum{
 	BORDER_FLAMES
 }CURRENT_BORDER;
 
+
+typedef enum{
+	ENG,
+	JAP
+}CHOSEN_LANGUAGE;
+
+struct FlagInfo{
+	CHOSEN_LANGUAGE type;
+	UINT8 configured;
+};
+
 typedef enum{
 	GENERIC_IDLE,
 	GENERIC_WALK,

@@ -38,6 +38,7 @@ UINT8 opt_selected = 0;
 UINT8 flag_camera_move = 0u;
 UINT8 camera_state = 0u;
 UINT8 btns_selected = 0;
+CHOSEN_LANGUAGE chosen_language = ENG;
 
 UINT8 J_INT=J_A;//0x10;
 UINT8 J_ATK=J_B;//0x20;
@@ -76,6 +77,14 @@ void START(){
             manage_sgb_border();
             InitScroll(BANK(maptitlescreen), &maptitlescreen, 0, 0);
             scroll_target = SpriteManagerAdd(SpriteCamera, 80u, 72u);
+            Sprite* flag_en = SpriteManagerAdd(SpriteLanguage, 54u, 126u);
+            struct FlagInfo* flag_en_info = (struct FlagInfo*)flag_en->custom_data;
+            flag_en_info->type = ENG;
+            flag_en_info->configured = 1;
+            Sprite* flag_jp = SpriteManagerAdd(SpriteLanguage, 96u, 126u);
+            struct FlagInfo* flag_jp_info = (struct FlagInfo*)flag_jp->custom_data;
+            flag_jp_info->type = JAP;
+            flag_jp_info->configured = 1;
         break;
     }
     INIT_FONT(font, PRINT_BKG);
@@ -226,6 +235,13 @@ void UPDATE(){
                                 credit_page_counter = 0;
                                 SetState(StateCredit);
                             }break;
+                        }
+                    }
+                    if(KEY_TICKED(J_LEFT) || KEY_TICKED(J_RIGHT)){
+                        if(chosen_language == ENG){
+                            chosen_language = JAP;
+                        }else{
+                            chosen_language = ENG;
                         }
                     }
                 }break;

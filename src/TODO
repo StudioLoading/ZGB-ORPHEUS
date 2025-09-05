@@ -1,6 +1,6 @@
-
 DEMO V2:
 - lingua giappa
+    - intro!
     - scelta lingua alla titlescreen
     - prepare_dialog() diventa una scelta fra prepare_dialog_eng() e prepare_dialog_j() a seconda di quanto scelto in titlescreen
 

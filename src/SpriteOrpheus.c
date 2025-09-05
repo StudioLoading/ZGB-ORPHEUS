@@ -95,7 +95,6 @@ void orpheus_pickup(Sprite* itemsprite) BANKED;
 void orpheus_check_tile_overlapping() BANKED;
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
-extern UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED;
 extern void go_to_next_map() BANKED;
 extern void go_to_prev_map() BANKED;
 extern void solve_current_map() BANKED;
@@ -233,7 +232,7 @@ void UPDATE() {
                     orpheus_state_before = orpheus_info->ow_state;
                     new_state = ATTACK;
                 }else{
-			        init_write_dialog(prepare_dialog_j(MISSING_LYRE));
+			        init_write_dialog(prepare_dialog(MISSING_LYRE));
                 }
 			}
         }

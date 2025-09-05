@@ -13,6 +13,7 @@ _STATE(StateEnddemo)\
 STATE_DEF_END
 
 #define SPRITES \
+_SPRITE_DMG(SpriteLanguage, language)\
 _SPRITE_DMG(SpriteNote, note)\
 _SPRITE_DMG(SpriteButterfly, butterfly)\
 _SPRITE_DMG(SpriteDog, dog)\

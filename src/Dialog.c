@@ -32,13 +32,13 @@ unsigned char d22[22];
 unsigned char d23[22];
 unsigned char EMPTY_STRING_20[] = "                    ";
 
-UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
-UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED;
+UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED;
+UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED;
 unsigned char get_char(UINT8 arg_writing_line, UINT8 arg_counter_char) BANKED;
 
-UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED{
+UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
-        case FIRSTEVER://JJZ QFB. 4[Z PS]T- 5RIUBT. ZZ JJV EBP. BJC
+        case FIRSTEVER:
             memcpy(d1, "JJZ QFB. 4[Z PS]T- ", 21);
             memcpy(d2, "5RIUBT. ZZ JJV EBP.", 21);
             memcpy(d3, "        BJC        ", 21);
@@ -169,7 +169,7 @@ UINT8 prepare_dialog_j(WHOSTALKING arg_whostalking) BANKED{
     return 0u;
 }
 
-UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
+UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
         case FIRSTEVER:
             memcpy(d1, "THE GATES OF HADES  ", 21);
