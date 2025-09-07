@@ -281,3 +281,10 @@ void set_sbg_palette_hades_charon() __banked{
     set_sgb_pal2pal3(SGB_CHARON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
     set_sgb_structure_hades();
 }
+
+void set_sbg_palette_boss_charon() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_BOSSCHARON_LIGHTER, SGB_BOSSCHARON_LIGHT, SGB_BOSSCHARON_DARK, SGB_BOSSCHARON_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_BOSSCHARON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}

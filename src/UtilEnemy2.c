@@ -19,7 +19,6 @@ extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 extern ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 extern void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED;
-extern void e_destroy(Sprite* s_enemy) BANKED;
 
 void e_dog_management(Sprite* s_enemy) BANKED;
 

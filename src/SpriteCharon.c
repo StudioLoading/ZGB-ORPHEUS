@@ -365,6 +365,7 @@ void charon_change_state(SPRITE_STATES arg_new_state) BANKED{
             if(THIS->x > boat_walk_right_limit){
                 THIS->x = boat_walk_right_limit-2;
             }
+            THIS->y = s_charon_boat->y - 20u;
             SetSpriteAnim(THIS, a_charon, 8);
         break;
         case PREATTACK_UP://moves to attack position

@@ -836,6 +836,7 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
                 restart_current_map = 1u;
             }
             orpheus_hp = 0;
+            orpheus_haskey = 0;
             redraw_hud = 1;
             boss_intro = 0;
             SetSpriteAnim(arg_s_orpheus, a_orpheus_dead, 1u);

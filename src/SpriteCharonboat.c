@@ -19,7 +19,6 @@ const UINT8 a_charonboat_blink[] = {2, 0,1};
 
 UINT8 boat_count = 0u;
 INT8 boat_vx = 1;
-INT8 boat_vy = 0;
 UINT16 boat_walk_right_limit = 103u;
 UINT16 boat_walk_left_limit = 32u;
 INT8 boat_frmskip = 0;
@@ -68,7 +67,7 @@ void UPDATE() {
             THIS->y = s_charon->y + 16u; 
             return;
         }
-    //HORIZONTAL MOVEMENT
+    //HORIZONTAL LIMITS
         if(THIS->x > boat_walk_right_limit){
             boat_turn();
             THIS->x = boat_walk_right_limit;
@@ -84,12 +83,11 @@ void UPDATE() {
             boat_frmskip_max = BOAT_FRMSKIP_MID;
         }else if(boat_frmskip_max != BOAT_FRMSKIP_MAX){//speed up the boat!
             boat_frmskip_max = BOAT_FRMSKIP_MAX;
-            //boat_vx = boat_vx * 2;
         }
     //TRANSLATION
         boat_frmskip--;
         if(boat_frmskip <= 0){
-            UINT8 boat_tile_coll = TranslateSprite(THIS, boat_vx << delta_time, boat_vy << delta_time);
+            UINT8 boat_tile_coll = TranslateSprite(THIS, boat_vx << delta_time, 0);
             boat_frmskip = boat_frmskip_max;
         }
 }

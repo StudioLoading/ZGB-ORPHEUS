@@ -63,8 +63,11 @@ Sprite* s_radamanthusshadow = 0;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
 UINT8 death_countdown = 0u;
-struct ItemSpawnedByCommon item_spawned_by_common;
-
+struct ItemSpawnedByCommon item_spawned_by_common = {
+        .sprite_type = 0,
+        .item_type = ITEM_NONE,
+        .spawned = 0
+};
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
 extern Sprite* s_orpheus;
@@ -131,11 +134,11 @@ void START() {
 				}break;
 				case HADES_05:{
 					area_enemy_counter = 1;
-					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
-					e_configure(e_dog);
 					item_spawned_by_common.sprite_type = SpriteDog;
 					item_spawned_by_common.item_type = KEY;
 					item_spawned_by_common.spawned = 0;
+					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
+					e_configure(e_dog);
 				}break;
 				//BOSS CHARON
 				case HADES_06:{
@@ -320,6 +323,7 @@ void UPDATE() {
 					prepare_dialog(HADES_GUARDS);
 				break;
 			}
+			show_cartel = 0u;
 			SaveSprites();
 			SetState(StateCartel);
 		}

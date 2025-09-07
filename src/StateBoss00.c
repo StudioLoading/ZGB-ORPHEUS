@@ -33,7 +33,7 @@ DECLARE_MUSIC(battle);
 
 
 const UINT8 coll_t_charon[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
-75,76,
+75,76, 110, 111,
 //here the hit tiles
 115, 113, 122, 120, 114,
 //prev
@@ -176,7 +176,7 @@ void START() {
 		switch(current_map){
 			case BOSS_CHARON:{
 				InitScroll(BANK(mapbosscharon), &mapbosscharon, coll_t_charon, coll_s_hades005);
-				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 5u << 3));
+				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 5u << 3) - 1u);
 				Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
 				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
 				heart_data->item_type = HEART;
@@ -701,8 +701,10 @@ void boss_manage_death_charon() BANKED{
 			SpriteManagerRemoveSprite(s_charon);
 		break;
 		case 0u:{
-			prepare_dialog(BOSS_CHARON_BEATED);
-			SetState(StateCartel);
+			//TODO uncomment below
+			/*prepare_dialog(BOSS_CHARON_BEATED);
+			SetState(StateCartel);*/
+			SetState(StateEnddemo);
 		}break;
 	}
 }

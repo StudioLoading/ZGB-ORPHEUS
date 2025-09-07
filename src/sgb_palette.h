@@ -55,6 +55,11 @@
 #define SGB_STATUS2_DARK	myRGB(61, 142, 197)
 #define SGB_STATUS2_DARKER 	myRGB(0, 0, 0)
 
+#define SGB_BOSSCHARON_LIGHTER 	myRGB(216, 216, 216)
+#define SGB_BOSSCHARON_LIGHT 	myRGB(239, 187, 170)
+#define SGB_BOSSCHARON_DARK		myRGB(198, 0, 13)
+#define SGB_BOSSCHARON_DARKER 	myRGB(0, 0, 0)
+
 void set_sgb_palette(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3) __banked;
 void set_sgb_palette2(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
 void set_sgb_palette_intro(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
@@ -66,6 +71,7 @@ void set_sgb_palette_credits_zgb() __banked;
 void set_sbg_titlescreen() __banked;
 void set_sbg_palette_tutorial() __banked;
 void set_sbg_palette_hades_charon() __banked;
+void set_sbg_palette_boss_charon() __banked;
 
 void set_sbg_intro() __banked;
 /*

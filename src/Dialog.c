@@ -166,7 +166,17 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d10, "                  ", 21);
         break;
         case BOSS_CHARON_BEATED:
-            SetState(StateEnddemo);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
         break;
     }
     return 0u;
@@ -271,8 +281,8 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d6, "FIRE AT YOUR ADVAN", 21);
             memcpy(d7, "TAGE. BUT BE CARE(", 21);
             memcpy(d8, "FUL BECAUSE NOT   ", 21);
-            memcpy(d9, "CREATURES GET HAR(", 21);
-            memcpy(d10, "MED BY THOSE.     ", 21);
+            memcpy(d9, "ALL CREATURES GET ", 21);
+            memcpy(d10, "HARMED BY FIRE.  ", 21);
         break;
         case HADES_GUARDS:
             memcpy(d0, "LISTEN CLOSELY,   ", 21);

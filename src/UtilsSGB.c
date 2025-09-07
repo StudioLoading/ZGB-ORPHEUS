@@ -79,6 +79,13 @@ void manage_sgb_palette() BANKED{
                 set_sbg_palette_hades_charon();
             }
         }break;
+        case StateBoss00:{
+            switch(current_map){
+                case BOSS_CHARON:{
+                    set_sbg_palette_boss_charon();
+                }break;
+           }
+        }break;
     }
 }
 

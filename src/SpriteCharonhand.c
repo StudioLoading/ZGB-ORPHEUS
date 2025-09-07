@@ -12,6 +12,7 @@
 extern INT8 boss_hp_current;
 extern struct CharonInfo charon_info;
 extern Sprite* s_orpheus;
+extern Sprite* s_charon;
 extern UINT8 charon_attack_type;
 
 const UINT8 a_charonhand[] = {1, 1};
@@ -44,7 +45,7 @@ void START() {
 void UPDATE() {
     if(THIS->x < 8){ THIS->x = 8u; }
     if(THIS->x > 150){ THIS->x = 150u; }
-    if(THIS->y < 2){ THIS->y = 2u; }
+    if(THIS->y < 4){ THIS->y = 4u; }
     if(THIS->y > 137){ THIS->y = 137u;}
     struct EnemyInfo* charonhand_data = (struct EnemyInfo*)THIS->custom_data;
     switch(charon_info.e_state){
@@ -153,32 +154,24 @@ void UPDATE() {
                         break;
                     }
                     UINT8 hand_coll = TranslateSprite(THIS, charonhand_data->vx << delta_time, charonhand_data->vy << delta_time);
-                    if(hand_coll || THIS->y > 136u){
+                    if((hand_coll != 111u && hand_coll != 110u) || THIS->y > 136u){
                         charonhand_data->e_configured = 2;
                     }
                 }
                 break;
                 case 2:{
-                    INT8 actual_hand_vx = 2 * -charonhand_data->vx;
-                    INT8 actual_hand_vy = 2 * -charonhand_data->vy;
-                    if(actual_hand_vy < -4){actual_hand_vy = -4;}
-                    if(actual_hand_vy > 4){actual_hand_vy = 4;}
-                    TranslateSprite(THIS, actual_hand_vx << delta_time, actual_hand_vy << delta_time);
-                    INT16 delta_finalx = (INT16)THIS->x - (INT16)THIS->lim_x;
-                    if(delta_finalx > -5 && delta_finalx < 5 && THIS->x != THIS->lim_x){
-                        THIS->x = THIS->lim_x;
+                    if(charonhand_data->frmskip == 0){
+                        THIS->x = s_charon->x + 17u;
+                        THIS->y = s_charon->y+1;
+                    }else{
+                        THIS->x = s_charon->x - 9u;
+                        THIS->y = s_charon->y+1;
                     }
-                    INT16 delta_finaly = (INT16)THIS->y - (INT16)THIS->lim_y;
-                    if(delta_finaly > -3 && delta_finaly < 3 && THIS->y != THIS->lim_y){
-                        THIS->y = THIS->lim_y;
-                    }
-                    if(THIS->x == THIS->lim_x && THIS->y == THIS->lim_y){
-                        charonhand_data->e_configured = 3;
-                    }
+                    charonhand_data->e_configured = 3;
                 }
                 break;
-                case 3://attack finished, nothing to do
-                break;
+                case 3:{//attack finished, go back to charon
+                }break;
             }
             //SPRITE COLLISION
             UINT8 scroll_ch_tile;
