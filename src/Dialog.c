@@ -165,6 +165,9 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
+        case BOSS_CHARON_BEATED:
+            SetState(StateEnddemo);
+        break;
     }
     return 0u;
 }

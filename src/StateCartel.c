@@ -17,6 +17,7 @@
 IMPORT_MAP(mapcartel);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(fontbw);
+IMPORT_TILES(fontjbw);
 
 extern unsigned char d0[];
 extern unsigned char d1[];
@@ -36,11 +37,19 @@ extern UINT8 song_selection_cooldown;
 extern INT8 boss_hp_current;
 
 extern UINT8 is_current_map_on_boss() BANKED;
+extern CHOSEN_LANGUAGE chosen_language;
 
 
 void START(){
     InitScroll(BANK(mapcartel), &mapcartel, 0, 0);
-    INIT_FONT(fontbw, PRINT_BKG);
+    switch(chosen_language){
+        case ENG:
+            INIT_FONT(fontbw, PRINT_BKG);
+        break;
+        case JAP:
+            INIT_FONT(fontjbw, PRINT_BKG);
+        break;
+    }
     INIT_HUD(hudmap);
     PRINT(1,2, d0);
     PRINT(1,3, d1);

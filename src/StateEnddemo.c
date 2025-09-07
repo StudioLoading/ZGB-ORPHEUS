@@ -14,6 +14,7 @@
 
 IMPORT_MAP(mapenddemo);
 IMPORT_TILES(font);
+IMPORT_TILES(fontj);
 DECLARE_MUSIC(intro);
 
 extern CHOSEN_LANGUAGE chosen_language;
@@ -23,9 +24,9 @@ void START() {
         SetWindowY(144);//TO HIDE THE OLD HUD
 		InitScroll(BANK(mapenddemo), &mapenddemo, 0, 0);
 	//MAP
-        INIT_FONT(font, PRINT_BKG);
         switch(chosen_language){
             case ENG:{
+                INIT_FONT(font, PRINT_BKG);
                 PRINT(0, 1, "  CONGRATULATIONS!  ");
                 PRINT(0, 8, "YOU COMPLETED THIS  ");
                 PRINT(0, 9, "DEMO. SO THANK YOU!");
@@ -36,6 +37,7 @@ void START() {
                 PRINT(0, 15, "UPDATES!    ");
             }break;
             case JAP:{
+                INIT_FONT(fontj, PRINT_BKG);
                 PRINT(0, 1, "E8ST_E[BKL KYY T_8 -");
                 PRINT(0, 8, "F(A LS H,S A,G T_   ");
                 PRINT(0, 9, "5UK8 AP(L_B EL(LN  ");
@@ -46,7 +48,7 @@ void START() {
                 PRINT(0, 15, "            ");
             }break;
         }
-    //PlayMusic(intro, 1);
+    PlayMusic(intro, 1);
 }
 
 void UPDATE() {

@@ -42,6 +42,10 @@ void START() {
 }
 
 void UPDATE() {
+    if(THIS->x < 8){ THIS->x = 8u; }
+    if(THIS->x > 150){ THIS->x = 150u; }
+    if(THIS->y < 2){ THIS->y = 2u; }
+    if(THIS->y > 137){ THIS->y = 137u;}
     struct EnemyInfo* charonhand_data = (struct EnemyInfo*)THIS->custom_data;
     switch(charon_info.e_state){
         case PREATTACK_UP:{

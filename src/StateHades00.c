@@ -21,6 +21,7 @@ IMPORT_MAP(maphades001);
 IMPORT_MAP(maphades002);
 IMPORT_MAP(maphades003);
 IMPORT_MAP(maphades004);
+IMPORT_MAP(maphades005);
 IMPORT_MAP(maphades006);
 IMPORT_MAP(maphades007);
 IMPORT_MAP(maphades008);
@@ -121,14 +122,11 @@ void START() {
 					e_configure(e_enemy);
 				}break;
 				case HADES_04:{
-					area_enemy_counter = 3;
-					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					area_enemy_counter = 2;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1);
 					
-					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
-					e_configure(e_skeleton2);
-
-					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
 					e_configure(e_skeleton3);
 				}break;
 				case HADES_05:{
@@ -205,23 +203,23 @@ void START() {
 		}
 	//INITSCROLL
 		switch(current_map){
-			case HADES_00: 
+			case HADES_00: //ponte
 				InitScroll(BANK(maphades000), &maphades000, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_01: 
+			case HADES_01: //blocco
 				InitScroll(BANK(maphades001), &maphades001, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_02: 
+			case HADES_02: //chiave
 				InitScroll(BANK(maphades002), &maphades002, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_03: 
+			case HADES_03: //skeleton
 				InitScroll(BANK(maphades003), &maphades003, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_04:
+			case HADES_04: //infernal imp
 				InitScroll(BANK(maphades004), &maphades004, coll_t_hades001, coll_s_hades001);
 			break;
-			case HADES_05:
-				InitScroll(BANK(maphades006), &maphades004, coll_t_hades001, coll_s_hades001);
+			case HADES_05: //puppy
+				InitScroll(BANK(maphades005), &maphades005, coll_t_hades001, coll_s_hades001);
 			break;
 			case HADES_06:
 				InitScroll(BANK(maphades006), &maphades006, coll_t_hades001, coll_s_hades001);
