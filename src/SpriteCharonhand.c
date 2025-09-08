@@ -9,6 +9,7 @@
 #include "custom_datas.h"
 #include "CircleMath.h"
 
+extern INT8 boss_hp_max;
 extern INT8 boss_hp_current;
 extern struct CharonInfo charon_info;
 extern Sprite* s_orpheus;
@@ -19,18 +20,9 @@ const UINT8 a_charonhand[] = {1, 1};
 const UINT8 a_charonhand_blink[] = {2, 0,1};
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
-/*
-struct EnemyInfo{
-	SPRITE_STATES e_state;
-	UINT8 tile_collision;
-	INT8 vx;
-	INT8 vy;
-    UINT8 wait;
-	UINT8 frmskip_wait;
-	UINT8 e_configured;
-	UINT8 frmskip;
-}; */
+
 void START() {
     struct EnemyInfo* charonhand_data = (struct EnemyInfo*)THIS->custom_data;
     charonhand_data->wait = 0u;
@@ -64,8 +56,7 @@ void UPDATE() {
             }else{
                 charonhand_data->wait += (12 / boss_hp_current);
             }
-        }
-        break;
+        }break;
         case PREATTACK_DOWN:{
             switch(charonhand_data->e_configured){
                 case 0:{
@@ -111,8 +102,7 @@ void UPDATE() {
                     }
                 break;
             }
-        }
-        break;
+        }break;
         case ATTACK:{
             switch(charonhand_data->e_configured){
                 case 0:
@@ -154,7 +144,10 @@ void UPDATE() {
                         break;
                     }
                     UINT8 hand_coll = TranslateSprite(THIS, charonhand_data->vx << delta_time, charonhand_data->vy << delta_time);
-                    if((hand_coll != 111u && hand_coll != 110u) || THIS->y > 136u){
+                    if(hand_coll == 111u || hand_coll == 110u){
+                        THIS->x += charonhand_data->vx;
+                        THIS->y += charonhand_data->vy;
+                    }else if(hand_coll){//THIS->y > 136u
                         charonhand_data->e_configured = 2;
                     }
                 }
@@ -177,14 +170,20 @@ void UPDATE() {
             UINT8 scroll_ch_tile;
             Sprite* ichspr;
             SPRITEMANAGER_ITERATE(scroll_ch_tile, ichspr) {
-                if(ichspr->type == SpriteOrpheus){
-                    if(CheckCollision(THIS, ichspr)) {
-                        orpheus_change_state(s_orpheus, HIT);
+                if(CheckCollision(THIS, ichspr)) {
+                    switch(ichspr->type){
+                        case SpriteOrpheus:{
+                            orpheus_change_state(s_orpheus, HIT);
+                        }break;
+                        case SpriteItem:{
+                            SpriteManagerRemoveSprite(ichspr);
+                            boss_hp_current = boss_hp_max;
+                            spawn_death_animation(THIS->x + 8u, THIS->y + 20u);
+                        }break;
                     }
                 }
             }
-        }
-        break;
+        }break;
     }
 }
 

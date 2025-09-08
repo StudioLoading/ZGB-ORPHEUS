@@ -30,16 +30,11 @@ void e_dog_management(Sprite* s_enemy) BANKED{
     if(e_data->frmskip_wait > 0){
         e_data->frmskip_wait--;
     }
-    if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 
-        e_data->e_state != WALK_LEFT && e_data->e_state != WALK_RIGHT &&
-        e_data->e_state != PREATTACK_DOWN && e_data->e_state != PREATTACK_UP && 
-        e_data->e_state != PREATTACK_LEFT && e_data->e_state != PREATTACK_RIGHT &&
-        e_data->e_state != HIT){
+    if(e_data->e_state == IDLE_DOWN || e_data->e_state == IDLE_UP || e_data->e_state == IDLE_RIGHT || e_data->e_state == IDLE_LEFT){
         if(e_data->wait > 0){
             e_data->wait--;
-            return;
-        }
-        if(e_data->e_state == IDLE_DOWN || e_data->e_state == IDLE_UP || e_data->e_state == IDLE_RIGHT || e_data->e_state == IDLE_LEFT){
+            //return;
+        }else{
             e_turn(s_enemy, 1);
             //TURN_CLOCKWISE defined in UtilEnemy.c
         }

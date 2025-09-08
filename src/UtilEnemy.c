@@ -452,7 +452,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     if(e_data->tile_collision){
                         e_check_tile_collision(s_enemy, e_sprite_type);
                     }
-                }
+                }break;
                 case ATTACK:
                     if(s_enemy->type == SpriteOoze || s_enemy->type == SpriteSiren || s_enemy->type == SpriteWyrmling || s_enemy->type == SpriteRevenant){
                         e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
@@ -501,7 +501,7 @@ ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED
             result = ENEMY_REACT_PASSTHROUGH;
         break;
         default:{
-            result = arg_tile == 20u || arg_tile == 66u || ( arg_tile >= 78u && arg_tile <= 83u);
+            result = arg_tile == 20u || arg_tile == 66u || (arg_tile >= 78u && arg_tile <= 83u);
             if(result){
                 result = ENEMY_REACT_DIE;
             }

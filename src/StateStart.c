@@ -37,15 +37,15 @@ UINT8 tutorial_go = 1u; // 0
 UINT8 tutorial_hades_entrance = 1u; //  0
 UINT8 tutorial_get_lyre = 1u; //  0
 
-MACROMAP solved_map = HADES_05; // NONE
-MACROMAP current_map = BOSS_CHARON; // TUTORIAL
+MACROMAP solved_map = HADES_04; // NONE
+MACROMAP current_map = HADES_05; // TUTORIAL
 MACROMAP next_map = BOSS_CHARON; // HADES_00
-MACROMAP prev_map = HADES_05; // NONE
-MACROMAP max_map = BOSS_CHARON; // TUTORIAL
+MACROMAP prev_map = HADES_04; // NONE
+MACROMAP max_map = HADES_05; // TUTORIAL
 UINT8 has_lyre = 1; // 0
 
-UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);//((UINT16) 28u << 3) - 4u;
-UINT16 orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3);//((UINT16) 79u << 3);
+UINT16 orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);//((UINT16) 28u << 3) - 4u;
+UINT16 orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3);//((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) 30 << 3) + 4u; // ((UINT16) 30 << 3) + 4u;
 UINT16 camera_spawny = ((UINT16) 64 << 3) + 4u;//  ((UINT16) 64 << 3) + 4u;
 */
