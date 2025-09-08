@@ -63,6 +63,7 @@ UINT16 idle_countdown = 800u;
 Sprite* s_lyre = 0;
 PUSHING orpheus_pushing = PUSH_NONE;
 UINT8 orpheus_invulnerable = 0u;
+UINT8 orpheus_against_cartel = 0u;
 
 extern UINT8 redraw_hud;
 extern UINT8 move_camera_up;
@@ -498,7 +499,10 @@ void orpheus_check_tile_overlapping() BANKED{
     }
 }
 
-void orpheus_behave() BANKED{   
+void orpheus_behave() BANKED{
+    if(orpheus_against_cartel){
+        orpheus_against_cartel--;
+    } 
     switch(new_state){
         case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
             if(inertia_x > 31){
@@ -529,6 +533,12 @@ void orpheus_behave() BANKED{
             orpheus_recharge();
             orpheus_check_tile_overlapping();
             idle_countdown--;
+            if(orpheus_against_cartel){
+                if(KEY_PRESSED(J_INT)){
+                    show_cartel = 1;
+                    orpheus_against_cartel = 0;
+                }
+            }
         break;
         case WALK_DOWN: case WALK_UP:
         case WALK_LEFT: case WALK_RIGHT:
@@ -693,8 +703,8 @@ void orpheus_update_position() BANKED{
                         break;
                         case 116u://CARTEL
                             case 118u:
-                                if(KEY_PRESSED(J_INT)){
-                                    show_cartel = 1;
+                                if(KEY_PRESSED(J_UP) && orpheus_against_cartel == 0){
+                                orpheus_against_cartel = 80u;
                                 }
                         break;
                     }

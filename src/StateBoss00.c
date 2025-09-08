@@ -701,10 +701,9 @@ void boss_manage_death_charon() BANKED{
 			SpriteManagerRemoveSprite(s_charon);
 		break;
 		case 0u:{
-			//TODO uncomment below
-			/*prepare_dialog(BOSS_CHARON_BEATED);
-			SetState(StateCartel);*/
-			SetState(StateEnddemo);
+			prepare_dialog(BOSS_CHARON_BEATED);
+			SetState(StateCartel);
+			//SetState(StateEnddemo); DEMO
 		}break;
 	}
 }

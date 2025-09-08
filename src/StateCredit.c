@@ -150,7 +150,7 @@ void UPDATE(){
             }
         }
     }
-    if(credit_page_counter == 4){//titlescreen     
+    if(credit_page_counter == 4){//titlescreen
         if(flag_camera_move){
             switch(camera_state){
                 case 0:{//move right
@@ -290,7 +290,7 @@ void UPDATE(){
             }   
         }
     }else{
-        if(KEY_TICKED(J_START)){
+        if(KEY_TICKED(J_START) || KEY_TICKED(J_A) || KEY_TICKED(J_B)){
             credit_page_counter++;
             note_countdown = 0;
             rndm = 0;
