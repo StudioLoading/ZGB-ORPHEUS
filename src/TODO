@@ -1,22 +1,15 @@
-DEMO V2:
-
-
 PRODUZIONE:
-
+- aggiunge della SpriteCarteltext su ogni livello coi cartelli
+    - testo inglese
+    - testo giapponese
 - nuovo State di presentazione del nuovo bioma a fine boss e dal quale chiamare la go_to_next_map()
-- hitbox degli enemy da aggiornare
-	considera che i minion sono i più piccoli e i golem sono i più grandi
-- CREDIT screen potrei far atterrare la piuma di kibou in posizione
-- bgm
-- musichette delle song
+- bgm da sloopygoop
+- musichette delle song ?
 - pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
 
 
 POTENZIALI PROBLEMI - da verificare in fase di test:
 - il common strippa quando si muove diagonale
-- HADES 5
-	ho pistolato cose sullo spawn degli item su nemico. è diventata una struct che viene settata all'inizio di ogni mappa nuova. è li che setto chi, morendo, spawna cose.
-
 
 
     
