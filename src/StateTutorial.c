@@ -58,6 +58,7 @@ extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2,
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 void START() {
 	level_common_start();
@@ -65,10 +66,7 @@ void START() {
 		s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 		if(tutorial_go == 0){
 			scroll_target->y = s_orpheus->y - 16u;
-			Sprite* s_item_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 27u << 3), ((UINT16) 84u << 3));
-			struct ItemInfo* heart_data = (struct ItemInfo*) s_item_heart->custom_data; 
-			heart_data->item_type = HEART;
-			heart_data->i_configured = 1;
+			spawn_item(HEART, ((UINT16) 27u << 3), ((UINT16) 84u << 3), 0);
 		}
 		other_gate_created = 0u;
 		if(gate_pushed == 1u){

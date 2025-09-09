@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 
+#define ANIM_COUNTER_MAX 32
 
 void AnimFire_Aeacus0() BANKED;
 void AnimFire_Minos0() BANKED;
@@ -13,6 +14,15 @@ void Anim_Spike_0() BANKED;
 void Anim_Spike_1() BANKED;
 void Anim_Spike_2() BANKED;
 void Anim_Spike_3() BANKED;
+
+void Anim_Water_0() BANKED;
+void Anim_Water_1() BANKED;
+void Anim_Water_2() BANKED;
+void Anim_Water_3() BANKED;
+void Anim_Water_4() BANKED;
+void Anim_Water_5() BANKED;
+void Anim_Water_6() BANKED;
+void Anim_Water_7() BANKED;
 
 void Anim_Opendoors() BANKED;
 void Anim_Cerberus_0() BANKED;

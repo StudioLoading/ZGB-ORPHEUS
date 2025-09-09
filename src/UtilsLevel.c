@@ -17,7 +17,6 @@
 
 #define V_CAMERA 2
 #define MAX_WAIT_CHAR 4
-#define ANIM_COUNTER_MAX 32
 #define REPUSHABLE_BUTTON_COOLDOWN_MAX 400
 #define CAMERA_SHAKE_DURATION 10
 #define CAMERA_SHAKE_FRMSKIP_MAX_INIT 8
@@ -49,8 +48,8 @@
 #define SPAWNY_HADES004_IN 4
 #define SPAWNX_HADES004_OUT 6
 #define SPAWNY_HADES004_OUT 13
-#define SPAWNX_HADES006_OUT 15
-#define SPAWNY_HADES006_OUT 3
+#define SPAWNX_HADES006_OUT 16
+#define SPAWNY_HADES006_OUT 12
 #define SPAWNX_BOSSCHARON_IN 9
 #define SPAWNY_BOSSCHARON_IN 15
 #define SPAWNX_BOSSAEACUS_IN 4
@@ -146,11 +145,15 @@ void solve_current_map() BANKED;
 void reset_maps() BANKED;
 void camera_shake_v() BANKED;
 
+
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_ball(UINT8 arg_type, UINT16 arg_spawnfireball_x, UINT16 arg_spawnfireball_y, UINT8 arg_direction) BANKED;
 extern unsigned char get_char(UINT8 arg_writing_line, UINT8 counter_char) BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
-extern UINT8 is_current_map_on_boss() BANKED;
+extern UINT8 is_level_on_boss() BANKED;
+extern UINT8 is_level_with_button() BANKED;
+extern UINT8 is_level_with_repushable_button() BANKED;
+extern UINT8 is_level_with_enemies() BANKED;
 extern void manage_sgb_border() BANKED;
 extern void manage_sgb_palette() BANKED;
 
@@ -302,7 +305,7 @@ void reset_maps() BANKED{
 }
 
 void level_common_update_play() BANKED{
-	//camera shake
+	// camera shake
 		if(flag_camera_shake_v){
 			camera_shake_v();
 		}
@@ -310,7 +313,7 @@ void level_common_update_play() BANKED{
 			camera_shake_h();
 		}
 	// paused
-		if(current_map > TUTORIAL && !is_current_map_on_boss()){
+		if(current_map > TUTORIAL && !is_level_on_boss()){
 			if(KEY_TICKED(J_START) && orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != HIT){
 				if(flag_paused == 0){
 					PauseMusic;
@@ -445,7 +448,7 @@ void level_common_update_play() BANKED{
 		}
 	// check button draw
 		if(evaluate_button){
-			if(current_map == HADES_06 || current_map == BOSS_AEACUS){
+			if(is_level_with_button()){
 				if(trap_button_pressed < current_map || 
 					(flag_button_repushable && repushable_button_cooldown == REPUSHABLE_BUTTON_COOLDOWN_MAX)
 				){//SET IT PUSHABLE
@@ -453,7 +456,7 @@ void level_common_update_play() BANKED{
 					repushable_button_cooldown--;
 					switch(current_map){
 						case HADES_06:
-							draw_button(12, 11, 67u);
+							draw_button(12, 12, 67u);
 						break;
 						case BOSS_AEACUS:
 							draw_button(16, 14, 67u);
@@ -462,7 +465,7 @@ void level_common_update_play() BANKED{
 				}else{//SET IT PUSHED
 					switch(current_map){
 						case HADES_06:
-							draw_button(12, 11, 71u);
+							draw_button(12, 12, 71u);
 						break;
 						case BOSS_AEACUS:
 							draw_button(16, 14, 71u);
@@ -481,7 +484,7 @@ void level_common_update_play() BANKED{
 			if(flag_button_pushable == 1){
 				switch(current_map){
 					case HADES_06:
-						spawn_ball(SpriteStone, 36u, 28u, J_DOWN);
+						spawn_ball(SpriteStone, 56u, 28u, J_DOWN);
 					break;
 					case BOSS_AEACUS:
 						spawn_ball(SpriteFireball, 96u, 24u, J_DOWN);
@@ -565,23 +568,6 @@ void level_common_update_play() BANKED{
 		if(redraw_hud){
 			UpdateHUD();
 		}
-	// tiles animation
-		if(current_map > TUTORIAL && !is_current_map_on_boss()){
-			anim_counter++;
-			if(anim_counter >= ANIM_COUNTER_MAX){
-				anim_counter = 0u;
-			}
-			switch(anim_counter){
-				case 0u: AnimFire_0();
-				break;
-				case 8u: AnimFire_1();
-				break;
-				case 16u: AnimFire_2();
-				break;
-				case 24u: AnimFire_3();
-				break;
-			}
-		}
 	// spikes animation
 		if(current_map >= HADES_06){
 			spikes_countdown++;
@@ -601,20 +587,15 @@ void level_common_update_play() BANKED{
 		}
 	// solve current map
 		//test start
-		/*if(current_map > TUTORIAL && !is_current_map_on_boss()){
+		/*if(current_map > TUTORIAL && !is_level_on_boss()){
 			solve_current_map();//TEST always solve
 		}*/
 		//test end
-		switch(current_map){
-			case HADES_03:
-			case HADES_04:
-			case HADES_06:
-				if(changing_map == 0u && solved_map < current_map && area_enemy_counter == 0){
-					solve_current_map();
-				}
-			break;
-		}
-		
+		if(is_level_with_enemies()){
+			if(changing_map == 0u && solved_map < current_map && area_enemy_counter == 0){
+				solve_current_map();
+			}
+		}		
 }
 
 void move_camera() BANKED{
@@ -652,7 +633,7 @@ void move_camera() BANKED{
 void UpdateHUD() BANKED{
 	redraw_hud = 0;
 	INT8 idx = 0;
-	UINT8 is_on_boss = is_current_map_on_boss();
+	UINT8 is_on_boss = is_level_on_boss();
 	//STRUCTURE
 		if(is_on_boss == 0){
 			UPDATE_HUD_TILE(0,0,57);
@@ -1320,9 +1301,10 @@ void go_to_prev_map() BANKED{
 		case HADES_06:
 			prev_map = HADES_06;
 			next_map = HADES_07;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES006_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES006_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES006_OUT << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES006_OUT << 3);
 			new_state = IDLE_DOWN;
+			a_walk_counter_y = 8;
 			next_state = StateHades00;
 		break;
 		case HADES_07:

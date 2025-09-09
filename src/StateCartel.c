@@ -37,7 +37,7 @@ extern UINT8 J_INT;
 extern UINT8 song_selection_cooldown;
 extern INT8 boss_hp_current;
 
-extern UINT8 is_current_map_on_boss() BANKED;
+extern UINT8 is_level_on_boss() BANKED;
 extern CHOSEN_LANGUAGE chosen_language;
 
 
@@ -68,7 +68,7 @@ void START(){
 void UPDATE(){
     if(KEY_TICKED(J_ATK) || KEY_TICKED(J_INT)){
         song_selection_cooldown = 40u;
-        if(is_current_map_on_boss() && current_map != HADES_26){
+        if(is_level_on_boss() && current_map != HADES_26){
             //TODO nuovo State di presentazione Nuovo Bioma
             //dal quale chiamare la go_to_next_map()
             SetState(StateBoss00);

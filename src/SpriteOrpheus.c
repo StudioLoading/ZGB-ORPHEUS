@@ -94,6 +94,8 @@ void orpheus_hit() BANKED;
 void orpheus_recharge() BANKED;
 void orpheus_pickup(Sprite* itemsprite) BANKED;
 void orpheus_check_tile_overlapping() BANKED;
+void orpheus_show_cartel() BANKED;
+
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void go_to_next_map() BANKED;
@@ -112,8 +114,6 @@ void START() {
     orpheus_info->tile_collision = 0u;
     orpheus_info->ow_state = IDLE_DOWN;
     orpheus_info->charming = 0;
-    //new_state = GENERIC_IDLE;
-    //orpheus_change_state(THIS, IDLE_DOWN);
     orpheus_change_state(THIS, new_state);//set on go_to_prev..go_to_next...
     if(tutorial_go == 0 || (current_map == HADES_00 && THIS->y > 50u)){
         SetSpriteAnim(THIS, a_orpheus_idleup, 8u);
@@ -121,8 +121,6 @@ void START() {
     }
     orpheus_hitted = 0u;
     orpheus_hit_countdown = 0;
-    //a_walk_counter_x = 0;
-    //a_walk_counter_y = 0;
     hit_frameskip = 0;
     hit_frameskip_max = 0;
     orpheus_wait = 0u;
@@ -130,7 +128,7 @@ void START() {
     orpheus_power_max = POWER_MAX;
 	countdown = orpheus_power_max;
     countdown_verso = 0;
-    orpheus_starting_up = 20;
+    orpheus_starting_up = 1;
     inertia_x = 0u;
     inertia_y = 0u;
     if(_cpu != CGB_TYPE){
@@ -283,6 +281,10 @@ void UPDATE() {
             }else{
                 if(CheckCollision(THIS, iospr)) {
                     switch(iospr->type){
+                        case SpriteCarteltext:
+                            SpriteManagerRemoveSprite(iospr);
+                            orpheus_show_cartel();
+                        break;
                         case SpriteMinosplate:{
                             struct EnemyInfo* plate_data = (struct EnemyInfo*) iospr->custom_data;
                             if(plate_data->e_state == GENERIC_WALK && plate_data->e_configured == 0u){
@@ -484,19 +486,28 @@ void orpheus_check_tile_overlapping() BANKED{
     }
     switch(current_state){
         case StateBoss00:
-        case StateHades00:
-            if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                orpheus_change_state(THIS, HIT);
+        case StateHades00:{
+            switch(tile){
+                case 84u: case 85u: case 86u: case 87u:{
+                    orpheus_change_state(THIS, HIT);
+                }break;
+                case 66u: case 40u: case 41u:{
+                    orpheus_hp = 0;
+                    redraw_hud = 1u;
+                }break;
+                case 50u:{
+                    if(spikes_hit_flag){
+                        orpheus_change_state(THIS, HIT);
+                    }
+                }break;
             }
-            if(tile == 20 || tile == 66u || tile == 82){
-                orpheus_hp = 0;
-                redraw_hud = 1u;
-            }
-            if(tile == 50u && spikes_hit_flag){
-                orpheus_change_state(THIS, HIT);
-            }
-        break;
+        }break;
     }
+}
+
+void orpheus_show_cartel() BANKED{
+    show_cartel = 1;
+    orpheus_against_cartel = 0;
 }
 
 void orpheus_behave() BANKED{
@@ -535,8 +546,7 @@ void orpheus_behave() BANKED{
             idle_countdown--;
             if(orpheus_against_cartel){
                 if(KEY_PRESSED(J_INT)){
-                    show_cartel = 1;
-                    orpheus_against_cartel = 0;
+                    orpheus_show_cartel();
                 }
             }
         break;
@@ -687,20 +697,21 @@ void orpheus_update_position() BANKED{
                             case 8u:
                                 go_to_prev_map();
                         break;
-                        case 88u://NEXT MAP
+                        case 90u: case 96u: case 102u:{//NEXT MAP
+                            /*case 88u:
                             case 90u: case 92u:
                             case 94u: case 96u: case 98u:
-                            case 100u: case 102u: case 104u:
-                                if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
-                                    song_selection_cooldown = 40u;
-                                    solve_current_map();
-                                    redraw_hud = 1;
-                                    orpheus_haskey = 0;
-                                }
-                                if(solved_map >= current_map){
-                                    go_to_next_map();
-                                }
-                        break;
+                            case 100u: case 102u: case 104u:*/
+                            if(orpheus_haskey == 1u && KEY_PRESSED(J_INT) && solved_map < current_map){
+                                song_selection_cooldown = 40u;
+                                solve_current_map();
+                                redraw_hud = 1;
+                                orpheus_haskey = 0;
+                            }
+                            if(solved_map >= current_map){
+                                go_to_next_map();
+                            }
+                        }break;
                         case 116u://CARTEL
                             case 118u:
                                 if(KEY_PRESSED(J_UP) && orpheus_against_cartel == 0){

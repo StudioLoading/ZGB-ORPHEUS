@@ -15,9 +15,11 @@ INT8 stone_mirroring = 10;
 extern UINT8 spawned_ball;
 extern PUSHING orpheus_pushing;
 extern UINT8 flag_paused;
+extern Sprite* s_orpheus;
 
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 void START() {
     THIS->lim_x = 10u;
@@ -63,32 +65,49 @@ void UPDATE() {
                 stone_data->vy = 0;
                 SPRITE_SET_PALETTE(THIS,1);
                 stone_data->e_configured = 2;
+                if(orpheus_pushing == PUSH_DOWN){
+                    if(t_stone_coll == 11){//sguillare lateralmente!
+                        stone_data->e_configured = 1;
+                        if(s_orpheus->x > THIS->x){//sguillo a sx
+                            stone_data->vx = -1;
+                        }else{//sguillo a dx
+                            stone_data->vx = 1;
+                        }
+                    }
+                }
             }else{
                 UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
-                if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
-                    stone_data->e_configured = 3;
-                    //TRANSFORMS INTO A FIREBALL!
-                    Sprite* s_fireball = SpriteManagerAdd(SpriteFireball, THIS->x, THIS->y);
-                    struct EnemyInfo* fireball_data = (struct EnemyInfo*) s_fireball->custom_data;
-                    fireball_data->vx = stone_data->vx;
-                    fireball_data->vy = stone_data->vy;
-                    fireball_data->e_configured = 2;
+                if(tile == 66u){//pit! die and spawn heart
+                    UINT16 heart_spawnx = THIS->x + 18u;
+                    if(stone_data->vx > 0){
+                        heart_spawnx = THIS->x - 10u;
+                    }
+                    spawn_item(HEART, heart_spawnx, THIS->y - 1u, 3);
                     SpriteManagerRemoveSprite(THIS);
+                }else if(tile == 84u || tile == 85u || tile == 86u || tile == 87u){
+                        stone_data->e_configured = 3;
+                        //TRANSFORMS INTO A FIREBALL!
+                        Sprite* s_fireball = SpriteManagerAdd(SpriteFireball, THIS->x, THIS->y);
+                        struct EnemyInfo* fireball_data = (struct EnemyInfo*) s_fireball->custom_data;
+                        fireball_data->vx = stone_data->vx;
+                        fireball_data->vy = stone_data->vy;
+                        fireball_data->e_configured = 2;
+                        SpriteManagerRemoveSprite(THIS);
                 }else{
-                    //SPRITE COLLISION
-                        UINT8 scroll_st_tile;
-                        Sprite* istspr;
-                        SPRITEMANAGER_ITERATE(scroll_st_tile, istspr) {
-                            if(CheckCollision(THIS, istspr)) {
-                                if(istspr->type == SpriteOrpheus && stone_data->wait == 0){
-                                    orpheus_change_state(istspr, HIT);
-                                } else if(istspr->type != SpriteStone && istspr->type != SpriteBlade && istspr->type != SpriteDeath && istspr->type != SpriteOrpheusnote && istspr->type != SpriteOrpheus){
-                                    e_destroy(istspr);
+                        //SPRITE COLLISION
+                            UINT8 scroll_st_tile;
+                            Sprite* istspr;
+                            SPRITEMANAGER_ITERATE(scroll_st_tile, istspr) {
+                                if(CheckCollision(THIS, istspr)) {
+                                    if(istspr->type == SpriteOrpheus && stone_data->wait == 0){
+                                        orpheus_change_state(istspr, HIT);
+                                    } else if(istspr->type != SpriteStone && istspr->type != SpriteBlade && istspr->type != SpriteDeath && istspr->type != SpriteOrpheusnote && istspr->type != SpriteOrpheus){
+                                        e_destroy(istspr);
+                                    }
                                 }
                             }
-                        }
+                    }
                 }
-            }
         }break;
         case 2://stopped, can be rolled away by Orpheus
             switch(orpheus_pushing){

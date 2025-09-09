@@ -46,7 +46,7 @@ const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,
 60,61,63,64,
 75,76, 107, 108, 111, 112,
 //prev
-6,7,8,2,
+6,7,8,
 //next
 88,90,92,94,96,98,100,102,104,
 //cartel
@@ -89,10 +89,13 @@ extern UINT8 flag_paused;
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
+extern void level_common_anim() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void solve_current_map() BANKED;
+extern UINT8 is_level_with_repushable_button() BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 void START() {
 	level_common_start();
@@ -113,10 +116,7 @@ void START() {
 				}break;
 				case HADES_02:{
 					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
-						Sprite* s_key = SpriteManagerAdd(SpriteItem, ((UINT16) 17u << 3), ((UINT16) 15u << 3) - 3u);
-						struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
-						key_data->item_type = KEY;
-						key_data->i_configured = 1u;
+						spawn_item(KEY,  ((UINT16) 17u << 3), ((UINT16) 15u << 3) - 3u, 0);
 					}
 				}break;
 				case HADES_03:{
@@ -145,8 +145,14 @@ void START() {
 					area_enemy_counter = 1;
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton1);
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 16u << 4, 4u << 4);
 				}break;
 				case HADES_07:{
+					area_enemy_counter = 2;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 17u << 3), ((UINT16) 6u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteLostsoul, ((UINT16) 1u << 3), ((UINT16) 10u << 3));
+					e_configure(e_skeleton2);
 				}break;
 				case HADES_08:{
 				}break;
@@ -284,7 +290,8 @@ void START() {
 			PlayMusic(danger, 1);
 			hades_music_started = 1;
 		}
-		if(current_map == HADES_06){
+	//SET REPUSHABLE
+		if(is_level_with_repushable_button()){
 			flag_button_repushable = 1u;
 		}
 }
@@ -294,6 +301,7 @@ void UPDATE() {
 		level_common_update_play();
 	}
 	if(flag_paused){ return; }
+	level_common_anim();
 	//DEATH COOLDOWN BEFORE CHANGING SCREEN
 		if(death_countdown){
 			death_countdown--;
@@ -321,6 +329,9 @@ void UPDATE() {
 				break;
 				case HADES_05:
 					prepare_dialog(HADES_GUARDS);
+				break;
+				case HADES_06:
+					prepare_dialog(HADES_ROLLING_STONES);
 				break;
 			}
 			show_cartel = 0u;

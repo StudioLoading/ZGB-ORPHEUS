@@ -297,6 +297,19 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "WRONG THEY WILL RUN", 21);
             memcpy(d10, "AT IT.             ", 21);
         break;
+        case HADES_ROLLING_STONES:
+            memcpy(d0, "HADES IS FULL OF  ", 21);
+            memcpy(d1, "DEADLY TRAPS. ONE ", 21);
+            memcpy(d2, "OF THEM ARE THE   ", 21);
+            memcpy(d3, "ROLLING STONES.   ", 21);
+            memcpy(d4, "THEY START ROLLING", 21);
+            memcpy(d5, "DOWN AS SOON AS A ", 21);
+            memcpy(d6, "BUTTON ON THE     ", 21);
+            memcpy(d7, "GROUND IS PRESSED.", 21);
+            memcpy(d8, "THE HARD STONES   ", 21);
+            memcpy(d9, "HARM EVERYTHING ON", 21);
+            memcpy(d10, "ITS PATH.         ", 21);
+        break;
         case HADES_DEATH:
             memcpy(d0, "SON O MINE YOUR   ", 21);
             memcpy(d1, "JOURNEY IS NOT    ", 21);

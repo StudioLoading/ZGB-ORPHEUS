@@ -64,6 +64,7 @@ UINT8 e_is_attack(UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED;
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 
 void e_start(struct EnemyInfo* e_data, SPRITE_STATES new_state) BANKED{
@@ -670,10 +671,7 @@ void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED{
 void e_destroy(Sprite* s_enemy) BANKED{
     if(item_spawned_by_common.sprite_type == s_enemy->type && 
         item_spawned_by_common.spawned == 0){
-        Sprite* s_key = SpriteManagerAdd(SpriteItem, s_enemy->x + 8u, s_enemy->y + 10u);
-        struct ItemInfo* key_data = (struct ItemInfo*) s_key->custom_data;
-        key_data->item_type = KEY;
-        key_data->i_configured = 1u;
+        spawn_item(KEY,  s_enemy->x + 8u, s_enemy->y + 10u, 0);
         item_spawned_by_common.spawned = 1;
     }
     e_change_state(s_enemy, DIE);

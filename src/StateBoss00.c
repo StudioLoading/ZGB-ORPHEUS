@@ -14,7 +14,7 @@
 #include "Dialog.h"
 #include "UtilAnim.h"
 
-#define ANIM_COUNTER_MAX 84
+#define BOSS_ANIM_COUNTER_MAX 84
 #define ANIMFIRE_COUNTER_MAX 32
 #define BOSS_BREATH_MAX 24
 #define BOSS_BREATH_MED 16
@@ -78,7 +78,6 @@ UINT8 boss_intro = 0u;//0 init; 1 make Orpheus move up; 2 stop Orpheus and show 
 UINT16 spawn_common_wait = 0u;
 UINT16 spawn_common_wait_max = 0u;
 UINT8 spawned_enemy_counter = 0u;
-UINT8 river_verse = 0u;//0 left;1 right
 INT8 boss_breath_counter = 0;
 INT8 boss_breath_counter_max = 0;
 INT8 boss_breath_verse = 1;//1 low, 2 low, -1 up, -2up
@@ -111,7 +110,6 @@ void boss_manage_death_minos() BANKED;
 void boss_manage_death_aeacus() BANKED;
 void boss_manage_death_radamanthus() BANKED;
 void boss_manage_death_hades() BANKED;
-void boss_invert_river_verse() BANKED;
 void boss_update_breath_verse_and_max() BANKED;
 void boss_hit() BANKED;
 
@@ -146,6 +144,7 @@ extern UINT16 saved_orpheus_posx;
 extern UINT16 saved_orpheus_posy;
 extern UINT8 flag_camera_shake_h;
 extern UINT8 flag_camera_shake_v;
+extern UINT8 river_verse;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -156,6 +155,8 @@ extern void e_configure(Sprite* s_enemy) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void UpdateHUD() BANKED;
 extern void hades_regenerate_claws() BANKED;
+extern UINT8 is_level_with_repushable_button() BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 
 void START() {
@@ -177,10 +178,7 @@ void START() {
 			case BOSS_CHARON:{
 				InitScroll(BANK(mapbosscharon), &mapbosscharon, coll_t_charon, coll_s_hades005);
 				s_charon = SpriteManagerAdd(SpriteCharon, ((UINT16) 11u << 3), ((UINT16) 5u << 3) - 1u);
-				Sprite* s_heart = SpriteManagerAdd(SpriteItem, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u);
-				struct ItemInfo* heart_data = (struct ItemInfo*) s_heart->custom_data;
-				heart_data->item_type = HEART;
-				heart_data->i_configured = 1u;
+				spawn_item(HEART, ((UINT16) 16u << 3), ((UINT16) 14u << 3) - 3u, 0);
 			}break;
 			case BOSS_CERBERUS:{
 				InitScroll(BANK(mapbosscerberus), &mapbosscerberus, coll_t_hades005, coll_s_hades005);
@@ -226,10 +224,13 @@ void START() {
 		boss_breath_verse_right = 1;
 		boss_breath_flag_right = 0u;
 		animboss_hit_flag = 0;
-		flag_button_repushable = 1u;
 		bossminos_breath_flag = 0u;
 		flag_impminos_alive = 0u;
 		flag_hades_summon = 0u;
+	//SET REPUSHABLE
+		if(is_level_with_repushable_button()){
+			flag_button_repushable = 1u;
+		}
 	//PER STAGE
 		if(boss_intro == 0){
 			boss_intro = 1;
@@ -594,7 +595,7 @@ void UPDATE() {
 	//ANIMS RIVER
 		if(current_map != BOSS_MINOS && current_map != BOSS_AEACUS && current_map != BOSS_HADES){
 			anim_counter++;
-			if(anim_counter >= (ANIM_COUNTER_MAX + 12)){
+			if(anim_counter >= (BOSS_ANIM_COUNTER_MAX + 12)){
 				anim_counter = 0u;
 			}
 			if(river_verse == 0){//to the left
@@ -805,14 +806,6 @@ void boss_manage_death_aeacus() BANKED{
 			prepare_dialog(BOSS_AEACUS_BEATED);
 			SetState(StateCartel);
 		}break;
-	}
-}
-
-void boss_invert_river_verse() BANKED{
-	if(river_verse == 0){
-		river_verse = 1;
-	}else{
-		river_verse = 0;
 	}
 }
 

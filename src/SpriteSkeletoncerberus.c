@@ -29,8 +29,8 @@ extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void e_management(Sprite* s_enemy) BANKED;
 extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
-extern void boss_invert_river_verse() BANKED;
-extern UINT8 is_current_map_on_boss() BANKED;
+extern void invert_river_verse() BANKED;
+extern UINT8 is_level_on_boss() BANKED;
 
 void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 
@@ -116,7 +116,7 @@ void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANK
             SetSpriteAnim(s_enemy, a_skeletoncerberus_repelled, 24);
         break;
     }
-    if(is_current_map_on_boss()){
+    if(is_level_on_boss()){
         UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
         if(tile == 0){
             tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+14) >> 3);
@@ -128,6 +128,6 @@ void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANK
 }
 
 void DESTROY(){
-    boss_invert_river_verse();
+    invert_river_verse();
     e_destroy(THIS);
 }

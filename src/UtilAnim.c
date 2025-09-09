@@ -12,7 +12,15 @@ IMPORT_TILES(maphades002ta5);
 IMPORT_TILES(maphades002ta6);
 IMPORT_TILES(maphades002ta7);
 IMPORT_TILES(maphades003t);
+IMPORT_TILES(maphades003ta1);
+IMPORT_TILES(maphades003ta2);
+IMPORT_TILES(maphades003ta3);
+IMPORT_TILES(maphades003ta4);
+IMPORT_TILES(maphades003ta5);
+IMPORT_TILES(maphades003ta6);
+IMPORT_TILES(maphades003ta7);
 
+IMPORT_TILES(mapbosscharont);
 IMPORT_TILES(mapbosscerberust);
 IMPORT_TILES(mapbossminost);
 IMPORT_TILES(mapbossminost01);
@@ -116,8 +124,33 @@ void Anim_Minos_0() BANKED{
 void Anim_Cerberus_0() BANKED{
 	set_banked_bkg_data(106u, 7u, &mapbosscerberust, BANK(mapbosscerberust));//river
 }
+
+void Anim_Water_0() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003t, BANK(maphades003t));//river
+}
+void Anim_Water_1() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta1, BANK(maphades003ta1));//river
+}
+void Anim_Water_2() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta2, BANK(maphades003ta2));//river
+}
+void Anim_Water_3() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta3, BANK(maphades003ta3));//river
+}
+void Anim_Water_4() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta4, BANK(maphades003ta4));//river
+}
+void Anim_Water_5() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta5, BANK(maphades003ta5));//river
+}
+void Anim_Water_6() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta6, BANK(maphades003ta6));//river
+}
+void Anim_Water_7() BANKED{
+	set_banked_bkg_data(40u, 2u, &maphades003ta7, BANK(maphades003ta7));//river
+}
 void Anim_Charon_0() BANKED{
-	set_banked_bkg_data(106u, 7u, &maphades002t, BANK(maphades002t));//river
+	set_banked_bkg_data(106u, 7u, &mapbosscharont, BANK(mapbosscharont));//river
 }
 void Anim_Charon_1() BANKED{
 	set_banked_bkg_data(106u, 7u, &maphades002ta1, BANK(maphades002ta1));//river
