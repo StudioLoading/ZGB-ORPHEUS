@@ -281,10 +281,14 @@ void UPDATE() {
             }else{
                 if(CheckCollision(THIS, iospr)) {
                     switch(iospr->type){
-                        case SpriteCarteltext:
-                            SpriteManagerRemoveSprite(iospr);
-                            orpheus_show_cartel();
-                        break;
+                        case SpriteCarteltext:{
+                            INT16 delta = (INT16)iospr->x - (INT16)THIS->x;
+                            if(delta <= 3 && delta >= -3){
+                                orpheus_change_state(THIS, IDLE_UP);
+                                SpriteManagerRemoveSprite(iospr);
+                                orpheus_show_cartel();
+                            }
+                        }break;
                         case SpriteMinosplate:{
                             struct EnemyInfo* plate_data = (struct EnemyInfo*) iospr->custom_data;
                             if(plate_data->e_state == GENERIC_WALK && plate_data->e_configured == 0u){
