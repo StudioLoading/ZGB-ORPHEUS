@@ -257,7 +257,6 @@ void UPDATE() {
                     case SpriteBanshee:
                     case SpriteSerpent:
                     case SpriteDevourer:
-                    case SpriteRevenant:
                     case SpriteRadamanthus:
                         e_change_state(iospr, HIT);
                     break;
@@ -274,6 +273,11 @@ void UPDATE() {
                     case SpriteSiren:
                     case SpriteWyrmling:
                         if(song_selection == SLEEP){
+                            e_change_state(iospr, HIT);
+                        }
+                    break;                    
+                    case SpriteRevenant:
+                        if(song_selection == ATTRACT){
                             e_change_state(iospr, HIT);
                         }
                     break;
@@ -701,8 +705,8 @@ void orpheus_update_position() BANKED{
                             case 8u:
                                 go_to_prev_map();
                         break;
-                        case 90u: case 96u: case 102u:{//NEXT MAP
-                            /*case 88u:
+                        case 90u: case 96u: case 102u: case 88u:{//NEXT MAP
+                            /*
                             case 90u: case 92u:
                             case 94u: case 96u: case 98u:
                             case 100u: case 102u: case 104u:*/

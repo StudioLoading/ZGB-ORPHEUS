@@ -46,10 +46,26 @@
 #define SPAWNY_HADES003_OUT 4
 #define SPAWNX_HADES004_IN 4
 #define SPAWNY_HADES004_IN 4
+#define SPAWNX_HADES007_IN 3
+#define SPAWNY_HADES007_IN 4
+#define SPAWNX_HADES008_IN 15
+#define SPAWNY_HADES008_IN 4
+#define SPAWNX_HADES009_IN 4
+#define SPAWNY_HADES009_IN 11
+#define SPAWNX_HADES010_IN 1
+#define SPAWNY_HADES010_IN 13
 #define SPAWNX_HADES004_OUT 6
 #define SPAWNY_HADES004_OUT 13
 #define SPAWNX_HADES006_OUT 16
 #define SPAWNY_HADES006_OUT 12
+#define SPAWNX_HADES007_OUT 14
+#define SPAWNY_HADES007_OUT 3
+#define SPAWNX_HADES008_OUT 10
+#define SPAWNY_HADES008_OUT 3
+#define SPAWNX_HADES009_OUT 9
+#define SPAWNY_HADES009_OUT 3
+#define SPAWNX_HADES010_OUT 14
+#define SPAWNY_HADES010_OUT 3
 #define SPAWNX_BOSSCHARON_IN 9
 #define SPAWNY_BOSSCHARON_IN 15
 #define SPAWNX_BOSSAEACUS_IN 4
@@ -304,6 +320,7 @@ void reset_maps() BANKED{
 	}
 }
 
+
 void level_common_update_play() BANKED{
 	// camera shake
 		if(flag_camera_shake_v){
@@ -458,6 +475,9 @@ void level_common_update_play() BANKED{
 						case HADES_06:
 							draw_button(12, 12, 67u);
 						break;
+						case HADES_09:
+							draw_button(17, 11, 67u);
+						break;
 						case BOSS_AEACUS:
 							draw_button(16, 14, 67u);
 						break;
@@ -466,6 +486,9 @@ void level_common_update_play() BANKED{
 					switch(current_map){
 						case HADES_06:
 							draw_button(12, 12, 71u);
+						break;
+						case HADES_09:
+							draw_button(17, 11, 71u);
 						break;
 						case BOSS_AEACUS:
 							draw_button(16, 14, 71u);
@@ -957,6 +980,9 @@ void go_to_next_map() BANKED{
 	a_walk_counter_x = 0;
 	a_walk_counter_y = 0;
 	current_map = next_map;
+	if(!is_level_on_boss()){
+		a_walk_counter_y = 8;
+	}
 	switch(next_map){
 		case HADES_00:
 			prev_map = HADES_00;
@@ -965,7 +991,6 @@ void go_to_next_map() BANKED{
 			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4u;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES000_IN << 3);
-			//a_walk_counter_y = -8;
 			new_state = IDLE_LEFT;
 			next_state = StateHades00;
 		break;
@@ -991,7 +1016,6 @@ void go_to_next_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES003_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES003_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
-			//a_walk_counter_y = 16;
 			next_state = StateHades00;
 		break;
 		case HADES_04:
@@ -1000,7 +1024,6 @@ void go_to_next_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
-			//a_walk_counter_y = 16;
 			next_state = StateHades00;
 		break;
 		case HADES_05:
@@ -1030,32 +1053,32 @@ void go_to_next_map() BANKED{
 		case HADES_07:
 			prev_map = HADES_06;
 			next_map = HADES_08;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES007_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES007_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
 		case HADES_08:
 			prev_map = HADES_07;
 			next_map = HADES_09;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES008_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES008_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
 		case HADES_09:
 			prev_map = HADES_08;
 			next_map = HADES_10;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES009_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES009_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
 		case HADES_10:
 			prev_map = HADES_09;
 			next_map = BOSS_CERBERUS;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES010_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES010_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
 		break;
@@ -1243,6 +1266,9 @@ void go_to_prev_map() BANKED{
 	UINT8 next_state = StateTutorial;
 	a_walk_counter_x = 0;
 	a_walk_counter_y = 0;
+	if(!is_level_on_boss()){
+		a_walk_counter_y = 8;
+	}
 	switch(prev_map){
 		case TUTORIAL:
 			prev_map = TUTORIAL;
@@ -1274,7 +1300,6 @@ void go_to_prev_map() BANKED{
 			next_map = HADES_03;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES002_OUT << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES002_OUT << 3);
-			//a_walk_counter_y = 16;
 			next_state = StateHades00;
 		break;
 		case HADES_03:
@@ -1304,35 +1329,35 @@ void go_to_prev_map() BANKED{
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES006_OUT << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES006_OUT << 3);
 			new_state = IDLE_DOWN;
-			a_walk_counter_y = 8;
 			next_state = StateHades00;
 		break;
 		case HADES_07:
 			prev_map = HADES_06;
 			next_map = HADES_08;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			new_state = IDLE_DOWN;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES007_OUT << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES007_OUT << 3) + 4u;
 			next_state = StateHades00;
 		break;
 		case HADES_08:
 			prev_map = HADES_07;
 			next_map = HADES_09;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES008_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES008_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case HADES_09:
 			prev_map = HADES_08;
 			next_map = HADES_10;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES009_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES009_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case HADES_10:
 			prev_map = HADES_09;
 			next_map = BOSS_CERBERUS;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES010_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES010_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case HADES_11:

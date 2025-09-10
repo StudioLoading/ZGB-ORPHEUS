@@ -37,11 +37,11 @@ UINT8 tutorial_go = 1u; // 0
 UINT8 tutorial_hades_entrance = 1u; //  0
 UINT8 tutorial_get_lyre = 1u; //  0
 
-MACROMAP solved_map = HADES_05; // NONE
-MACROMAP current_map = HADES_06; // TUTORIAL
-MACROMAP next_map = HADES_07; // HADES_00
-MACROMAP prev_map = HADES_05; // NONE
-MACROMAP max_map = HADES_06; // TUTORIAL
+MACROMAP solved_map = HADES_09; // NONE
+MACROMAP current_map = HADES_10; // TUTORIAL
+MACROMAP next_map = BOSS_CERBERUS; // HADES_00
+MACROMAP prev_map = HADES_09; // NONE
+MACROMAP max_map = HADES_10; // TUTORIAL
 UINT8 has_lyre = 1; // 0
 
 UINT16 orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);//((UINT16) 28u << 3) - 4u;

@@ -130,6 +130,7 @@ struct ExclamationInfo{
 };
 
 struct ItemSpawnedByCommon{
+	UINT16 e_unique_id;
 	UINT8 sprite_type;
 	ITEM_TYPE item_type;
 	UINT8 spawned;

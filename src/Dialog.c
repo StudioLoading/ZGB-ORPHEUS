@@ -139,6 +139,19 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "                   ", 21);
             memcpy(d10, "                  ", 21);
         break;
+        case HADES_ROLLING_STONES:
+            memcpy(d0, "L Y HUV Z KIVU    ", 21);
+            memcpy(d1, "WA?U B K(B        ", 21);
+            memcpy(d2, "OY 0RT Z J:(,,B   ", 21);
+            memcpy(d3, " B L4L            ", 21);
+            memcpy(d4, "L4UV Y CD Y EPUV  ", 21);
+            memcpy(d5, "F.,Y7-5'  - EST,  ", 21);
+            memcpy(d6, "J:(,,B Z J:(,)    ", 21);
+            memcpy(d7, "Z58L              ", 21);
+            memcpy(d8, "FPB B B OY 5Q     ", 21);
+            memcpy(d9, "Y MBS - J?L4L     ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
         case HADES_DEATH:
             memcpy(d0, "6MJO' G5Y 5QZ     ", 21);
             memcpy(d1, " E?(UB            ", 21);
@@ -166,14 +179,14 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d10, "                  ", 21);
         break;
         case BOSS_CHARON_BEATED:
-            memcpy(d0, "                  ", 21);
-            memcpy(d1, "                  ", 21);
-            memcpy(d2, "                  ", 21);
-            memcpy(d3, "                  ", 21);
+            memcpy(d0, "E4D Z R'B! ?PL    ", 21);
+            memcpy(d1, "Y 1V Z J?KLNP     ", 21);
+            memcpy(d2, "?PL Y LGT Z       ", 21);
+            memcpy(d3, "A,PL4LP           ", 21);
             memcpy(d4, "                  ", 21);
-            memcpy(d5, "                  ", 21);
-            memcpy(d6, "                  ", 21);
-            memcpy(d7, "                  ", 21);
+            memcpy(d5, "KAA !I            ", 21);
+            memcpy(d6, "LYHUV2Y8UV        ", 21);
+            memcpy(d7, " Z B4 0(H         ", 21);
             memcpy(d8, "                  ", 21);
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
@@ -337,15 +350,15 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d10, "UNDER HIS CONTROL", 21);
         break;
         case BOSS_CHARON_BEATED:
-            memcpy(d0, "CHARON:           ", 21);
-            memcpy(d1, "YOU BEATED ME     ", 21);
-            memcpy(d2, "                  ", 21);
-            memcpy(d3, "                  ", 21);
-            memcpy(d4, "                  ", 21);
-            memcpy(d5, "                  ", 21);
-            memcpy(d6, "                  ", 21);
-            memcpy(d7, "                  ", 21);
-            memcpy(d8, "                  ", 21);
+            memcpy(d0, "YOU HAVE THAT     ", 21);
+            memcpy(d1, "STRENGTH!         ", 21);
+            memcpy(d2, "MY BOAT HAS BEEN  ", 21);
+            memcpy(d3, "BROKEN. MY DUTY   ", 21);
+            memcpy(d4, "HERE IS DONE.     ", 21);
+            memcpy(d5, "GO ON.  THE GATES ", 21);
+            memcpy(d6, "TO THE LAND OF    ", 21);
+            memcpy(d7, "DEATH ARE         ", 21);
+            memcpy(d8, " OPENING NOW.     ", 21);
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
             memcpy(d11, "                  ", 21);

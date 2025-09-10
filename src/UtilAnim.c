@@ -19,6 +19,7 @@ IMPORT_TILES(maphades003ta4);
 IMPORT_TILES(maphades003ta5);
 IMPORT_TILES(maphades003ta6);
 IMPORT_TILES(maphades003ta7);
+IMPORT_TILES(maphades003acheront);
 
 IMPORT_TILES(mapbosscharont);
 IMPORT_TILES(mapbosscerberust);
@@ -33,6 +34,7 @@ IMPORT_TILES(mapbosshadest);
 IMPORT_TILES(mapbosshadest01);
 IMPORT_TILES(mapbosshadest02);
 
+extern MACROMAP current_map;
 
 void set_banked_bkg_data(UINT8 first_tile, UINT8 nb_tiles, struct TilesInfo* t, UINT8 bank) NONBANKED {
     uint8_t save = _current_bank;
@@ -102,7 +104,14 @@ void AnimFire_3() BANKED{
 
 
 void Anim_Spike_0() BANKED{
-	set_banked_bkg_data(50u, 1u, &maphades003t, BANK(maphades003t));//spike
+	switch(current_map){
+		case HADES_06:
+			set_banked_bkg_data(50u, 1u, &maphades003acheront, BANK(maphades003acheront));//spike
+		break;
+		default:
+			set_banked_bkg_data(50u, 1u, &maphades003t, BANK(maphades003t));//spike
+		break;
+	}
 }
 void Anim_Spike_1() BANKED{
 	set_banked_bkg_data(50u, 1u, &maphades002ta1, BANK(maphades002ta1));//spike
@@ -126,7 +135,14 @@ void Anim_Cerberus_0() BANKED{
 }
 
 void Anim_Water_0() BANKED{
-	set_banked_bkg_data(40u, 2u, &maphades003t, BANK(maphades003t));//river
+	switch(current_map){
+		case HADES_06:
+			set_banked_bkg_data(40u, 2u, &maphades003acheront, BANK(maphades003acheront));//spike
+		break;
+		default:
+			set_banked_bkg_data(40u, 2u, &maphades003t, BANK(maphades003t));//river
+		break;
+	}
 }
 void Anim_Water_1() BANKED{
 	set_banked_bkg_data(40u, 2u, &maphades003ta1, BANK(maphades003ta1));//river

@@ -57,13 +57,13 @@ const UINT8 coll_s_hades001[] = {0};
 UINT8 dialog_block_interact = 0u;
 UINT8 dialog_skeleton_lyre = 0u;
 Sprite* s_block_00;
-Sprite* s_block_01;
 Sprite* s_blade;
 Sprite* s_radamanthusshadow = 0;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
 UINT8 death_countdown = 0u;
 struct ItemSpawnedByCommon item_spawned_by_common = {
+		.e_unique_id = 0,
         .sprite_type = 0,
         .item_type = ITEM_NONE,
         .spawned = 0
@@ -103,48 +103,58 @@ void START() {
 		if(sprite_stack_top > 0){
 			RestoreSprites();
 		}else if(solved_map < current_map){
+			item_spawned_by_common.e_unique_id = 0;
 			item_spawned_by_common.sprite_type = 0;
 			item_spawned_by_common.item_type = 0;
 			item_spawned_by_common.spawned = 0;
 			s_orpheus = SpriteManagerAdd(SpriteOrpheus, orpheus_spawnx, orpheus_spawny);
 			switch(current_map){
+				case HADES_00:{
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 6u << 3, 13u << 3);
+				}break;
 				case HADES_01:{
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 5u << 3), ((UINT16) 8u << 3) + 3u);
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
 					block00_data->i_configured = 1u;
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 1u << 3, 4u << 3);
 				}break;
 				case HADES_02:{
 					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
 						spawn_item(KEY,  ((UINT16) 17u << 3), ((UINT16) 15u << 3) - 3u, 0);
 					}
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 5u << 3, 4u << 3);
 				}break;
 				case HADES_03:{
 					area_enemy_counter = 1;
 					Sprite* e_enemy = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
 					e_configure(e_enemy);
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 6u << 3, 4u << 3);
 				}break;
 				case HADES_04:{
 					area_enemy_counter = 2;
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton1);
-					
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
 					e_configure(e_skeleton3);
 				}break;
 				case HADES_05:{
 					area_enemy_counter = 1;
+					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
+					e_configure(e_dog);
+					item_spawned_by_common.e_unique_id = e_dog->unique_id;
 					item_spawned_by_common.sprite_type = SpriteDog;
 					item_spawned_by_common.item_type = KEY;
 					item_spawned_by_common.spawned = 0;
-					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
-					e_configure(e_dog);
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 1u << 3, 4u << 3);
 				}break;
 				//BOSS CHARON
 				case HADES_06:{
-					area_enemy_counter = 1;
-					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 12u << 3), ((UINT16) 8u << 3));
+					area_enemy_counter = 2;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 14u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeletonshield, ((UINT16) 8u << 3), ((UINT16) 14u << 3));
+					e_configure(e_skeleton2);
 					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 16u << 3, 4u << 3);
 				}break;
 				case HADES_07:{
@@ -155,10 +165,34 @@ void START() {
 					e_configure(e_skeleton2);
 				}break;
 				case HADES_08:{
+					area_enemy_counter = 2;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteRevenant, ((UINT16) 2u << 3), ((UINT16) 9u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteRevenant, ((UINT16) 17u << 3), ((UINT16) 16u << 3));
+					e_configure(e_skeleton2);
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						spawn_item(KEY,  ((UINT16) 12u << 3), ((UINT16) 15u << 3) - 3u, 0);
+					}
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 1u << 3, 4u << 3);
 				}break;
 				case HADES_09:{
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 17u << 3), ((UINT16) 15u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 1u << 3), ((UINT16) 5u << 3));
+					e_configure(e_skeleton2);
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 8u << 3) + 5u, ((UINT16) 12u << 3));
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->item_type = BLOCK;
+					block00_data->i_configured = 1u;
 				}break;
 				case HADES_10:{
+					area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 2u << 3), ((UINT16) 5u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 15u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
+					e_configure(e_skeleton3);
 				}break;
 				//BOSS CERBERUS
 				case HADES_11:{
@@ -339,30 +373,45 @@ void UPDATE() {
 			SetState(StateCartel);
 		}
 	//BLOCK MANAGEMENT
-		if(current_map == HADES_01){
-			if(init_block_button == 0){
-				if(button_pressed == 1 || solved_map >= current_map){
-					draw_button(1u, 15u, 71u);
-				}else{
-					s_block_01->x = (UINT16) 3u << 3;
-					s_block_01->y = ((UINT16) 8u << 3) - 1u;
+		switch(current_map){
+			case HADES_01:{
+				if(init_block_button == 0){
+					if(button_pressed == 1 || solved_map >= current_map){
+						draw_button(1u, 15u, 71u);
+					}
+					init_block_button = 1u;
 				}
-				init_block_button = 1u;
-			}
-			if(button_pressed == 0){
-				UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
-				if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
-					press_release_button(1u, 15u, 71u);
-					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
-					block00_data->i_configured = 3;
+				if(button_pressed == 0){
+					UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
+					if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
+						press_release_button(1u, 15u, 71u);
+						struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+						block00_data->i_configured = 3;
+					}
 				}
-			}
+			}break;
+			case HADES_09:{
+				if(init_block_button == 0){
+					if(button_pressed == 1 || solved_map >= current_map){
+						draw_button(17u, 11u, 71u);
+					}
+					init_block_button = 1u;
+				}
+				if(button_pressed == 0){
+					UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
+					if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
+						press_release_button(17u, 11u, 71u);
+						struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+						block00_data->i_configured = 3;
+					}
+				}
+			}break;
 		}
-		if(s_orpheus->y > ((UINT16) 16u << 3)){
+		/*if(s_orpheus->y > ((UINT16) 16u << 3)){
 			if(init_block_button == 1){
 				init_block_button = 0;
 			}
-		}
+		}*/
 	//GHOSTS
 		if(current_map > HADES_02 && current_map < BOSS_CHARON){
 			if(in_dialog == 0 && idle_countdown < 10 && idle_countdown > 0){

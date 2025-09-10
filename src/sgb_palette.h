@@ -43,10 +43,10 @@
 #define SGB_TUTORIAL_DARK		myRGB(0, 176, 80)
 #define SGB_TUTORIAL_DARKER 	myRGB(0, 0, 0)
 
-#define SGB_CHARON_LIGHTER 	myRGB(216, 216, 216)
-#define SGB_CHARON_LIGHT 	myRGB(240, 216, 136)
-#define SGB_CHARON_DARK		myRGB(104, 128, 248)
-#define SGB_CHARON_DARKER 	myRGB(0, 0, 0)
+#define SGB_STYX_LIGHTER 	myRGB(216, 216, 216)
+#define SGB_STYX_LIGHT 	myRGB(240, 216, 136)
+#define SGB_STYX_DARK		myRGB(104, 128, 248)
+#define SGB_STYX_DARKER 	myRGB(0, 0, 0)
 #define SGB_STATUS_LIGHTER 	myRGB(255, 255, 255)
 #define SGB_STATUS_LIGHT 	myRGB(232, 248, 72)
 #define SGB_STATUS_DARK		myRGB(248, 40, 24)
@@ -60,6 +60,11 @@
 #define SGB_BOSSCHARON_DARK		myRGB(198, 0, 13)
 #define SGB_BOSSCHARON_DARKER 	myRGB(0, 0, 0)
 
+#define SGB_ACHERON_LIGHTER	myRGB(216, 216, 216)
+#define SGB_ACHERON_LIGHT   myRGB(255, 209, 228)
+#define SGB_ACHERON_DARK    myRGB(255, 59, 56)
+#define SGB_ACHERON_DARKER 	myRGB(0, 0, 0)
+
 void set_sgb_palette(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3) __banked;
 void set_sgb_palette2(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
 void set_sgb_palette_intro(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
@@ -70,8 +75,9 @@ void set_sgb_palette_credits_faultsl() __banked;
 void set_sgb_palette_credits_zgb() __banked;
 void set_sbg_titlescreen() __banked;
 void set_sbg_palette_tutorial() __banked;
-void set_sbg_palette_hades_charon() __banked;
+void set_sbg_palette_styx() __banked;
 void set_sbg_palette_boss_charon() __banked;
+void set_sbg_palette_acheron() __banked;
 
 void set_sbg_intro() __banked;
 /*

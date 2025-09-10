@@ -275,10 +275,10 @@ void set_sbg_palette_tutorial() __banked{
     set_sgb_structure_hades();
 }
 
-void set_sbg_palette_hades_charon() __banked{
+void set_sbg_palette_styx() __banked{
     set_sgb_palette_credits_reset();
-    set_sgb_pal0pal1(SGB_CHARON_LIGHTER, SGB_CHARON_LIGHT, SGB_CHARON_DARK, SGB_CHARON_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
-    set_sgb_pal2pal3(SGB_CHARON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_pal0pal1(SGB_STYX_LIGHTER, SGB_STYX_LIGHT, SGB_STYX_DARK, SGB_STYX_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_STYX_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
     set_sgb_structure_hades();
 }
 
@@ -286,5 +286,12 @@ void set_sbg_palette_boss_charon() __banked{
     set_sgb_palette_credits_reset();
     set_sgb_pal0pal1(SGB_BOSSCHARON_LIGHTER, SGB_BOSSCHARON_LIGHT, SGB_BOSSCHARON_DARK, SGB_BOSSCHARON_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
     set_sgb_pal2pal3(SGB_BOSSCHARON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}
+
+void set_sbg_palette_acheron() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_ACHERON_LIGHTER, SGB_ACHERON_LIGHT, SGB_ACHERON_DARK, SGB_ACHERON_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_ACHERON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
     set_sgb_structure_hades();
 }

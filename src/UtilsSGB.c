@@ -76,7 +76,9 @@ void manage_sgb_palette() BANKED{
         break;
         case StateHades00:{
             if(current_map <= BOSS_CHARON){
-                set_sbg_palette_hades_charon();
+                set_sbg_palette_styx();
+            }else if(current_map <= BOSS_CERBERUS){
+                set_sbg_palette_acheron();
             }
         }break;
         case StateBoss00:{

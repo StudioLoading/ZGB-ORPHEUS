@@ -21,6 +21,7 @@ extern UINT8 in_dialog;
 extern struct ItemSpawnedByCommon item_spawned_by_common;
 extern UINT8 spawned_enemy_counter;
 extern UINT8 flag_paused;
+extern MACROMAP current_map;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -302,6 +303,8 @@ void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
 void e_management(Sprite* s_enemy) BANKED{
     if(in_dialog){ return; }
     if(flag_paused){ return; }
+    if(s_enemy->x < 6u){ s_enemy->x = 8u;}
+    if(s_enemy->x > 153u){ s_enemy->x = 152u;}
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 
@@ -503,6 +506,9 @@ ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED
         break;
         default:{
             result = arg_tile == 20u || arg_tile == 66u || (arg_tile >= 78u && arg_tile <= 83u);
+            if(current_map <= BOSS_CERBERUS && current_map > BOSS_CHARON){
+                result = result || arg_tile == 40u || arg_tile == 41u;
+            }
             if(result){
                 result = ENEMY_REACT_DIE;
             }
@@ -547,6 +553,14 @@ void e_check_sprite_collision(Sprite* s_enemy) BANKED{
                     if(enemy_data->e_state == HIT){
                         boss_hit();
                     }
+                }break;
+                case SpriteItem:{
+                    struct ItemInfo* i_data = (struct ItemInfo*) iespr->custom_data; 
+					item_spawned_by_common.e_unique_id = s_enemy->unique_id;
+					item_spawned_by_common.sprite_type = s_enemy->type;
+					item_spawned_by_common.item_type = i_data->item_type;
+					item_spawned_by_common.spawned = 0;
+                    SpriteManagerRemoveSprite(iespr);
                 }break;
             }
         }
@@ -669,7 +683,7 @@ void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED{
 }
 
 void e_destroy(Sprite* s_enemy) BANKED{
-    if(item_spawned_by_common.sprite_type == s_enemy->type && 
+    if(item_spawned_by_common.e_unique_id == s_enemy->unique_id && item_spawned_by_common.sprite_type == s_enemy->type && 
         item_spawned_by_common.spawned == 0){
         spawn_item(KEY,  s_enemy->x + 8u, s_enemy->y + 10u, 0);
         item_spawned_by_common.spawned = 1;
