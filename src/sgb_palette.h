@@ -65,6 +65,11 @@
 #define SGB_ACHERON_DARK    myRGB(255, 59, 56)
 #define SGB_ACHERON_DARKER 	myRGB(0, 0, 0)
 
+#define SGB_BOSSCERBERUS_LIGHTER 	myRGB(216, 216, 216)
+#define SGB_BOSSCERBERUS_LIGHT 	    myRGB(250, 184, 88)
+#define SGB_BOSSCERBERUS_DARK		myRGB(0, 152, 8)
+#define SGB_BOSSCERBERUS_DARKER 	myRGB(0, 0, 0)
+
 void set_sgb_palette(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3) __banked;
 void set_sgb_palette2(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
 void set_sgb_palette_intro(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
@@ -78,6 +83,7 @@ void set_sbg_palette_tutorial() __banked;
 void set_sbg_palette_styx() __banked;
 void set_sbg_palette_boss_charon() __banked;
 void set_sbg_palette_acheron() __banked;
+void set_sbg_palette_boss_cherberus() __banked;
 
 void set_sbg_intro() __banked;
 /*

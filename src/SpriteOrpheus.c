@@ -508,6 +508,11 @@ void orpheus_check_tile_overlapping() BANKED{
                         orpheus_change_state(THIS, HIT);
                     }
                 }break;
+                case 117u: case 199u://cartel
+                    if(KEY_TICKED(J_INT)){
+                        orpheus_show_cartel();
+                    }
+                break;
             }
         }break;
     }

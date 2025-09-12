@@ -183,8 +183,8 @@ void START() {
 			case BOSS_CERBERUS:{
 				InitScroll(BANK(mapbosscerberus), &mapbosscerberus, coll_t_hades005, coll_s_hades005);
 				s_cerberus_headright = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 8u << 3), ((UINT16) 3u << 3) + 1);
-					struct CerberusInfo* headcenter_info = (struct CerberusInfo*)s_cerberus_headright->custom_data;
-					headcenter_info->head_config = 2;
+				struct CerberusInfo* headcenter_info = (struct CerberusInfo*)s_cerberus_headright->custom_data;
+				headcenter_info->head_config = 2;
 				s_cerberus_headleft = SpriteManagerAdd(SpriteCerberushead, ((UINT16) 7u << 3), ((UINT16) 3u << 3) + 4);
 				struct CerberusInfo* headleft_info = (struct CerberusInfo*)s_cerberus_headleft->custom_data;
 				headleft_info->head_config = 1;
@@ -593,7 +593,7 @@ void UPDATE() {
 			}
 		}
 	//ANIMS RIVER
-		if(current_map != BOSS_MINOS && current_map != BOSS_AEACUS && current_map != BOSS_HADES){
+		if(current_map == BOSS_CHARON || current_map == BOSS_CERBERUS){
 			anim_counter++;
 			if(anim_counter >= (BOSS_ANIM_COUNTER_MAX + 12)){
 				anim_counter = 0u;
@@ -733,7 +733,6 @@ void boss_manage_death_cerberus() BANKED{
 			spawn_death_animation(52u, 42u);
 		break;
 		case 0u:{
-			boss_intro = 0;//reset
 			prepare_dialog(BOSS_CERBERUS_BEATED);
 			SetState(StateCartel);
 		}break;
@@ -764,7 +763,6 @@ void boss_manage_death_minos() BANKED{
 			spawn_death_animation(59u, 44u);
 		break;
 		case 0u:{
-			boss_intro = 0;//reset
 			prepare_dialog(BOSS_MINOS_BEATED);
 			SetState(StateCartel);
 		}break;
@@ -802,7 +800,6 @@ void boss_manage_death_aeacus() BANKED{
 			spawn_death_animation(s_awacus_body->x + 2u, s_awacus_body->y + 16);
 		break;
 		case 0u:{
-			boss_intro = 0;//reset
 			prepare_dialog(BOSS_AEACUS_BEATED);
 			SetState(StateCartel);
 		}break;
@@ -846,7 +843,6 @@ void boss_manage_death_hades() BANKED{
 			spawn_death_animation(s_hades_skull->x + 16u, s_hades_skull->y + 26u);
 		break;
 		case 0u:{
-			boss_intro = 0;//reset
 			prepare_dialog(BOSS_HADES_BEATED);
 			SetState(StateCartel);
 		}break;

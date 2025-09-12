@@ -145,6 +145,7 @@ extern UINT8 colliding_block;
 extern UINT8 dialog_paused;
 extern uint8_t sgb_checked;
 extern UINT8 hades_music_started;
+extern UINT8 boss_intro;
 
 void write_dialog() BANKED;
 void level_common_start() BANKED;
@@ -224,7 +225,7 @@ void camera_shake_h() BANKED{
 void level_common_start() BANKED{
 	//SGB
 		if(sgb_checked){
-			if(current_map == TUTORIAL){
+			if(current_map == TUTORIAL || current_map == BOSS_HADES){
 				manage_sgb_border();
 			}
 			manage_sgb_palette();
@@ -1039,8 +1040,9 @@ void go_to_next_map() BANKED{
 			next_map = END_DEMO;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3);
-			next_state = StateBoss00;
 			a_walk_counter_y = -16;
+            boss_intro = 0;
+			next_state = StateBoss00;
 		break;
 		case HADES_06:
 			prev_map = HADES_05;
@@ -1087,9 +1089,10 @@ void go_to_next_map() BANKED{
 			next_map = HADES_11;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 4u;
-			next_state = StateBoss00;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -18;
+            boss_intro = 0;
+			next_state = StateBoss00;
 		break;
 		case HADES_11:
 			prev_map = BOSS_CERBERUS;
@@ -1135,9 +1138,10 @@ void go_to_next_map() BANKED{
 			next_map = HADES_16;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 2u;
-			next_state = StateBoss00;
+            boss_intro = 0;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -18;
+			next_state = StateBoss00;
 		break;
 		case HADES_16:
 			prev_map = BOSS_MINOS;
@@ -1184,9 +1188,10 @@ void go_to_next_map() BANKED{
 			next_map = HADES_21;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSAEACUS_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSAEACUS_IN << 3);
-			next_state = StateBoss00;
+            boss_intro = 0;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -16;
+			next_state = StateBoss00;
 		break;
 		case HADES_21:{
 			prev_map = BOSS_AEACUS;
@@ -1235,7 +1240,6 @@ void go_to_next_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
-			new_state = IDLE_DOWN;
 		}break;
 		case HADES_27:{
 			prev_map = HADES_26;
@@ -1244,16 +1248,16 @@ void go_to_next_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
 			new_state = IDLE_DOWN;
 			next_state = StateHades00;
-			new_state = IDLE_DOWN;
 		}break;
 		case BOSS_HADES:
 			prev_map = HADES_27;
 			next_map = END_GAME;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSHADES_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSHADES_IN << 3);
-			next_state = StateBoss00;
+            boss_intro = 0;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -10;
+			next_state = StateBoss00;
 		break;
 	}
 	SetState(next_state);

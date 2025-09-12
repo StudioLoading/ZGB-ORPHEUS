@@ -15,6 +15,7 @@
 
 IMPORT_MAP(bordersky);
 IMPORT_MAP(borderflame);
+IMPORT_MAP(borderflamehades);
 
 CURRENT_BORDER current_border = BORDER_NO;
 
@@ -31,14 +32,16 @@ void manage_sgb_border() BANKED{
         current_border = BORDER_FLAMES;
     }else if(current_state == StateIntro && current_border != BORDER_SKY){
         current_border = BORDER_SKY;
-    //}else if(current_state == StateHades00 && current_border != BORDER_FLAMES){
     }else if(current_state == StateTutorial && current_border != BORDER_FLAMES){
         current_border = BORDER_FLAMES;
+    }else if(current_state == StateBoss00 && current_border != BORDER_FLAMES_HADES){
+        current_border = BORDER_FLAMES_HADES;
     }
     if(old_border != current_border){
         switch(current_border){
             case BORDER_SKY:{ LOAD_SGB_BORDER(bordersky); }break;
             case BORDER_FLAMES:{ LOAD_SGB_BORDER(borderflame); }break;
+            case BORDER_FLAMES_HADES:{ LOAD_SGB_BORDER(borderflamehades); }break;
         }
     }
 }
@@ -85,6 +88,9 @@ void manage_sgb_palette() BANKED{
             switch(current_map){
                 case BOSS_CHARON:{
                     set_sbg_palette_boss_charon();
+                }break;
+                case BOSS_CERBERUS:{
+                    set_sbg_palette_boss_cherberus();
                 }break;
            }
         }break;

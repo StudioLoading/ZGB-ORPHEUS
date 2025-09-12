@@ -102,7 +102,6 @@ void AnimFire_3() BANKED{
 	set_banked_bkg_data(84u, 4u, &maphades002ta3, BANK(maphades002ta3));//fire
 }
 
-
 void Anim_Spike_0() BANKED{
 	switch(current_map){
 		case HADES_06:

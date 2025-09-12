@@ -131,13 +131,13 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d1, "                  ", 21);
             memcpy(d2, "JBW Z JY29-48,    ", 21);
             memcpy(d3, "F.,Z29-5SB,       ", 21);
-            memcpy(d4, "                  ", 21);
-            memcpy(d5, "F.,Y7-5'          ", 21);
-            memcpy(d6, "                  ", 21);
-            memcpy(d7, "UVF EFSLB T       ", 21);
-            memcpy(d8, "5.B F., Z ZL,     ", 21);
-            memcpy(d9, "                   ", 21);
-            memcpy(d10, "                  ", 21);
+            memcpy(d4, "F.,Y7-5'          ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "KYY HUV Y 5Z(B Z  ", 21);
+            memcpy(d7, "55 Z GJEUVB       ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "UVF EFSLB T       ", 21);
+            memcpy(d10, "5.B F., Z ZL,     ", 21);
         break;
         case HADES_ROLLING_STONES:
             memcpy(d0, "L Y HUV Z KIVU    ", 21);
@@ -300,8 +300,8 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
         case HADES_GUARDS:
             memcpy(d0, "LISTEN CLOSELY,   ", 21);
             memcpy(d1, "MY SON.           ", 21);
-            memcpy(d2, "CERBERUS PUPPIES  ", 21);
-            memcpy(d3, "GUARD THIS REALM. ", 21);
+            memcpy(d2, "GUARDS IN THIS    ", 21);
+            memcpy(d3, "REALM ARE DEAF.   ", 21);
             memcpy(d4, "THEY SCAN THE ROOM", 21);
             memcpy(d5, "WATCHING AROUND.  ", 21);
             memcpy(d6, "NOTICE WHERE THEY ", 21);

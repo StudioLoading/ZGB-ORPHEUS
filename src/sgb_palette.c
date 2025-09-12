@@ -295,3 +295,10 @@ void set_sbg_palette_acheron() __banked{
     set_sgb_pal2pal3(SGB_ACHERON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
     set_sgb_structure_hades();
 }
+
+void set_sbg_palette_boss_cherberus() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_BOSSCERBERUS_LIGHTER, SGB_BOSSCERBERUS_LIGHT, SGB_BOSSCERBERUS_DARK, SGB_BOSSCERBERUS_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_BOSSCERBERUS_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}
