@@ -246,8 +246,23 @@ void START() {
 				}break;
 				//BOSS MINOS
 				case HADES_16:{
+					area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteBanshee, ((UINT16) 3u << 3), ((UINT16) 6u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteBanshee, ((UINT16) 6u << 3), ((UINT16) 14u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteBanshee, ((UINT16) 16u << 3), ((UINT16) 9u << 3));
+					e_configure(e_skeleton3);
 				}break;
 				case HADES_17:{
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 8u << 3) + 4u, ((UINT16) 14u << 3));
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->item_type = BLOCK;
+					block00_data->i_configured = 1u;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteMagma, ((UINT16) 8u << 3), ((UINT16) 10u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMagma, ((UINT16) 3u << 3), ((UINT16) 14u << 3));
+					e_configure(e_skeleton2);
 				}break;
 				case HADES_18:{
 				}break;
@@ -430,6 +445,10 @@ void UPDATE() {
 			case HADES_14:{
 				button_posx = 14u;
 				button_posy = 11u;
+			}break;
+			case HADES_17:{
+				button_posx = 6u;
+				button_posy = 7u;
 			}break;
 		}
 		if(button_posx && button_posy){

@@ -113,9 +113,7 @@ void boss_manage_death_hades() BANKED;
 void boss_update_breath_verse_and_max() BANKED;
 void boss_hit() BANKED;
 
-extern UINT8 dialog_block_interact;
 extern UINT8 in_dialog;
-extern UINT8 init_block_button;
 extern Sprite* s_orpheus;
 extern UINT16 orpheus_spawnx;
 extern UINT16 orpheus_spawny;
