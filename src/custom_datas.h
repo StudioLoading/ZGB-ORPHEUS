@@ -124,6 +124,7 @@ struct ItemInfo{
 	INT8 counter_x;
 	INT8 counter_y;
 	INT8 counter_verso;//1 o -1
+	UINT8 pickupdelay;
 };
 
 struct ExclamationInfo{

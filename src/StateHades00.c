@@ -196,14 +196,53 @@ void START() {
 				}break;
 				//BOSS CERBERUS
 				case HADES_11:{
+					area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSentinel, ((UINT16) 17u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSentinel, ((UINT16) 12u << 3), ((UINT16) 5u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSentinel, ((UINT16) 12u << 3), ((UINT16) 15u << 3));
+					e_configure(e_skeleton3);
 				}break;
 				case HADES_12:{
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSentinel, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton1);
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 4u << 3) + 5u, ((UINT16) 13u << 3));
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->item_type = BLOCK;
+					block00_data->i_configured = 1u;
 				}break;
 				case HADES_13:{
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						spawn_item(KEY,  ((UINT16) 1u << 3), ((UINT16) 5u << 3), 0);
+					}
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteShadow, ((UINT16) 16u << 3), ((UINT16) 14u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteShadow, ((UINT16) 11u << 3), ((UINT16) 6u << 3));
+					e_configure(e_skeleton2);
 				}break;
 				case HADES_14:{
+					area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSiren, ((UINT16) 8u << 3), ((UINT16) 6u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSiren, ((UINT16) 17u << 3), ((UINT16) 12u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSiren, ((UINT16) 6u << 3), ((UINT16) 15u << 3));
+					e_configure(e_skeleton3);
 				}break;
 				case HADES_15:{
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteTartarus, ((UINT16) 14u << 3), ((UINT16) 5u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteTartarus, ((UINT16) 17u << 3), ((UINT16) 12u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteTartarus, ((UINT16) 2u << 3), ((UINT16) 15u << 3));
+					e_configure(e_skeleton3);
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						item_spawned_by_common.e_unique_id = e_skeleton1->unique_id;
+						item_spawned_by_common.sprite_type = SpriteTartarus;
+						item_spawned_by_common.item_type = KEY;
+						item_spawned_by_common.spawned = 0;
+					}
 				}break;
 				//BOSS MINOS
 				case HADES_16:{
@@ -373,47 +412,44 @@ void UPDATE() {
 			SetState(StateCartel);
 		}
 	//BLOCK MANAGEMENT
+		UINT16 button_posx = 0u;
+		UINT16 button_posy = 0u;
 		switch(current_map){
 			case HADES_01:{
-				if(init_block_button == 0){
-					if(button_pressed == 1 || solved_map >= current_map){
-						draw_button(1u, 15u, 71u);
-					}
-					init_block_button = 1u;
-				}
-				if(button_pressed == 0){
-					UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
-					if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
-						press_release_button(1u, 15u, 71u);
-						struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
-						block00_data->i_configured = 3;
-					}
-				}
+				button_posx = 1u;
+				button_posy = 15u;
 			}break;
 			case HADES_09:{
-				if(init_block_button == 0){
-					if(button_pressed == 1 || solved_map >= current_map){
-						draw_button(17u, 11u, 71u);
-					}
-					init_block_button = 1u;
-				}
-				if(button_pressed == 0){
-					UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
-					if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
-						press_release_button(17u, 11u, 71u);
-						struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
-						block00_data->i_configured = 3;
-					}
-				}
+				button_posx = 17u;
+				button_posy = 11u;
+			}break;
+			case HADES_12:{
+				button_posx = 2u;
+				button_posy = 8u;
+			}break;
+			case HADES_14:{
+				button_posx = 14u;
+				button_posy = 11u;
 			}break;
 		}
-		/*if(s_orpheus->y > ((UINT16) 16u << 3)){
-			if(init_block_button == 1){
-				init_block_button = 0;
+		if(button_posx && button_posy){
+			if(init_block_button == 0){
+				if(button_pressed == 1 || solved_map >= current_map){
+					draw_button(button_posx, button_posy, 71u);
+				}
+				init_block_button = 1u;
 			}
-		}*/
+			if(button_pressed == 0){
+				UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
+				if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
+					press_release_button(button_posx, button_posy, 71u);
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->i_configured = 3;
+				}
+			}
+		}
 	//GHOSTS
-		if(current_map > HADES_02 && current_map < BOSS_CHARON){
+		if(current_map > HADES_02 && current_map < BOSS_HADES){
 			if(in_dialog == 0 && idle_countdown < 10 && idle_countdown > 0){
 				UINT16 ghost_spawnx = ((UINT16) 19u << 3);
 				INT8 ghost_vx = -1;

@@ -14,6 +14,7 @@ const UINT8 i_key[] = {6, 0,2,2,2,2,2};
 void START() {
     THIS->lim_x = 1000;
     THIS->lim_y = 1000;
+    struct ItemInfo* i_data = (struct ItemInfo*) THIS->custom_data; 
 }
 
 void UPDATE() {
@@ -27,6 +28,12 @@ void UPDATE() {
                 case KEY: SetSpriteAnim(THIS, i_key, 24u); break;
             }
             i_data->i_configured = 2;
+            i_data->pickupdelay = 60u;
+        break;
+        case 2u:
+            if(i_data->pickupdelay){
+                i_data->pickupdelay--;
+            }
         break;
     }
 }

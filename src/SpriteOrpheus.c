@@ -270,12 +270,16 @@ void UPDATE() {
                     break;
                     case SpriteSkeletonshield:
                     case SpriteOoze:
-                    case SpriteSiren:
                     case SpriteWyrmling:
                         if(song_selection == SLEEP){
                             e_change_state(iospr, HIT);
                         }
-                    break;                    
+                    break;
+                    case SpriteSiren:
+                        if(song_selection != REPEL){
+                            e_change_state(iospr, HIT);
+                        }
+                    break;     
                     case SpriteRevenant:
                         if(song_selection == ATTRACT){
                             e_change_state(iospr, HIT);

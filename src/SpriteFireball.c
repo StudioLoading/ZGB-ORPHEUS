@@ -101,8 +101,11 @@ void UPDATE() {
                                 boss_hit();
                             }
                         }else if(is_enemy(ifbspr->type)){
-                            if(ifbspr->type == SpriteSkeletoncerberus && is_skeletoncerberus_in_river == 0)
-                            e_destroy(ifbspr);
+                            if(ifbspr->type == SpriteSkeletoncerberus && is_skeletoncerberus_in_river == 0){
+
+                            }else{
+                                e_destroy(ifbspr);
+                            }
                         }
                     }
                 }
