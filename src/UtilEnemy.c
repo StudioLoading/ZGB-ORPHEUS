@@ -22,6 +22,7 @@ extern struct ItemSpawnedByCommon item_spawned_by_common;
 extern UINT8 spawned_enemy_counter;
 extern UINT8 flag_paused;
 extern MACROMAP current_map;
+extern UINT8 spikes_hit_flag;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -63,6 +64,7 @@ ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKE
 UINT8 e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_attack(UINT8 arg_sprite_type) BANKED;
 UINT8 e_is_guard(UINT8 arg_sprite_type) BANKED;
+void e_check_tile_overlapping(Sprite* arg_s_enemy) BANKED;
 
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
@@ -438,10 +440,11 @@ void e_management(Sprite* s_enemy) BANKED{
                 case WALK_UP:
                 case WALK_LEFT:
                 case WALK_RIGHT:
+                    e_check_tile_overlapping(s_enemy);
                 case HIT:{
-                    UINT8 tile = GetScrollTile((THIS->x + 4) >> 3, (THIS->y+6) >> 3);
+                    UINT8 tile = GetScrollTile((s_enemy->x + 4) >> 3, (s_enemy->y+6) >> 3);
                     if(tile == 0){
-                        tile = GetScrollTile((THIS->x + 12) >> 3, (THIS->y+12) >> 3); 
+                        tile = GetScrollTile((s_enemy->x + 12) >> 3, (s_enemy->y+12) >> 3); 
                     }
                     ENEMY_REACTION is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
                     ENEMY_REACTION is_against_pit = e_is_damaged_by_pit(tile, e_sprite_type);
@@ -458,9 +461,10 @@ void e_management(Sprite* s_enemy) BANKED{
                     }
                 }break;
                 case ATTACK:
-                    if(s_enemy->type == SpriteOoze || s_enemy->type == SpriteSiren || s_enemy->type == SpriteWyrmling || s_enemy->type == SpriteRevenant){
-                        e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
-                    }
+                    //if(e_is_attack(s_enemy->type)){
+                    e_data->tile_collision = TranslateSprite(THIS, e_data->vx << delta_time, e_data->vy << delta_time);
+                    e_check_tile_overlapping(s_enemy);
+                    //}
                 break;
             }
     }
@@ -470,6 +474,32 @@ void e_management(Sprite* s_enemy) BANKED{
                 e_change_state(s_enemy, ATTACK);
             }
         }
+    }
+}
+
+void e_check_tile_overlapping(Sprite* arg_s_enemy) BANKED{
+    UINT8 change_to_hit = 0u;
+    UINT8 tile = GetScrollTile((arg_s_enemy->x + 8) >> 3, (arg_s_enemy->y+8) >> 3);
+    if(tile == 0){
+        tile = GetScrollTile((arg_s_enemy->x + 2) >> 3, (arg_s_enemy->y+16) >> 3);
+    }
+    if(tile == 0){
+        tile = GetScrollTile((arg_s_enemy->x + 10) >> 3, (arg_s_enemy->y+16) >> 3);
+    }
+    switch(current_state){
+        case StateHades00:{
+            switch(tile){
+                case 50u:{
+                    if(spikes_hit_flag){
+                        change_to_hit = 1;
+                    }
+                break;
+                }
+            }
+        }break;
+    }
+    if(change_to_hit){
+        e_change_state(arg_s_enemy, HIT);
     }
 }
 
@@ -493,12 +523,10 @@ ENEMY_REACTION e_is_damaged_by_fire(UINT8 arg_tile, UINT8 arg_sprite_type) BANKE
     }
     return result;
 }
-
 ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED{
     ENEMY_REACTION result = ENEMY_REACT_NONE;
     switch(arg_sprite_type){
         case SpriteLostsoul:
-        case SpriteOoze:
         case SpriteSiren:
         case SpriteWyrmling:
         case SpriteRevenant:

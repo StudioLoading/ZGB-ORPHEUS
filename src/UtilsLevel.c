@@ -66,6 +66,14 @@
 #define SPAWNY_HADES015_IN 3
 #define SPAWNX_HADES016_IN 8
 #define SPAWNY_HADES016_IN 3
+#define SPAWNX_HADES017_IN 16
+#define SPAWNY_HADES017_IN 12
+#define SPAWNX_HADES018_IN 3
+#define SPAWNY_HADES018_IN 3
+#define SPAWNX_HADES019_IN 6
+#define SPAWNY_HADES019_IN 11
+#define SPAWNX_HADES020_IN 15
+#define SPAWNY_HADES020_IN 12
 
 #define SPAWNX_HADES004_OUT 6
 #define SPAWNY_HADES004_OUT 13
@@ -87,10 +95,16 @@
 #define SPAWNY_HADES013_OUT 3
 #define SPAWNX_HADES014_OUT 2
 #define SPAWNY_HADES014_OUT 13
-#define SPAWNX_HADES016_OUT 2
+#define SPAWNX_HADES016_OUT 10
 #define SPAWNY_HADES016_OUT 13
 #define SPAWNX_HADES017_OUT 16
 #define SPAWNY_HADES017_OUT 3
+#define SPAWNX_HADES018_OUT 14
+#define SPAWNY_HADES018_OUT 3
+#define SPAWNX_HADES019_OUT 14
+#define SPAWNY_HADES019_OUT 3
+#define SPAWNX_HADES020_OUT 8
+#define SPAWNY_HADES020_OUT 3
 #define SPAWNX_BOSSCHARON_IN 9
 #define SPAWNY_BOSSCHARON_IN 15
 #define SPAWNX_BOSSAEACUS_IN 4
@@ -125,7 +139,7 @@ INT8 boss_hp_max = 5;
 INT8 boss_hp_current = 5;
 UINT8 spikes_countdown = 255u;
 UINT8 spikes_hit_flag = 0u;
-MACROMAP trap_button_pressed = HADES_00;
+//MACROMAP trap_button_pressed = HADES_00;
 UINT8 evaluate_button = 1u;//0 normal, 1 init, 2 force pressed
 UINT8 flag_button_repushable = 0u;
 UINT16 repushable_button_cooldown = REPUSHABLE_BUTTON_COOLDOWN_MAX;
@@ -343,6 +357,7 @@ void reset_maps() BANKED{
 		orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 		orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3);
 	}
+	//trap_button_pressed = current_map -1;
 }
 
 
@@ -491,7 +506,7 @@ void level_common_update_play() BANKED{
 	// check button draw
 		if(evaluate_button){
 			if(is_level_with_button()){
-				if(trap_button_pressed < current_map || 
+				if(flag_button_pushable || 
 					(flag_button_repushable && repushable_button_cooldown == REPUSHABLE_BUTTON_COOLDOWN_MAX)
 				){//SET IT PUSHABLE
 					flag_button_pushable = 1u;
@@ -508,6 +523,9 @@ void level_common_update_play() BANKED{
 						break;
 						case HADES_17:
 							draw_button(6, 7, 67u);
+						break;
+						case HADES_19:
+							draw_button(3, 13, 67u);
 						break;
 						case BOSS_AEACUS:
 							draw_button(16, 14, 67u);
@@ -527,6 +545,9 @@ void level_common_update_play() BANKED{
 						case HADES_17:
 							draw_button(6, 7, 71u);
 						break;
+						case HADES_19:
+							draw_button(3, 13, 71u);
+						break;
 						case BOSS_AEACUS:
 							draw_button(16, 14, 71u);
 						break;
@@ -538,10 +559,11 @@ void level_common_update_play() BANKED{
 		UINT8 tile = GetScrollTile((s_orpheus->x + 4) >> 3, (s_orpheus->y+12) >> 3);
 		if(tile == 71u || tile == 72u || tile == 73u || tile == 74u){
 			evaluate_button = 1u;
-			if(trap_button_pressed < current_map){
+			/*if(trap_button_pressed < current_map){
 				trap_button_pressed = current_map;
-			}
+			}*/
 			if(flag_button_pushable == 1){
+				flag_button_pushable = 0;
 				switch(current_map){
 					case HADES_06:
 						spawn_ball(SpriteStone, 56u, 28u, J_DOWN);
@@ -549,9 +571,11 @@ void level_common_update_play() BANKED{
 					case HADES_14:
 						spawn_ball(SpriteFireball, 72u, 24u, J_DOWN);
 					break;
+					case HADES_19:
+						spawn_ball(SpriteStone, 88u, 24u, J_DOWN);
+					break;
 					case BOSS_AEACUS:
 						spawn_ball(SpriteFireball, 96u, 24u, J_DOWN);
-						flag_button_pushable = 0;
 					break;
 				}
 			}
@@ -1193,32 +1217,32 @@ void go_to_next_map() BANKED{
 		case HADES_17:
 			prev_map = HADES_16;
 			next_map = HADES_18;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES017_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES017_IN << 3) + 4u;
 			next_state = StateHades00;
 			new_state = IDLE_UP;
 		break;
 		case HADES_18:
 			prev_map = HADES_17;
 			next_map = HADES_19;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES018_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES018_IN << 3) + 4u;
 			next_state = StateHades00;
 			new_state = IDLE_UP;
 		break;
 		case HADES_19:
 			prev_map = HADES_18;
 			next_map = HADES_20;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES019_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES019_IN << 3) + 2u;
 			next_state = StateHades00;
 			new_state = IDLE_UP;
 		break;
 		case HADES_20:
 			prev_map = HADES_19;
 			next_map = BOSS_AEACUS;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES020_IN << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES020_IN << 3) + 2u;
 			next_state = StateHades00;
 			new_state = IDLE_RIGHT;
 		break;
@@ -1455,22 +1479,22 @@ void go_to_prev_map() BANKED{
 		case HADES_18:
 			prev_map = HADES_17;
 			next_map = HADES_19;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES018_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES018_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case HADES_19:
 			prev_map = HADES_19;
 			next_map = HADES_20;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES019_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES019_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case HADES_20:
 			prev_map = HADES_19;
 			next_map = BOSS_AEACUS;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES020_OUT << 3) + 4u;
+			orpheus_spawny = ((UINT16) SPAWNY_HADES020_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case HADES_21:

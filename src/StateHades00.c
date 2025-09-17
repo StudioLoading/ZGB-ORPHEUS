@@ -52,6 +52,18 @@ const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,
 //cartel
 116, 118,
 0};
+const UINT8 coll_t_hades003[] = {1,3,4,5,9,10,11,13,14,17,18,19,
+60,61,63,64,
+75,76, 107, 108, 111, 112,
+//prev
+6,7,8,
+//next
+88,90,92,94,96,98,100,102,104,
+//cartel
+116, 118,
+//column
+34, 38, 33, 37,
+0};
 const UINT8 coll_s_hades001[] = {0};
 
 UINT8 dialog_block_interact = 0u;
@@ -265,10 +277,35 @@ void START() {
 					e_configure(e_skeleton2);
 				}break;
 				case HADES_18:{
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						spawn_item(KEY,  ((UINT16) 3u << 3), ((UINT16) 15u << 3), 0);
+					}
+					spawn_item(HEART,  ((UINT16) 15u << 3), ((UINT16) 15u << 3), 2);
+					s_blade = SpriteManagerAdd(SpriteBlade, ((UINT16) 7u << 3), ((UINT16) 14u << 3));
 				}break;
 				case HADES_19:{
+					//area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSiren, ((UINT16) 2u << 3), ((UINT16) 5u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSiren, ((UINT16) 9u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSiren, ((UINT16) 14u << 3), ((UINT16) 13u << 3));
+					e_configure(e_skeleton3);
+					item_spawned_by_common.e_unique_id = e_skeleton1->unique_id;
+					item_spawned_by_common.sprite_type = SpriteSiren;
+					item_spawned_by_common.item_type = KEY;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_20:{
+					area_enemy_counter = 4;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteOoze, ((UINT16) 2u << 3), ((UINT16) 6u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteOoze, ((UINT16) 7u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteOoze, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
+					e_configure(e_skeleton3);
+					Sprite* e_skeleton4 = SpriteManagerAdd(SpriteOoze, ((UINT16) 4u << 3), ((UINT16) 11u << 3));
+					e_configure(e_skeleton4);
 				}break;
 				//BOSS AEACUS
 				case HADES_21:{
@@ -349,19 +386,19 @@ void START() {
 				InitScroll(BANK(maphades015), &maphades015, coll_t_hades001, coll_s_hades001);
 			break;
 			case HADES_16:
-				InitScroll(BANK(maphades016), &maphades016, coll_t_hades001, coll_s_hades001);
+				InitScroll(BANK(maphades016), &maphades016, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_17:
-				InitScroll(BANK(maphades017), &maphades017, coll_t_hades001, coll_s_hades001);
+				InitScroll(BANK(maphades017), &maphades017, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_18:
-				InitScroll(BANK(maphades018), &maphades018, coll_t_hades001, coll_s_hades001);
+				InitScroll(BANK(maphades018), &maphades018, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_19:
-				InitScroll(BANK(maphades019), &maphades019, coll_t_hades001, coll_s_hades001);
+				InitScroll(BANK(maphades019), &maphades019, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_20:
-				InitScroll(BANK(maphades020), &maphades020, coll_t_hades001, coll_s_hades001);
+				InitScroll(BANK(maphades020), &maphades020, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_26:
 				InitScroll(BANK(maphades026), &maphades026, coll_t_hades001, coll_s_hades001);

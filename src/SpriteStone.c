@@ -20,6 +20,7 @@ extern Sprite* s_orpheus;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
+extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
 
 void START() {
     THIS->lim_x = 10u;
@@ -65,8 +66,8 @@ void UPDATE() {
                 stone_data->vy = 0;
                 SPRITE_SET_PALETTE(THIS,1);
                 stone_data->e_configured = 2;
-                if(orpheus_pushing == PUSH_DOWN){
-                    if(t_stone_coll == 11){//sguillare lateralmente!
+                if(orpheus_pushing == PUSH_DOWN || orpheus_pushing == PUSH_UP){
+                    if(t_stone_coll){//sguillare lateralmente!
                         stone_data->e_configured = 1;
                         if(s_orpheus->x > THIS->x){//sguillo a sx
                             stone_data->vx = -1;
@@ -101,7 +102,7 @@ void UPDATE() {
                                 if(CheckCollision(THIS, istspr)) {
                                     if(istspr->type == SpriteOrpheus && stone_data->wait == 0){
                                         orpheus_change_state(istspr, HIT);
-                                    } else if(istspr->type != SpriteStone && istspr->type != SpriteBlade && istspr->type != SpriteDeath && istspr->type != SpriteOrpheusnote && istspr->type != SpriteOrpheus){
+                                    } else if(is_enemy(istspr->type)){
                                         e_destroy(istspr);
                                     }
                                 }

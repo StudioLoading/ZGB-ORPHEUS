@@ -268,8 +268,13 @@ void UPDATE() {
                             e_change_state(iospr, HIT);
                         }
                     break;
+                    case SpriteOoze:{
+                        struct EnemyInfo* ooze_data = (struct EnemyInfo*) iospr->custom_data;
+                        if(ooze_data->e_state == ATTACK && song_selection != SLEEP){
+                            e_change_state(iospr, HIT);
+                        }
+                    }break;
                     case SpriteSkeletonshield:
-                    case SpriteOoze:
                     case SpriteWyrmling:
                         if(song_selection == SLEEP){
                             e_change_state(iospr, HIT);
@@ -709,12 +714,13 @@ void orpheus_update_position() BANKED{
                         THIS->y -= orpheus_info->vy;
                     }
                     switch(orpheus_info->tile_collision){
-                        case 6u://PREV MAP
-                            case 7u:
-                            case 8u:
-                                go_to_prev_map();
-                        break;
-                        case 90u: case 96u: case 102u: case 88u:{//NEXT MAP
+                        case 6u:
+                        case 7u:
+                        case 8u:{//PREV MAP
+                            go_to_prev_map();
+                        }break;
+                        case 90u: case 94u: case 96u: case 98u:
+                        case 100u: case 102u: case 88u:{//NEXT MAP
                             /*
                             case 90u: case 92u:
                             case 94u: case 96u: case 98u:
