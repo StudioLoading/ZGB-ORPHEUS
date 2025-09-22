@@ -306,7 +306,7 @@ void e_management(Sprite* s_enemy) BANKED{
     if(in_dialog){ return; }
     if(flag_paused){ return; }
     if(s_enemy->x < 6u){ s_enemy->x = 8u;}
-    if(s_enemy->x > 153u){ s_enemy->x = 152u;}
+    if(s_enemy->x > 148u){ s_enemy->x = 146u;}
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 

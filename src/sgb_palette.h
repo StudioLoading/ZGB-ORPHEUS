@@ -70,6 +70,26 @@
 #define SGB_BOSSCERBERUS_DARK		myRGB(0, 152, 8)
 #define SGB_BOSSCERBERUS_DARKER 	myRGB(0, 0, 0)
 
+#define SGB_PHLEGETON_LIGHTER	myRGB(216, 216, 216)
+#define SGB_PHLEGETON_LIGHT     myRGB(232, 208, 240)
+#define SGB_PHLEGETON_DARK      myRGB(0, 56, 248)
+#define SGB_PHLEGETON_DARKER 	myRGB(0, 0, 0)
+
+#define SGB_BOSSMINOS_LIGHTER 	myRGB(216, 216, 216)
+#define SGB_BOSSMINOS_LIGHT 	myRGB(184, 216, 240)
+#define SGB_BOSSMINOS_DARK		myRGB(8, 112, 104)
+#define SGB_BOSSMINOS_DARKER 	myRGB(0, 0, 0)
+
+#define SGB_COCYTUS_LIGHTER     myRGB(216, 216, 216)
+#define SGB_COCYTUS_LIGHT       myRGB(255, 209, 228)
+#define SGB_COCYTUS_DARK        myRGB(8, 181, 104)
+#define SGB_COCYTUS_DARKER 	    myRGB(0, 0, 0)
+
+#define SGB_BOSSAEACUS_LIGHTER 	myRGB(216, 216, 216)
+#define SGB_BOSSAEACUS_LIGHT 	myRGB(250, 184, 88)
+#define SGB_BOSSAEACUS_DARK		myRGB(0, 152, 8)
+#define SGB_BOSSAEACUS_DARKER 	myRGB(0, 0, 0)
+
 void set_sgb_palette(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3) __banked;
 void set_sgb_palette2(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
 void set_sgb_palette_intro(UINT16 c0, UINT16 c1, UINT16 c2, UINT16 c3, UINT16 c11, UINT16 c12, UINT16 c13) __banked;
@@ -84,6 +104,10 @@ void set_sbg_palette_styx() __banked;
 void set_sbg_palette_boss_charon() __banked;
 void set_sbg_palette_acheron() __banked;
 void set_sbg_palette_boss_cherberus() __banked;
+void set_sbg_palette_phlegeton() __banked;
+void set_sbg_palette_boss_minos() __banked;
+void set_sbg_palette_cocytus() __banked;
+void set_sbg_palette_boss_aeacus() __banked;
 
 void set_sbg_intro() __banked;
 /*

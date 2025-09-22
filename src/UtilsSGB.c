@@ -82,6 +82,10 @@ void manage_sgb_palette() BANKED{
                 set_sbg_palette_styx();
             }else if(current_map <= BOSS_CERBERUS){
                 set_sbg_palette_acheron();
+            }else if(current_map <= BOSS_MINOS){
+                set_sbg_palette_phlegeton();
+            }else if(current_map <= BOSS_AEACUS){
+                set_sbg_palette_cocytus();
             }
         }break;
         case StateBoss00:{
@@ -91,6 +95,12 @@ void manage_sgb_palette() BANKED{
                 }break;
                 case BOSS_CERBERUS:{
                     set_sbg_palette_boss_cherberus();
+                }break;
+                case BOSS_MINOS:{
+                    set_sbg_palette_boss_minos();
+                }break;
+                case BOSS_AEACUS:{
+                    set_sbg_palette_boss_aeacus();
                 }break;
            }
         }break;

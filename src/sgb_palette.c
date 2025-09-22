@@ -302,3 +302,31 @@ void set_sbg_palette_boss_cherberus() __banked{
     set_sgb_pal2pal3(SGB_BOSSCERBERUS_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
     set_sgb_structure_hades();
 }
+
+void set_sbg_palette_phlegeton() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_PHLEGETON_LIGHTER, SGB_PHLEGETON_LIGHT, SGB_PHLEGETON_DARK, SGB_PHLEGETON_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_PHLEGETON_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}
+
+void set_sbg_palette_boss_minos() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_BOSSMINOS_LIGHTER, SGB_BOSSMINOS_LIGHT, SGB_BOSSMINOS_DARK, SGB_BOSSMINOS_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_BOSSMINOS_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}
+
+void set_sbg_palette_cocytus() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_COCYTUS_LIGHTER, SGB_COCYTUS_LIGHT, SGB_COCYTUS_DARK, SGB_COCYTUS_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_COCYTUS_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}
+
+void set_sbg_palette_boss_aeacus() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_BOSSAEACUS_LIGHTER, SGB_BOSSAEACUS_LIGHT, SGB_BOSSAEACUS_DARK, SGB_BOSSMINOS_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_BOSSAEACUS_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}
