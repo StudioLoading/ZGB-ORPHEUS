@@ -23,6 +23,8 @@ extern UINT8 spawned_enemy_counter;
 extern UINT8 flag_paused;
 extern MACROMAP current_map;
 extern UINT8 spikes_hit_flag;
+extern UINT8 show_cartel;
+extern UINT8 changing_map;
 
 extern void skeleton_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletonshield_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
@@ -713,6 +715,7 @@ void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED{
 }
 
 void e_destroy(Sprite* s_enemy) BANKED{
+    if(show_cartel || changing_map){ return; }
     if(item_spawned_by_common.e_unique_id == s_enemy->unique_id && item_spawned_by_common.sprite_type == s_enemy->type && 
         item_spawned_by_common.spawned == 0){
         UINT16 spawn_item_posy = s_enemy->y + 10u;

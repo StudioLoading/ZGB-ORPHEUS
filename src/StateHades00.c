@@ -93,7 +93,6 @@ extern MACROMAP max_map;
 extern MACROMAP solved_map;
 extern UINT16 idle_countdown;
 extern UINT8 area_enemy_counter;
-extern UINT8 changing_map;
 extern UINT8 sprite_stack_top;
 extern UINT8 flag_button_repushable;
 extern UINT8 flag_paused;
@@ -459,7 +458,6 @@ void UPDATE() {
 					prepare_dialog(HADES_ROLLING_STONES);
 				break;
 			}
-			show_cartel = 0u;
 			SaveSprites();
 			SetState(StateCartel);
 		}

@@ -28,7 +28,7 @@ New-QRCodeURI -URI 'https://discord.gg/QYkKEMJmY2' -Width 16 -OutPath 'C:\Users\
 New-QRCodeURI -URI 'https://bolognanerd.it/corsi/' -Width 16 -OutPath 'C:\Users\checc\BN\QR-CORSI.PNG'
 New-QRCodeURI -URI 'https://www.youtube.com/@bolognanerd/streams' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT.PNG'
 New-QRCodeURI -URI 'https://chat.whatsapp.com/JNWSvei4zt27Is5mqumZIF' -Width 16 -OutPath 'C:\Users\checc\CERSERENO\QR-WhatsApp.PNG'
-New-QRCodeURI -URI 'https://www.kickstarter.com/projects/studioloading/orpheus-to-hell-and-back-game-boy-cartridge-retrogame' -Width 16 -OutPath 'C:\ZGB-2023.0\ZGB-ORPHEUS\other\KS\QR.png'
+New-QRCodeURI -URI 'https://www.youtube.com/watch?v=FuAXHr72XHk' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT-SEGAHW.PNG.png'
 
 
 GIF TO PNG FRAMES

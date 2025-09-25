@@ -369,7 +369,7 @@ void level_common_update_play() BANKED{
 		if(flag_camera_shake_h){
 			camera_shake_h();
 		}
-	// paused
+	// pausedè'a	
 		if(current_map > TUTORIAL && !is_level_on_boss()){
 			if(KEY_TICKED(J_START) && orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != HIT){
 				if(flag_paused == 0){
@@ -1055,7 +1055,7 @@ void go_to_next_map() BANKED{
 			camera_spawny = ((UINT16) SPAWNY_CAMERA_HADES << 3) + 4u;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES000_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES000_IN << 3);
-			new_state = IDLE_LEFT;
+			new_state = IDLE_UP;
 			next_state = StateHades00;
 		break;
 		case HADES_01:

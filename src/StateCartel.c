@@ -37,9 +37,11 @@ extern UINT8 J_INT;
 extern UINT8 song_selection_cooldown;
 extern INT8 boss_hp_current;
 extern UINT8 boss_intro;
+extern UINT8 show_cartel;
+extern CHOSEN_LANGUAGE chosen_language;
 
 extern UINT8 is_level_on_boss() BANKED;
-extern CHOSEN_LANGUAGE chosen_language;
+extern void go_to_next_map() BANKED;
 
 
 void START(){
@@ -64,6 +66,7 @@ void START(){
     PRINT(1,10, d8);
     PRINT(1,11, d9);
     PRINT(1,12, d10);
+    show_cartel = 0u;
 }
 
 void UPDATE(){
@@ -72,7 +75,7 @@ void UPDATE(){
         if(is_level_on_boss() && current_map != HADES_26){
             if(boss_intro == 4){
                 boss_intro = 0;//reset
-                SetState(StateHades00);
+                go_to_next_map();
                 //TODO nuovo State di presentazione Nuovo Bioma
                 //dal quale chiamare la go_to_next_map()
             }else{

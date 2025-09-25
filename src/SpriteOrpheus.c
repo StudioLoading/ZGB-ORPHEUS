@@ -296,7 +296,7 @@ void UPDATE() {
                     switch(iospr->type){
                         case SpriteCarteltext:{
                             INT16 delta = (INT16)iospr->x - (INT16)THIS->x;
-                            if(delta <= 3 && delta >= -3){
+                            if(delta <= 3 && delta >= -9){
                                 orpheus_change_state(THIS, IDLE_UP);
                                 SpriteManagerRemoveSprite(iospr);
                                 orpheus_show_cartel();
