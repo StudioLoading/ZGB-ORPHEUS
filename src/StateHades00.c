@@ -240,6 +240,10 @@ void START() {
 					e_configure(e_skeleton2);
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSiren, ((UINT16) 6u << 3), ((UINT16) 15u << 3));
 					e_configure(e_skeleton3);
+					item_spawned_by_common.e_unique_id = e_skeleton3->unique_id;
+					item_spawned_by_common.sprite_type = SpriteSiren;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_15:{
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteTartarus, ((UINT16) 14u << 3), ((UINT16) 5u << 3));

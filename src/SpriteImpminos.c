@@ -29,6 +29,7 @@ extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void boss_hit() BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 void impminos_check_sprite_collision(Sprite* s_enemy) BANKED;
@@ -90,7 +91,6 @@ void UPDATE(){
     impminos_check_sprite_collision(THIS);
 }
 
-
 void impminos_check_sprite_collision(Sprite* s_enemy) BANKED{
     UINT8 scroll_e_tile;
     Sprite* iespr;
@@ -146,5 +146,6 @@ void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
 
 void DESTROY(){
     flag_impminos_alive = 0;
+    spawn_item(HEART, THIS->x, THIS->y, 2);
     e_destroy(THIS);
 }

@@ -40,7 +40,7 @@ void START() {
     SetSpriteAnim(THIS, a_minosplate_load, 24u);
     struct EnemyInfo* plate_data = (struct EnemyInfo*) THIS->custom_data;
     plate_data->e_state = WALK_DOWN;
-    plate_data->wait = 60u;
+    plate_data->wait = 68u;
     plate_data->e_configured = 0u;
     plate_data->frmskip_wait = 0;
     plate_data->frmskip = 4;
