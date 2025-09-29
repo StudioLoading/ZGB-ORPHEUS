@@ -625,7 +625,12 @@ void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED{
         case SpriteRevenant:
         case SpriteMinion:
             if(e_data->e_state != HIT){
-                e_turn(s_enemy, TURN_CLOCKWISE);
+                INT16 delta_orpheus = s_enemy->y - s_orpheus->y;
+                if(delta_orpheus > 0){
+                    e_turn(s_enemy, TURN_CLOCKWISE);
+                }else{
+                    e_turn(s_enemy, TURN_OPPOSITE);
+                }
             }
         break;
         case SpriteDog:

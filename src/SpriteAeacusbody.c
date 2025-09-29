@@ -74,7 +74,7 @@ void START() {
     aeacusbody_data->e_configured = 1;
     aeacusbody_data->e_state = GENERIC_IDLE;
     aeacusbody_data->frmskip_wait = 0;
-    aeacusbody_data->frmskip = 2u;
+    aeacusbody_data->frmskip = 0u;
     aeacusbody_data->vx = 0;
     aeacusbody_data->vy = 0;
     aeacusbody_arrived = 0u;
@@ -356,17 +356,6 @@ AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED{
     aeacusbody_arrived = 0u;
     aeacusbody_arrived_back = 0u;
     struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
-    switch(boss_hp_current){
-        case 5: case 4:
-            aeacusbody_data->frmskip = 2;
-        break;
-        case 3: case 2:
-            aeacusbody_data->frmskip = 1;
-        break;
-        default:
-            aeacusbody_data->frmskip = 0;
-        break;
-    }
     aeacusbody_change_state(arg_s_aeacusbody, JUMP);
     return AEA_IDLE;
 }
