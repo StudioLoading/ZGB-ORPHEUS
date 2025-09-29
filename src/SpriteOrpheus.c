@@ -103,6 +103,7 @@ extern void go_to_prev_map() BANKED;
 extern void solve_current_map() BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void play_death_music() BANKED;
 
 void START() {
     THIS->lim_x = 100;
@@ -346,6 +347,7 @@ void UPDATE() {
                         case SpriteDevourer:
                         case SpriteRevenant:
                         case SpriteMinion:
+                        case SpriteAeacusbody:
                             if(orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
                                 struct EnemyInfo* e_data = (struct EnemyInfo*) iospr->custom_data;
                                 if(e_data->vx != orpheus_info->vx && orpheus_info->vy == 0){
@@ -886,6 +888,7 @@ void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BA
             SetSpriteAnim(arg_s_orpheus, a_orpheus_dead, 1u);
             if(orpheus_info->ow_state != arg_new_state){//make sure death anim once
                 spawn_death_animation(arg_s_orpheus->x, arg_s_orpheus->y);
+                play_death_music();
             }
         }break;
         case FROZEN:

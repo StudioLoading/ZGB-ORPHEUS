@@ -1100,7 +1100,7 @@ void go_to_next_map() BANKED{
 		break;
 		case BOSS_CHARON:
 			prev_map = HADES_05;
-			next_map = END_DEMO;
+			next_map = HADES_06;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSCHARON_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3);
 			a_walk_counter_y = -16;
@@ -1203,7 +1203,7 @@ void go_to_next_map() BANKED{
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSCHARON_IN << 3) + 2u;
             boss_intro = 0;
 			new_state = IDLE_UP;
-			a_walk_counter_y = -18;
+			a_walk_counter_y = -8;
 			next_state = StateBoss00;
 		break;
 		case HADES_16:

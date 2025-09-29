@@ -258,8 +258,7 @@ void UPDATE() {
                         }
                     }
                 }
-            }
-            break;
+            }break;
             case DIE:
                 if(s_charon_hand_left){
                     s_charon_hand_left->x = THIS->x - 9u;

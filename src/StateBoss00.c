@@ -3,6 +3,7 @@
 #include "BankManager.h"
 #include "ZGBMain.h"
 #include "Music.h"
+#include "Keys.h"
 #include "Palette.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -103,6 +104,9 @@ UINT8 animboss_hit_counter = 0u;
 INT8 animboss_hit = 0u;
 INT8 animboss_hit_max = 10;
 UINT8 shadow_counter = 0u;
+UINT8 cheat_button_timeout_max = 100u;
+UINT8 cheat_button_timeout = 0u;
+UINT8 cheat_button_counter = 0u;
 
 void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
@@ -155,6 +159,7 @@ extern void UpdateHUD() BANKED;
 extern void hades_regenerate_claws() BANKED;
 extern UINT8 is_level_with_repushable_button() BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
+extern void restart_from_tutorial() BANKED;
 
 
 void START() {
@@ -225,6 +230,7 @@ void START() {
 		bossminos_breath_flag = 0u;
 		flag_impminos_alive = 0u;
 		flag_hades_summon = 0u;
+		cheat_button_counter = 0;
 	//SET REPUSHABLE
 		if(is_level_with_repushable_button()){
 			flag_button_repushable = 1u;
@@ -274,6 +280,38 @@ void UPDATE() {
 		case 0://on Orpheus death!
 		case 3:
 			level_common_update_play();
+			if(cheat_button_counter == 0 || cheat_button_timeout < cheat_button_timeout_max){
+				if(cheat_button_timeout < cheat_button_timeout_max){
+					cheat_button_timeout++;
+				}
+				UINT8 old_cheat_button_counter = cheat_button_counter;
+				switch(cheat_button_counter){
+					case 0: 
+						if(KEY_RELEASED(J_LEFT)){ 
+							cheat_button_counter = 1;
+						}
+					break;
+					case 1: if(KEY_RELEASED(J_DOWN)){ cheat_button_counter = 2;} break;
+					case 2: if(KEY_RELEASED(J_RIGHT)){ cheat_button_counter = 3;} break;
+					case 3: if(KEY_RELEASED(J_RIGHT)){ cheat_button_counter = 4;} break;
+					case 4: if(KEY_RELEASED(J_DOWN)){ cheat_button_counter = 5;} break;
+					case 5: if(KEY_RELEASED(J_LEFT)){ cheat_button_counter = 6;} break;
+					case 6: if(KEY_RELEASED(J_SELECT)){ cheat_button_counter = 7;} break;
+					case 7: if(KEY_RELEASED(J_START)){ cheat_button_counter = 8;} break;
+					case 8:{ 
+						boss_hp_current = 1;
+						boss_hit();
+						cheat_button_counter = 0;
+						if(current_map == BOSS_HADES){
+							restart_from_tutorial();
+							SetState(StateCredit);
+						}
+					}break;
+				}
+				if(old_cheat_button_counter != cheat_button_counter){
+					cheat_button_timeout = 0;
+				}
+			}else if(cheat_button_counter && cheat_button_timeout >= cheat_button_timeout_max){ cheat_button_counter = 0; }
 		break;
 		case 4:{//DEATH COOLDOWN BEFORE CHANGING SCREEN
 			if(redraw_hud){
@@ -743,7 +781,7 @@ void boss_manage_death_minos() BANKED{
 			spawn_death_animation(76u, 47u);
 		break;
 		case 130u:
-			spawn_death_animation(68u, 49u);
+			//spawn_death_animation(68u, 49u);
 		break;
 		case 100u:
 			spawn_death_animation(58u, 47u);
@@ -752,7 +790,7 @@ void boss_manage_death_minos() BANKED{
 			spawn_death_animation(83u, 48u);
 		break;
 		case 60u:
-			spawn_death_animation(74u, 45u);
+			//spawn_death_animation(74u, 45u);
 		break;
 		case 45u:
 			spawn_death_animation(69u, 45u);

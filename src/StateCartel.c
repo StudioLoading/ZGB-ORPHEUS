@@ -18,6 +18,7 @@ IMPORT_MAP(mapcartel);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(fontbw);
 IMPORT_TILES(fontjbw);
+DECLARE_MUSIC(intro);
 
 extern unsigned char d0[];
 extern unsigned char d1[];
@@ -67,6 +68,9 @@ void START(){
     PRINT(1,11, d9);
     PRINT(1,12, d10);
     show_cartel = 0u;
+    if(boss_intro == 4 && is_level_on_boss()){
+        PlayMusic(intro, 1);
+    }
 }
 
 void UPDATE(){

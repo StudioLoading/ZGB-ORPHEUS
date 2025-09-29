@@ -40,6 +40,7 @@ IMPORT_MAP(maphades020);
 IMPORT_MAP(maphades026);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
+DECLARE_MUSIC(death);
 
 
 const UINT8 coll_t_hades001[] = {1,3,4,5,9,10,11,13,14,17,18,19,
@@ -80,6 +81,9 @@ struct ItemSpawnedByCommon item_spawned_by_common = {
         .item_type = ITEM_NONE,
         .spawned = 0
 };
+
+void play_death_music() BANKED;
+
 extern UINT8 in_dialog;
 extern UINT8 init_block_button;
 extern Sprite* s_orpheus;
@@ -146,8 +150,8 @@ void START() {
 					area_enemy_counter = 2;
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 13u << 3), ((UINT16) 7u << 3));
 					e_configure(e_skeleton1);
-					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 4u << 3), ((UINT16) 15u << 3) - 3u);
-					e_configure(e_skeleton3);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 14u << 3), ((UINT16) 14u << 3) - 3u);
+					e_configure(e_skeleton2);
 				}break;
 				case HADES_05:{
 					area_enemy_counter = 1;
@@ -195,6 +199,10 @@ void START() {
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
 					block00_data->i_configured = 1u;
+					item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+					item_spawned_by_common.sprite_type = SpriteInfernalimp;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_10:{
 					area_enemy_counter = 3;
@@ -204,6 +212,10 @@ void START() {
 					e_configure(e_skeleton2);
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton3);
+					item_spawned_by_common.e_unique_id = e_skeleton3->unique_id;
+					item_spawned_by_common.sprite_type = SpriteSkeleton;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				//BOSS CERBERUS
 				case HADES_11:{
@@ -231,6 +243,10 @@ void START() {
 					e_configure(e_skeleton1);
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteShadow, ((UINT16) 11u << 3), ((UINT16) 6u << 3));
 					e_configure(e_skeleton2);
+					item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+					item_spawned_by_common.sprite_type = SpriteShadow;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_14:{
 					area_enemy_counter = 3;
@@ -268,6 +284,10 @@ void START() {
 					e_configure(e_skeleton2);
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteBanshee, ((UINT16) 16u << 3), ((UINT16) 9u << 3));
 					e_configure(e_skeleton3);
+					item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+					item_spawned_by_common.sprite_type = SpriteBanshee;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_17:{
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 8u << 3) + 4u, ((UINT16) 14u << 3));
@@ -278,6 +298,10 @@ void START() {
 					e_configure(e_skeleton1);
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMagma, ((UINT16) 3u << 3), ((UINT16) 14u << 3));
 					e_configure(e_skeleton2);
+					item_spawned_by_common.e_unique_id = e_skeleton1->unique_id;
+					item_spawned_by_common.sprite_type = SpriteMagma;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_18:{
 					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
@@ -309,6 +333,10 @@ void START() {
 					e_configure(e_skeleton3);
 					Sprite* e_skeleton4 = SpriteManagerAdd(SpriteOoze, ((UINT16) 4u << 3), ((UINT16) 11u << 3));
 					e_configure(e_skeleton4);
+					item_spawned_by_common.e_unique_id = e_skeleton1->unique_id;
+					item_spawned_by_common.sprite_type = SpriteOoze;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				//BOSS AEACUS
 				case HADES_21:{
@@ -422,6 +450,10 @@ void START() {
 		if(is_level_with_repushable_button()){
 			flag_button_repushable = 1u;
 		}
+}
+
+void play_death_music() BANKED{
+	PlayMusic(death, 0);
 }
 
 void UPDATE() {

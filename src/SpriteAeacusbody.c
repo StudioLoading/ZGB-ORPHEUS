@@ -55,6 +55,7 @@ AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED;
 AEACUS_PHASE aea_move_to_hit(Sprite* arg_s_aeacusbody) BANKED;
 
 extern void boss_hit() BANKED;
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 
 /*
 	SPRITE_STATES e_state;
@@ -115,6 +116,16 @@ void UPDATE() {
             if(aeacusbody_arrived && aeacusbody_arrived_back){
                 aea_change_state(THIS);
             }
+            //SPRITE COLLISION
+                UINT8 scroll_aeabl_tile;
+                Sprite* iaeablspr;
+                SPRITEMANAGER_ITERATE(scroll_aeabl_tile, iaeablspr) {
+                    if(CheckCollision(THIS, iaeablspr)) {
+                        if(iaeablspr->type == SpriteOrpheus || iaeablspr->type == SpriteOrpheuslyre){
+                            orpheus_change_state(iaeablspr, HIT);
+                        }
+                    }
+                }
         }break;
         case AEA_SCIMITAR_HORIZONTAL:
         case AEA_SCIMITAR_COUNTERCLOCK:
@@ -150,7 +161,6 @@ UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, 
     if(aeacusbody_delta_walking_delta_x < 3 && aeacusbody_delta_walking_delta_y < 3){
         return 1u;
     }
-    UINT8 result_arrived = 0u;
     INT8 delta_walking_delta_x_verse = 1;
     if(aea_s_aeacusbody->x > arg_final_posx){
         delta_walking_delta_x_verse = -1;
@@ -203,7 +213,7 @@ UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, 
         aeacusbody_data->vx = actual_aeabody_vx;
         aeacusbody_data->vy = actual_aeabody_vy;
     }
-    return result_arrived;
+    return 0;
 }
 
 void aea_change_state(Sprite* arg_s_aeacusbody) BANKED{
@@ -346,7 +356,17 @@ AEACUS_PHASE aea_move_to_idle(Sprite* arg_s_aeacusbody) BANKED{
     aeacusbody_arrived = 0u;
     aeacusbody_arrived_back = 0u;
     struct EnemyInfo* aeacusbody_data = (struct EnemyInfo*)arg_s_aeacusbody->custom_data;
-    aeacusbody_data->frmskip = boss_hp_current - 1;
+    switch(boss_hp_current){
+        case 5: case 4:
+            aeacusbody_data->frmskip = 2;
+        break;
+        case 3: case 2:
+            aeacusbody_data->frmskip = 1;
+        break;
+        default:
+            aeacusbody_data->frmskip = 0;
+        break;
+    }
     aeacusbody_change_state(arg_s_aeacusbody, JUMP);
     return AEA_IDLE;
 }

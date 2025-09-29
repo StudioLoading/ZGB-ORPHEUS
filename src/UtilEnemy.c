@@ -414,7 +414,7 @@ void e_management(Sprite* s_enemy) BANKED{
                 case WALK_LEFT:
                 case WALK_RIGHT:
                     if(e_data->wait < 30){//check if Orpheus is over or above enemy
-                        if(delta_y > 30u){
+                        if(delta_y > 50u){
                             if(flag_is_enemy_upper){
                                 e_change_state(s_enemy, WALK_DOWN);
                             }else if(flag_is_enemy_lower){
@@ -674,9 +674,9 @@ void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED{
             case TURN_CLOCKWISE:
                 switch(e_data->e_state){
                     case IDLE_DOWN: case WALK_DOWN: s_enemy->x -=2; e_change_state(s_enemy, IDLE_LEFT); break;
-                    case IDLE_LEFT: case WALK_LEFT: s_enemy->x +=2; e_change_state(s_enemy, IDLE_UP); break;
+                    case IDLE_LEFT: case WALK_LEFT: s_enemy->y -=2; e_change_state(s_enemy, IDLE_UP); break;
                     case IDLE_UP: case WALK_UP: s_enemy->x +=2; e_change_state(s_enemy, IDLE_RIGHT); break;
-                    case IDLE_RIGHT: case WALK_RIGHT: s_enemy->x -=2; e_change_state(s_enemy, IDLE_DOWN); break;
+                    case IDLE_RIGHT: case WALK_RIGHT: s_enemy->y += 2; e_change_state(s_enemy, IDLE_DOWN); break;
                 }
             break;
             case TURN_COUNTERCLOCKWISE:        
@@ -697,7 +697,7 @@ void e_turn(Sprite* s_enemy, UINT8 forced_wise) BANKED{
             break;
         }
     //NOT A GUARD? MOVE!
-        if(!e_is_guard(s_enemy->type)){
+        if(!e_is_guard(s_enemy->type) && e_data->wait == 0){
             switch(e_data->e_state){
                 case IDLE_LEFT:
                     e_change_state(s_enemy, WALK_LEFT); break;
@@ -723,8 +723,8 @@ void e_destroy(Sprite* s_enemy) BANKED{
         if(e_data->vy > 0){
             spawn_item_posy = s_enemy->y - 12u;
         }
-        spawn_item(KEY,  s_enemy->x + 8u, s_enemy->y + 10u, 0);
         item_spawned_by_common.spawned = 1;
+        spawn_item(item_spawned_by_common.item_type,  s_enemy->x + 8u, spawn_item_posy, 0);
     }
     e_change_state(s_enemy, DIE);
 }

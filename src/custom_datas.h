@@ -174,8 +174,7 @@ typedef enum{
 	HADES_26,//RADAMANTHUS
 	HADES_27,
 	BOSS_HADES,
-	END_GAME,
-	END_DEMO
+	END_GAME
 }MACROMAP;
 
 typedef enum{

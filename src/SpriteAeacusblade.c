@@ -26,6 +26,8 @@ extern Sprite* s_aeacus_wing_left;
 extern Sprite* s_aeacus_wing_right;
 
 UINT8 old_frame = 10u;
+UINT8 dont_collide_counter = 0u;
+UINT8 dont_collide_counter_max = 40u;
 
 void aeacusblade_rotation(Sprite* arg_s_aeacusblade) BANKED;
 void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_state) BANKED;
@@ -48,6 +50,7 @@ void START() {
     blade_data->e_configured = 0;//H;V;CLOCK;COUNTERCLOCK;
     flag_aeacus_scimitar = 1u;
     old_frame = 10u;
+    dont_collide_counter = 0u;
     if(_cpu != CGB_TYPE){
         SPRITE_SET_PALETTE(THIS,1);
     }
@@ -66,8 +69,11 @@ void UPDATE() {
             switch(blade_data->e_configured){
                 case 0: break;
                 case 1:{//HORIZONTAL
-                    if(blade_data->vy == 0){
-                        blade_data->vy = aeacusbody_move_to_point(THIS, SCIMITAR_H_POSX << 3, SCIMITAR_H_POSY << 3);
+                    if(dont_collide_counter < dont_collide_counter_max){
+                        dont_collide_counter++;
+                    }
+                    if(dont_collide_counter < dont_collide_counter_max || blade_data->tile_collision == 0){
+                        blade_data->tile_collision = aeacusbody_move_to_point(THIS, SCIMITAR_H_POSX << 3, SCIMITAR_H_POSY << 3);
                     }else{
                         aeacusblade_rotation(THIS);
                         SetSpriteAnim(THIS, a_aeacusblade_rotating, 32u);
@@ -78,8 +84,8 @@ void UPDATE() {
                     }
                 }break;
                 case 2u:{//VERTICAL
-                    if(blade_data->vy == 0){
-                        blade_data->vy = aeacusbody_move_to_point(THIS, SCIMITAR_V_POSX << 3, SCIMITAR_V_POSY << 3);
+                    if(blade_data->tile_collision == 0){
+                        blade_data->tile_collision = aeacusbody_move_to_point(THIS, SCIMITAR_V_POSX << 3, SCIMITAR_V_POSY << 3);
                     }else{
                         SetSpriteAnim(THIS, a_aeacusblade_rotating, 32u);
                         aeacusblade_rotation(THIS);
@@ -92,13 +98,16 @@ void UPDATE() {
                 case 3u://CLOCK
                 case 4u://COUNTERCLOCK
                     aeacusblade_rotation(THIS);
+                    if(dont_collide_counter < dont_collide_counter_max){
+                        dont_collide_counter++;
+                    }
                     blade_data->frmskip_wait++;
                     if(blade_data->frmskip_wait >= blade_data->frmskip){
                         blade_data->frmskip_wait = 0;
                         UINT8 cos_position = blade_data->wait + 64u;
                         UINT16 new_posx = 64u + ((sine_wave[cos_position]) / 3);
                         UINT16 new_posy = 72u + ((sine_wave[blade_data->wait]) / 3);
-                        if(blade_data->vx < (boss_hp_current + 3)){
+                        if(dont_collide_counter < dont_collide_counter_max || blade_data->vx < (boss_hp_current + 3)){
                             blade_data->vx++;
                             THIS->x = new_posx;
                             THIS->y = new_posy;
@@ -106,9 +115,6 @@ void UPDATE() {
                             INT16 vx = (INT16)new_posx - (INT16)THIS->x;
                             INT16 vy = (INT16)new_posy - (INT16)THIS->y;
                             UINT8 aeacusblade_coll = TranslateSprite(THIS, vx << delta_time, vy << delta_time);
-                            if(vx || vy){
-                                aeacusblade_check_sprite_coll(THIS);
-                            }
                         }
                         if(blade_data->e_configured == 3){//CLOCKWISE
                             blade_data->wait = blade_data->wait + 5 + ((3 - boss_hp_current) << 3);
@@ -119,6 +125,9 @@ void UPDATE() {
                 break;
             }
         break;
+    }
+    if(dont_collide_counter >= dont_collide_counter_max){
+        aeacusblade_check_sprite_coll(THIS);
     }
 }
 
@@ -135,7 +144,7 @@ void aeacusblade_check_sprite_coll(Sprite* arg_s_aeacusblade) BANKED{
                     break;
                     case SpriteOrpheus:
                     case SpriteOrpheuslyre:
-                            orpheus_change_state(iablspr, HIT);
+                        orpheus_change_state(iablspr, HIT);
                     break;
                 }
             }

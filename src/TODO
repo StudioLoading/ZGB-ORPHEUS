@@ -1,33 +1,33 @@
 PRODUZIONE:
-
-- chatcode sx-giu-dx-dx-giu-sx-select-start
-    se fatto boss, instakill del boss
-    se fatto altrove, restart dal bioma
-    se fatto contro hades, restart dal tutorial
-- nuovo State di presentazione del nuovo bioma a fine boss e dal quale chiamare la go_to_next_map()
 - bgm da sloopygoop
 - musichette delle song ?
 - pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
+    basterebbe poi metterlo in una stanza anche vuota, farlo blinkare e interagire con orpheus come fosse un cartel. lo riempie di vita, e lo fa sempre. magari il livello prima di Radamanthus! così possiamo arrivare da Hades a fullHP.
+
+- IL FINALE è UNA IN-GAME CUTSCENE CON EURIDICE CHE INSEGUE ORPHEUS
+    POTREI FARE CHE CI SONO DELLE MAPPE SENZA NEMICI Nè OSTACOLI, E
+    ORPHEUS ASPETTA RIVOLTO LA PORTA DI USCITA. IL GIOCATORE HA IL CONTROLLO
+    DI EURIDICE E LO SCOPO è ARRIVARE CONTRO ORPHEUS, COLLIDENDO.
+    NELL ULTIMO STAGE è UN SEMPLICE CORRIDOIO ORIZZONTALE, APPENA ARRIVO A UNA CERTA
+    DISTANZA DA ORPHEUS LUI SI VOLTA, EURIDICE LAMPEGGIA E POI SPARISCE.
+    CAMBIO SCENA.
+    (SCHERMATA FINALE DI ENDGAME CHE PREANNUNCIA ORPHEUS 2.)
+    UNA SCHERMATA COMPLETAMENTE NERA, EURIDICE SULLA SINISTRA, IL VASO DI PANDORA
+    SULLA DESTRA, LEI CHE CI VA CONTRO E SI CHIEDE:    
+    "DOVE SONO?"
+    "ORFEO: SEI ANCORA QUI?"
+    "MA... COS'è QUESTO VASO?"
+    EURIDICE: RITORNO ALL INFERNO. ORFEO, DOVE SEI?
+
 
 
 POTENZIALI PROBLEMI - da verificare in fase di test:
 - il common strippa quando si muove diagonale
+- test cheatcodes on boss s,g,d,d,g,s,sel,start
 
 
     
 GENERAZIONE QR CODE DA POWERSHELL
-New-QRCodeURI -URI 'https://www.kickstarter.com/projects/studioloading/flying-arrows-2-gameboy-game-save-bolognanerd' -Width 15 -OutPath 'C:\Users\checc\GB\ARROWS2\BOX\QR-URL.png'
-New-QRCodeURI -URI 'https://x.com/StudioLoading1' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-twitter.png'
-New-QRCodeURI -URI 'https://www.instagram.com/studioloading/' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-instagram.png'
-New-QRCodeURI -URI 'https://www.kickstarter.com/profile/studioloading/created' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-kickstarter.png'
-New-QRCodeURI -URI 'https://studioloading.itch.io/' -Width 16 -OutPath 'C:\Users\checc\GB\ARROWS2\QR-itchio.png'
-New-QRCodeURI -URI 'https://discord.gg/hEXVuvC3' -Width 15 -OutPath 'C:\Users\checc\BN\QR-DISCORD-URL-QR.PNG'
-New-QRCodeURI -URI 'https://paypal.me/frabacche' -Width 16 -OutPath 'C:\Users\checc\ARROWS2\COTOLETTA8BIT\QR-PAYPAL-URL-QR.PNG'
-New-QRCodeURI -URI 'https://discord.gg/RYPAPk4GpB' -Width 16 -OutPath 'C:\Users\checc\GB\QR-REDDIT.PNG'
-New-QRCodeURI -URI 'https://discord.gg/QYkKEMJmY2' -Width 16 -OutPath 'C:\Users\checc\M5S\QR-DISCORD-INFINITO-QR.PNG'
-New-QRCodeURI -URI 'https://bolognanerd.it/corsi/' -Width 16 -OutPath 'C:\Users\checc\BN\QR-CORSI.PNG'
-New-QRCodeURI -URI 'https://www.youtube.com/@bolognanerd/streams' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT.PNG'
-New-QRCodeURI -URI 'https://chat.whatsapp.com/JNWSvei4zt27Is5mqumZIF' -Width 16 -OutPath 'C:\Users\checc\CERSERENO\QR-WhatsApp.PNG'
 New-QRCodeURI -URI 'https://www.youtube.com/watch?v=FuAXHr72XHk' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT-SEGAHW.PNG.png'
 
 
