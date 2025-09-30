@@ -105,6 +105,7 @@ void UPDATE() {
     switch(aeacus_phase){
         case AEA_IDLE:
             if(boss_hp_current == 0){
+                aea_move_to_dead(THIS);
             }
             aeabody_idle_wait++;
             if(aeabody_idle_wait >= aeabody_idle_wait_max){
