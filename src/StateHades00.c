@@ -37,6 +37,7 @@ IMPORT_MAP(maphades017);
 IMPORT_MAP(maphades018);
 IMPORT_MAP(maphades019);
 IMPORT_MAP(maphades020);
+IMPORT_MAP(maphades021);
 IMPORT_MAP(maphades026);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
@@ -340,6 +341,16 @@ void START() {
 				}break;
 				//BOSS AEACUS
 				case HADES_21:{
+					area_enemy_counter = 2;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSerpent, ((UINT16) 6u << 3), ((UINT16) 7u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSerpent, ((UINT16) 17u << 3), ((UINT16) 12u << 3));
+					e_configure(e_skeleton2);
+					s_blade = SpriteManagerAdd(SpriteBlade, ((UINT16) 10u << 3), ((UINT16) 14u << 3));
+					item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+					item_spawned_by_common.sprite_type = SpriteSerpent;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_22:{
 				}break;
@@ -430,6 +441,9 @@ void START() {
 			break;
 			case HADES_20:
 				InitScroll(BANK(maphades020), &maphades020, coll_t_hades003, coll_s_hades001);
+			break;
+			case HADES_21:
+				InitScroll(BANK(maphades021), &maphades021, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_26:
 				InitScroll(BANK(maphades026), &maphades026, coll_t_hades001, coll_s_hades001);

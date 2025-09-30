@@ -10,6 +10,7 @@
 
 
 const UINT8 a_aeacuswing_opened[] = {1, 1};
+const UINT8 a_aeacuswing_opened_blink[] = {2, 0,1};
 const UINT8 a_aeacuswing_watch[] = {1, 1};
 const UINT8 a_aeacuswing_covered[] = {1, 3};
 const UINT8 a_aeacuswing_fly[] = {5, 1,1,1,2,3};
@@ -26,11 +27,11 @@ extern Sprite* s_aeacus_wing_right;
 void START() {
     THIS->lim_x = 10u;
     THIS->lim_y = 10u;
-    SetSpriteAnim(THIS, a_aeacuswing_fly, 10u);
+    SetSpriteAnim(THIS, a_aeacuswing_fly, 8u);
     struct EnemyInfo* aeacuswing_data = (struct EnemyInfo*)THIS->custom_data;
     aeacuswing_data->e_configured = 0;
     aeacuswing_data->frmskip_wait = 0;
-    aeacuswing_data->frmskip = 24u;
+    aeacuswing_data->frmskip = 0u;
     aeacuswing_data->vx = 0;
     aeacuswing_data->vy = 0;
 }
@@ -53,8 +54,6 @@ void UPDATE() {
             }
             THIS->x = s_awacus_body->x + 10u;
             THIS->y = s_awacus_body->y + 4u;
-            THIS->anim_speed = s_aeacus_wing_left->anim_speed;
-            THIS->anim_frame = s_aeacus_wing_left->anim_frame;
         }break;
         case 3u:{//left closed
             THIS->x = s_awacus_body->x - 4;
@@ -62,9 +61,7 @@ void UPDATE() {
             THIS->mirror = HV_MIRROR;
             SetSpriteAnim(THIS, a_aeacuswing_covered, 1u);
             if(aeacuswing_data->wait == 0){                
-                SetSpriteAnim(THIS, a_aeacuswing_fly, 10u);
-                THIS->anim_speed = s_aeacus_wing_right->anim_speed;
-                THIS->anim_frame = s_aeacus_wing_right->anim_frame;
+                SetSpriteAnim(THIS, a_aeacuswing_fly, 8u);
                 THIS->mirror = NO_MIRROR;
                 aeacuswing_data->e_configured = 1u;
             }
@@ -75,13 +72,18 @@ void UPDATE() {
             THIS->mirror = H_MIRROR;
             SetSpriteAnim(THIS, a_aeacuswing_covered, 1u);
             if(aeacuswing_data->wait == 0){                
-                SetSpriteAnim(THIS, a_aeacuswing_fly, 10u);
-                THIS->anim_speed = s_aeacus_wing_left->anim_speed;
-                THIS->anim_frame = s_aeacus_wing_left->anim_frame;
+                SetSpriteAnim(THIS, a_aeacuswing_fly, 8u);
 				THIS->mirror = V_MIRROR;
                 aeacuswing_data->e_configured = 2u;
             }
         }break;
+        case 5u://dead
+            SetSpriteAnim(THIS, a_aeacuswing_opened_blink, 24u);
+            aeacuswing_data->e_configured = 6;
+        break;
+    }
+    if(aeacuswing_data->e_configured == 6){
+        return;
     }
     switch(THIS->anim_frame){
         case 0:
@@ -89,21 +91,15 @@ void UPDATE() {
             THIS->y++;
         break;
         case 3:
-            THIS->y-=2;
+            THIS->y -= 2;
         break;
         case 4:
-            THIS->y+=2;
-            THIS->y--;
+            THIS->y++;
         break;
     }
     switch(aeacus_phase){
         case AEA_IDLE:{
-            SetSpriteAnim(THIS, a_aeacuswing_fly, 16u);
-            THIS->anim_speed = 16u;
-            /*if(aeacuswing_data->e_configured == 2){
-                THIS->anim_speed = s_aeacus_wing_left->anim_speed;
-                THIS->anim_frame = s_aeacus_wing_left->anim_frame;
-            }*/
+            SetSpriteAnim(THIS, a_aeacuswing_fly, 8u);
         }break;
         case AEA_BODY_WATCH:{
             SetSpriteAnim(s_aeacus_wing_right, a_aeacuswing_watch, 16u);
@@ -112,7 +108,7 @@ void UPDATE() {
         case AEA_BODY_FLY:{
             if(aeacusbody_arrived == 0){
                 SetSpriteAnim(THIS, a_aeacuswing_opened, 1u);
-            }else{//} if(aeacusbody_arrived_back == 0){
+            }else{
                 SetSpriteAnim(THIS, a_aeacuswing_fly, 64u);
             }
         }break;

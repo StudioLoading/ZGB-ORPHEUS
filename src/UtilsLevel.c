@@ -105,6 +105,8 @@
 #define SPAWNY_HADES019_OUT 3
 #define SPAWNX_HADES020_OUT 8
 #define SPAWNY_HADES020_OUT 3
+#define SPAWNX_HADES021_IN 2
+#define SPAWNY_HADES021_IN 13
 #define SPAWNX_BOSSCHARON_IN 9
 #define SPAWNY_BOSSCHARON_IN 15
 #define SPAWNX_BOSSAEACUS_IN 4
@@ -309,11 +311,6 @@ void level_common_start() BANKED{
 }
 
 void reset_maps() BANKED{
-	/*MACROMAP solved_map = HADES_05; //TODO NONE
-	MACROMAP current_map = BOSS_CHARON; //TODO TUTORIAL
-	MACROMAP next_map = BOSS_CHARON; //TODO HADES_00
-	MACROMAP prev_map = HADES_05; //TODO NONE
-	MACROMAP max_map*/
 	hades_music_started = 0;
 	new_state = GENERIC_IDLE;
 	if(current_map <= BOSS_CHARON){
@@ -357,7 +354,6 @@ void reset_maps() BANKED{
 		orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 		orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3);
 	}
-	//trap_button_pressed = current_map -1;
 }
 
 
@@ -673,11 +669,6 @@ void level_common_update_play() BANKED{
 			}
 		}
 	// solve current map
-		//test start
-		/*if(current_map > TUTORIAL && !is_level_on_boss()){
-			solve_current_map();//TEST always solve
-		}*/
-		//test end
 		if(is_level_with_enemies()){
 			if(changing_map == 0u && solved_map < current_map && area_enemy_counter == 0){
 				solve_current_map();
@@ -1259,8 +1250,8 @@ void go_to_next_map() BANKED{
 		case HADES_21:{
 			prev_map = BOSS_AEACUS;
 			next_map = HADES_22;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
+			orpheus_spawnx = ((UINT16) SPAWNX_HADES021_IN << 3);
+			orpheus_spawny = ((UINT16) SPAWNY_HADES021_IN << 3) + 4u;
 			next_state = StateHades00;
 			new_state = IDLE_DOWN;
 		}break;

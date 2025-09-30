@@ -19,11 +19,14 @@ const UINT8 a_aeacusblade_v[] = {1, 1};
 const UINT8 a_aeacusblade_h[] = {1, 3};
 const UINT8 a_aeacusblade_rotating[] = {8, 1,2,3,2,1,2,3,2};
 const UINT8 a_aeacusblade_hidden[] = {1, 0};
+const UINT8 a_aeacusblade_diagonal[] = {1, 2};
 
 extern INT8 boss_hp_current;
 extern UINT8 flag_aeacus_scimitar;
 extern Sprite* s_aeacus_wing_left;
 extern Sprite* s_aeacus_wing_right;
+extern UINT16 saved_orpheus_posx;
+extern UINT16 saved_orpheus_posy;
 
 UINT8 old_frame = 10u;
 UINT8 dont_collide_counter = 0u;
@@ -84,7 +87,10 @@ void UPDATE() {
                     }
                 }break;
                 case 2u:{//VERTICAL
-                    if(blade_data->tile_collision == 0){
+                    if(dont_collide_counter < dont_collide_counter_max){
+                        dont_collide_counter++;
+                    }
+                    if(dont_collide_counter < dont_collide_counter_max ||   blade_data->tile_collision == 0){
                         blade_data->tile_collision = aeacusbody_move_to_point(THIS, SCIMITAR_V_POSX << 3, SCIMITAR_V_POSY << 3);
                     }else{
                         SetSpriteAnim(THIS, a_aeacusblade_rotating, 32u);
@@ -114,7 +120,7 @@ void UPDATE() {
                         }else{
                             INT16 vx = (INT16)new_posx - (INT16)THIS->x;
                             INT16 vy = (INT16)new_posy - (INT16)THIS->y;
-                            UINT8 aeacusblade_coll = TranslateSprite(THIS, vx << delta_time, vy << delta_time);
+                            TranslateSprite(THIS, vx << delta_time, vy << delta_time);
                         }
                         if(blade_data->e_configured == 3){//CLOCKWISE
                             blade_data->wait = blade_data->wait + 5 + ((3 - boss_hp_current) << 3);
@@ -123,6 +129,21 @@ void UPDATE() {
                         }
                     }
                 break;
+                case 5u://MOVE TO ORPHEUS
+                    if(dont_collide_counter < dont_collide_counter_max){
+                        dont_collide_counter++;
+                    }
+                    if(dont_collide_counter < dont_collide_counter_max ||   blade_data->tile_collision == 0){
+                        blade_data->tile_collision = aeacusbody_move_to_point(THIS, saved_orpheus_posx, saved_orpheus_posy);
+                    }else{
+                        SetSpriteAnim(THIS, a_aeacusblade_rotating, 32u);
+                        aeacusblade_rotation(THIS);
+                        UINT8 arrived = aeacusbody_move_to_point(THIS, THIS->lim_x, THIS->lim_y);
+                        if(arrived){
+                            SpriteManagerRemoveSprite(THIS);
+                        }
+                    }
+                    break;
             }
         break;
     }
@@ -179,6 +200,10 @@ void aeacusblade_change_state(Sprite* arg_s_aeacusblade, SPRITE_STATES arg_new_s
                 case 4:
                     blade_data->wait = 160u;
                     SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_rotating, 32u);
+                break;
+                case 5:
+                    blade_data->wait = 120u;
+                    SetSpriteAnim(arg_s_aeacusblade, a_aeacusblade_diagonal, 32u);
                 break;
             }
             struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;

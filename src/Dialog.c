@@ -541,7 +541,7 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d6, "GUARDIAN FRIEND   ", 21);
             memcpy(d7, "AWAITS! MOVE ON,  ", 21);
             memcpy(d8, "SON, DEFEAT THEM  ", 21);
-            memcpy(d9, " ALL! FOR EURYDICE!", 21);
+            memcpy(d9, "ALL! FOR EURYDICE!", 21);
             memcpy(d10, "                  ", 21);
         break;
         case BOSS_HADES_INTRO:
@@ -549,9 +549,9 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d1, "FALLS! HADES'     ", 21);
             memcpy(d2, "CHAMBER IS FILLED ", 21);
             memcpy(d3, "WITH FATAL FLAMES ", 21);
-            memcpy(d4, "DODGE THEM!      ", 21);
+            memcpy(d4, "DODGE THEM!       ", 21);
             memcpy(d5, "YOUR TRUE SONG    ", 21);
-            memcpy(d6, "BREAKS HIS WILL! ", 21);
+            memcpy(d6, "BREAKS HIS WILL!  ", 21);
             memcpy(d7, "USE YOUR LYRE     ", 21);
             memcpy(d8, "TO CHALLENGE      ", 21);
             memcpy(d9, "HIM! RECLAIM      ", 21);
@@ -567,7 +567,7 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d6, "THIS RULE, AND    ", 21);
             memcpy(d7, "SHE IS LOST       ", 21);
             memcpy(d8, "FOREVER.          ", 21);
-            memcpy(d9, "ORPHEUS, PROCEED!", 21);
+            memcpy(d9, "ORPHEUS, PROCEED! ", 21);
             memcpy(d10, "EURIDYCE, FOLLOW!", 21);
         break;
     }

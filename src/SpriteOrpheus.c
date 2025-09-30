@@ -256,7 +256,6 @@ void UPDATE() {
                     case SpriteSentinel:
                     case SpriteShadow:
                     case SpriteBanshee:
-                    case SpriteSerpent:
                     case SpriteDevourer:
                     case SpriteRadamanthus:
                         e_change_state(iospr, HIT);
@@ -287,6 +286,7 @@ void UPDATE() {
                         }
                     break;     
                     case SpriteRevenant:
+                    case SpriteSerpent:
                         if(song_selection == ATTRACT){
                             e_change_state(iospr, HIT);
                         }

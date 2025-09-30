@@ -85,7 +85,7 @@ UINT8 is_level_with_enemies() BANKED{
             || current_map == HADES_06 || current_map == HADES_07
             || current_map == HADES_10 || current_map == HADES_11
             || current_map == HADES_14 || current_map == HADES_16
-            || current_map == HADES_20;
+            || current_map == HADES_20 || current_map == HADES_21;
 }
 
 UINT8 is_level_on_boss() BANKED{

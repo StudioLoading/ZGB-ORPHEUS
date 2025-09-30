@@ -42,7 +42,7 @@ const UINT8 coll_t_charon[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
 //next
 88,90,92,94,96,98,100,102,104,
 0};
-const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
+const UINT8 coll_t_hades005[] = {1,3,4,5,9,10,11,13,14,17,18,19,
 75,76,
 //here the hit tiles
 
@@ -200,7 +200,8 @@ void START() {
 				InitScroll(BANK(mapbossaeacus), &mapbossaeacus, coll_t_hades005, coll_s_hades005);
 				s_aeacus_wing_left = SpriteManagerAdd(SpriteAeacuswing, 8u, 18u);
 				s_aeacus_wing_right = SpriteManagerAdd(SpriteAeacuswing, 40u, 18u);
-				s_awacus_body = SpriteManagerAdd(SpriteAeacusbody, 32u, 18u);			    struct EnemyInfo* aeacuswing_left_data = (struct EnemyInfo*)s_aeacus_wing_left->custom_data;
+				s_awacus_body = SpriteManagerAdd(SpriteAeacusbody, 32u, 18u);
+				struct EnemyInfo* aeacuswing_left_data = (struct EnemyInfo*)s_aeacus_wing_left->custom_data;
 				aeacuswing_left_data->e_configured = 1u;
 				struct EnemyInfo* aeacuswing_right_data = (struct EnemyInfo*)s_aeacus_wing_right->custom_data;
 				aeacuswing_right_data->e_configured = 2u;
@@ -815,25 +816,25 @@ void boss_manage_death_aeacus() BANKED{
 	}
 	switch(death_countdown){
 		case 140u:
-			spawn_death_animation(s_awacus_body->x, s_awacus_body->y + 16);
+			spawn_death_animation(s_awacus_body->x, s_awacus_body->y + 22);
 		break;
 		case 130u:
 			//spawn_death_animation(20u, 30u);
 		break;
 		case 100u:
-			spawn_death_animation(s_awacus_body->x - 3, s_awacus_body->y + 12);
+			spawn_death_animation(s_awacus_body->x + 2, s_awacus_body->y + 20);
 		break;
 		case 80u:
 			//spawn_death_animation(28u, 28u);
 		break;
 		case 60u:
-			spawn_death_animation(s_awacus_body->x - 4, s_awacus_body->y + 28);
+			spawn_death_animation(s_awacus_body->x - 1, s_awacus_body->y + 24);
 		break;
 		case 45u:
-			spawn_death_animation(s_awacus_body->x - 6u, s_awacus_body->y + 12);
+			//spawn_death_animation(s_awacus_body->x - 6u, s_awacus_body->y + 21);
 		break;
 		case 30u:
-			spawn_death_animation(s_awacus_body->x + 2u, s_awacus_body->y + 16);
+			spawn_death_animation(s_awacus_body->x + 2u, s_awacus_body->y + 26);
 		break;
 		case 0u:{
 			prepare_dialog(BOSS_AEACUS_BEATED);

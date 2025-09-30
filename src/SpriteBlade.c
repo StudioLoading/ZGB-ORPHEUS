@@ -23,7 +23,7 @@ void START() {
     SetSpriteAnim(THIS, a_blade, 64u);
     struct NoteInfo* bladedata = (struct NoteInfo*) THIS->custom_data;
     bladedata->frmskip = 0;
-    bladedata->frmskip_max = 12;
+    bladedata->frmskip_max = 4;
     bladedata->wait = 0;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
@@ -57,17 +57,20 @@ void UPDATE() {
         Sprite* iblspr;
         SPRITEMANAGER_ITERATE(scroll_bl_tile, iblspr) {
             if(CheckCollision(THIS, iblspr)) {
-                if(iblspr->type == SpriteOrpheus){
-                    orpheus_change_state(iblspr, HIT);
-                }else if(iblspr->type == SpriteFireball){
-                    struct EnemyInfo* fireball_data = (struct EnemyInfo*) iblspr->custom_data;
-                    if(fireball_data->e_configured == 2){//super fireball!
-                        SpriteManagerRemoveSprite(THIS);
-                    }
-
+                switch(iblspr->type){
+                    case SpriteOrpheus:
+                    case SpriteOrpheuslyre:
+                        orpheus_change_state(iblspr, HIT);
+                    break;
+                    case SpriteFireball:{
+                        struct EnemyInfo* fireball_data = (struct EnemyInfo*) iblspr->custom_data;
+                        if(fireball_data->e_configured == 2){//super fireball!
+                            SpriteManagerRemoveSprite(THIS);
+                        }
+                    }break;
+                }
             }
         }
-    }
 }
 
 void DESTROY() {
