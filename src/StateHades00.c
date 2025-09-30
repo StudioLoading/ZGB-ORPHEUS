@@ -38,6 +38,7 @@ IMPORT_MAP(maphades018);
 IMPORT_MAP(maphades019);
 IMPORT_MAP(maphades020);
 IMPORT_MAP(maphades021);
+IMPORT_MAP(maphades022);
 IMPORT_MAP(maphades026);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
@@ -353,6 +354,16 @@ void START() {
 					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_22:{
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteFrost, ((UINT16) 1u << 3), ((UINT16) 10u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteFrost, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteFrost, ((UINT16) 7u << 3), ((UINT16) 13u << 3));
+					e_configure(e_skeleton3);
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 11u << 3), ((UINT16) 12u << 3));
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->item_type = BLOCK;
+					block00_data->i_configured = 1u;
 				}break;
 				case HADES_23:{
 				}break;
@@ -444,6 +455,9 @@ void START() {
 			break;
 			case HADES_21:
 				InitScroll(BANK(maphades021), &maphades021, coll_t_hades003, coll_s_hades001);
+			break;
+			case HADES_22:
+				InitScroll(BANK(maphades022), &maphades022, coll_t_hades003, coll_s_hades001);
 			break;
 			case HADES_26:
 				InitScroll(BANK(maphades026), &maphades026, coll_t_hades001, coll_s_hades001);

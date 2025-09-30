@@ -426,7 +426,7 @@ void e_management(Sprite* s_enemy) BANKED{
                 case WALK_UP:
                 case WALK_DOWN:
                     if(e_data->wait < 30){//check if Orpheus is over or above enemy
-                        if(delta_x > 30u){
+                        if(delta_x > 50u){
                             if(flag_is_enemy_righter){
                                 e_change_state(s_enemy, WALK_LEFT);
                             }else if(flag_is_enemy_lefter){

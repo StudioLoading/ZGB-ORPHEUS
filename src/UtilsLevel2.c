@@ -77,7 +77,7 @@ UINT8 is_level_with_button() BANKED{
 }
 
 UINT8 is_level_with_repushable_button() BANKED{
-	return current_map == HADES_06 || current_map == HADES_14 || is_level_on_boss();
+	return current_map == HADES_06 || current_map == HADES_14 || current_map == HADES_21 || is_level_on_boss();
 }
 
 UINT8 is_level_with_enemies() BANKED{

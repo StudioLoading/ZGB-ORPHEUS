@@ -16,19 +16,19 @@ IMPORT_MAP(inbetweenmap);
 
 // START FROM OTHER POSITION - TEST ONLY
 
-#define SPAWNX_HADES_IN 4
-#define SPAWNY_HADES_IN 4
+#define SPAWNX_HADES_IN 2
+#define SPAWNY_HADES_IN 3
 #define SPAWNX_BOSS_IN 9
 #define SPAWNY_BOSS_IN 15
 
-MACROMAP solved_map = HADES_20; // NONE
-MACROMAP current_map = BOSS_AEACUS; // TUTORIAL
-MACROMAP next_map = HADES_21; // HADES_00
-MACROMAP prev_map = HADES_20; // NONE
-MACROMAP max_map = BOSS_AEACUS; // TUTORIAL
+MACROMAP solved_map = HADES_21; // NONE
+MACROMAP current_map = HADES_22; // TUTORIAL
+MACROMAP next_map = HADES_23; // HADES_00
+MACROMAP prev_map = HADES_21; // NONE
+MACROMAP max_map = HADES_22; // TUTORIAL
 
-UINT16 orpheus_spawnx = ((UINT16) SPAWNX_BOSS_IN << 3) + 4u;//((UINT16) 28u << 3) - 4u;
-UINT16 orpheus_spawny = ((UINT16) SPAWNY_BOSS_IN << 3) + 2u;//((UINT16) 79u << 3);
+UINT16 orpheus_spawnx = ((UINT16) SPAWNX_HADES_IN << 3) + 4u;//((UINT16) 28u << 3) - 4u;
+UINT16 orpheus_spawny = ((UINT16) SPAWNY_HADES_IN << 3) + 2u;//((UINT16) 79u << 3);
 UINT16 camera_spawnx = ((UINT16) 30 << 3) + 4u; // ((UINT16) 30 << 3) + 4u;
 UINT16 camera_spawny = ((UINT16) 64 << 3) + 4u;//  ((UINT16) 64 << 3) + 4u;
 
