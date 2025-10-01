@@ -87,14 +87,16 @@ extern UINT8 flag_paused;
 extern UINT8 flag_camera_shake_v;
 extern UINT8 song_selection_cooldown;
 
-void orpheus_behave() BANKED;
+void orpheus_behave(Sprite* arg_s_orpheus) BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 void orpheus_update_position() BANKED;
 void orpheus_hit() BANKED;
 void orpheus_recharge() BANKED;
 void orpheus_pickup(Sprite* itemsprite) BANKED;
-void orpheus_check_tile_overlapping() BANKED;
+void orpheus_check_tile_overlapping(Sprite* arg_s_orpheus) BANKED;
 void orpheus_show_cartel() BANKED;
+void orpheus_gate_collision(Sprite* arg_s_gate, Sprite* arg_s_orpheus) BANKED;
+void orpheus_block_collision(Sprite* arg_s_block, Sprite* arg_s_orpheus) BANKED;
 
 extern void init_write_dialog(UINT8 nlines) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
@@ -240,7 +242,7 @@ void UPDATE() {
             orpheus_change_state(THIS, new_state);
         }
     //BEHAVE
-        orpheus_behave();
+        orpheus_behave(THIS);
     //SPRITE COLLISION
         if(orpheus_hitted || orpheus_hp == 0) return;
         UINT8 scroll_o_tile;
@@ -370,124 +372,10 @@ void UPDATE() {
                         break;
                         case SpriteStone:
                         case SpriteGate:{
-                            inertia_x = 0;
-                            inertia_y = 0;
-                            INT8 deltax = THIS->x - iospr->x;
-                            INT8 deltay = THIS->y - iospr->y;
-                            if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){                            
-                                if(KEY_PRESSED(J_INT)){
-                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
-                                    orpheus_pushing = PUSH_RIGHT;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
-                                    THIS->x++;
-                                    colliding_block = 1u;
-                                }
-                            }else if(THIS->x < iospr->x && orpheus_info->ow_state == WALK_RIGHT){
-                                if(KEY_PRESSED(J_INT)){
-                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
-                                    orpheus_pushing = PUSH_LEFT;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
-                                    THIS->x--;
-                                    colliding_block = 1u;
-                                }   
-                            }
-                            if(THIS->y < iospr->y && orpheus_info->ow_state == WALK_DOWN){
-                                if(KEY_PRESSED(J_INT)){
-                                    SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
-                                    orpheus_pushing = PUSH_DOWN;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
-                                    THIS->y--;
-                                    colliding_block = 1u;
-                                }
-                            }else if(THIS->y > iospr->y && orpheus_info->ow_state == WALK_UP){
-                                if(KEY_PRESSED(J_INT)){
-                                    orpheus_pushing = PUSH_UP;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vy < 0 && deltay > 6){
-                                    THIS->y++;
-                                    colliding_block = 1u;
-                                }
-                            }
+                            orpheus_gate_collision(iospr, THIS);
                         }break;
                         case SpriteBlock:{
-                            inertia_x = 0;
-                            inertia_y = 0;
-                            struct ItemInfo* block_data = (struct ItemInfo*) iospr->custom_data;
-                            INT8 deltax = THIS->x - iospr->x;
-                            INT8 deltay = THIS->y - iospr->y;
-                            if(THIS->x > iospr->x && orpheus_info->ow_state == WALK_LEFT){
-                                block_data->counter_verso = -1;                            
-                                if(KEY_PRESSED(J_INT)){
-                                    block_data->counter_x++;
-                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
-                                    orpheus_pushing = PUSH_RIGHT;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    song_selection_cooldown = 40u;
-                                    block_data->counter_x = 0;
-                                    block_data->counter_y = 0;
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
-                                    THIS->x++;
-                                    colliding_block = 1u;
-                                }
-                            }else if(THIS->x < iospr->x && orpheus_info->ow_state == WALK_RIGHT){
-                                block_data->counter_verso = 1;
-                                if(KEY_PRESSED(J_INT)){
-                                    block_data->counter_x++;
-                                    SetSpriteAnim(THIS, a_orpheus_walk_h_push, 8u);
-                                    orpheus_pushing = PUSH_LEFT;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    block_data->counter_x = 0;
-                                    block_data->counter_y = 0;
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
-                                    THIS->x--;
-                                    colliding_block = 1u;
-                                }   
-                            }
-                            if(THIS->y < iospr->y && orpheus_info->ow_state == WALK_DOWN){
-                                block_data->counter_verso = 1;
-                                if(KEY_PRESSED(J_INT)){
-                                    block_data->counter_y++;
-                                    SetSpriteAnim(THIS, a_orpheus_walk_down_push, 8u);
-                                    orpheus_pushing = PUSH_DOWN;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    block_data->counter_x = 0;
-                                    block_data->counter_y = 0;
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
-                                    THIS->y--;
-                                    colliding_block = 1u;
-                                }
-                            }else if(THIS->y > iospr->y && orpheus_info->ow_state == WALK_UP){
-                                block_data->counter_verso = -1;
-                                if(KEY_PRESSED(J_INT)){
-                                    block_data->counter_y++;
-                                    orpheus_pushing = PUSH_UP;
-                                }else if(KEY_RELEASED(J_INT)){
-                                    block_data->counter_x = 0;
-                                    block_data->counter_y = 0;
-                                    orpheus_pushing = PUSH_NONE;
-                                }
-                                if(orpheus_info->vy < 0 && deltay > 6){
-                                    THIS->y++;
-                                    colliding_block = 1u;
-                                }
-                            }
+                            orpheus_block_collision(iospr, THIS);
                         }break;                    
                     }
                 }
@@ -495,20 +383,166 @@ void UPDATE() {
         }
 }
 
-void orpheus_check_tile_overlapping() BANKED{
-    UINT8 tile = GetScrollTile((THIS->x + 8) >> 3, (THIS->y+8) >> 3);
+void orpheus_block_collision(Sprite* arg_s_block, Sprite* arg_s_orpheus) BANKED{
+    inertia_x = 0;
+    inertia_y = 0;
+    struct ItemInfo* block_data = (struct ItemInfo*) arg_s_block->custom_data;
+    INT8 deltax = arg_s_orpheus->x - arg_s_block->x;
+    INT8 deltay = arg_s_orpheus->y - arg_s_block->y;
+    if(arg_s_orpheus->x > arg_s_block->x && orpheus_info->ow_state == WALK_LEFT){
+        block_data->counter_verso = -1;                            
+        if(KEY_PRESSED(J_INT)){
+            block_data->counter_x++;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_h_push, 8u);
+            orpheus_pushing = PUSH_RIGHT;
+        }else if(KEY_RELEASED(J_INT)){
+            song_selection_cooldown = 40u;
+            block_data->counter_x = 0;
+            block_data->counter_y = 0;
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
+            arg_s_orpheus->x++;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->x++;
+            }
+            colliding_block = 1u;
+        }
+    }else if(arg_s_orpheus->x < arg_s_block->x && orpheus_info->ow_state == WALK_RIGHT){
+        block_data->counter_verso = 1;
+        if(KEY_PRESSED(J_INT)){
+            block_data->counter_x++;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_h_push, 8u);
+            orpheus_pushing = PUSH_LEFT;
+        }else if(KEY_RELEASED(J_INT)){
+            block_data->counter_x = 0;
+            block_data->counter_y = 0;
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
+            arg_s_orpheus->x--;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->x--;
+            }
+            colliding_block = 1u;
+        }   
+    }
+    if(arg_s_orpheus->y < arg_s_block->y && orpheus_info->ow_state == WALK_DOWN){
+        block_data->counter_verso = 1;
+        if(KEY_PRESSED(J_INT)){
+            block_data->counter_y++;
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_down_push, 8u);
+            orpheus_pushing = PUSH_DOWN;
+        }else if(KEY_RELEASED(J_INT)){
+            block_data->counter_x = 0;
+            block_data->counter_y = 0;
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
+            arg_s_orpheus->y--;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->y--;
+            }
+            colliding_block = 1u;
+        }
+    }else if(arg_s_orpheus->y > arg_s_block->y && orpheus_info->ow_state == WALK_UP){
+        block_data->counter_verso = -1;
+        if(KEY_PRESSED(J_INT)){
+            block_data->counter_y++;
+            orpheus_pushing = PUSH_UP;
+        }else if(KEY_RELEASED(J_INT)){
+            block_data->counter_x = 0;
+            block_data->counter_y = 0;
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vy < 0 && deltay > 6){
+            arg_s_orpheus->y++;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->y++;
+            }
+            colliding_block = 1u;
+        }
+    }
+}
+
+void orpheus_gate_collision(Sprite* arg_s_gate, Sprite* arg_s_orpheus) BANKED{
+    inertia_x = 0;
+    inertia_y = 0;
+    INT8 deltax = arg_s_orpheus->x - arg_s_gate->x;
+    INT8 deltay = arg_s_orpheus->y - arg_s_gate->y;
+    if(arg_s_orpheus->x > arg_s_gate->x && orpheus_info->ow_state == WALK_LEFT){                            
+        if(KEY_PRESSED(J_INT)){
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_h_push, 8u);
+            orpheus_pushing = PUSH_RIGHT;
+        }else if(KEY_RELEASED(J_INT)){
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vx < 0 && deltay > -14 && deltay < 8){
+            arg_s_orpheus->x++;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->x++;
+            }
+            colliding_block = 1u;
+        }
+    }else if(arg_s_orpheus->x < arg_s_gate->x && orpheus_info->ow_state == WALK_RIGHT){
+        if(KEY_PRESSED(J_INT)){
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_h_push, 8u);
+            orpheus_pushing = PUSH_LEFT;
+        }else if(KEY_RELEASED(J_INT)){
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vx > 0 && deltay > -14 && deltay < 8){
+            arg_s_orpheus->x--;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->x--;
+            }
+            colliding_block = 1u;
+        }   
+    }
+    if(arg_s_orpheus->y < arg_s_gate->y && orpheus_info->ow_state == WALK_DOWN){
+        if(KEY_PRESSED(J_INT)){
+            SetSpriteAnim(arg_s_orpheus, a_orpheus_walk_down_push, 8u);
+            orpheus_pushing = PUSH_DOWN;
+        }else if(KEY_RELEASED(J_INT)){
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vy > 0 && deltax > -8 && deltax < 16){
+            arg_s_orpheus->y--;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->y--;
+            }
+            colliding_block = 1u;
+        }
+    }else if(arg_s_orpheus->y > arg_s_gate->y && orpheus_info->ow_state == WALK_UP){
+        if(KEY_PRESSED(J_INT)){
+            orpheus_pushing = PUSH_UP;
+        }else if(KEY_RELEASED(J_INT)){
+            orpheus_pushing = PUSH_NONE;
+        }
+        if(orpheus_info->vy < 0 && deltay > 6){
+            arg_s_orpheus->y++;
+            if(_cpu != CGB_TYPE){
+                arg_s_orpheus->y++;
+            }
+            colliding_block = 1u;
+        }
+    }
+}
+
+void orpheus_check_tile_overlapping(Sprite* arg_s_orpheus) BANKED{
+    UINT8 tile = GetScrollTile((arg_s_orpheus->x + 8) >> 3, (arg_s_orpheus->y+8) >> 3);
     if(tile == 0){
-        tile = GetScrollTile((THIS->x + 2) >> 3, (THIS->y+16) >> 3);
+        tile = GetScrollTile((arg_s_orpheus->x + 2) >> 3, (arg_s_orpheus->y+16) >> 3);
     }
     if(tile == 0){
-        tile = GetScrollTile((THIS->x + 10) >> 3, (THIS->y+16) >> 3);
+        tile = GetScrollTile((arg_s_orpheus->x + 10) >> 3, (arg_s_orpheus->y+16) >> 3);
     }
     switch(current_state){
         case StateBoss00:
         case StateHades00:{
             switch(tile){
                 case 84u: case 85u: case 86u: case 87u:{
-                    orpheus_change_state(THIS, HIT);
+                    orpheus_change_state(arg_s_orpheus, HIT);
                 }break;
                 case 66u: case 40u: case 41u:{
                     orpheus_hp = 0;
@@ -516,7 +550,7 @@ void orpheus_check_tile_overlapping() BANKED{
                 }break;
                 case 50u:{
                     if(spikes_hit_flag){
-                        orpheus_change_state(THIS, HIT);
+                        orpheus_change_state(arg_s_orpheus, HIT);
                     }
                 }break;
                 case 117u: case 199u://cartel
@@ -534,7 +568,7 @@ void orpheus_show_cartel() BANKED{
     orpheus_against_cartel = 0;
 }
 
-void orpheus_behave() BANKED{
+void orpheus_behave(Sprite* s_arg_orpheus) BANKED{
     if(orpheus_against_cartel){
         orpheus_against_cartel--;
     } 
@@ -566,7 +600,7 @@ void orpheus_behave() BANKED{
                 orpheus_update_position();
             }
             orpheus_recharge();
-            orpheus_check_tile_overlapping();
+            orpheus_check_tile_overlapping(s_arg_orpheus);
             idle_countdown--;
             if(orpheus_against_cartel){
                 if(KEY_PRESSED(J_INT)){
@@ -582,7 +616,7 @@ void orpheus_behave() BANKED{
             if(orpheus_info->vy != 0 && inertia_y > 0 && inertia_y < 32){
                 inertia_y++;
             }
-            orpheus_check_tile_overlapping();
+            orpheus_check_tile_overlapping(s_arg_orpheus);
             orpheus_update_position();
         break;
         case HIT:
