@@ -146,6 +146,6 @@ void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{
 
 void DESTROY(){
     flag_impminos_alive = 0;
-    spawn_item(HEART, THIS->x, THIS->y, 4);
+    spawn_item(HEART, THIS->x, THIS->y, 0);
     e_destroy(THIS);
 }

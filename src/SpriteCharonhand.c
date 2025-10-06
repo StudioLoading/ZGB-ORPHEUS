@@ -147,7 +147,7 @@ void UPDATE() {
                     if(hand_coll == 111u || hand_coll == 110u){
                         THIS->x += charonhand_data->vx;
                         THIS->y += charonhand_data->vy;
-                    }else if(hand_coll){//THIS->y > 136u
+                    }else if(hand_coll && hand_coll != 114u && hand_coll != 121u){//THIS->y > 136u
                         charonhand_data->e_configured = 2;
                     }
                 }

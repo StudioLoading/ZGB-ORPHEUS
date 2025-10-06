@@ -73,7 +73,8 @@ void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED{
 UINT8 is_level_with_button() BANKED{
 	return current_map == BOSS_AEACUS || current_map == HADES_06 
         || current_map == HADES_09 || current_map == HADES_14
-        || current_map == HADES_17 || current_map == HADES_19;
+        || current_map == HADES_17 || current_map == HADES_19
+        || current_map == HADES_21 || current_map == HADES_23;
 }
 
 UINT8 is_level_with_repushable_button() BANKED{

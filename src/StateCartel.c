@@ -40,6 +40,7 @@ extern INT8 boss_hp_current;
 extern UINT8 boss_intro;
 extern UINT8 show_cartel;
 extern CHOSEN_LANGUAGE chosen_language;
+extern UINT8 hades_music_started;
 
 extern UINT8 is_level_on_boss() BANKED;
 extern void go_to_next_map() BANKED;
@@ -79,6 +80,8 @@ void UPDATE(){
         if(is_level_on_boss() && current_map != HADES_26){
             if(boss_intro == 4){
                 boss_intro = 0;//reset
+                StopMusic;
+			    hades_music_started = 0;
                 go_to_next_map();
                 //TODO nuovo State di presentazione Nuovo Bioma
                 //dal quale chiamare la go_to_next_map()

@@ -1,9 +1,7 @@
 PRODUZIONE:
-- bgm da sloopygoop
-- musichette delle song ?
 - pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
     basterebbe poi metterlo in una stanz farlo blinkare e interagire con orpheus come fosse un cartel. lo riempie di vita, e lo fa sempre. magari il livello prima di Radamanthus! così possiamo arrivare da Hades a fullHP.
-
+- musichette delle song ?
 - IL FINALE è UNA IN-GAME CUTSCENE CON EURIDICE CHE INSEGUE ORPHEUS
     POTREI FARE CHE CI SONO DELLE MAPPE SENZA NEMICI Nè OSTACOLI, E
     ORPHEUS ASPETTA RIVOLTO LA PORTA DI USCITA. IL GIOCATORE HA IL CONTROLLO
@@ -18,13 +16,6 @@ PRODUZIONE:
     "ORFEO: SEI ANCORA QUI?"
     "MA... COS'è QUESTO VASO?"
     EURIDICE: RITORNO ALL INFERNO. ORFEO, DOVE SEI?
-
-
-
-POTENZIALI PROBLEMI - da verificare in fase di test:
-- il common strippa quando si muove diagonale
-- test cheatcodes on boss s,g,d,d,g,s,sel,start
-
 
     
 GENERAZIONE QR CODE DA POWERSHELL

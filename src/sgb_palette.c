@@ -330,3 +330,10 @@ void set_sbg_palette_boss_aeacus() __banked{
     set_sgb_pal2pal3(SGB_BOSSAEACUS_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
     set_sgb_structure_hades();
 }
+
+void set_sbg_palette_lethe() __banked{
+    set_sgb_palette_credits_reset();
+    set_sgb_pal0pal1(SGB_LETHE_LIGHTER, SGB_LETHE_LIGHT, SGB_LETHE_DARK, SGB_LETHE_DARKER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER);
+    set_sgb_pal2pal3(SGB_LETHE_LIGHTER, SGB_STATUS_LIGHT, SGB_STATUS_DARK, SGB_STATUS_DARKER, SGB_STATUS2_LIGHT, SGB_STATUS2_DARK, SGB_STATUS2_DARKER);
+    set_sgb_structure_hades();
+}

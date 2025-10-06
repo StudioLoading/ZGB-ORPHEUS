@@ -384,9 +384,9 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d5, "KEY. SO GRAB IT   ", 21);
             memcpy(d6, "AND INTERACT      ", 21);
             memcpy(d7, "WITH THE DOOR     ", 21);
-            memcpy(d8, "TO USE IT.        ", 21);
-            memcpy(d9, "                  ", 21);
-            memcpy(d10, "                  ", 21);
+            memcpy(d8, "TO USE IT IN THE  ", 21);
+            memcpy(d9, "SAME WAY YOU CHAN ", 21);
+            memcpy(d10, "GE SONGS.         ", 21);
         break;
         case HADES_KILL_ENEMY:
             memcpy(d0, "SOME GATES OPEN   ", 21);

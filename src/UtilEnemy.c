@@ -309,6 +309,7 @@ void e_management(Sprite* s_enemy) BANKED{
     if(flag_paused){ return; }
     if(s_enemy->x < 6u){ s_enemy->x = 8u;}
     if(s_enemy->x > 148u){ s_enemy->x = 146u;}
+    if(s_enemy->y > 134u){ s_enemy->y = 134u;}
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->e_state != WALK_DOWN && e_data->e_state != WALK_UP && 
@@ -532,6 +533,7 @@ ENEMY_REACTION e_is_damaged_by_pit(UINT8 arg_tile, UINT8 arg_sprite_type) BANKED
         case SpriteSiren:
         case SpriteWyrmling:
         case SpriteRevenant:
+        case SpriteMinion:
             result = ENEMY_REACT_PASSTHROUGH;
         break;
         default:{

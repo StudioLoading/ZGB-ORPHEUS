@@ -9,9 +9,9 @@
 
 #include "custom_datas.h"
 
-
 extern UINT8 in_dialog;
 extern Sprite* s_orpheus;
+extern UINT8 flag_paused;
 
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void e_check_tile_collision(Sprite* s_enemy, UINT8 e_sprite_type) BANKED;
@@ -25,6 +25,7 @@ void e_dog_management(Sprite* s_enemy) BANKED;
 
 void e_dog_management(Sprite* s_enemy) BANKED{
     if(in_dialog) return;
+	if(flag_paused){ return; }
     struct EnemyInfo* e_data = (struct EnemyInfo*) s_enemy->custom_data;
     UINT8 e_sprite_type = s_enemy->type;
     if(e_data->frmskip_wait > 0){

@@ -31,6 +31,7 @@ IMPORT_MAP(mapbossaeacus);
 IMPORT_MAP(mapbosshades);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(battle);
+DECLARE_MUSIC(battle2);
 
 
 const UINT8 coll_t_charon[] = {1,3,4,5,9,10,11,13,14,17,18,19,66,
@@ -218,7 +219,11 @@ void START() {
 		spawn_common_wait = 0u;
 		spawn_common_wait_max = 300u;
 		spawned_enemy_counter = 0u;
-		PlayMusic(battle, 1);
+		if(current_map == BOSS_HADES){
+			PlayMusic(battle2, 1);
+		}else{
+			PlayMusic(battle, 1);
+		}
 		boss_breath_counter = 0;
 		boss_breath_counter_max = BOSS_BREATH_MAX;
 		boss_breath_verse = 1;

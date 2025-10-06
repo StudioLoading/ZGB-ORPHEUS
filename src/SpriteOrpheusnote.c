@@ -10,6 +10,7 @@
 #include "custom_datas.h"
 
 extern Sprite* s_orpheus;
+extern UINT8 flag_paused;
 
 UINT8 frmskip = 0;
 INT8 left_right = -2;
@@ -30,6 +31,7 @@ void START() {
 }
 
 void UPDATE() {
+    if(flag_paused){ return; }
     struct NoteInfo* notedata = (struct NoteInfo*) THIS->custom_data;
     switch(notedata->is_enemy){
         case 0u:{//NOT AN ENEMY
@@ -63,7 +65,7 @@ void UPDATE() {
                         UINT8 cos_position = notedata->wait + 64u;
                         THIS->x = THIS->lim_x + ((sine_wave[cos_position]) >> 3);
                         THIS->y = THIS->lim_y + ((sine_wave[notedata->wait]) >> 3);
-                        notedata->wait += 32;
+                        notedata->wait += 24;
                         THIS->lim_x += notedata->vx;
                         THIS->lim_y += notedata->vy;
                     break;

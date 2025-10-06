@@ -34,6 +34,8 @@ void manage_sgb_border() BANKED{
         current_border = BORDER_SKY;
     }else if(current_state == StateTutorial && current_border != BORDER_FLAMES){
         current_border = BORDER_FLAMES;
+    }else if(current_state == StateHades00 && current_border != BORDER_FLAMES){
+        current_border = BORDER_FLAMES;
     }else if(current_state == StateBoss00 && current_border != BORDER_FLAMES_HADES){
         current_border = BORDER_FLAMES_HADES;
     }
@@ -86,6 +88,8 @@ void manage_sgb_palette() BANKED{
                 set_sbg_palette_phlegeton();
             }else if(current_map <= BOSS_AEACUS){
                 set_sbg_palette_cocytus();
+            }else if(current_map <= BOSS_HADES){
+                set_sbg_palette_lethe();
             }
         }break;
         case StateBoss00:{

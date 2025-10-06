@@ -258,31 +258,33 @@ void UPDATE() {
                     case SpriteSentinel:
                     case SpriteShadow:
                     case SpriteBanshee:
-                    case SpriteDevourer:
                     case SpriteRadamanthus:
                         e_change_state(iospr, HIT);
                     break;
                     case SpriteTartarus:
                     case SpriteMagma:
                     case SpriteFrost:
-                    case SpriteMinion:
+                    case SpriteSkeletonshield:
                         if(song_selection != SLEEP){
                             e_change_state(iospr, HIT);
                         }
                     break;
                     case SpriteOoze:{
                         struct EnemyInfo* ooze_data = (struct EnemyInfo*) iospr->custom_data;
-                        if(ooze_data->e_state == ATTACK && song_selection != SLEEP){
+                        if(song_selection == ATTRACT && ooze_data->e_state != ATTACK){
+                            e_change_state(iospr, HIT);
+                        }else if(ooze_data->e_state == ATTACK && song_selection != SLEEP){
                             e_change_state(iospr, HIT);
                         }
                     }break;
-                    case SpriteSkeletonshield:
+                    case SpriteMinion:
                     case SpriteWyrmling:
                         if(song_selection == SLEEP){
                             e_change_state(iospr, HIT);
                         }
                     break;
                     case SpriteSiren:
+                    case SpriteDevourer:
                         if(song_selection != REPEL){
                             e_change_state(iospr, HIT);
                         }
@@ -331,6 +333,7 @@ void UPDATE() {
                         }
                         case SpriteTartarus:
                         case SpriteMagma:
+                        case SpriteBlade:
                         case SpriteFrost:
                             orpheus_hp = 0;
                             redraw_hud = 1u;
@@ -340,7 +343,6 @@ void UPDATE() {
                         case SpriteSkeleton:
                         case SpriteSkeletoncerberus:
                         case SpriteInfernalimp:
-                        case SpriteBlade:
                         case SpriteFireball:
                         case SpriteSentinel:
                         case SpriteCharonhand:
@@ -358,7 +360,7 @@ void UPDATE() {
                                 if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
                                     push_vy = e_data->vy;
                                 }
-                                if(e_data->e_state != FROZEN){
+                                if(e_data->e_state != FROZEN || (e_data->e_state == HIT && song_selection != SLEEP)){
                                     orpheus_change_state(THIS, HIT);
                                 }
                             }

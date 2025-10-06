@@ -39,9 +39,13 @@ IMPORT_MAP(maphades019);
 IMPORT_MAP(maphades020);
 IMPORT_MAP(maphades021);
 IMPORT_MAP(maphades022);
+IMPORT_MAP(maphades023);
+IMPORT_MAP(maphades024);
+IMPORT_MAP(maphades025);
 IMPORT_MAP(maphades026);
 IMPORT_MAP(hudmap);
 DECLARE_MUSIC(danger);
+DECLARE_MUSIC(danger2);
 DECLARE_MUSIC(death);
 
 
@@ -159,10 +163,12 @@ void START() {
 					area_enemy_counter = 1;
 					Sprite* e_dog = SpriteManagerAdd(SpriteDog, ((UINT16) 7u << 3), ((UINT16) 14u << 3) +3);
 					e_configure(e_dog);
-					item_spawned_by_common.e_unique_id = e_dog->unique_id;
-					item_spawned_by_common.sprite_type = SpriteDog;
-					item_spawned_by_common.item_type = KEY;
-					item_spawned_by_common.spawned = 0;
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						item_spawned_by_common.e_unique_id = e_dog->unique_id;
+						item_spawned_by_common.sprite_type = SpriteDog;
+						item_spawned_by_common.item_type = KEY;
+						item_spawned_by_common.spawned = 0;
+					}
 					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 1u << 3, 4u << 3);
 				}break;
 				//BOSS CHARON
@@ -320,10 +326,12 @@ void START() {
 					e_configure(e_skeleton2);
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSiren, ((UINT16) 14u << 3), ((UINT16) 13u << 3));
 					e_configure(e_skeleton3);
-					item_spawned_by_common.e_unique_id = e_skeleton1->unique_id;
-					item_spawned_by_common.sprite_type = SpriteSiren;
-					item_spawned_by_common.item_type = KEY;
-					item_spawned_by_common.spawned = 0;
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						item_spawned_by_common.e_unique_id = e_skeleton1->unique_id;
+						item_spawned_by_common.sprite_type = SpriteSiren;
+						item_spawned_by_common.item_type = KEY;
+						item_spawned_by_common.spawned = 0;
+					}
 				}break;
 				case HADES_20:{
 					area_enemy_counter = 4;
@@ -358,6 +366,10 @@ void START() {
 					e_configure(e_skeleton1);
 					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteFrost, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
 					e_configure(e_skeleton2);
+					item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+					item_spawned_by_common.sprite_type = SpriteFrost;
+					item_spawned_by_common.item_type = HEART;
+					item_spawned_by_common.spawned = 0;
 					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteFrost, ((UINT16) 7u << 3), ((UINT16) 13u << 3));
 					e_configure(e_skeleton3);
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 11u << 3), ((UINT16) 12u << 3));
@@ -366,10 +378,36 @@ void START() {
 					block00_data->i_configured = 1u;
 				}break;
 				case HADES_23:{
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteMinion, ((UINT16) 6u << 3), ((UINT16) 12u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 10u << 3), ((UINT16) 9u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteMinion, ((UINT16) 16u << 3), ((UINT16) 13u << 3));
+					e_configure(e_skeleton3);
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 3u << 3), ((UINT16) 13u << 3));
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->item_type = BLOCK;
+					block00_data->i_configured = 1u;
+					spawn_item(HEART,  ((UINT16) 3u << 3), ((UINT16) 7u << 3), 2);
 				}break;
 				case HADES_24:{
+					area_enemy_counter = 3;
+					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteDevourer, ((UINT16) 2u << 3), ((UINT16) 15u << 3));
+					e_configure(e_skeleton1);
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteDevourer, ((UINT16) 1u << 3), ((UINT16) 6u << 3));
+					e_configure(e_skeleton2);
+					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteDevourer, ((UINT16) 8u << 3), ((UINT16) 5u << 3));
+					e_configure(e_skeleton3);
+					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
+						item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+						item_spawned_by_common.sprite_type = SpriteDevourer;
+						item_spawned_by_common.item_type = KEY;
+						item_spawned_by_common.spawned = 0;
+					}
+					spawn_item(HEART,  ((UINT16) 11u << 3), ((UINT16) 15u << 3), 0);
 				}break;
 				case HADES_25:{
+					spawn_item(KEY,  ((UINT16) 9u << 3), ((UINT16) 9u << 3) - 3u, 0);
 				}break;
 				case HADES_26:{//BOSS RADAMANTHUS
 					area_enemy_counter = 1;
@@ -459,6 +497,15 @@ void START() {
 			case HADES_22:
 				InitScroll(BANK(maphades022), &maphades022, coll_t_hades003, coll_s_hades001);
 			break;
+			case HADES_23:
+				InitScroll(BANK(maphades023), &maphades023, coll_t_hades003, coll_s_hades001);
+			break;
+			case HADES_24:
+				InitScroll(BANK(maphades024), &maphades024, coll_t_hades003, coll_s_hades001);
+			break;
+			case HADES_25:
+				InitScroll(BANK(maphades025), &maphades025, coll_t_hades003, coll_s_hades001);
+			break;
 			case HADES_26:
 				InitScroll(BANK(maphades026), &maphades026, coll_t_hades001, coll_s_hades001);
 			break;
@@ -470,8 +517,21 @@ void START() {
 			Anim_Opendoors();
 		}
 	//VARS & MUSIC
-		if(hades_music_started == 0){
-			PlayMusic(danger, 1);
+		if(current_map == HADES_25){
+			StopMusic;
+			hades_music_started = 0;
+		}else if(hades_music_started == 0){
+			if(current_map < BOSS_CHARON){
+				PlayMusic(danger, 1);
+			}else if(current_map < BOSS_CERBERUS){
+				PlayMusic(danger2, 1);
+			}else if(current_map < BOSS_MINOS){
+				PlayMusic(danger, 1);
+			}else if(current_map < BOSS_AEACUS){
+				PlayMusic(danger2, 1);
+			}else{
+				PlayMusic(danger, 1);
+			}
 			hades_music_started = 1;
 		}
 	//SET REPUSHABLE
@@ -548,6 +608,14 @@ void UPDATE() {
 			case HADES_17:{
 				button_posx = 6u;
 				button_posy = 7u;
+			}break;
+			case HADES_22:{
+				button_posx = 1u;
+				button_posy = 15u;
+			}break;
+			case HADES_23:{
+				button_posx = 16u;
+				button_posy = 15u;
 			}break;
 		}
 		if(button_posx && button_posy){
