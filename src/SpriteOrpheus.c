@@ -532,13 +532,13 @@ void orpheus_gate_collision(Sprite* arg_s_gate, Sprite* arg_s_orpheus) BANKED{
 }
 
 void orpheus_check_tile_overlapping(Sprite* arg_s_orpheus) BANKED{
-    UINT8 tile = GetScrollTile((arg_s_orpheus->x + 8) >> 3, (arg_s_orpheus->y+8) >> 3);
+    UINT8 tile = GetScrollTile((arg_s_orpheus->x + 8) >> 3, (arg_s_orpheus->y+12) >> 3);
     if(tile == 0){
-        tile = GetScrollTile((arg_s_orpheus->x + 2) >> 3, (arg_s_orpheus->y+16) >> 3);
+        tile = GetScrollTile((arg_s_orpheus->x + 2) >> 3, (arg_s_orpheus->y+18) >> 3);
     }
-    if(tile == 0){
-        tile = GetScrollTile((arg_s_orpheus->x + 10) >> 3, (arg_s_orpheus->y+16) >> 3);
-    }
+    /*if(tile == 0){
+        tile = GetScrollTile((arg_s_orpheus->x + 10) >> 3, (arg_s_orpheus->y+20) >> 3);
+    }*/
     switch(current_state){
         case StateBoss00:
         case StateHades00:{

@@ -446,7 +446,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     e_check_tile_overlapping(s_enemy);
                 case HIT:{
                     UINT8 tile = GetScrollTile((s_enemy->x + 4) >> 3, (s_enemy->y+6) >> 3);
-                    if(tile == 0){
+                    if(tile == 0 && tile != 27u){
                         tile = GetScrollTile((s_enemy->x + 12) >> 3, (s_enemy->y+12) >> 3); 
                     }
                     ENEMY_REACTION is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
