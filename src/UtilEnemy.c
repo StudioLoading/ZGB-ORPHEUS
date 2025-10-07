@@ -446,7 +446,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     e_check_tile_overlapping(s_enemy);
                 case HIT:{
                     UINT8 tile = GetScrollTile((s_enemy->x + 4) >> 3, (s_enemy->y+6) >> 3);
-                    if(tile == 0 && tile != 27u){
+                    if(tile == 0 && tile == 27u){
                         tile = GetScrollTile((s_enemy->x + 12) >> 3, (s_enemy->y+12) >> 3); 
                     }
                     ENEMY_REACTION is_against_fire = e_is_damaged_by_fire(tile, e_sprite_type);
@@ -578,7 +578,11 @@ void e_check_sprite_collision(Sprite* s_enemy) BANKED{
             switch(iespr->type){
                 case SpriteOrpheus:
                 case SpriteOrpheuslyre:
-                    orpheus_change_state(s_orpheus, HIT);
+                    struct EnemyInfo* enemy_data = (struct EnemyInfo*)s_enemy->custom_data;
+                    if(enemy_data->e_state == HIT && song_selection == SLEEP){
+                    }else{
+                        orpheus_change_state(s_orpheus, HIT);
+                    }
                 break;
                 case SpriteHadesskull:{
                     struct EnemyInfo* enemy_data = (struct EnemyInfo*)s_enemy->custom_data;

@@ -50,6 +50,7 @@ extern UINT8 stop_music_on_new_state;
 uint8_t sgb_checked = 0;
 extern void manage_sgb_border() BANKED;
 extern void manage_sgb_palette() BANKED;
+extern void restart_cheat() BANKED;
 
 void START(){
     manage_sgb_palette();
@@ -200,7 +201,7 @@ void UPDATE(){
                             break;
                         }
                     }
-                    if(KEY_TICKED(J_SELECT) || KEY_TICKED(J_DOWN)){
+                    if(KEY_TICKED(J_DOWN)){
                         write_menu(99);
                         opt_selected++;
                         if(opt_selected >= 3){
@@ -243,6 +244,10 @@ void UPDATE(){
                         }else{
                             chosen_language = ENG;
                         }
+                    }
+                    if(KEY_PRESSED(J_SELECT) && KEY_PRESSED(J_START)){
+                        restart_cheat();
+                        SetState(StateStart);
                     }
                 }break;
                 case 1:{

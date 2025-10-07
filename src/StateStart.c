@@ -63,6 +63,7 @@ extern UINT8 current_map;
 extern INT8 a_walk_counter_y;
 
 void restart_from_tutorial() BANKED;
+void restart_cheat() BANKED;
 
 void START(){
 	InitScroll(BANK(inbetweenmap), &inbetweenmap, 0, 0);
@@ -106,6 +107,29 @@ void restart_from_tutorial() BANKED{
     camera_spawnx = ((UINT16) 30 << 3) + 4u;
     camera_spawny = ((UINT16) 64 << 3) + 4u;
     
+}
+
+void restart_cheat() BANKED{
+    UINT16 SPAWNX_HADES_IN = 2;
+    UINT16 SPAWNY_HADES_IN = 3;
+    UINT16 SPAWNX_BOSS_IN = 9;
+    UINT16 SPAWNY_BOSS_IN = 15;
+
+    solved_map = HADES_22; // NONE
+    current_map = HADES_23; // TUTORIAL
+    next_map = HADES_24; // HADES_00
+    prev_map = HADES_22; // NONE
+    max_map = HADES_23; // TUTORIAL
+
+    orpheus_spawnx = ((UINT16) SPAWNX_HADES_IN << 3) + 4u;//((UINT16) 28u << 3) - 4u;
+    orpheus_spawny = ((UINT16) SPAWNY_HADES_IN << 3) + 2u;//((UINT16) 79u << 3);
+    camera_spawnx = ((UINT16) 30 << 3) + 4u; // ((UINT16) 30 << 3) + 4u;
+    camera_spawny = ((UINT16) 64 << 3) + 4u;//  ((UINT16) 64 << 3) + 4u;
+
+    has_lyre = 1; // 0
+    tutorial_go = 1u; // 0
+    tutorial_hades_entrance = 1u; //  0
+    tutorial_get_lyre = 1u; //  0
 }
 
 void UPDATE(){

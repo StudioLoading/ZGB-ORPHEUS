@@ -285,12 +285,12 @@ void UPDATE() {
                     break;
                     case SpriteSiren:
                     case SpriteDevourer:
+                    case SpriteSerpent:
                         if(song_selection != REPEL){
                             e_change_state(iospr, HIT);
                         }
                     break;     
                     case SpriteRevenant:
-                    case SpriteSerpent:
                         if(song_selection == ATTRACT){
                             e_change_state(iospr, HIT);
                         }
@@ -360,8 +360,14 @@ void UPDATE() {
                                 if(e_data->vy != orpheus_info->vy && orpheus_info->vx == 0){
                                     push_vy = e_data->vy;
                                 }
-                                if(e_data->e_state != FROZEN || (e_data->e_state == HIT && song_selection != SLEEP)){
-                                    orpheus_change_state(THIS, HIT);
+                                if(e_data->e_state != FROZEN ){
+                                    if(e_data->e_state == HIT){
+                                        if(song_selection != SLEEP){
+                                            orpheus_change_state(THIS, HIT);
+                                        }
+                                    }else{
+                                        orpheus_change_state(THIS, HIT);
+                                    }
                                 }
                             }
                         break;
