@@ -25,7 +25,8 @@ const UINT8 coll_tiles_endgame[] = {
 0};
 const UINT8 coll_surface_endgame[] = { 0};
 
-Sprite* s_eg_orpheus;
+Sprite* s_eg_orpheus = 0;
+Sprite* s_eg_euridyce = 0;
 
 extern UINT8 dialog_paused;
 extern UINT8 in_dialog;
@@ -57,6 +58,7 @@ void START() {
 		
 	//SPRITES
 		s_eg_orpheus = SpriteManagerAdd(SpriteEndgameorpheus, ((UINT16) 71u << 3), ((UINT16) 7u << 3) + 2);
+		s_eg_euridyce = SpriteManagerAdd(SpriteEndgameeuridyce, ((UINT16) 73u << 3), ((UINT16) 8u << 3));
 		
 	//INITSCROLL
 		InitScroll(BANK(mapendgame), &mapendgame, 0, 0);

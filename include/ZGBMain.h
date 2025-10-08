@@ -69,6 +69,7 @@ _SPRITE_DMG(SpriteHadesskull, hadesskull)\
 _SPRITE_DMG(SpriteHadesclaw, hadesclaw)\
 _SPRITE_DMG(SpriteHadesshadow, hadesshadow)\
 _SPRITE_DMG(SpriteEndgameorpheus, endgameorpheus)\
+_SPRITE_DMG(SpriteEndgameeuridyce, endgameeuridyce)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

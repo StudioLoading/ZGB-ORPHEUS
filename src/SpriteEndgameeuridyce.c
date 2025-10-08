@@ -12,16 +12,17 @@
 #include "Dialog.h"
 
 
-const UINT8 a_eg_orpheus_idledown[] = {1, 1};
-const UINT8 a_eg_orpheus_disappearing[] = {4, 1,2,0,2};
-const UINT8 a_eg_orpheus_hidden[] = {1, 0};
-const UINT8 a_eg_orpheus_walk_h[] = {4, 3,4,3,5};
-const UINT8 a_eg_orpheus_walk_up[] = {4, 6,7,6,8};
+const UINT8 a_eg_euridyce_idledown[] = {1, 1};
+const UINT8 a_eg_euridyce_disappearing[] = {4, 1,2,0,2};
+const UINT8 a_eg_euridyce_hidden[] = {1, 0};
+const UINT8 a_eg_euridyce_walk_h[] = {4, 3,4,3,5};
+const UINT8 a_eg_euridyce_walk_up[] = {4, 6,7,6,8};
+const UINT8 a_eg_euridyce_walk_down[] = {2, 1,2};
 
 void START(){
     THIS->lim_x = 1000;
     THIS->lim_y = 1000;
-    SetSpriteAnim(THIS, a_eg_orpheus_walk_h, 8);
+    SetSpriteAnim(THIS, a_eg_euridyce_walk_down, 8);
     THIS->mirror = V_MIRROR;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
