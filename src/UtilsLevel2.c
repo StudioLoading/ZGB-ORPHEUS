@@ -35,6 +35,7 @@ UINT8 is_level_with_enemies() BANKED;
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 void invert_river_verse() BANKED;
 void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
+void level_common_anim() BANKED;
 
 extern UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED;
 extern UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED;
@@ -86,7 +87,8 @@ UINT8 is_level_with_enemies() BANKED{
             || current_map == HADES_06 || current_map == HADES_07
             || current_map == HADES_10 || current_map == HADES_11
             || current_map == HADES_14 || current_map == HADES_16
-            || current_map == HADES_20 || current_map == HADES_21;
+            || current_map == HADES_20 || current_map == HADES_21
+            || current_map == HADES_26;
 }
 
 UINT8 is_level_on_boss() BANKED{

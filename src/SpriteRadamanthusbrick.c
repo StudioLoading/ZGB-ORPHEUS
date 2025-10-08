@@ -10,25 +10,15 @@
 
 
 const UINT8 a_radamanthusbrick[] = {1, 1};
-/*
-struct EnemyInfo{
-	SPRITE_STATES e_state;
-	UINT8 tile_collision;
-	INT8 vx;
-	INT8 vy;
-    UINT8 wait;
-	UINT8 frmskip_wait;
-	UINT8 e_configured;
-	UINT8 frmskip;
-};
-*/
 
 extern Sprite* s_orpheus;
 extern Sprite* s_radamanthusshadow;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void boss_hit() BANKED;
+extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 
 void START() {
     SetSpriteAnim(THIS, a_radamanthusbrick, 1u);
@@ -65,6 +55,8 @@ void UPDATE() {
                 case SpriteRadamanthus:
                     if((s_radamanthusshadow->y - THIS->y) < 16){
                         boss_hit();
+                        e_change_state(s_radamanthusshadow, HIT);
+                        spawn_item(HEART, THIS->x, THIS->y - 16u, 0);
                         SpriteManagerRemoveSprite(THIS);
                     }
                 break;

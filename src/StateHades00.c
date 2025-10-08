@@ -418,8 +418,6 @@ void START() {
 					shadow_data->tile_collision = MOVEMENT_DIAGONAL_NWSE;
 					shadow_data->e_configured = 1;
 				}break;
-				case HADES_27:{
-				}break;
 				//BOSS HADES
 				//END GAME
 			}

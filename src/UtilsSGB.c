@@ -77,6 +77,7 @@ void manage_sgb_palette() BANKED{
             }
         }break;
         case StateTutorial:
+        case StateEndgame:
             set_sbg_palette_tutorial();
         break;
         case StateHades00:{

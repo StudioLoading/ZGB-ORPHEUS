@@ -10,6 +10,7 @@ _STATE(StateCartel)\
 _STATE(StateHades00)\
 _STATE(StateBoss00)\
 _STATE(StateEnddemo)\
+_STATE(StateEndgame)\
 STATE_DEF_END
 
 #define SPRITES \
@@ -67,6 +68,7 @@ _SPRITE_DMG(SpriteRadamanthusbrick, radamanthusbrick)\
 _SPRITE_DMG(SpriteHadesskull, hadesskull)\
 _SPRITE_DMG(SpriteHadesclaw, hadesclaw)\
 _SPRITE_DMG(SpriteHadesshadow, hadesshadow)\
+_SPRITE_DMG(SpriteEndgameorpheus, endgameorpheus)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

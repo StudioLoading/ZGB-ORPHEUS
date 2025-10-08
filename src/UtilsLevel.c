@@ -364,7 +364,7 @@ void reset_maps() BANKED{
 		max_map = HADES_16;
 		orpheus_spawnx = ((UINT16) SPAWNX_HADES016_IN << 3);
 		orpheus_spawny = ((UINT16) SPAWNY_HADES016_IN << 3);
-	}else{
+	}else if(current_map < BOSS_HADES){
 		solved_map = BOSS_AEACUS;
 		current_map = HADES_21;
 		next_map = HADES_22;
@@ -372,6 +372,14 @@ void reset_maps() BANKED{
 		max_map = HADES_21;
 		orpheus_spawnx = ((UINT16) SPAWNX_HADES021_IN << 3);
 		orpheus_spawny = ((UINT16) SPAWNY_HADES021_IN << 3);
+	}else{
+		solved_map = HADES_24;
+		current_map = HADES_25;
+		next_map = HADES_26;
+		prev_map = HADES_24;
+		max_map = HADES_25;
+		orpheus_spawnx = ((UINT16) SPAWNX_HADES025_IN << 3);
+		orpheus_spawny = ((UINT16) SPAWNY_HADES025_IN << 3);
 	}
 }
 
@@ -385,7 +393,7 @@ void level_common_update_play() BANKED{
 			camera_shake_h();
 		}
 	// pause	
-		if(current_map > TUTORIAL && !is_level_on_boss()){
+		if(current_map > TUTORIAL && !is_level_on_boss() && current_map != END_GAME){
 			if(KEY_TICKED(J_START) && orpheus_info->ow_state != ATTACK && orpheus_info->ow_state != HIT && orpheus_info->ow_state != DIE){
 				if(flag_paused == 0){
 					PauseMusic;
@@ -981,7 +989,9 @@ void init_write_dialog(UINT8 nlines) BANKED{
 }
 
 void write_dialog() BANKED{	
-    if(KEY_TICKED(J_SELECT)){init_write_dialog(n_lines);}
+    if(KEY_TICKED(J_SELECT)){
+		init_write_dialog(n_lines);
+	}
     switch(dialog_ready){
 		case 0u:{
 			dialog_ready = 1;
@@ -1320,14 +1330,6 @@ void go_to_next_map() BANKED{
 		}break;
 		case HADES_26:{//RADAMANTHUS
 			prev_map = HADES_25;
-			next_map = HADES_27;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
-			new_state = IDLE_DOWN;
-			next_state = StateHades00;
-		}break;
-		case HADES_27:{
-			prev_map = HADES_26;
 			next_map = BOSS_HADES;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_IN << 3) + 4u;
@@ -1335,14 +1337,14 @@ void go_to_next_map() BANKED{
 			next_state = StateHades00;
 		}break;
 		case BOSS_HADES:
-			prev_map = HADES_27;
+			prev_map = HADES_26;
 			next_map = END_GAME;
 			orpheus_spawnx = ((UINT16) SPAWNX_BOSSHADES_IN << 3);
 			orpheus_spawny = ((UINT16) SPAWNY_BOSSHADES_IN << 3);
             boss_intro = 0;
 			new_state = IDLE_UP;
 			a_walk_counter_y = -10;
-			next_state = StateBoss00;
+			next_state = StateEndgame;
 		break;
 	}
 	SetState(next_state);
@@ -1556,20 +1558,13 @@ void go_to_prev_map() BANKED{
 		break;
 		case HADES_26://RADAMANTHUS
 			prev_map = HADES_25;
-			next_map = HADES_27;
-			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
-			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
-			next_state = StateHades00;
-		break;
-		case HADES_27:
-			prev_map = HADES_26;
 			next_map = BOSS_HADES;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;
 			next_state = StateHades00;
 		break;
 		case BOSS_HADES:
-			prev_map = HADES_27;
+			prev_map = HADES_26;
 			next_map = END_GAME;
 			orpheus_spawnx = ((UINT16) SPAWNX_HADES004_OUT << 3) + 4u;
 			orpheus_spawny = ((UINT16) SPAWNY_HADES004_OUT << 3) + 2u;

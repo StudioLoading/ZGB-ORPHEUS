@@ -393,6 +393,7 @@ void e_management(Sprite* s_enemy) BANKED{
     }else{
         e_data->frmskip_wait = e_data->frmskip;
         //FORCE DIRECTION TO ORPHEUS
+        /*
             UINT16 delta_y = 0;
             UINT16 delta_x = 0;
             UINT8 flag_is_enemy_upper = 1u;
@@ -437,6 +438,7 @@ void e_management(Sprite* s_enemy) BANKED{
                     }
                 break;
             }
+            */
         //TRANSLATE SPRITE
             switch (e_data->e_state){
                 case WALK_DOWN:
@@ -592,7 +594,7 @@ void e_check_sprite_collision(Sprite* s_enemy) BANKED{
                 }break;
                 case SpriteItem:{
                     struct ItemInfo* i_data = (struct ItemInfo*) iespr->custom_data;
-                    if(i_data->i_configured == 2 && i_data->pickupdelay == 0){ 
+                    if(i_data->i_configured == 2 && i_data->pickupdelay == 0 && item_spawned_by_common.e_unique_id != s_enemy->unique_id){ 
                         item_spawned_by_common.e_unique_id = s_enemy->unique_id;
                         item_spawned_by_common.sprite_type = s_enemy->type;
                         item_spawned_by_common.item_type = i_data->item_type;

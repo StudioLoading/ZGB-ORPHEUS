@@ -115,11 +115,14 @@ void restart_cheat() BANKED{
     UINT16 SPAWNX_BOSS_IN = 9;
     UINT16 SPAWNY_BOSS_IN = 15;
 
-    solved_map = HADES_22; // NONE
-    current_map = HADES_23; // TUTORIAL
-    next_map = HADES_24; // HADES_00
-    prev_map = HADES_22; // NONE
-    max_map = HADES_23; // TUTORIAL
+    SPAWNX_HADES_IN = 8;
+    SPAWNY_HADES_IN = 3;
+
+    solved_map = HADES_24; // NONE
+    current_map = HADES_25; // TUTORIAL
+    next_map = HADES_26; // HADES_00
+    prev_map = solved_map; // NONE
+    max_map = current_map; // TUTORIAL
 
     orpheus_spawnx = ((UINT16) SPAWNX_HADES_IN << 3) + 4u;//((UINT16) 28u << 3) - 4u;
     orpheus_spawny = ((UINT16) SPAWNY_HADES_IN << 3) + 2u;//((UINT16) 79u << 3);

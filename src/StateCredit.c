@@ -246,8 +246,9 @@ void UPDATE(){
                         }
                     }
                     if(KEY_PRESSED(J_SELECT) && KEY_PRESSED(J_START)){
-                        restart_cheat();
-                        SetState(StateStart);
+                        /*restart_cheat();
+                        SetState(StateStart);*/
+                        SetState(StateEndgame);
                     }
                 }break;
                 case 1:{

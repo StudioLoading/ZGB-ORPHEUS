@@ -113,7 +113,6 @@ void boss_manage_death_charon() BANKED;
 void boss_manage_death_cerberus() BANKED;
 void boss_manage_death_minos() BANKED;
 void boss_manage_death_aeacus() BANKED;
-void boss_manage_death_radamanthus() BANKED;
 void boss_manage_death_hades() BANKED;
 void boss_update_breath_verse_and_max() BANKED;
 void boss_hit() BANKED;
@@ -264,19 +263,19 @@ void UPDATE() {
 		}break;
 		case 2:{
 			switch(current_map){
-				case BOSS_CHARON: 
+				case BOSS_CHARON:
 					prepare_dialog(BOSS_CHARON_INTRO);
 				break;
-				case BOSS_CERBERUS: 
+				case BOSS_CERBERUS:
 					prepare_dialog(BOSS_CERBERUS_INTRO);
 				break;
-				case BOSS_MINOS: 
+				case BOSS_MINOS:
 					prepare_dialog(BOSS_MINOS_INTRO);
 				break;
-				case BOSS_AEACUS: 
+				case BOSS_AEACUS:
 					prepare_dialog(BOSS_AEACUS_INTRO);
 				break;
-				case BOSS_HADES: 
+				case BOSS_HADES:
 					prepare_dialog(BOSS_HADES_INTRO);
 				break;
 			}

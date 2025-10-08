@@ -14,7 +14,6 @@ const UINT8 i_key[] = {6, 0,2,2,2,2,2};
 void START() {
     THIS->lim_x = 1000;
     THIS->lim_y = 1000;
-    struct ItemInfo* i_data = (struct ItemInfo*) THIS->custom_data; 
 }
 
 void UPDATE() {
