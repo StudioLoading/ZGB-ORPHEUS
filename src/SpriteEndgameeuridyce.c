@@ -22,7 +22,7 @@ const UINT8 a_eg_euridyce_walk_down[] = {2, 1,2};
 void START(){
     THIS->lim_x = 1000;
     THIS->lim_y = 1000;
-    SetSpriteAnim(THIS, a_eg_euridyce_walk_down, 8);
+    SetSpriteAnim(THIS, a_eg_euridyce_walk_h, 12);
     THIS->mirror = V_MIRROR;
     if(_cpu != CGB_TYPE){
         OBP1_REG = PAL_DEF(0, 0, 1, 3);
