@@ -570,6 +570,18 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "ORPHEUS, PROCEED! ", 21);
             memcpy(d10, "EURIDYCE, FOLLOW!", 21);
         break;
+        case END_ORPHEUS_FOLLOW:
+            memcpy(d1, "THE GATES OF HADES  ", 21);
+            memcpy(d2, "ARE NOT FAR...      ", 21);
+            memcpy(d3, "STAY BEHIND ME MY   ", 21);
+            memcpy(d4, "BELOVED. FEW ARE    ", 21);
+            memcpy(d5, "JUST A FEW STEPS    ", 21);
+            memcpy(d6, "AWAY FROM OUR       ", 21);
+            memcpy(d7, "FREEDOM. AS LONG AS ", 21);
+            memcpy(d8, "I HEAR YOUR STEPS I ", 21);
+            memcpy(d9, "WILL BE CALM.       ", 21);
+            return 9u;
+        break;
     }
     return 0u;
 }

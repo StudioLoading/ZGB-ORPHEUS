@@ -13,11 +13,12 @@
 extern UINT16 idle_countdown;
 
 const UINT8 a_ghost[] = {2, 0,1};
-struct EnemyInfo* ghost_data = 0;
 
 void START() {
+    THIS->lim_x = 40u;
+    THIS->lim_y = 16u;
     SetSpriteAnim(THIS, a_ghost, 56u);
-    ghost_data = (struct EnemyInfo*) THIS->custom_data;
+    struct EnemyInfo* ghost_data = (struct EnemyInfo*) THIS->custom_data;
     ghost_data->e_state = WALK_RIGHT;
 	ghost_data->tile_collision = 0;
 	ghost_data->vy = 0;
@@ -33,6 +34,7 @@ void START() {
 }
 
 void UPDATE() {
+    struct EnemyInfo* ghost_data = (struct EnemyInfo*) THIS->custom_data;
     ghost_data->frmskip_wait++;
     if(ghost_data->frmskip_wait < ghost_data->frmskip){
         return;

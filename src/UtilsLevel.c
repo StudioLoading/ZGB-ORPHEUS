@@ -662,7 +662,7 @@ void level_common_update_play() BANKED{
 	// orpheus_scroll_deltax
 		INT16 orpheus_scroll_deltax = s_orpheus->x - scroll_target->x;
 		if(orpheus_scroll_deltax < - 80){
-			move_camera_left= 1;
+			move_camera_left = 1;
 			move_camera_destx = scroll_target->x - 160u;
 			a_walk_counter_x = -8;
 			return;

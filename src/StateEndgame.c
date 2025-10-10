@@ -14,6 +14,8 @@
 #include "Dialog.h"
 #include "UtilAnim.h"
 
+#define TIME_INTRO 60
+#define GHOST_TIMER_MAX 40
 
 IMPORT_MAP(mapendgame);
 IMPORT_MAP(hudmap);
@@ -25,6 +27,27 @@ const UINT8 coll_tiles_endgame[] = {
 0};
 const UINT8 coll_surface_endgame[] = { 0};
 
+typedef enum{
+	INTRO_PAUSE,
+	INTRO_DIALOG,
+	INTRO_DIALOG_END,
+	ORPHEUS_GO_LEFT,
+	WAIT_CAMERA_MOVEMENT,
+	ORPHEUS_GO_UP,
+	TREMBLE,
+	FALLING_BRICKS,
+	ORPHEUS_TURN,
+	ORPHEUS_DISAPPEAR
+}CUTSCENE_PHASE;
+
+CUTSCENE_PHASE cutscene_phase = INTRO_PAUSE;
+UINT8 cutscene_timer = 0u;
+UINT16 orpheus_limx_first = 52u << 3;
+UINT8 ghost_counter = 0u;
+UINT8 ghost_timer = 0u;
+UINT8 cutscene_frmskip = 0;
+INT8 cutscene_frmskip_max = 0;
+Sprite* s_eg_shadow = 0;
 Sprite* s_eg_orpheus = 0;
 Sprite* s_eg_euridyce = 0;
 
@@ -37,6 +60,11 @@ extern unsigned char EMPTY_STRING_20[];
 extern UINT8 tutorial_go;
 extern MACROMAP current_map;
 extern UINT8 anim_counter;
+extern UINT8 move_camera_left;
+extern UINT16 move_camera_destx;
+extern UINT8 flag_camera_shake_v;
+extern INT8 boss_hp_current;
+extern INT16 shadow_blinking_hp;
 
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
@@ -45,21 +73,34 @@ extern void write_dialog() BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
+extern void move_camera() BANKED;
+extern void eg_orpheus_go_up(Sprite* arg_s_eg_orpheus) BANKED;
+extern void eg_orpheus_idle_up(Sprite* arg_s_eg_orpheus) BANKED;
+extern void eg_euridyce_idleup(Sprite* arg_s_eg_euridyce) BANKED;
+extern void camera_shake_v() BANKED;
 
 void endgame_anim() BANKED;
+void spawn_ghost() BANKED;
 
 void START() {
 	in_dialog = 0;
+	ghost_counter = 0u;
+	ghost_timer = 0u;
 	camera_spawnx = 68u << 3;
-	camera_spawny = 11u << 3;
+	camera_spawny = (11u << 3) - 2u;
 	tutorial_go = 1;
 	current_map = END_GAME;
-	level_common_start();
-		
+	cutscene_timer = 0u;
+	move_camera_destx = 0;
+	move_camera_left = 0;
+	cutscene_frmskip = 0u;
+	cutscene_frmskip_max = 0u;
+	level_common_start();		
 	//SPRITES
+		s_eg_shadow = 0;
 		s_eg_orpheus = SpriteManagerAdd(SpriteEndgameorpheus, ((UINT16) 71u << 3), ((UINT16) 7u << 3) + 2);
 		s_eg_euridyce = SpriteManagerAdd(SpriteEndgameeuridyce, ((UINT16) 73u << 3), ((UINT16) 8u << 3));
-		
+
 	//INITSCROLL
 		InitScroll(BANK(mapendgame), &mapendgame, 0, 0);
 	//HUD
@@ -67,15 +108,15 @@ void START() {
 			case ENG: INIT_FONT(font, PRINT_BKG); break;
 			case JAP: INIT_FONT(fontj, PRINT_BKG); break;
 		}
-		INIT_HUD(hudmap);
-		
+		INIT_HUD(hudmap);		
 		print_target = PRINT_WIN;
 		PRINT(0, 0, EMPTY_STRING_20);
 		PRINT(0, 1, EMPTY_STRING_20);
 		PRINT(0, 2, EMPTY_STRING_20);
-		//MUSIC
-    		PlayMusic(danger2, 1);
-	}
+	//MUSIC
+    	PlayMusic(danger2, 1);
+}
+
 
 void UPDATE() {
 	if(in_dialog){
@@ -85,14 +126,148 @@ void UPDATE() {
 			write_dialog();
 		}
 	}
-	if(tutorial_go > 0){
-		level_common_update_play();
+	ghost_timer++;
+	if(ghost_timer > GHOST_TIMER_MAX){
+		spawn_ghost();
 	}
+	//level_common_update_play();
 	endgame_anim();
+	if(move_camera_left){
+		move_camera();
+		return;
+	}
+	switch(cutscene_phase){
+		case INTRO_PAUSE:{
+			if(cutscene_timer < TIME_INTRO){
+				cutscene_timer++;
+			}else{
+				init_write_dialog(prepare_dialog(END_ORPHEUS_FOLLOW));
+				cutscene_phase = INTRO_DIALOG;
+			}
+		}break;
+		case INTRO_DIALOG:{
+			if(in_dialog == 0){
+				PRINT(0, 0, EMPTY_STRING_20);
+				PRINT(0, 1, EMPTY_STRING_20);
+				PRINT(0, 2, EMPTY_STRING_20);
+				cutscene_phase = ORPHEUS_GO_LEFT;
+			}
+		}break;
+		case ORPHEUS_GO_LEFT:{
+			UINT8 move_phase = 0u;
+			if(scroll_target->x > ((31u << 3) + 3u)){
+				scroll_target->x--;
+			}else{
+				move_phase++;
+			}
+			if(s_eg_orpheus->x > ((UINT16) 22u << 3)){
+				if(cutscene_frmskip < cutscene_frmskip_max){
+					cutscene_frmskip++;
+					return;
+				}else{
+					cutscene_frmskip = 0u;
+				}
+				if(scroll_target->x > ((31u << 3) + 3u)){
+					if(s_eg_orpheus->x > (scroll_target->x - 40u)){
+						cutscene_frmskip_max = 0;
+					}else{
+						cutscene_frmskip_max = 1;
+					}
+				}
+				TranslateSprite(s_eg_orpheus, -1 << delta_time, 0);
+				TranslateSprite(s_eg_euridyce, -1 << delta_time, 0);
+			}else{
+				move_phase++;
+			}
+			if(move_phase == 2){
+				cutscene_frmskip = 0;
+				cutscene_frmskip_max = 3;
+				eg_orpheus_go_up(s_eg_orpheus);
+				cutscene_phase = ORPHEUS_GO_UP;
+			}
+		}break;
+		case ORPHEUS_GO_UP:{
+			UINT8 move_phase = 0u;
+			if(cutscene_frmskip < cutscene_frmskip_max){
+				cutscene_frmskip++;
+				return;
+			}else{
+				cutscene_frmskip = 0u;
+			}
+			if(s_eg_orpheus->y > 18u){
+				TranslateSprite(s_eg_orpheus, 0, -1 << delta_time);
+			}else{
+				move_phase++;
+			}
+			if(s_eg_euridyce->x > 180u){
+				TranslateSprite(s_eg_euridyce, -1 << delta_time, 0);
+			}else{
+				eg_euridyce_idleup(s_eg_euridyce);
+				move_phase++;
+			}
+			if(move_phase == 2){
+				eg_orpheus_idle_up(s_eg_orpheus);
+				flag_camera_shake_v = 1;
+				cutscene_timer = 0;
+				cutscene_phase = TREMBLE;
+			}
+		}break;
+		case TREMBLE:{
+			if(cutscene_timer < TIME_INTRO){
+				cutscene_timer++;
+				camera_shake_v();
+			}else{
+				s_eg_shadow = SpriteManagerAdd(SpriteRadamanthusshadow, s_eg_euridyce->x + 8, s_eg_euridyce->y - 8);
+				struct EnemyInfo* shadow_data = (struct EnemyInfo*) s_eg_shadow->custom_data;
+				shadow_data->tile_collision = MOVEMENT_NONE;
+				shadow_data->e_configured = 1;
+				shadow_blinking_hp = 40;
+				cutscene_phase = FALLING_BRICKS;
+				flag_camera_shake_v = 0;
+			}
+		}break;
+		case FALLING_BRICKS:{
+			camera_shake_v();
+			struct EnemyInfo* shadow_data = (struct EnemyInfo*) s_eg_shadow->custom_data;
+			if(shadow_data->e_configured == 5){
+				SpriteManagerRemoveSprite(s_eg_shadow);
+			}
+		}break;
+	}
 	//DIALOGS INTERRUPTS
 		if(s_eg_orpheus->x < ((UINT16) 68u << 3)){
-			init_write_dialog(prepare_dialog(MISSING_LYRE));
+			//init_write_dialog(prepare_dialog(MISSING_LYRE));
 		}
+}
+
+void spawn_ghost() BANKED{
+	boss_hp_current = 2;
+	ghost_timer = 0;
+	ghost_counter++;
+	UINT16 spawn_ghostx = 0u;
+	UINT16 spawn_ghosty = 0u;
+	if(ghost_counter | 0){
+		spawn_ghostx = s_eg_orpheus->x - 120u;
+		spawn_ghosty = 24u;
+	}else{
+		spawn_ghostx = s_eg_orpheus->x - 90u;
+		spawn_ghosty = 60u;
+	}
+	Sprite* s_ghost1 = SpriteManagerAdd(SpriteGhost, s_eg_orpheus->x - 120u, 24u);
+	struct EnemyInfo* ghost1_data = (struct EnemyInfo*) s_ghost1->custom_data;
+	s_ghost1->mirror = V_MIRROR;
+	if(ghost_counter | 0){
+		ghost1_data->vx = 4;
+	}else{
+		ghost1_data->vx = 3;
+	}
+	if(ghost_counter & 3){
+		s_ghost1->y += 20u;
+	}
+	if(ghost_counter & 5){
+		ghost1_data->vx = 6;
+	}
+	s_ghost1 = 0;
 }
 
 void endgame_anim() BANKED{
