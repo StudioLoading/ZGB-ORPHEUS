@@ -13,6 +13,7 @@ const UINT8 a_radamanthusbrick[] = {1, 1};
 
 extern Sprite* s_orpheus;
 extern Sprite* s_radamanthusshadow;
+extern UINT8 flag_eg_brick_crashed;
 
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void boss_hit() BANKED;
@@ -69,5 +70,8 @@ void UPDATE() {
 }
 
 void DESTROY() {
+    if(current_state == StateEndgame){
+        flag_eg_brick_crashed = 1u;
+    }
     spawn_death_animation(THIS->x + 4u, THIS->y + 8u);
 }

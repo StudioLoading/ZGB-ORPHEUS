@@ -632,7 +632,7 @@ void UPDATE() {
 				}
 			}
 		}
-	//GHOSTS
+	//GHOST
 		if(current_map > HADES_02 && current_map < BOSS_HADES){
 			if(in_dialog == 0 && idle_countdown < 10 && idle_countdown > 0){
 				UINT16 ghost_spawnx = ((UINT16) 19u << 3);

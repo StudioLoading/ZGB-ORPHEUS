@@ -18,9 +18,12 @@ const UINT8 a_eg_orpheus_hidden[] = {1, 0};
 const UINT8 a_eg_orpheus_idleup[] = {1, 6};
 const UINT8 a_eg_orpheus_walk_h[] = {4, 3,4,3,5};
 const UINT8 a_eg_orpheus_walk_up[] = {4, 6,7,6,8};
+const UINT8 a_eg_orpheus_down[] = {1, 1};
 
 void eg_orpheus_go_up(Sprite* arg_s_eg_orpheus) BANKED;
 void eg_orpheus_idle_up(Sprite* arg_s_eg_orpheus) BANKED;
+void eg_orpheus_go_down(Sprite* arg_s_eg_orpheus) BANKED;
+void eg_orpheus_blinking(Sprite* arg_s_eg_orpheus) BANKED;
 
 void START(){
     THIS->lim_x = 1000;
@@ -38,6 +41,12 @@ void eg_orpheus_go_up(Sprite* arg_s_eg_orpheus) BANKED{
 }
 void eg_orpheus_idle_up(Sprite* arg_s_eg_orpheus) BANKED{
     SetSpriteAnim(arg_s_eg_orpheus, a_eg_orpheus_idleup, 1u);
+}
+void eg_orpheus_go_down(Sprite* arg_s_eg_orpheus) BANKED{
+    SetSpriteAnim(arg_s_eg_orpheus, a_eg_orpheus_down, 1u);
+}
+void eg_orpheus_blinking(Sprite* arg_s_eg_orpheus) BANKED{
+    SetSpriteAnim(arg_s_eg_orpheus, a_eg_orpheus_disappearing, 18u);
 }
 
 void UPDATE() {

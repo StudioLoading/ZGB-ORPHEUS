@@ -37,7 +37,12 @@ typedef enum{
 	TREMBLE,
 	FALLING_BRICKS,
 	ORPHEUS_TURN,
-	ORPHEUS_DISAPPEAR
+	ORPHEUS_DISAPPEAR,
+	HADESCLAW_INTRO,
+	HADESCLAW_APPEAR,
+	HADESCLAW_UP,
+	HADESCLAW_LEFT,
+	HADESCLAW_DEPOSIT
 }CUTSCENE_PHASE;
 
 CUTSCENE_PHASE cutscene_phase = INTRO_PAUSE;
@@ -50,6 +55,8 @@ INT8 cutscene_frmskip_max = 0;
 Sprite* s_eg_shadow = 0;
 Sprite* s_eg_orpheus = 0;
 Sprite* s_eg_euridyce = 0;
+Sprite* s_eg_hadesclaw = 0;
+UINT8 flag_eg_brick_crashed = 0u;
 
 extern UINT8 dialog_paused;
 extern UINT8 in_dialog;
@@ -76,7 +83,10 @@ extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_sp
 extern void move_camera() BANKED;
 extern void eg_orpheus_go_up(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_orpheus_idle_up(Sprite* arg_s_eg_orpheus) BANKED;
+extern void eg_orpheus_go_down(Sprite* arg_s_eg_orpheus) BANKED;
+extern void eg_orpheus_blinking(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_euridyce_idleup(Sprite* arg_s_eg_euridyce) BANKED;
+extern void eg_hadesclaw_appear(Sprite* arg_s_eg_hadesclaw) BANKED;
 extern void camera_shake_v() BANKED;
 
 void endgame_anim() BANKED;
@@ -95,9 +105,11 @@ void START() {
 	move_camera_left = 0;
 	cutscene_frmskip = 0u;
 	cutscene_frmskip_max = 0u;
+	flag_eg_brick_crashed = 0u;
 	level_common_start();		
 	//SPRITES
 		s_eg_shadow = 0;
+		s_eg_hadesclaw = 0;
 		s_eg_orpheus = SpriteManagerAdd(SpriteEndgameorpheus, ((UINT16) 71u << 3), ((UINT16) 7u << 3) + 2);
 		s_eg_euridyce = SpriteManagerAdd(SpriteEndgameeuridyce, ((UINT16) 73u << 3), ((UINT16) 8u << 3));
 
@@ -146,7 +158,8 @@ void UPDATE() {
 			}
 		}break;
 		case INTRO_DIALOG:{
-			if(in_dialog == 0){
+			if(in_dialog){ return; }
+			else{
 				PRINT(0, 0, EMPTY_STRING_20);
 				PRINT(0, 1, EMPTY_STRING_20);
 				PRINT(0, 2, EMPTY_STRING_20);
@@ -217,6 +230,8 @@ void UPDATE() {
 				cutscene_timer++;
 				camera_shake_v();
 			}else{
+				cutscene_timer = 0;
+				init_write_dialog(prepare_dialog(END_ORPHEUS_EURIDYCE));
 				s_eg_shadow = SpriteManagerAdd(SpriteRadamanthusshadow, s_eg_euridyce->x + 8, s_eg_euridyce->y - 8);
 				struct EnemyInfo* shadow_data = (struct EnemyInfo*) s_eg_shadow->custom_data;
 				shadow_data->tile_collision = MOVEMENT_NONE;
@@ -228,10 +243,73 @@ void UPDATE() {
 		}break;
 		case FALLING_BRICKS:{
 			camera_shake_v();
-			struct EnemyInfo* shadow_data = (struct EnemyInfo*) s_eg_shadow->custom_data;
-			if(shadow_data->e_configured == 5){
+			if(flag_eg_brick_crashed){
+				flag_eg_brick_crashed = 0;
 				SpriteManagerRemoveSprite(s_eg_shadow);
+				SpriteManagerAdd(SpriteEndgamehole, s_eg_euridyce->x, s_eg_euridyce->y - 10u);
+				SpriteManagerAdd(SpriteEndgamehole, s_eg_euridyce->x + 10, s_eg_euridyce->y - 14u);
+				eg_orpheus_go_down(s_eg_orpheus);
+				cutscene_timer = 0;
 			}
+			if(in_dialog){ return; }
+			else if(cutscene_timer == 0){
+				cutscene_phase = ORPHEUS_TURN;
+			}
+		}break;
+		case ORPHEUS_TURN:{
+			if(cutscene_timer < TIME_INTRO){
+				cutscene_timer++;
+			}else{
+				cutscene_timer = 0;
+				eg_orpheus_blinking(s_eg_orpheus);
+				init_write_dialog(prepare_dialog(END_EURIDYCE_NOOO));
+				cutscene_phase = ORPHEUS_DISAPPEAR;
+			}
+		}break;
+		case ORPHEUS_DISAPPEAR:{
+			if(cutscene_timer < TIME_INTRO){
+				cutscene_timer++;
+			}else{
+				if(in_dialog){ return; }
+				cutscene_timer = 0;
+				SpriteManagerRemoveSprite(s_eg_orpheus);
+				s_eg_hadesclaw = SpriteManagerAdd(SpriteEndgamehadesclaw, s_eg_euridyce->x, s_eg_euridyce->y + 38);
+				cutscene_phase = HADESCLAW_APPEAR;
+			}
+		}break;
+		case HADESCLAW_APPEAR:{
+			if(cutscene_timer < TIME_INTRO){
+				cutscene_timer++;
+			}else{
+				cutscene_timer = 0;
+				eg_hadesclaw_appear(s_eg_hadesclaw);
+				cutscene_phase = HADESCLAW_UP;
+			}
+		}break;
+		case HADESCLAW_UP:{
+			TranslateSprite(s_eg_hadesclaw, 0, -1 << delta_time);
+			s_eg_euridyce->x = s_eg_hadesclaw->x;
+			s_eg_euridyce->y = s_eg_hadesclaw->y - 20u;
+			if(s_eg_hadesclaw->y < 48u){
+				cutscene_timer = 0;
+				cutscene_phase = HADESCLAW_LEFT;
+			}
+		}break;
+		case HADESCLAW_LEFT:{
+			if(cutscene_timer < TIME_INTRO){
+				cutscene_timer++;
+			}else{
+				TranslateSprite(s_eg_hadesclaw, -1 << delta_time, 0);
+				s_eg_euridyce->x = s_eg_hadesclaw->x;
+				s_eg_euridyce->y = s_eg_hadesclaw->y - 20u;
+				if(s_eg_hadesclaw->x < 104u){
+					cutscene_timer = 0;
+					cutscene_phase = HADESCLAW_DEPOSIT;
+				}
+			}
+		}break;
+		case HADESCLAW_DEPOSIT:{
+
 		}break;
 	}
 	//DIALOGS INTERRUPTS

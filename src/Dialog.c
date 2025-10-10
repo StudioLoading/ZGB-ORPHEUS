@@ -582,6 +582,18 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "WILL BE CALM.       ", 21);
             return 9u;
         break;
+        case END_ORPHEUS_EURIDYCE:
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "     EURIDYCE!      ", 21);
+            memcpy(d3, "                    ", 21);
+            return 3u;
+        break;
+        case END_EURIDYCE_NOOO:
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "     NNOOOOOO!      ", 21);
+            memcpy(d3, "                    ", 21);
+            return 3u;
+        break;
     }
     return 0u;
 }
