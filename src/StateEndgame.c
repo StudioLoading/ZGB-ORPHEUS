@@ -14,7 +14,7 @@
 #include "Dialog.h"
 #include "UtilAnim.h"
 
-#define TIME_INTRO 60
+#define TIME_INTRO 100
 #define GHOST_TIMER_MAX 40
 
 IMPORT_MAP(mapendgame);
@@ -42,7 +42,10 @@ typedef enum{
 	HADESCLAW_APPEAR,
 	HADESCLAW_UP,
 	HADESCLAW_LEFT,
-	HADESCLAW_DEPOSIT
+	HADESCLAW_DEPOSIT,
+	EURIDYCE_GO_DOWN,
+	EURIDYCE_GO_LEFT,
+	EURIDYCE_MEET_BOX
 }CUTSCENE_PHASE;
 
 CUTSCENE_PHASE cutscene_phase = INTRO_PAUSE;
@@ -56,6 +59,7 @@ Sprite* s_eg_shadow = 0;
 Sprite* s_eg_orpheus = 0;
 Sprite* s_eg_euridyce = 0;
 Sprite* s_eg_hadesclaw = 0;
+Sprite* s_eg_box = 0;
 UINT8 flag_eg_brick_crashed = 0u;
 
 extern UINT8 dialog_paused;
@@ -86,6 +90,7 @@ extern void eg_orpheus_idle_up(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_orpheus_go_down(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_orpheus_blinking(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_euridyce_idleup(Sprite* arg_s_eg_euridyce) BANKED;
+extern void eg_euridyce_idledown(Sprite* arg_s_eg_euridyce) BANKED;
 extern void eg_hadesclaw_appear(Sprite* arg_s_eg_hadesclaw) BANKED;
 extern void camera_shake_v() BANKED;
 
@@ -110,8 +115,8 @@ void START() {
 	//SPRITES
 		s_eg_shadow = 0;
 		s_eg_hadesclaw = 0;
-		s_eg_orpheus = SpriteManagerAdd(SpriteEndgameorpheus, ((UINT16) 71u << 3), ((UINT16) 7u << 3) + 2);
-		s_eg_euridyce = SpriteManagerAdd(SpriteEndgameeuridyce, ((UINT16) 73u << 3), ((UINT16) 8u << 3));
+		s_eg_orpheus = SpriteManagerAdd(SpriteEndgameorpheus, ((UINT16) 71u << 3), ((UINT16) 8u << 3) + 2u);
+		s_eg_euridyce = SpriteManagerAdd(SpriteEndgameeuridyce, ((UINT16) 73u << 3), ((UINT16) 9u << 3) + 6u);
 
 	//INITSCROLL
 		InitScroll(BANK(mapendgame), &mapendgame, 0, 0);
@@ -142,12 +147,7 @@ void UPDATE() {
 	if(ghost_timer > GHOST_TIMER_MAX){
 		spawn_ghost();
 	}
-	//level_common_update_play();
 	endgame_anim();
-	if(move_camera_left){
-		move_camera();
-		return;
-	}
 	switch(cutscene_phase){
 		case INTRO_PAUSE:{
 			if(cutscene_timer < TIME_INTRO){
@@ -173,7 +173,7 @@ void UPDATE() {
 			}else{
 				move_phase++;
 			}
-			if(s_eg_orpheus->x > ((UINT16) 22u << 3)){
+			if(s_eg_orpheus->x > (((UINT16) 24u << 3) - 3u)){
 				if(cutscene_frmskip < cutscene_frmskip_max){
 					cutscene_frmskip++;
 					return;
@@ -195,6 +195,7 @@ void UPDATE() {
 			if(move_phase == 2){
 				cutscene_frmskip = 0;
 				cutscene_frmskip_max = 3;
+				s_eg_euridyce->x += 2u;
 				eg_orpheus_go_up(s_eg_orpheus);
 				cutscene_phase = ORPHEUS_GO_UP;
 			}
@@ -207,12 +208,12 @@ void UPDATE() {
 			}else{
 				cutscene_frmskip = 0u;
 			}
-			if(s_eg_orpheus->y > 18u){
+			if(s_eg_orpheus->y > 24u){
 				TranslateSprite(s_eg_orpheus, 0, -1 << delta_time);
 			}else{
 				move_phase++;
 			}
-			if(s_eg_euridyce->x > 180u){
+			if(s_eg_euridyce->x > 186u){
 				TranslateSprite(s_eg_euridyce, -1 << delta_time, 0);
 			}else{
 				eg_euridyce_idleup(s_eg_euridyce);
@@ -232,7 +233,7 @@ void UPDATE() {
 			}else{
 				cutscene_timer = 0;
 				init_write_dialog(prepare_dialog(END_ORPHEUS_EURIDYCE));
-				s_eg_shadow = SpriteManagerAdd(SpriteRadamanthusshadow, s_eg_euridyce->x + 8, s_eg_euridyce->y - 8);
+				s_eg_shadow = SpriteManagerAdd(SpriteRadamanthusshadow, s_eg_euridyce->x, s_eg_euridyce->y - 18u);
 				struct EnemyInfo* shadow_data = (struct EnemyInfo*) s_eg_shadow->custom_data;
 				shadow_data->tile_collision = MOVEMENT_NONE;
 				shadow_data->e_configured = 1;
@@ -246,13 +247,16 @@ void UPDATE() {
 			if(flag_eg_brick_crashed){
 				flag_eg_brick_crashed = 0;
 				SpriteManagerRemoveSprite(s_eg_shadow);
-				SpriteManagerAdd(SpriteEndgamehole, s_eg_euridyce->x, s_eg_euridyce->y - 10u);
-				SpriteManagerAdd(SpriteEndgamehole, s_eg_euridyce->x + 10, s_eg_euridyce->y - 14u);
+				SpriteManagerAdd(SpriteEndgamehole, s_eg_euridyce->x, s_eg_euridyce->y - 16u);
+				SpriteManagerAdd(SpriteEndgamehole, s_eg_euridyce->x + 6, s_eg_euridyce->y - 14u);
 				eg_orpheus_go_down(s_eg_orpheus);
 				cutscene_timer = 0;
 			}
 			if(in_dialog){ return; }
 			else if(cutscene_timer == 0){
+				PRINT(0, 0, EMPTY_STRING_20);
+				PRINT(0, 1, EMPTY_STRING_20);
+				PRINT(0, 2, EMPTY_STRING_20);
 				cutscene_phase = ORPHEUS_TURN;
 			}
 		}break;
@@ -271,6 +275,9 @@ void UPDATE() {
 				cutscene_timer++;
 			}else{
 				if(in_dialog){ return; }
+				PRINT(0, 0, EMPTY_STRING_20);
+				PRINT(0, 1, EMPTY_STRING_20);
+				PRINT(0, 2, EMPTY_STRING_20);
 				cutscene_timer = 0;
 				SpriteManagerRemoveSprite(s_eg_orpheus);
 				s_eg_hadesclaw = SpriteManagerAdd(SpriteEndgamehadesclaw, s_eg_euridyce->x, s_eg_euridyce->y + 38);
@@ -288,34 +295,47 @@ void UPDATE() {
 		}break;
 		case HADESCLAW_UP:{
 			TranslateSprite(s_eg_hadesclaw, 0, -1 << delta_time);
-			s_eg_euridyce->x = s_eg_hadesclaw->x;
-			s_eg_euridyce->y = s_eg_hadesclaw->y - 20u;
+			s_eg_euridyce->x = s_eg_hadesclaw->x + 10u;
+			s_eg_euridyce->y = s_eg_hadesclaw->y - 8u;
 			if(s_eg_hadesclaw->y < 48u){
 				cutscene_timer = 0;
 				cutscene_phase = HADESCLAW_LEFT;
 			}
 		}break;
 		case HADESCLAW_LEFT:{
-			if(cutscene_timer < TIME_INTRO){
-				cutscene_timer++;
-			}else{
-				TranslateSprite(s_eg_hadesclaw, -1 << delta_time, 0);
-				s_eg_euridyce->x = s_eg_hadesclaw->x;
-				s_eg_euridyce->y = s_eg_hadesclaw->y - 20u;
-				if(s_eg_hadesclaw->x < 104u){
-					cutscene_timer = 0;
-					cutscene_phase = HADESCLAW_DEPOSIT;
-				}
+			TranslateSprite(s_eg_hadesclaw, -1 << delta_time, 0);
+			s_eg_euridyce->x = s_eg_hadesclaw->x + 10u;
+			s_eg_euridyce->y = s_eg_hadesclaw->y - 8u;
+			if(s_eg_hadesclaw->x < 104u){
+				cutscene_timer = 0;
+				eg_euridyce_idledown(s_eg_euridyce);
+				SpriteManagerRemoveSprite(s_eg_hadesclaw);
+				cutscene_phase = HADESCLAW_DEPOSIT;
 			}
 		}break;
 		case HADESCLAW_DEPOSIT:{
-
+			if(scroll_target->x > 80u){
+				TranslateSprite(scroll_target, -1 << delta_time, 0);
+			}else{
+				if(cutscene_timer < TIME_INTRO){
+					cutscene_timer++;
+				}else{
+					s_eg_box = SpriteManagerAdd(SpriteEndgamebox, 24u, 104u);
+					cutscene_timer = 0;
+					cutscene_phase = EURIDYCE_GO_DOWN;
+				}
+			}
+		}break;
+		case EURIDYCE_GO_DOWN:{
+			if(s_eg_euridyce->y < s_eg_box->y){
+				TranslateSprite(s_eg_euridyce, 0, 1 << delta_time);
+			}else if(s_eg_euridyce->x > (s_eg_box->x + 16u)){
+				TranslateSprite(s_eg_euridyce, -1 << delta_time, 0);
+			}else{
+				init_write_dialog(prepare_dialog(END_EURIDYCE_BOX));
+			}
 		}break;
 	}
-	//DIALOGS INTERRUPTS
-		if(s_eg_orpheus->x < ((UINT16) 68u << 3)){
-			//init_write_dialog(prepare_dialog(MISSING_LYRE));
-		}
 }
 
 void spawn_ghost() BANKED{

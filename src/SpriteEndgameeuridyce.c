@@ -19,6 +19,7 @@ const UINT8 a_eg_euridyce_walk_h[] = {4, 3,4,3,5};
 const UINT8 a_eg_euridyce_idleup[] = {1, 6};
 
 void eg_euridyce_idleup(Sprite* arg_s_eg_euridyce) BANKED;
+void eg_euridyce_idledown(Sprite* arg_s_eg_euridyce) BANKED;
 
  
 void START(){
@@ -34,6 +35,10 @@ void START(){
 
 void eg_euridyce_idleup(Sprite* arg_s_eg_euridyce) BANKED{
     SetSpriteAnim(arg_s_eg_euridyce, a_eg_euridyce_idleup, 4u);
+}
+
+void eg_euridyce_idledown(Sprite* arg_s_eg_euridyce) BANKED{
+    SetSpriteAnim(arg_s_eg_euridyce, a_eg_euridyce_idledown, 4u);
 }
 
 void UPDATE() {

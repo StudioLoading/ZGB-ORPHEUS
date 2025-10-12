@@ -594,6 +594,18 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
+        case END_EURIDYCE_BOX:
+            memcpy(d1, "WHAT IS THIS? A BOX?", 21);
+            memcpy(d2, "CAN IT BE... THE    ", 21);
+            memcpy(d3, "PANDORA'S BOX?      ", 21);
+            memcpy(d4, "I COULD USE IT TO   ", 21);
+            memcpy(d5, "GET MY WAY BACK. NOW", 21);
+            memcpy(d6, "IT IS TIME FOR ME TO", 21);
+            memcpy(d7, "GET YOU MY BELOVED. ", 21);
+            memcpy(d8, "ORPHEUS....         ", 21);
+            memcpy(d9, "WHERE ARE YOU?      ", 21);
+            return 9u;
+        break;
     }
     return 0u;
 }
