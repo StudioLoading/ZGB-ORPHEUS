@@ -73,6 +73,7 @@ _SPRITE_DMG(SpriteEndgameeuridyce, endgameeuridyce)\
 _SPRITE_DMG(SpriteEndgamehole, endgamehole)\
 _SPRITE_DMG(SpriteEndgamehadesclaw, endgamehadesclaw)\
 _SPRITE_DMG(SpriteEndgamebox, endgamebox)\
+_SPRITE_DMG(SpriteOwl, owl)\
 SPRITE_DEF_END
 
 #include "ZGBMain_Init.h"

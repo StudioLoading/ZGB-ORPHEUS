@@ -574,12 +574,12 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d1, "THE GATES OF HADES  ", 21);
             memcpy(d2, "ARE NOT FAR...      ", 21);
             memcpy(d3, "STAY BEHIND ME MY   ", 21);
-            memcpy(d4, "BELOVED. FEW ARE    ", 21);
-            memcpy(d5, "JUST A FEW STEPS    ", 21);
-            memcpy(d6, "AWAY FROM OUR       ", 21);
-            memcpy(d7, "FREEDOM. AS LONG AS ", 21);
-            memcpy(d8, "I HEAR YOUR STEPS I ", 21);
-            memcpy(d9, "WILL BE CALM.       ", 21);
+            memcpy(d4, "BELOVED. WE ARE JUST", 21);
+            memcpy(d5, "A FEW STEPS AWAY    ", 21);
+            memcpy(d6, "FROM OUR FREEDOM.   ", 21);
+            memcpy(d7, "AS LONG AS I HEAR   ", 21);
+            memcpy(d8, "YOUR STEPS BEHIND ME", 21);
+            memcpy(d9, "I WILL BE CALM.     ", 21);
             return 9u;
         break;
         case END_ORPHEUS_EURIDYCE:
@@ -605,6 +605,12 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d8, "ORPHEUS....         ", 21);
             memcpy(d9, "WHERE ARE YOU?      ", 21);
             return 9u;
+        break;
+        case ENDSCREEN_SEEYOUIN2027:
+            memcpy(d1, "  CONGRATULATIONS!  ", 21);
+            memcpy(d2, "                    ", 21);
+            memcpy(d3, "THANK U FOR PLAYING!", 21);
+            return 3u;
         break;
     }
     return 0u;

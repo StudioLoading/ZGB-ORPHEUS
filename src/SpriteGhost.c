@@ -14,6 +14,8 @@ extern UINT16 idle_countdown;
 
 const UINT8 a_ghost[] = {2, 0,1};
 
+extern UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
+
 void START() {
     THIS->lim_x = 40u;
     THIS->lim_y = 16u;
@@ -35,25 +37,40 @@ void START() {
 
 void UPDATE() {
     struct EnemyInfo* ghost_data = (struct EnemyInfo*) THIS->custom_data;
-    ghost_data->frmskip_wait++;
-    if(ghost_data->frmskip_wait < ghost_data->frmskip){
-        return;
+    switch(ghost_data->e_configured){
+        case 1:{
+            ghost_data->frmskip_wait++;
+            if(ghost_data->frmskip_wait < ghost_data->frmskip){
+                return;
+            }
+            ghost_data->frmskip_wait = 0u;
+            ghost_data->wait++;
+            if(ghost_data->wait > 16){
+                ghost_data->vy = 1;
+            }else if(ghost_data->wait > 2){
+                ghost_data->vy = -1;
+            }else{
+                ghost_data->vy = 0;
+            }
+            if(ghost_data->wait > 30){ghost_data->wait = 0;}
+            UINT8 ghost_collision = TranslateSprite(THIS, ghost_data->vx << delta_time, ghost_data->vy << delta_time);
+            if(ghost_collision){
+                THIS->x += ghost_data->vx;
+                THIS->y += ghost_data->vy;
+            }
+        }break;
+        case 2:{
+		    ghost_data->frmskip_wait++;
+            if(ghost_data->frmskip_wait < 2){
+                return;
+            }
+            ghost_data->frmskip_wait = 0u;
+            if(THIS->y > 78u){
+                SpriteManagerRemoveSprite(THIS);
+            }
+            aeacusbody_move_to_point(THIS, 80u, 84u);
+        }break;
     }
-    ghost_data->frmskip_wait = 0u;
-    ghost_data->wait++;
-    if(ghost_data->wait > 16){
-        ghost_data->vy = 1;
-    }else if(ghost_data->wait > 2){
-        ghost_data->vy = -1;
-    }else{
-        ghost_data->vy = 0;
-    }
-    if(ghost_data->wait > 30){ghost_data->wait = 0;}
-    UINT8 ghost_collision = TranslateSprite(THIS, ghost_data->vx << delta_time, ghost_data->vy << delta_time);
-    if(ghost_collision){
-        THIS->x += ghost_data->vx;
-        THIS->y += ghost_data->vy;
-    }    
 }
 
 void DESTROY() {

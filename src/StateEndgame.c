@@ -16,12 +16,15 @@
 
 #define TIME_INTRO 100
 #define GHOST_TIMER_MAX 40
+#define GHOST_TIMER_ENDSCREEN 120
 
 IMPORT_MAP(mapendgame);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
 IMPORT_TILES(fontj);
 DECLARE_MUSIC(danger2);
+DECLARE_MUSIC(battle);
+DECLARE_MUSIC(tutorial);
 
 const UINT8 coll_tiles_endgame[] = {
 0};
@@ -45,7 +48,8 @@ typedef enum{
 	HADESCLAW_DEPOSIT,
 	EURIDYCE_GO_DOWN,
 	EURIDYCE_GO_LEFT,
-	EURIDYCE_MEET_BOX
+	EURIDYCE_MEET_BOX,
+	OVER
 }CUTSCENE_PHASE;
 
 CUTSCENE_PHASE cutscene_phase = INTRO_PAUSE;
@@ -91,7 +95,12 @@ extern void eg_orpheus_go_down(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_orpheus_blinking(Sprite* arg_s_eg_orpheus) BANKED;
 extern void eg_euridyce_idleup(Sprite* arg_s_eg_euridyce) BANKED;
 extern void eg_euridyce_idledown(Sprite* arg_s_eg_euridyce) BANKED;
+extern void eg_euridyce_walkdown(Sprite* arg_s_eg_euridyce) BANKED;
+extern void eg_euridyce_walkh(Sprite* arg_s_eg_euridyce) BANKED;
+extern void eg_euridyce_idleh(Sprite* arg_s_eg_euridyce) BANKED;
+extern void eg_euridyce_champion(Sprite* arg_s_eg_euridyce) BANKED;
 extern void eg_hadesclaw_appear(Sprite* arg_s_eg_hadesclaw) BANKED;
+extern void eg_box_absorb(Sprite* arg_s_box) BANKED;
 extern void camera_shake_v() BANKED;
 
 void endgame_anim() BANKED;
@@ -144,8 +153,14 @@ void UPDATE() {
 		}
 	}
 	ghost_timer++;
-	if(ghost_timer > GHOST_TIMER_MAX){
-		spawn_ghost();
+	if(cutscene_phase < OVER){
+		if(ghost_timer > GHOST_TIMER_MAX){
+			spawn_ghost();
+		}
+	}else{
+		if(ghost_timer > GHOST_TIMER_ENDSCREEN){
+			spawn_ghost();
+		}
 	}
 	endgame_anim();
 	switch(cutscene_phase){
@@ -223,6 +238,7 @@ void UPDATE() {
 				eg_orpheus_idle_up(s_eg_orpheus);
 				flag_camera_shake_v = 1;
 				cutscene_timer = 0;
+    			PlayMusic(battle, 1);
 				cutscene_phase = TREMBLE;
 			}
 		}break;
@@ -280,7 +296,7 @@ void UPDATE() {
 				PRINT(0, 2, EMPTY_STRING_20);
 				cutscene_timer = 0;
 				SpriteManagerRemoveSprite(s_eg_orpheus);
-				s_eg_hadesclaw = SpriteManagerAdd(SpriteEndgamehadesclaw, s_eg_euridyce->x, s_eg_euridyce->y + 38);
+				s_eg_hadesclaw = SpriteManagerAdd(SpriteEndgamehadesclaw, s_eg_euridyce->x - 16u, s_eg_euridyce->y + 18u);
 				cutscene_phase = HADESCLAW_APPEAR;
 			}
 		}break;
@@ -294,7 +310,11 @@ void UPDATE() {
 			}
 		}break;
 		case HADESCLAW_UP:{
-			TranslateSprite(s_eg_hadesclaw, 0, -1 << delta_time);
+			cutscene_frmskip++;
+			if(cutscene_frmskip > cutscene_frmskip_max){
+				cutscene_frmskip = 0;
+				TranslateSprite(s_eg_hadesclaw, 0, -1 << delta_time);
+			}
 			s_eg_euridyce->x = s_eg_hadesclaw->x + 10u;
 			s_eg_euridyce->y = s_eg_hadesclaw->y - 8u;
 			if(s_eg_hadesclaw->y < 48u){
@@ -320,38 +340,83 @@ void UPDATE() {
 				if(cutscene_timer < TIME_INTRO){
 					cutscene_timer++;
 				}else{
-					s_eg_box = SpriteManagerAdd(SpriteEndgamebox, 24u, 104u);
+					s_eg_box = SpriteManagerAdd(SpriteEndgamebox, 80u, 104u);
 					cutscene_timer = 0;
+					eg_euridyce_walkdown(s_eg_euridyce);
+					cutscene_frmskip = 0;
+					cutscene_frmskip_max = 3;
+					PlayMusic(tutorial, 1);
 					cutscene_phase = EURIDYCE_GO_DOWN;
 				}
 			}
 		}break;
 		case EURIDYCE_GO_DOWN:{
 			if(s_eg_euridyce->y < s_eg_box->y){
-				TranslateSprite(s_eg_euridyce, 0, 1 << delta_time);
+				cutscene_frmskip++;
+				if(cutscene_frmskip > cutscene_frmskip_max){
+					cutscene_frmskip = 0;
+					TranslateSprite(s_eg_euridyce, 0, 1 << delta_time);
+				}
 			}else if(s_eg_euridyce->x > (s_eg_box->x + 16u)){
-				TranslateSprite(s_eg_euridyce, -1 << delta_time, 0);
+				eg_euridyce_walkh(s_eg_euridyce);
+				cutscene_frmskip++;
+				if(cutscene_frmskip > cutscene_frmskip_max){
+					cutscene_frmskip = 0;
+					TranslateSprite(s_eg_euridyce, -1 << delta_time, 0);
+				}
 			}else{
+				eg_euridyce_idleh(s_eg_euridyce);
 				init_write_dialog(prepare_dialog(END_EURIDYCE_BOX));
+				cutscene_timer = 0;
+				cutscene_phase = EURIDYCE_MEET_BOX;
 			}
+		}break;
+		case EURIDYCE_MEET_BOX:{
+				if(cutscene_timer < TIME_INTRO){
+					cutscene_timer++;
+				}else{
+					if(in_dialog){ return; }
+					PRINT(0, 0, EMPTY_STRING_20);
+					PRINT(0, 1, EMPTY_STRING_20);
+					PRINT(0, 2, EMPTY_STRING_20);
+					cutscene_timer = 0;
+					s_eg_euridyce->x = 80u;
+					s_eg_box->x = s_eg_euridyce->x - 4u;
+					s_eg_box->y = s_eg_euridyce->y - 20u;
+					eg_euridyce_champion(s_eg_euridyce);
+					eg_box_absorb(s_eg_box);
+					init_write_dialog(prepare_dialog(ENDSCREEN_SEEYOUIN2027));
+					cutscene_phase = OVER;
+				}
 		}break;
 	}
 }
 
 void spawn_ghost() BANKED{
 	boss_hp_current = 2;
-	ghost_timer = 0;
+	ghost_timer = 0u;
 	ghost_counter++;
 	UINT16 spawn_ghostx = 0u;
 	UINT16 spawn_ghosty = 0u;
-	if(ghost_counter | 0){
-		spawn_ghostx = s_eg_orpheus->x - 120u;
-		spawn_ghosty = 24u;
+	if(cutscene_phase <= ORPHEUS_DISAPPEAR){
+		if(ghost_counter | 0){
+			spawn_ghostx = s_eg_orpheus->x - 90u;
+			spawn_ghosty = 24u;
+		}else{
+			spawn_ghostx = s_eg_orpheus->x - 80u;
+			spawn_ghosty = 60u;
+		}
 	}else{
-		spawn_ghostx = s_eg_orpheus->x - 90u;
-		spawn_ghosty = 60u;
+		if(ghost_counter | 0){
+			spawn_ghostx = 12u;
+			spawn_ghosty = 16u;
+		}else{
+			spawn_ghostx = 30u;
+			spawn_ghosty = 40u;
+		}
 	}
-	Sprite* s_ghost1 = SpriteManagerAdd(SpriteGhost, s_eg_orpheus->x - 120u, 24u);
+	Sprite* s_ghost1 = SpriteManagerAdd(SpriteGhost, spawn_ghostx, spawn_ghosty);
+	s_ghost1->lim_x = 80u;
 	struct EnemyInfo* ghost1_data = (struct EnemyInfo*) s_ghost1->custom_data;
 	s_ghost1->mirror = V_MIRROR;
 	if(ghost_counter | 0){
@@ -364,6 +429,10 @@ void spawn_ghost() BANKED{
 	}
 	if(ghost_counter & 5){
 		ghost1_data->vx = 6;
+	}
+	ghost1_data->vy = 4;
+	if(cutscene_phase == OVER){
+		ghost1_data->e_configured = 2;
 	}
 	s_ghost1 = 0;
 }
