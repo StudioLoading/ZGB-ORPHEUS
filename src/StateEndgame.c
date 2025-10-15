@@ -15,6 +15,7 @@
 #include "UtilAnim.h"
 
 #define TIME_INTRO 100
+#define TIME_OWL 600
 #define GHOST_TIMER_MAX 40
 #define GHOST_TIMER_ENDSCREEN 120
 
@@ -53,7 +54,7 @@ typedef enum{
 }CUTSCENE_PHASE;
 
 CUTSCENE_PHASE cutscene_phase = INTRO_PAUSE;
-UINT8 cutscene_timer = 0u;
+UINT16 cutscene_timer = 0u;
 UINT16 orpheus_limx_first = 52u << 3;
 UINT8 ghost_counter = 0u;
 UINT8 ghost_timer = 0u;
@@ -340,7 +341,7 @@ void UPDATE() {
 				if(cutscene_timer < TIME_INTRO){
 					cutscene_timer++;
 				}else{
-					s_eg_box = SpriteManagerAdd(SpriteEndgamebox, 80u, 104u);
+					s_eg_box = SpriteManagerAdd(SpriteEndgamebox, 72u, 104u);
 					cutscene_timer = 0;
 					eg_euridyce_walkdown(s_eg_euridyce);
 					cutscene_frmskip = 0;
@@ -388,6 +389,16 @@ void UPDATE() {
 					init_write_dialog(prepare_dialog(ENDSCREEN_SEEYOUIN2027));
 					cutscene_phase = OVER;
 				}
+		}break;
+		case OVER:{
+			cutscene_timer++;
+			if(cutscene_timer > TIME_OWL){
+				Sprite* s_owl = SpriteManagerAdd(SpriteOwl, 170u, 2u);
+				struct EnemyInfo* owl_data = (struct EnemyInfo*) s_owl->custom_data;
+            	owl_data->e_state = WALK_LEFT;
+				owl_data->e_configured = 2;
+				cutscene_timer = 0;
+			}
 		}break;
 	}
 }
