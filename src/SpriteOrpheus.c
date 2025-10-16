@@ -86,6 +86,7 @@ extern UINT8 boss_minos_flag_orpheus_on_plate;
 extern UINT8 flag_paused;
 extern UINT8 flag_camera_shake_v;
 extern UINT8 song_selection_cooldown;
+extern UINT8 owl_freed;
 
 void orpheus_behave(Sprite* arg_s_orpheus) BANKED;
 void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
@@ -384,7 +385,14 @@ void UPDATE() {
                         }break;
                         case SpriteBlock:{
                             orpheus_block_collision(iospr, THIS);
-                        }break;                    
+                        }break;
+                        case SpriteOwl:{
+                            struct EnemyInfo* owl_data = (struct EnemyInfo*) iospr->custom_data;
+                            if(owl_data->e_configured < 3){
+                                owl_data->e_configured = 3;
+                                owl_freed++;
+                            }
+                        }break;            
                     }
                 }
             }
@@ -572,13 +580,16 @@ void orpheus_check_tile_overlapping(Sprite* arg_s_orpheus) BANKED{
 }
 
 void orpheus_show_cartel() BANKED{
-    show_cartel = 1;
     orpheus_against_cartel = 0;
+    show_cartel = 1;
 }
 
 void orpheus_behave(Sprite* s_arg_orpheus) BANKED{
     if(orpheus_against_cartel){
-        orpheus_against_cartel--;
+        orpheus_against_cartel--;    
+        if(KEY_PRESSED(J_INT)){
+            orpheus_show_cartel();
+        }
     } 
     switch(new_state){
         case IDLE_DOWN: case IDLE_LEFT: case IDLE_RIGHT: case IDLE_UP:
@@ -610,11 +621,6 @@ void orpheus_behave(Sprite* s_arg_orpheus) BANKED{
             orpheus_recharge();
             orpheus_check_tile_overlapping(s_arg_orpheus);
             idle_countdown--;
-            if(orpheus_against_cartel){
-                if(KEY_PRESSED(J_INT)){
-                    orpheus_show_cartel();
-                }
-            }
         break;
         case WALK_DOWN: case WALK_UP:
         case WALK_LEFT: case WALK_RIGHT:
@@ -782,7 +788,7 @@ void orpheus_update_position() BANKED{
                         case 116u://CARTEL
                             case 118u:
                                 if(KEY_PRESSED(J_UP) && orpheus_against_cartel == 0){
-                                orpheus_against_cartel = 80u;
+                                orpheus_against_cartel = 40u;
                                 }
                         break;
                     }

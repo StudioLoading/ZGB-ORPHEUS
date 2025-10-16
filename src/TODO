@@ -1,16 +1,16 @@
 PRODUZIONE:
-- TESTO GIAPPONESE ENDGAME CUTSCENE
--   (SCHERMATA FINALE DI ENDGAME CHE PREANNUNCIA ORPHEUS 2.)
-    UNA SCHERMATA COMPLETAMENTE NERA, EURIDICE SULLA SINISTRA, IL VASO DI PANDORA
-    SULLA DESTRA, LEI CHE CI VA CONTRO E SI CHIEDE:    
-    "DOVE SONO?"
-    "ORFEO: SEI ANCORA QUI?"
-    "MA... COS'è QUESTO VASO?"
-    EURIDICE: RITORNO ALL INFERNO. ORFEO, DOVE SEI?
-- pixellare un Gufo per il tipo che lo ha richiesto su Kickstarter
-    basterebbe poi metterlo in una stanz farlo blinkare e interagire con orpheus come fosse un cartel. lo riempie di vita, e lo fa sempre. magari il livello prima di Radamanthus! così possiamo arrivare da Hades a fullHP.
-- musichette delle song ?
-    
+
+
+EURIDYCE: BACK TO HELL
+- il gufo è una super arma secondaria temporizzata attivabile e consumabile once con SELECT
+    rotea attorno ad Euridice dando invulnerabilità e uccidendo tutti i nemici che tocca. diventa indispensabile per i nemici non assorbibili e delicato da usare perché potrebbe eliminare i nemici che invece serve assorbirli per passare lo stage.
+- fare bonus-stage pilotando un gufo (shooter?)
+
+
+
+
+
+
 GENERAZIONE QR CODE DA POWERSHELL
 New-QRCodeURI -URI 'https://www.youtube.com/watch?v=FuAXHr72XHk' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT-SEGAHW.PNG.png'
 

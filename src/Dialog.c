@@ -152,6 +152,32 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "Y MBS - J?L4L     ", 21);
             memcpy(d10, "                  ", 21);
         break;
+        case HADES_OWL_SAVING:
+            memcpy(d0, "KFRBYSRBYDPYSCZIZT", 21);
+            memcpy(d1, "NBZPPTZYYKCMDISDBN", 21);
+            memcpy(d2, "FDRBTINDYZFRBYYHYH", 21);
+            memcpy(d3, "CPPBTQ'RNDBHIHBYDP", 21);
+            memcpy(d4, "RBYRRBYHCDIZBMDYZF", 21);
+            memcpy(d5, "RBYYHYHCPPBTQ'RNDB", 21);
+            memcpy(d6, "HIHBYDPRBYRRBYHCDI", 21);
+            memcpy(d7, "ZBMDYZFRBYYHYHCPPB", 21);
+            memcpy(d8, "TQ'RNDBHIHBYDPRBYR", 21);
+            memcpy(d9, "RBYHCDIZBMDYZFRBYY", 21);
+            memcpy(d10, "HYHCPPB           ", 21);
+        break;
+        case HADES_GUARDS_AWAKENED:
+            memcpy(d0, "KFRBYSRBYDPYSCZIZT", 21);
+            memcpy(d1, "NBZPPTZYYKCMDISDBN", 21);
+            memcpy(d2, "FDRBTINDYZFRBYYHYH", 21);
+            memcpy(d3, "CPPBTQ'RNDBHIHBYDP", 21);
+            memcpy(d4, "RBYRRBYHCDIZBMDYZF", 21);
+            memcpy(d5, "RBYYHYHCPPBTQ'RNDB", 21);
+            memcpy(d6, "HIHBYDPRBYRRBYHCDI", 21);
+            memcpy(d7, "ZBMDYZFRBYYHYHCPPB", 21);
+            memcpy(d8, "TQ'RNDBHIHBYDPRBYR", 21);
+            memcpy(d9, "RBYHCDIZBMDYZFRBYY", 21);
+            memcpy(d10, "HYHCPPB           ", 21);
+        break;
         case HADES_DEATH:
             memcpy(d0, "6MJO' G5Y 5QZ     ", 21);
             memcpy(d1, " E?(UB            ", 21);
@@ -295,6 +321,42 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "                   ", 21);
             memcpy(d10, "                   ", 21);
         break;
+        case END_ORPHEUS_FOLLOW:
+            memcpy(d1, "ZDSMFRCLB P R B     ", 21);
+            memcpy(d2, "V S P F R C T F I   ", 21);
+            memcpy(d3, "Y T B I Z F B K T F ", 21);
+            memcpy(d4, "Y N B T T R Y P R   ", 21);
+            memcpy(d5, "C M D I S D B N F   ", 21);
+            memcpy(d6, "D R B T I N D Y     ", 21);
+            return 6u;
+        break;
+        case END_ORPHEUS_EURIDYCE:
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "     ZDSMFRI!       ", 21);
+            memcpy(d3, "                    ", 21);
+            return 3u;
+        break;
+        case END_EURIDYCE_NOOO:
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "       !!!!!!       ", 21);
+            memcpy(d3, "                    ", 21);
+            return 3u;
+        break;
+        case END_EURIDYCE_BOX:               
+            memcpy(d1, "RRIPNTSIPMPTRRC     ", 21);
+            memcpy(d2, "RIPPPTZYYKCDISDBN   ", 21);
+            memcpy(d3, "FDRBTIN DYZFRBY     ", 21);
+            memcpy(d4, "YHYHCPPB T QRN DBHI ", 21);
+            memcpy(d5, "HBYDP RBYRRBYHCDI   ", 21);
+            memcpy(d6, "ZBMDY               ", 21);
+            return 6u;
+        break;
+        case ENDSCREEN_SEEYOUIN2027:
+            memcpy(d1, "      OGIYZTGDMS    ", 21);
+            memcpy(d2, "                    ", 21);
+            memcpy(d3, "       ARGTDMS!     ", 21);
+            return 3u;
+        break;
     }
     return 0u;
 }
@@ -426,6 +488,32 @@ UINT8 prepare_dialog_en(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d8, "THE HARD STONES   ", 21);
             memcpy(d9, "HARM EVERYTHING ON", 21);
             memcpy(d10, "ITS PATH.         ", 21);
+        break;
+        case HADES_OWL_SAVING:
+            memcpy(d0, "HAWK! THE OWL IS  ", 21);
+            memcpy(d1, "CERBERUS PRISONER.", 21);
+            memcpy(d2, "ONLY A STRONG SOUL", 21);
+            memcpy(d3, "MOVES THE BLOCK.  ", 21);
+            memcpy(d4, "FREEING THE BIRD  ", 21);
+            memcpy(d5, "AWAKENS ITS GUARD.", 21);
+            memcpy(d6, "PREPARE TO FACE   ", 21);
+            memcpy(d7, "THE TRIPLE HEADED ", 21);
+            memcpy(d8, "GUARDIAN  NEXT!   ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
+        case HADES_GUARDS_AWAKENED:
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "GUARDS HAVE BEEN  ", 21);
+            memcpy(d3, "ALERTED!          ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "THERE ARE         ", 21);
+            memcpy(d6, "SKELETONS ALL     ", 21);
+            memcpy(d7, "AROUND YOU!!      ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
+            memcpy(d10, "                  ", 21);
         break;
         case HADES_DEATH:
             memcpy(d0, "SON O MINE YOUR   ", 21);

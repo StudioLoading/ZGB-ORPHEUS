@@ -151,7 +151,6 @@ extern UINT8 river_verse;
 extern void level_common_start() BANKED;
 extern void level_common_update_play() BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
-extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;

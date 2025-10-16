@@ -21,6 +21,7 @@ extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
 
 void START() {
     THIS->lim_x = 10u;
@@ -146,4 +147,5 @@ void DESTROY() {
     if(stone_data->e_configured < 3){
         spawned_ball = 0u;
     }
+    spawn_death_animation(THIS->x - 4u, THIS->y + 24u);
 }

@@ -56,7 +56,6 @@ extern void init_write_dialog(UINT8 nlines) BANKED;
 extern void write_dialog() BANKED;
 extern void my_play_fx(UINT8 c, UINT8 mute_frames, UINT8 s0, UINT8 s1, UINT8 s2, UINT8 s3, UINT8 s4) BANKED;
 extern UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED;
-extern void press_release_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void draw_button(UINT16 x, UINT16 y, UINT8 t) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
 

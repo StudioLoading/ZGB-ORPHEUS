@@ -78,6 +78,7 @@ UINT8 dialog_skeleton_lyre = 0u;
 Sprite* s_block_00;
 Sprite* s_blade;
 Sprite* s_radamanthusshadow = 0;
+Sprite* s_owl = 0;
 UINT8 hades_music_started = 0u;
 UINT8 show_cartel = 0u;
 UINT8 death_countdown = 0u;
@@ -87,6 +88,7 @@ struct ItemSpawnedByCommon item_spawned_by_common = {
         .item_type = ITEM_NONE,
         .spawned = 0
 };
+UINT8 owl_freed = 0u;
 
 void play_death_music() BANKED;
 
@@ -106,6 +108,7 @@ extern UINT8 area_enemy_counter;
 extern UINT8 sprite_stack_top;
 extern UINT8 flag_button_repushable;
 extern UINT8 flag_paused;
+extern UINT8 changing_map;
 
 extern void e_configure(Sprite* s_enemy) BANKED;
 extern void level_common_start() BANKED;
@@ -123,6 +126,31 @@ void START() {
 	//SPRITES
 		if(sprite_stack_top > 0){
 			RestoreSprites();
+			if(current_map == HADES_10 && owl_freed == 1){
+				area_enemy_counter = 3;
+				Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 2u << 3), ((UINT16) 7u << 3));
+				e_configure(e_skeleton1);
+				Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 15u << 3));
+				e_configure(e_skeleton2);
+				Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
+				e_configure(e_skeleton3);
+				item_spawned_by_common.e_unique_id = e_skeleton3->unique_id;
+				item_spawned_by_common.sprite_type = SpriteSkeleton;
+				item_spawned_by_common.item_type = HEART;
+				item_spawned_by_common.spawned = 0;
+			}
+			if(current_map == HADES_22 && owl_freed == 1){
+				Sprite* e_skeleton1 = SpriteManagerAdd(SpriteFrost, ((UINT16) 1u << 3), ((UINT16) 10u << 3));
+				e_configure(e_skeleton1);
+				Sprite* e_skeleton2 = SpriteManagerAdd(SpriteFrost, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
+				e_configure(e_skeleton2);
+				item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
+				item_spawned_by_common.sprite_type = SpriteFrost;
+				item_spawned_by_common.item_type = HEART;
+				item_spawned_by_common.spawned = 0;
+				Sprite* e_skeleton3 = SpriteManagerAdd(SpriteFrost, ((UINT16) 7u << 3), ((UINT16) 13u << 3));
+				e_configure(e_skeleton3);
+			}
 		}else if(solved_map < current_map){
 			item_spawned_by_common.e_unique_id = 0;
 			item_spawned_by_common.sprite_type = 0;
@@ -213,17 +241,15 @@ void START() {
 					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_10:{
-					area_enemy_counter = 3;
-					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 2u << 3), ((UINT16) 5u << 3));
-					e_configure(e_skeleton1);
-					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 14u << 3), ((UINT16) 15u << 3));
-					e_configure(e_skeleton2);
-					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteSkeleton, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
-					e_configure(e_skeleton3);
-					item_spawned_by_common.e_unique_id = e_skeleton3->unique_id;
-					item_spawned_by_common.sprite_type = SpriteSkeleton;
-					item_spawned_by_common.item_type = HEART;
-					item_spawned_by_common.spawned = 0;
+					area_enemy_counter = 1;
+					owl_freed = 0u;
+					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 9u << 3, 6u << 3);
+					s_owl = SpriteManagerAdd(SpriteOwl, ((UINT16) 3u << 3) + 7u, ((UINT16) 4u << 3) - 4u);
+					e_configure(s_owl);	
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 3u << 3) + 6u, ((UINT16) 6u << 3) + 2u);
+					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
+					block00_data->item_type = BLOCK;
+					block00_data->i_configured = 1u;
 				}break;
 				//BOSS CERBERUS
 				case HADES_11:{
@@ -362,17 +388,10 @@ void START() {
 					item_spawned_by_common.spawned = 0;
 				}break;
 				case HADES_22:{
-					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteFrost, ((UINT16) 1u << 3), ((UINT16) 10u << 3));
-					e_configure(e_skeleton1);
-					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteFrost, ((UINT16) 11u << 3), ((UINT16) 8u << 3));
-					e_configure(e_skeleton2);
-					item_spawned_by_common.e_unique_id = e_skeleton2->unique_id;
-					item_spawned_by_common.sprite_type = SpriteFrost;
-					item_spawned_by_common.item_type = HEART;
-					item_spawned_by_common.spawned = 0;
-					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteFrost, ((UINT16) 7u << 3), ((UINT16) 13u << 3));
-					e_configure(e_skeleton3);
-					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 11u << 3), ((UINT16) 12u << 3));
+					owl_freed = 0u;
+					s_owl = SpriteManagerAdd(SpriteOwl, ((UINT16) 15u << 3) + 2u, ((UINT16) 8u << 3) + 4u);
+					e_configure(s_owl);	
+					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 15u << 3) + 2u, ((UINT16) 12u << 3));
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
 					block00_data->i_configured = 1u;
@@ -380,10 +399,8 @@ void START() {
 				case HADES_23:{
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteMinion, ((UINT16) 6u << 3), ((UINT16) 12u << 3));
 					e_configure(e_skeleton1);
-					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 10u << 3), ((UINT16) 9u << 3));
+					Sprite* e_skeleton2 = SpriteManagerAdd(SpriteMinion, ((UINT16) 16u << 3), ((UINT16) 13u << 3));
 					e_configure(e_skeleton2);
-					Sprite* e_skeleton3 = SpriteManagerAdd(SpriteMinion, ((UINT16) 16u << 3), ((UINT16) 13u << 3));
-					e_configure(e_skeleton3);
 					s_block_00 = SpriteManagerAdd(SpriteBlock, ((UINT16) 3u << 3), ((UINT16) 13u << 3));
 					struct ItemInfo* block00_data = (struct ItemInfo*) s_block_00->custom_data;
 					block00_data->item_type = BLOCK;
@@ -579,6 +596,19 @@ void UPDATE() {
 				case HADES_06:
 					prepare_dialog(HADES_ROLLING_STONES);
 				break;
+				case HADES_10:{
+					prepare_dialog(HADES_OWL_SAVING);
+					struct EnemyInfo* owl_data = (struct EnemyInfo*) s_owl->custom_data;
+					if(owl_data->e_configured > 3){
+						prepare_dialog(HADES_GUARDS_AWAKENED);
+					}
+				}break;
+				case HADES_22:{
+					struct EnemyInfo* owl_data = (struct EnemyInfo*) s_owl->custom_data;
+					if(owl_data->e_configured > 3){
+						prepare_dialog(HADES_GUARDS_AWAKENED);
+					}
+				}break;
 			}
 			SaveSprites();
 			SetState(StateCartel);
@@ -623,7 +653,7 @@ void UPDATE() {
 				}
 				init_block_button = 1u;
 			}
-			if(button_pressed == 0){
+			if(button_pressed == 0 && changing_map == 0){
 				UINT8 tile = GetScrollTile((s_block_00->x + 8) >> 3, (s_block_00->y+8) >> 3);
 				if(tile == 67u || tile == 68u || tile == 69u || tile == 70u){
 					press_release_button(button_posx, button_posy, 71u);

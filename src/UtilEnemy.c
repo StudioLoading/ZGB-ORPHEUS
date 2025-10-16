@@ -47,6 +47,7 @@ extern void minion_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void skeletoncerberus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void impminos_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+extern void owl_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void boss_hit() BANKED;
 
 extern UINT8 is_enemy(UINT8 arg_sprite_type) BANKED;
@@ -154,6 +155,9 @@ void e_update_anim(Sprite* arg_s_enemy) BANKED{
         break;
         case SpriteRadamanthus:
             radamanthus_update_anim(arg_s_enemy, e_data->e_state);
+        break;
+        case SpriteOwl:
+            owl_update_anim(arg_s_enemy, e_data->e_state);
         break;
     }
 }
