@@ -19,6 +19,11 @@ Sprite* s_puff_right_0 = 0;
 Sprite* s_puff_right_1 = 0;
 UINT8 init_puffs = 0u;
 
+void death_check_collision(Sprite* arg_s_death) BANKED;
+
+extern Sprite* s_orpheus;
+extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+
 void START() {
     struct EnemyInfo* d_data = (struct EnemyInfo*) THIS->custom_data;
     d_data->frmskip = 0;
@@ -176,6 +181,7 @@ void UPDATE() {
             }
             THIS->x += d_data->vx;
             THIS->y += d_data->vy;
+            death_check_collision(THIS);
         break;
         case 3u: //remove
             SpriteManagerRemoveSprite(THIS);
@@ -183,6 +189,21 @@ void UPDATE() {
     }
     d_data->frmskip = 0;
     d_data->wait++;
+}
+
+void death_check_collision(Sprite* arg_s_death) BANKED{
+    UINT8 scroll_abl_tile;
+    Sprite* iablspr;
+    SPRITEMANAGER_ITERATE(scroll_abl_tile, iablspr) {
+        if(CheckCollision(arg_s_death, iablspr)) {
+            switch(iablspr->type){
+                case SpriteOrpheus:
+                case SpriteOrpheuslyre:
+                    orpheus_change_state(s_orpheus, HIT);
+                break;
+            }
+        }
+    }
 }
 
 void DESTROY() {
