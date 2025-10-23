@@ -20,6 +20,7 @@ extern void boss_hit() BANKED;
 extern void e_change_state(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
+extern void radamanthus_hit(Sprite* s_enemy) BANKED;
 
 void START() {
     SetSpriteAnim(THIS, a_radamanthusbrick, 1u);
@@ -49,15 +50,11 @@ void UPDATE() {
             switch(ibrickspr->type){
                 case SpriteOrpheus:
                 case SpriteOrpheuslyre:
-                    if((s_radamanthusshadow->y - THIS->y) < 16){
-                        orpheus_change_state(s_orpheus, HIT);
-                    }
+                    orpheus_change_state(s_orpheus, HIT);
                 break;
                 case SpriteRadamanthus:
-                    if((s_radamanthusshadow->y - THIS->y) < 16){
-                        boss_hit();
-                        e_change_state(s_radamanthusshadow, HIT);
-                        spawn_item(HEART, THIS->x, THIS->y - 16u, 0);
+                    if((s_radamanthusshadow->y - THIS->y) < 24){
+                        radamanthus_hit(ibrickspr);
                         SpriteManagerRemoveSprite(THIS);
                     }
                 break;

@@ -23,6 +23,8 @@ void death_check_collision(Sprite* arg_s_death) BANKED;
 
 extern Sprite* s_orpheus;
 extern void orpheus_change_state(Sprite* arg_s_orpheus, SPRITE_STATES arg_new_state) BANKED;
+extern void radamanthus_hit(Sprite* s_enemy) BANKED;
+
 
 void START() {
     struct EnemyInfo* d_data = (struct EnemyInfo*) THIS->custom_data;
@@ -200,6 +202,9 @@ void death_check_collision(Sprite* arg_s_death) BANKED{
                 case SpriteOrpheus:
                 case SpriteOrpheuslyre:
                     orpheus_change_state(s_orpheus, HIT);
+                break;
+                case SpriteRadamanthus:
+                    radamanthus_hit(iablspr);
                 break;
             }
         }

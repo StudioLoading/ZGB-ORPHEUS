@@ -43,6 +43,7 @@ extern Sprite* s_aeacus_wing_left;
 extern Sprite* s_aeacus_wing_right;
 extern UINT16 saved_orpheus_posx;
 extern UINT16 saved_orpheus_posy;
+extern UINT8 boss_intro;
 
 void aeacusbody_change_state(Sprite* arg_s_aeacusbody, SPRITE_STATES arg_new_state) BANKED;
 UINT8 aeacusbody_move_to_point(Sprite* aea_s_aeacusbody, UINT16 arg_final_posx, UINT16 arg_final_posy) BANKED;
@@ -104,7 +105,7 @@ void UPDATE() {
     }
     switch(aeacus_phase){
         case AEA_IDLE:
-            if(boss_hp_current == 0){
+            if(boss_hp_current == 0 && boss_intro == 3){
                 aea_move_to_dead(THIS);
             }
             aeabody_idle_wait++;

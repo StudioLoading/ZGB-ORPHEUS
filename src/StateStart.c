@@ -16,14 +16,14 @@ IMPORT_MAP(inbetweenmap);
 
 // START FROM OTHER POSITION - TEST ONLY
 /*
-#define TEST_SPAWNX_HADES_IN 2
-#define TEST_SPAWNY_HADES_IN 3
+#define TEST_SPAWNX_HADES_IN 7
+#define TEST_SPAWNY_HADES_IN 14
 
-MACROMAP solved_map = HADES_23; // NONE
-MACROMAP current_map = HADES_24; // TUTORIAL
-MACROMAP next_map = HADES_25; // HADES_00
-MACROMAP prev_map = HADES_23; // NONE
-MACROMAP max_map = HADES_24; // TUTORIAL
+MACROMAP solved_map = HADES_25; // NONE
+MACROMAP current_map = HADES_26; // TUTORIAL
+MACROMAP next_map = BOSS_HADES; // HADES_00
+MACROMAP prev_map = HADES_25; // NONE
+MACROMAP max_map = HADES_26; // TUTORIAL
 
 UINT16 orpheus_spawnx = ((UINT16) TEST_SPAWNX_HADES_IN << 3) + 4u;//((UINT16) 28u << 3) - 4u;
 UINT16 orpheus_spawny = ((UINT16) TEST_SPAWNY_HADES_IN << 3) + 2u;//((UINT16) 79u << 3);

@@ -1,5 +1,6 @@
 PRODUZIONE:
-
+- libretto x2 lang
+- box x2 lang
 
 EURIDYCE: BACK TO HELL
 - il gufo è una super arma secondaria temporizzata attivabile e consumabile once con SELECT
@@ -57,15 +58,14 @@ PAD2 sulla SNES, prendere spunto da:
 
 PNG2MAP
 cd C:\ZGB-2023.0\tools\png2map\
-png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\mapendscreen.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\mapendscreen.gbm
+png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\lokman_tileset.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\lokmanmap.gbm
 
-GBM GBR TO PNG comando oppure da GBMB c'è Copy as Bitmap e incollare su un paint!
-cd C:\ZGB-2023.0\tools\png2gbtiles
-png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\mapshades020.gbm -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades020.png
-png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\mapshades002t.gbm -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades002_TILES.png
-png2gbtiles C:\GB-2023.0\ZGB-ORPHEUS\res\sprites\*.gbr -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\mapshades002_TILES.png
-for %f in (C:\GB-2023.0\ZGB-ORPHEUS\res\sprites\*.gbr) do png2gbtiles %f -png -c -pal=mypal.pal C:\ZGB-2023.0\tools\png2gbtiles\%f%.png
+GBM TO PNG
+GameBoyMapBuilder ha la funzione "Copy as Bitmap" e la incolli su Paint.NET
 
+GBR TO PNG
+cd C:\ZGB-2023.0\tools\gbr2png
+gbr2png.exe C:\ZGB-2023.0\ZGB-ORPHEUS\res\fontjbw.gbr ./
 
 maypal.pal file di testo contenente solo le seguenti
 #C6D783
@@ -75,8 +75,10 @@ maypal.pal file di testo contenente solo le seguenti
 ovviamente palette del Paint.NET con cui ho fatto il png contiene gli stessi codici, senza # e con FF iniziali per azzerare opacità
 png 160x144
 
-あ=A, い=B, う=C, え=D, お=E, か=F, き=G, く=H, け=I, こ=J, さ=K, し=L, す=M, せ=N, そ=O, た=P, ち=Q, つ=R, て=S, と=T, な=U, に=V, ぬ=W, ね=X, の=Y, は=Z, ひ=0, ふ=1, へ=2, ほ=3, ま=4, み=5, む=6, め=7, も=8, や=9, ゆ=!, よ=', ら=(, り=), る=,, れ=., ろ=:, わ=?, を=-, ず=[, ご=]
 
+あ=A い=B う=C え=D お=E か=F き=G く=H け=I こ=J さ=K し=L す=M せ=N そ=O た=P ち=Q つ=R て=S と=T な=U に=V ん=W ね=X の=Y は=Z ひ=0 ふ=1 へ=2 ほ=3 ま=4 み=5 む=6 め=7 も=8 や=9 ゆ=! よ=' ら=( り=) る=, れ=. ろ=: わ=? を=- ず=[ ご=]
+
+ず=[
 
 ROMUSAGE
 C:\GB\ZGBNEW\tools\romusage-main\bin\romusage.exe C:\GB\ZGBNEW\ZGB-template-master\Debug\ARROWS_Debug.noi -g

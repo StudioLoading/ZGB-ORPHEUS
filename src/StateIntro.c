@@ -151,68 +151,68 @@ void print_intro_en() BANKED{
 
 void print_intro_jp() BANKED{
     switch(intro_page_counter){
-        case 0u:
-            PRINT(0,11, "   6FL6FL  F5YHUV   ");
-            PRINT(0,12, "     A,EPJTEP7      ");
-            PRINT(0,13, "     1P)YJJ(Z0T     ");
-            PRINT(0,14, "     EPJZCPC0T      ");
-            PRINT(0,15, "    EP7Z F.Y AB     ");
-            PRINT(0,16, "   1P)ZTJNLQPVQPFF  ");
-            PRINT(0,17, "                    ");
+        case 0u:   
+            PRINT(0,11, "  6FL 6FL JPB G)L9  ");
+            PRINT(0,12, "    V 1FH ABLAC     ");
+            PRINT(0,13, "    DB! T VC1       ");
+            PRINT(0,14, "    F B4LP F.(      ");
+            PRINT(0,15, "    Y U4D Z E,2CM   ");
+            PRINT(0,16, "     T DC)!SBN      ");
+            PRINT(0,17, "        SLP         ");
         break;
         case 1u:
-            PRINT(0,11, "                    ");
-            PRINT(0,12, "   1P)ZLA?NVH(LP    ");
-            PRINT(0,13, "                    ");
-            PRINT(0,14, "   PST]TZCPT(P)     ");
-            PRINT(0,15, "                    ");
-            PRINT(0,16, "  4BVQZCRJHLH MGP   ");
+            PRINT(0,11, "    F.( Z LA?N      ");
+            PRINT(0,12, "     V H(L OY       ");
+            PRINT(0,13, "    00 Z E,2CM      ");
+            PRINT(0,14, "     F PS]T S       ");
+            PRINT(0,15, "      FUS, A4B      ");
+            PRINT(0,16, "      EY FH V       ");
+            PRINT(0,17, "     B:T(.S BP      ");
+        break;
+        case 2u:
+            PRINT(0,11, "       1JC V 8      ");
+            PRINT(0,12, "     DC)!SBN Z A,   ");
+            PRINT(0,13, "     0 20 - 1CP     ");
+            PRINT(0,14, "     20 Z 5 - 48,   ");
+            PRINT(0,15, "    P7 V FYO - F5   ");
+            PRINT(0,16, "      PPQ V TH F    ");
+            PRINT(0,17, "         4?RP       ");
+        break;
+        case 3u:
+            PRINT(0,11, "       E,2CM        ");
+            PRINT(0,12, "       Z ABM        ");
+            PRINT(0,13, "      , VC1 -       ");
+            PRINT(0,14, "       GI Y F(      ");
+            PRINT(0,15, "      48:C T LS     ");
+            PRINT(0,16, "      !CF V OY      ");
+            PRINT(0,17, "      20 - PELP     ");
+        break;
+        case 4u:
+            PRINT(0,11, "       FULB VC1     ");
+            PRINT(0,12, "       Z PPQ V      ");
+            PRINT(0,13, "      LV E,2CM -    ");
+            PRINT(0,14, "        FUL5        ");
+            PRINT(0,15, "       Y UF V       ");
+            PRINT(0,16, "      0T) YJLP      ");
             PRINT(0,17, "                    ");
         break;
-        case 2u:     
-            PRINT(0,11, "       FULBABZ      ");
-            PRINT(0,12, "A,0TR[U TE,P        ");
-            PRINT(0,13, "OYOYABYBVQ          ");
-            PRINT(0,14, "ZGDSB,PEPJ          ");
-            PRINT(0,15, "ZP_0T) V URP        ");
-            PRINT(0,16, "FUL5 - YJQP         ");
-            PRINT(0,17, "                    ");
+        case 5u:
+            PRINT(0,11, "      LFL ?FG       ");
+            PRINT(0,12, "       DB! Z        ");
+            PRINT(0,13, "     AG(7UFRP       ");
+            PRINT(0,14, "    UNU( UH URP     ");
+            PRINT(0,15, "    M2S Y P4LB      ");
+            PRINT(0,16, "F 8BFB 2 Y 5Q - 5RI ");
+            PRINT(0,17, " , JT - LRSB P F( P ");
         break;
-        case 3u:     
-            PRINT(0,11, "BUP AB Y BVQ - FDM  ");
-            PRINT(0,12, "P7 V ?FB EPJ Z 1FB  ");
-            PRINT(0,13, "!CG - 5[F( 8QP      ");
-            PRINT(0,14, "OLN FUL5 - W2S      ");
-            PRINT(0,15, "L Y HUV Y F5        ");
-            PRINT(0,16, "T AC JT - G4P       ");
-            PRINT(0,17, "                    ");
-        break;
-        case 4u:     
-            PRINT(0,11, "F?BKO' U AB Z       ");
-            PRINT(0,12, "GYV TE,P OY         ");
-            PRINT(0,13, "BVQ Z GDS B,P       ");
-            PRINT(0,14, "EPJ Z P_0T) V       ");
-            PRINT(0,15, "URP F.Y JJ( V       ");
-            PRINT(0,16, "1FB FUL5 ] YJKSP    ");
-            PRINT(0,17, "                    ");
-        break;
-        case 5u:       
-            PRINT(0,11, "LFLB ?FB EPJ        ");
-            PRINT(0,12, "AG(7UFQP F. Z L     ");
-            PRINT(0,13, "Y HUV Y F5          ");
-            PRINT(0,14, "-LRTBA.             ");
-            PRINT(0,15, "T FUL5 - AC JT      ");
-            PRINT(0,16, "- G4P               ");
-            PRINT(0,17, "                    ");
-        break;
-        case 6u:     
-            PRINT(0,11, "BUP AB Y BVQ        ");
-            PRINT(0,12, "- FDM P7 V ?FB EPJ  ");
-            PRINT(0,13, "Z 1FB !CG - 5[F(    ");
-            PRINT(0,14, "8QP OLN FUL5 -      ");
-            PRINT(0,15, "W2S L Y HUV Y       ");
-            PRINT(0,16, "F5 T AC JT - G4P    ");
-            PRINT(0,17, "                    ");
+        case 6u:
+            PRINT(0,11, "     DC)!SBN - '5   ");
+            PRINT(0,12, "  FD( N , IRB - LP  ");
+            PRINT(0,13, " E,2CM Z !CG - AR7  ");
+            PRINT(0,14, "   8BFB Y F5 LLW    ");
+            PRINT(0,15, "    V PPQ V PQ      ");
+            PRINT(0,16, "     6F C JT -      ");
+            PRINT(0,17, "       IRB LP       ");
         break;
     }
 }

@@ -25,8 +25,11 @@ extern void e_management(Sprite* s_enemy) BANKED;
 extern void e_check_sprite_collision(Sprite* s_enemy) BANKED;
 extern void e_destroy(Sprite* s_enemy) BANKED;
 extern void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, UINT8 arg_hp_max) BANKED;
+extern void spawn_death_animation(UINT16 spawnx, UINT16 spawny) BANKED;
+extern void boss_hit() BANKED;
 
 void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED;
+void radamanthus_hit(Sprite* s_enemy) BANKED;
 
 
 void START(){
@@ -67,6 +70,12 @@ void UPDATE(){
         spawn_item(HEART, THIS->x + 16, THIS->y + 8, 0);
         SpriteManagerRemoveSprite(THIS);
     }
+}
+
+void radamanthus_hit(Sprite* s_enemy) BANKED{
+    boss_hit();
+    e_change_state(s_enemy, HIT);
+    spawn_item(HEART, s_enemy->x, s_enemy->y - 16u, 0);
 }
 
 void radamanthus_update_anim(Sprite* s_enemy, SPRITE_STATES new_state) BANKED{

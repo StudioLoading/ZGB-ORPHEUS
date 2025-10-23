@@ -246,9 +246,7 @@ void START() {
 		}
 }
 
-void UPDATE() {	
-	if(a_walk_counter_y == 0 && boss_intro == 1){
-	}
+void UPDATE() {
 	switch(boss_intro){
 		case 1:{
 			if(a_walk_counter_y == 0){

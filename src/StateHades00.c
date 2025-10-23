@@ -224,7 +224,6 @@ void START() {
 					if(orpheus_haskey == 0 || (orpheus_haskey == 1 && solved_map > current_map)){
 						spawn_item(KEY,  ((UINT16) 12u << 3), ((UINT16) 15u << 3) - 3u, 0);
 					}
-					Sprite* s_carteltext = SpriteManagerAdd(SpriteCarteltext, 1u << 3, 4u << 3);
 				}break;
 				case HADES_09:{
 					Sprite* e_skeleton1 = SpriteManagerAdd(SpriteInfernalimp, ((UINT16) 17u << 3), ((UINT16) 15u << 3));
