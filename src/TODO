@@ -58,7 +58,7 @@ PAD2 sulla SNES, prendere spunto da:
 
 PNG2MAP
 cd C:\ZGB-2023.0\tools\png2map\
-png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\lokman_tileset.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\lokmanmap.gbm
+png2gbtiles.exe C:\ZGB-2023.0\tools\png2map\mapcredit1.png -gbm -g -pal=mypal.pal C:\ZGB-2023.0\tools\png2map\mapcredit1.gbm
 
 GBM TO PNG
 GameBoyMapBuilder ha la funzione "Copy as Bitmap" e la incolli su Paint.NET
