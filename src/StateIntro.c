@@ -24,6 +24,8 @@ IMPORT_MAP(intro3);
 IMPORT_MAP(intro4);
 IMPORT_TILES(font);
 IMPORT_TILES(fontj);
+IMPORT_TILES(fontjintro0);
+IMPORT_TILES(fontjintro1);
 
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
@@ -72,7 +74,13 @@ void START(){
     }
     switch(chosen_language){
         case ENG: INIT_FONT(font, PRINT_BKG); break;
-        case JAP: INIT_FONT(fontj, PRINT_BKG); break;
+        case JAP: {
+            switch(intro_page_counter){
+                case 0: INIT_FONT(fontjintro0, PRINT_BKG); break;
+                case 1: INIT_FONT(fontjintro1, PRINT_BKG); break;
+            }
+            //INIT_FONT(fontj, PRINT_BKG); 
+        }break;
     }
     
     print_target = PRINT_BKG;
@@ -151,23 +159,23 @@ void print_intro_en() BANKED{
 
 void print_intro_jp() BANKED{
     switch(intro_page_counter){
-        case 0u:   
-            PRINT(0,11, "  6FL 6FL JPB G)L9  ");
-            PRINT(0,12, "    V 1FH ABLAC     ");
-            PRINT(0,13, "    DB! T VC1       ");
-            PRINT(0,14, "    F B4LP F.(      ");
-            PRINT(0,15, "    Y U4D Z E,2CM   ");
-            PRINT(0,16, "     T DC)!SBN      ");
-            PRINT(0,17, "        SLP         ");
+        case 0u:
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "    QDG9QDGVWXYM9   ");
+            PRINT(0,13, "   Z01234LBCPCGTL   ");
+            PRINT(0,14, "    5W67LBCL'CHB    ");
+            PRINT(0,15, "  FODEABGA8KBPGI.   ");
+            PRINT(0,16, "                    ");
+            PRINT(0,17, "                    ");
         break;
         case 1u:
-            PRINT(0,11, "    F.( Z LA?N      ");
-            PRINT(0,12, "     V H(L OY       ");
-            PRINT(0,13, "    00 Z E,2CM      ");
-            PRINT(0,14, "     F PS]T S       ");
-            PRINT(0,15, "      FUS, A4B      ");
-            PRINT(0,16, "      EY FH V       ");
-            PRINT(0,17, "     B:T(.S BP      ");
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "  QDGB4QDGBWXXYZXM4 ");
+            PRINT(0,13, "  Z01234XKCCPKGUL   ");
+            PRINT(0,14, "    0X12LBCLSCHB    ");
+            PRINT(0,15, "  FODEABGA3KBPGI5   ");
+            PRINT(0,16, "                    ");
+            PRINT(0,17, "                    ");
         break;
         case 2u:
             PRINT(0,11, "       1JC V 8      ");
