@@ -15,7 +15,7 @@ EURIDYCE: BACK TO HELL
 
 
 GENERAZIONE QR CODE DA POWERSHELL
-New-QRCodeURI -URI 'https://www.youtube.com/watch?v=FuAXHr72XHk' -Width 16 -OutPath 'C:\Users\checc\BN\QR-YT-SEGAHW.PNG.png'
+New-QRCodeURI -URI 'https://www.instagram.com/studioloading/' -Width 16 -OutPath 'C:\Users\checc\GB\QR-instagram.png'
 
 
 GIF TO PNG FRAMES

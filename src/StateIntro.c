@@ -26,6 +26,7 @@ IMPORT_TILES(font);
 IMPORT_TILES(fontj);
 IMPORT_TILES(fontjintro0);
 IMPORT_TILES(fontjintro1);
+IMPORT_TILES(fontjintro2);
 
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
@@ -78,6 +79,7 @@ void START(){
             switch(intro_page_counter){
                 case 0: INIT_FONT(fontjintro0, PRINT_BKG); break;
                 case 1: INIT_FONT(fontjintro1, PRINT_BKG); break;
+                case 2: INIT_FONT(fontjintro2, PRINT_BKG); break;
             }
             //INIT_FONT(fontj, PRINT_BKG); 
         }break;
@@ -170,21 +172,21 @@ void print_intro_jp() BANKED{
         break;
         case 1u:
             PRINT(0,11, "                    ");
-            PRINT(0,12, "  QDGB4QDGBWXXYZXM4 ");
-            PRINT(0,13, "  Z01234XKCCPKGUL   ");
-            PRINT(0,14, "    0X12LBCLSCHB    ");
-            PRINT(0,15, "  FODEABGA3KBPGI5   ");
-            PRINT(0,16, "                    ");
+            PRINT(0,12, "     CJRR45678F     ");
+            PRINT(0,13, "    0123456789D     ");
+            PRINT(0,14, "       :-RAKB       ");
+            PRINT(0,15, "     [EGLLOFPQRS    ");
+            PRINT(0,16, "     :BKS:EJBPGI    ");
             PRINT(0,17, "                    ");
         break;
         case 2u:
-            PRINT(0,11, "       1JC V 8      ");
-            PRINT(0,12, "     DC)!SBN Z A,   ");
-            PRINT(0,13, "     0 20 - 1CP     ");
-            PRINT(0,14, "     20 Z 5 - 48,   ");
-            PRINT(0,15, "    P7 V FYO - F5   ");
-            PRINT(0,16, "      PPQ V TH F    ");
-            PRINT(0,17, "         4?RP       ");
+            PRINT(0,11, "     ZJCU5-A'XD     ");
+            PRINT(0,12, "      EGI]KM.ZN     ");
+            PRINT(0,13, "      OL2B2LP[      ");
+            PRINT(0,14, "     0M]FWQR.F3     ");
+            PRINT(0,15, "      -SH]FWQR      ");
+            PRINT(0,16, "      .H'LT2LP[     ");
+            PRINT(0,17, "                    ");
         break;
         case 3u:
             PRINT(0,11, "       E,2CM        ");
