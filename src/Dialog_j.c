@@ -36,198 +36,163 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED;
 
 UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
     switch(arg_whostalking){
-        // Dialog Case: FIRSTEVER
         case FIRSTEVER:
-            memcpy(d1, "8B1 Y 8 Y         ", 21);
-            memcpy(d2, "Z TE H UB         ", 21);
-            memcpy(d3, "4M PS]T - 5RI     ", 21);
-            memcpy(d4, "UI. Z ZZ F)E2     ", 21);
-            memcpy(d5, "F JY AP) V EB     ", 21);
-            memcpy(d6, "S BRP T E8 C      ", 21);
-            memcpy(d7, "BJC               ", 21);
-            memcpy(d8, "                  ", 21);
-            memcpy(d9, "                  ", 21);
-            return 9u;
-        break;
-
-// Dialog Case: MISSING_LYRE
-        case MISSING_LYRE:
-            memcpy(d1, "       MM 7 UB      ", 21);
-            memcpy(d2, "      4M PS]T -     ", 21);
-            memcpy(d3, "      5RI UI. Z     ", 21);
-            return 3u;
-        break;
-
-// Dialog Case: FOUND_LYRE
-        case FOUND_LYRE:
-            memcpy(d1, "      MJB PS]T S    ", 21);
-            memcpy(d2, "     SG - 0GR IP)   ", 21);
-            memcpy(d3, "      E0D KKP)G     ", 21);
-            memcpy(d4, "      EBZ(RP) M     ", 21);
-            memcpy(d5, "     , K4K4 U CP    ", 21);
-            memcpy(d6, "      - FUS(. ,     ", 21);
+            memcpy(d1, "      )3DXSG      ", 21);
+            memcpy(d2, "      HNOUA       ", 21);
+            memcpy(d3, "   J7,9[-(K0Z8.   ", 21);
+            memcpy(d4, "    GGDLMDWE5     ", 21);
+            memcpy(d5, "    QDMCRAIG71    ", 21);
+            memcpy(d6, "       W,AO!      ", 21);
             return 6u;
         break;
-
-// Dialog Case: PUSH_BUTTON
+        case MISSING_LYRE:
+            memcpy(d1, "     J1MHGYTUA.     ", 21);
+            memcpy(d2, "                    ", 21);
+            memcpy(d3, "    J79[-(K0ZUAH!   ", 21);
+            return 3u;
+        break;
+        case FOUND_LYRE:
+            memcpy(d1, "      9[-(LWP,      ", 21);
+            memcpy(d2, " MHUIA'Y,RTK]TZ8E5, ", 21);
+            memcpy(d3, "   M6L4:E5VIMHXYTI. ", 21);
+            return 3u;
+        break;
         case PUSH_BUTTON:
-            memcpy(d1, "     AY 3PW Y CD    ", 21);
-            memcpy(d2, "     V PR JT S 8    ", 21);
-            memcpy(d3, "      Y - AI(. ,    ", 21);
+            memcpy(d1, "       DF2QEZH,     ", 21);
+            memcpy(d2, "    XSKW84PI0EA1.   ", 21);
+            memcpy(d3, "                    ", 21);
             return 3u;
         break;
-
-// Dialog Case: PRESS_INTERACT
         case PRESS_INTERACT:
-            memcpy(d1, "    1.M Y BWP(HT    ", 21);
-            memcpy(d2, "   3PW - EL S PS]T  ", 21);
-            memcpy(d3, "     - S V B. :     ", 21);
+            memcpy(d1, "                    ", 21);
+            memcpy(d2, "      9[-(KRQAPI    ", 21);
+            memcpy(d3, "                    ", 21);
             return 3u;
         break;
-
-    // Dialog Case: HADES_ENTRANCE
         case HADES_ENTRANCE:
-            memcpy(d1, " GP O 8B1 Y 8       ", 21);
-            memcpy(d2, " Y P DC)!SBN G5 -   ", 21);
-            memcpy(d3, " MHB PM TW U        ", 21);
-            memcpy(d4, " L.W V Q'H 7W       ", 21);
-            memcpy(d5, " L'C T 8            ", 21);
+            memcpy(d1, "       ZAQZAE       ", 21);
+            memcpy(d2, "       )3DXS!       ", 21);
+            memcpy(d3, "         ),         ", 21);
+            memcpy(d4, "     BU47EV8RI!     ", 21);
+            memcpy(d5, "   SUMSUSLW'FHX!    ", 21);
             memcpy(d6, "                  ", 21);
             return 6u;
         break;
-
-// Dialog Case: HADES_WELCOME
         case HADES_WELCOME:
-            memcpy(d0, "'CJO ?F 6MJ ' J.( ", 21);
-            memcpy(d1, "Y 8L S FP) FI ,   ", 21);
-            memcpy(d2, "O.O. Y 29 V Z ZM ,", 21);
-            memcpy(d3, "F A , O. - TB S   ", 21);
-            memcpy(d4, "SHQ Y T0( - AI ,  ", 21);
-            memcpy(d5, "YP FLJH A . KM.   ", 21);
-            memcpy(d6, "Z KBAB Y 8 Y      ", 21);
-            memcpy(d7, "- T) 8TN ,        ", 21);
-            memcpy(d8, "P: C              ", 21);
-            memcpy(d9, "                  ", 21);
+            memcpy(d0, "7OTE,SVM7.        ", 21);
+            memcpy(d1, "NJ2QUZ034K        ", 21);
+            memcpy(d2, "BTDMRF.           ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "56QG89)BWI.       ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "RPKHOHOHY:(D-?LWO.", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "BCMAXDL,          ", 21);
+            memcpy(d9, "WAVIXDKVO2I1'F    ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: HADES_MOVE_BLOCK
         case HADES_MOVE_BLOCK:
-            memcpy(d0, "BHR F Y 5Q Z      ", 21);
-            memcpy(d1, "BL S 1KF .        ", 21);
-            memcpy(d2, "S B , F           ", 21);
-            memcpy(d3, "CJF M JT F SG ,   ", 21);
-            memcpy(d4, "BL - !F Y 3PW Y   ", 21);
-            memcpy(d5, "CD V EL S         ", 21);
-            memcpy(d6, "8 Y - AI :        ", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "ACY0(LDELPRAJV.   ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "ACKFGBCR,3[HMK    ", 21);
+            memcpy(d5, "N:OXSL]48I7F1.    ", 21);
+            memcpy(d6, "                  ", 21);
             memcpy(d7, "                  ", 21);
             memcpy(d8, "                  ", 21);
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
-            break;
-
-// Dialog Case: HADES_USE_KEY
+        break; 
         case HADES_USE_KEY:
-            memcpy(d0, "TCQ!C             ", 21);
-            memcpy(d1, "1,B FG Y FFRP     ", 21);
-            memcpy(d2, "T0( - 5RI , P: C  ", 21);
-            memcpy(d3, "AI (. ,           ", 21);
-            memcpy(d4, "FG - S V B.       ", 21);
-            memcpy(d5, "CP - FD, Y T EU L ", 21);
-            memcpy(d6, "3C3C S T0( V      ", 21);
-            memcpy(d7, "BWP(HT LS RF C YP ", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "0(DH(NFYOIABGD    ", 21);
+            memcpy(d2, "BB-EJ?K0Z8I1'F.   ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "BGLWPSW8IMHLYTI.  ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "UA'KB2I7FQJ?K     ", 21);
+            memcpy(d7, "VFXCR07F.         ", 21);
             memcpy(d8, "                  ", 21);
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
-            break;
-
-// Dialog Case: HADES_KILL_ENEMY
+        break;
         case HADES_KILL_ENEMY:
-            memcpy(d0, "BHR F Y 8 Y Z     ", 21);
-            memcpy(d1, "L!C B V 8B1 Y     ", 21);
-            memcpy(d2, "NB1R F YJR S B    ", 21);
-            memcpy(d3, "UB ZA B V Y5 AH   ", 21);
-            memcpy(d4, "1ATCAM 1ABA -     ", 21);
-            memcpy(d5, "!C) V )'C N'      ", 21);
-            memcpy(d6, "LFL M2S Y         ", 21);
-            memcpy(d7, "NB1R F 3YE S      ", 21);
-            memcpy(d8, "GM RH ?I S Z UB   ", 21);
-            memcpy(d9, "YS Q!C B N'       ", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "M)3DBAIZE(LAUO    ", 21);
+            memcpy(d2, "UPYXSLWO.         ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "1JCD0DNK6F5QZB2.  ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "V7RDBAIZQ]LTOHG   ", 21);
+            memcpy(d7, "B84UA9.           ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: HADES_GUARDS
         case HADES_GUARDS:
-            memcpy(d0, "'H GI ?F 6MJ '    ", 21);
-            memcpy(d1, "JY )'C B G Y ZW   ", 21);
-            memcpy(d2, "VW Z 55 F GJD     ", 21);
-            memcpy(d3, "UB F.( Z 29 -     ", 21);
-            memcpy(d4, "MG9W L L!C B -    ", 21);
-            memcpy(d5, "FW L LS B , F.(   ", 21);
-            memcpy(d6, "F TJ - 5S B ,     ", 21);
-            memcpy(d7, "F V Q!C B N' UN   ", 21);
-            memcpy(d8, "U( UVF BOC - 5.   ", 21);
-            memcpy(d9, "Z OJ 2 ZL R S H   ", 21);
-            memcpy(d10, ", P: C F(         ", 21);
+            memcpy(d0, "7OT8,3VM7.        ", 21);
+            memcpy(d1, "MMDCE5C9G00BTM2UA.", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "BP4G):K0J6CR,     ", 21);
+            memcpy(d4, "BSCCRAI.          ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "BP4D?CBA[Q(EFAC'. ", 21);
+            memcpy(d7, "UQBVMCYXNBCAMHL   ", 21);
+            memcpy(d8, "WP],              ", 21);
+            memcpy(d9, "VQBP4GWZJ-ROI1'F. ", 21);
+            memcpy(d10, "                 ", 21);
         break;
-
-// Dialog Case: HADES_ROLLING_STONES
         case HADES_ROLLING_STONES:
-            memcpy(d0, "8B1 Z Q7BSG U ?U S", 21);
-            memcpy(d1, "BRZB P            ", 21);
-            memcpy(d2, "OY 0T R F :C)WH   ", 21);
-            memcpy(d3, "MTCW P            ", 21);
-            memcpy(d4, "!F Y 3PW F EK . , ", 21);
-            memcpy(d5, "T MH V J:F)       ", 21);
-            memcpy(d6, "ZL 7 , FPB BL Z   ", 21);
-            memcpy(d7, "OY IB:OC Y M2S -  ", 21);
-            memcpy(d8, "GM RI ,           ", 21);
-            memcpy(d9, "                  ", 21);
+            memcpy(d0, "J)3QG(9ARTUKOL    ", 21);
+            memcpy(d1, "A-SA1.            ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "]HZGM'LINNA61.    ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "YBD027LN8PIH,     ", 21);
+            memcpy(d6, "V:QM'L5G?9I.      ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "[DBEAACDHN-EWHQG  ", 21);
+            memcpy(d9, "UQXDM4UA1'F.      ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: HADES_OWL_SAVING
         case HADES_OWL_SAVING:
-            memcpy(d0, "3CH               ", 21);
-            memcpy(d1, "1H:C Z I,2:M Y    ", 21);
-            memcpy(d2, "R'B P4LB PI F     ", 21);
-            memcpy(d3, "1:RH - CJF N ,    ", 21);
-            memcpy(d4, "T) - FB3C M , T   ", 21);
-            memcpy(d5, "ZW VW F 7K 7 ,    ", 21);
-            memcpy(d6, "R G V 5R H0 Y     ", 21);
-            memcpy(d7, "ZW VW V PQ 6F C   ", 21);
-            memcpy(d8, "L!W 0 - N'        ", 21);
-            memcpy(d9, "                  ", 21);
+            memcpy(d0, "WXP!Y2QG4Q6R3D    ", 21);
+            memcpy(d1, "BSCM1.            ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "Z7AEJCA18L,       ", 21);
+            memcpy(d4, "'R(PKFNB:I.       ", 21);
+            memcpy(d5, "H5KBA)FVIH,       ", 21);
+            memcpy(d6, "CMNCTL9K?JV.      ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "Z-G[0ZOU]DCMNCTH  ", 21);
+            memcpy(d9, "EEBFCMSUK!        ", 21);
             memcpy(d10, "                  ", 21);
-            break;
-
-// Dialog Case: HADES_GUARDS_AWAKENED
+        break;
         case HADES_GUARDS_AWAKENED:
             memcpy(d0, "                  ", 21);
             memcpy(d1, "                  ", 21);
             memcpy(d2, "                  ", 21);
             memcpy(d3, "                  ", 21);
-            memcpy(d4, "ZW VW F IBFB LP   ", 21);
-            memcpy(d5, "G5 Y 4?) V Z      ", 21);
-            memcpy(d6, "MI, T W PI P      ", 21);
+            memcpy(d4, "CDFCGL8ABACRAI!   ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "H[JKE(LNM-ROI!!   ", 21);
             memcpy(d7, "                  ", 21);
             memcpy(d8, "                  ", 21);
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
-            break;
-
-// Dialog Case: HADES_DEATH
+        break;
         case HADES_DEATH:
-            memcpy(d0, "6MJ '             ", 21);
-            memcpy(d1, "G5 Y P0 Z E?R S B ", 21);
-            memcpy(d2, "UB PE. P F        ", 21);
-            memcpy(d3, "G5 Y EW FH Z 1PP0 ", 21);
-            memcpy(d4, "PQ AF , P: C      ", 21);
-            memcpy(d5, "JY )'C B G Y ZL 4)", 21);
-            memcpy(d6, "V 8T. Z           ", 21);
-            memcpy(d7, "G5 Y QF( Z FB1H M ", 21);
-            memcpy(d8, ", P: C            ", 21);
-            memcpy(d9, "DC)!SBN F 4R S B ,", 21);
+            memcpy(d0, "SVM7.NJ2DECG      ", 21);
+            memcpy(d1, "N65HTUA.          ", 21);
+            memcpy(d2, "                  ", 21);
+            memcpy(d3, "NJ2GENPEL,        ", 21);
+            memcpy(d4, "NJ2DYA'G          ", 21);
+            memcpy(d5, "KEECE(WLI1'F.     ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "MD:BADGHJ5Q       ", 21);
+            memcpy(d8, "XZ5,(B4BBAKOVI1'F.", 21);
+            memcpy(d9, "03)8BJ-RAI.       ", 21);
             memcpy(d10, "                  ", 21);
         break;
 

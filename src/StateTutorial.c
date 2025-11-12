@@ -17,7 +17,7 @@
 IMPORT_MAP(omapintro);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
-IMPORT_TILES(fontj);
+IMPORT_TILES(fontjtutorial);
 DECLARE_MUSIC(tutorial);
 
 const UINT8 coll_tiles_intro[] = {4u, 6u, 15u, 16u, 17u, 18u ,19u, 20u, 21u, 22u, 23u, 24u, 25u, 29u, 30u, 32u, 33u, 34u, 35u, 36u, 40u, 41u, 51u, 53u, 60u, 61u, 62u, 63u, 64u, 65u, 71u, 80u,
@@ -88,7 +88,7 @@ void START() {
 	//HUD
 		switch(chosen_language){
 			case ENG: INIT_FONT(font, PRINT_BKG); break;
-			case JAP: INIT_FONT(fontj, PRINT_BKG); break;
+			case JAP: INIT_FONT(fontjtutorial, PRINT_BKG); break;
 		}
         INIT_HUD(hudmap);
 	//TUTORIAL INIT OPRHEUS MOVEMENT

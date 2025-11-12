@@ -20,6 +20,7 @@ extern MACROMAP current_map;
 extern CHOSEN_LANGUAGE chosen_language;
 extern UINT8 anim_counter;
 extern INT8 orpheus_hp;
+extern WHOSTALKING whostalking4cartel;
 
 UINT8 river_verse = 0u;
 
@@ -50,6 +51,7 @@ void spawn_item(ITEM_TYPE arg_item_type, UINT16 arg_spawnx, UINT16 arg_spawny, U
 
 UINT8 prepare_dialog(WHOSTALKING arg_whostalking) BANKED{
     UINT8 result = 0;
+    whostalking4cartel = arg_whostalking;
     switch(chosen_language){
         case ENG: result = prepare_dialog_en(arg_whostalking); break;
         case JAP: result = prepare_dialog_jp(arg_whostalking); break;

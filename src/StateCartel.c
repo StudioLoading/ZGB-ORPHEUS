@@ -12,12 +12,13 @@
 #include "Print.h"
 
 #include "custom_datas.h"
+#include "Dialog.h"
 #include "UtilsLoadSave.h"
 
 IMPORT_MAP(mapcartel);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(fontbw);
-IMPORT_TILES(fontjbw);
+IMPORT_TILES(fontjhadeswelcome);
 DECLARE_MUSIC(intro);
 
 extern unsigned char d0[];
@@ -45,6 +46,7 @@ extern UINT8 hades_music_started;
 extern UINT8 is_level_on_boss() BANKED;
 extern void go_to_next_map() BANKED;
 
+WHOSTALKING whostalking4cartel = 0;
 
 void START(){
     InitScroll(BANK(mapcartel), &mapcartel, 0, 0);
@@ -53,7 +55,35 @@ void START(){
             INIT_FONT(fontbw, PRINT_BKG);
         break;
         case JAP:
-            INIT_FONT(fontjbw, PRINT_BKG);
+            switch(whostalking4cartel){
+                case HADES_WELCOME:{
+                    INIT_FONT(fontjhadeswelcome, PRINT_BKG);
+                }break;
+                case HADES_MOVE_BLOCK:{
+                    INIT_FONT(fontjhades02moveblock, PRINT_BKG);
+                }break;
+                case HADES_USE_KEY:{
+                    INIT_FONT(fontjhades03usekey, PRINT_BKG);
+                }break;
+                case HADES_KILL_ENEMY:{
+                    INIT_FONT(fontjhades04killenemy, PRINT_BKG);
+                }break;
+                case HADES_GUARDS:{
+                    INIT_FONT(fontjhades05guards, PRINT_BKG);
+                }break;
+                case HADES_ROLLING_STONES:{
+                    INIT_FONT(fontjhades06rollingstones, PRINT_BKG);
+                }break;
+                case HADES_OWL_SAVING:{
+                    INIT_FONT(fontjhades07owlsaving, PRINT_BKG);
+                }break;
+                case HADES_GUARDS_AWAKENED:{
+                    INIT_FONT(fontjhades08awakened, PRINT_BKG);
+                }break;
+                case HADES_DEATH:{
+                    INIT_FONT(fontjhades09death, PRINT_BKG);
+                }break;
+            }
         break;
     }
     INIT_HUD(hudmap);
