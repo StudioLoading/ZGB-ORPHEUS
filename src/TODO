@@ -15,7 +15,7 @@ EURIDYCE: BACK TO HELL
 
 
 GENERAZIONE QR CODE DA POWERSHELL
-New-QRCodeURI -URI 'https://www.instagram.com/studioloading/' -Width 16 -OutPath 'C:\Users\checc\GB\QR-instagram.png'
+New-QRCodeURI -URI 'https://www.cersereno.it' -Width 16 -OutPath 'C:\Users\checc\CERSERENO\QR-www.png'
 
 
 GIF TO PNG FRAMES
@@ -77,10 +77,6 @@ maypal.pal file di testo contenente solo le seguenti
 ovviamente palette del Paint.NET con cui ho fatto il png contiene gli stessi codici, senza # e con FF iniziali per azzerare opacità
 png 160x144
 
-
-あ=A い=B う=C え=D お=E か=F き=G く=H け=I こ=J さ=K し=L す=M せ=N そ=O た=P ち=Q つ=R て=S と=T な=U に=V ん=W ね=X の=Y は=Z ひ=0 ふ=1 へ=2 ほ=3 ま=4 み=5 む=6 め=7 も=8 や=9 ゆ=! よ=' ら=( り=) る=, れ=. ろ=: わ=? を=- ず=[ ご=]
-
-ず=[
 
 ROMUSAGE
 C:\GB\ZGBNEW\tools\romusage-main\bin\romusage.exe C:\GB\ZGBNEW\ZGB-template-master\Debug\ARROWS_Debug.noi -g

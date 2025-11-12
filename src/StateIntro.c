@@ -27,6 +27,10 @@ IMPORT_TILES(fontj);
 IMPORT_TILES(fontjintro0);
 IMPORT_TILES(fontjintro1);
 IMPORT_TILES(fontjintro2);
+IMPORT_TILES(fontjintro3);
+IMPORT_TILES(fontjintro4);
+IMPORT_TILES(fontjintro5);
+IMPORT_TILES(fontjintro6);
 
 extern UINT8 J_INT;
 extern UINT8 J_ATK;
@@ -80,6 +84,10 @@ void START(){
                 case 0: INIT_FONT(fontjintro0, PRINT_BKG); break;
                 case 1: INIT_FONT(fontjintro1, PRINT_BKG); break;
                 case 2: INIT_FONT(fontjintro2, PRINT_BKG); break;
+                case 3: INIT_FONT(fontjintro3, PRINT_BKG); break;
+                case 4: INIT_FONT(fontjintro4, PRINT_BKG); break;
+                case 5: INIT_FONT(fontjintro5, PRINT_BKG); break;
+                case 6: INIT_FONT(fontjintro6, PRINT_BKG); break;
             }
             //INIT_FONT(fontj, PRINT_BKG); 
         }break;
@@ -172,57 +180,57 @@ void print_intro_jp() BANKED{
         break;
         case 1u:
             PRINT(0,11, "                    ");
-            PRINT(0,12, "     CJRR45678F     ");
-            PRINT(0,13, "    0123456789D     ");
-            PRINT(0,14, "       :-RAKB       ");
-            PRINT(0,15, "     [EGLLOFPQRS    ");
-            PRINT(0,16, "     :BKS:EJBPGI    ");
+            PRINT(0,12, "     BP4GFKMTV3     ");
+            PRINT(0,13, "    DZ[-0YBUYIWJA   ");
+            PRINT(0,14, "                    ");
+            PRINT(0,15, "      NSLOHHXQ,     ");
+            PRINT(0,16, "    CW6:QO4CRAJCE.  ");
             PRINT(0,17, "                    ");
         break;
         case 2u:
-            PRINT(0,11, "     ZJCU5-A'XD     ");
-            PRINT(0,12, "      EGI]KM.ZN     ");
-            PRINT(0,13, "      OL2B2LP[      ");
-            PRINT(0,14, "     0M]FWQR.F3     ");
-            PRINT(0,15, "      -SH]FWQR      ");
-            PRINT(0,16, "      .H'LT2LP[     ");
-            PRINT(0,17, "                    ");
+            PRINT(0,11, "     HMFQX,WI]      ");
+            PRINT(0,12, "     PR)TGUVKH      ");
+            PRINT(0,13, "     SYCJAJCE.      ");
+            PRINT(0,14, "                    ");
+            PRINT(0,15, "     Z1GBDLNKB      ");
+            PRINT(0,16, "     0,2OGBDLN      ");
+            PRINT(0,17, "     KOIC9JCE.      ");
         break;
         case 3u:
-            PRINT(0,11, "       E,2CM        ");
-            PRINT(0,12, "       Z ABM        ");
-            PRINT(0,13, "      , VC1 -       ");
-            PRINT(0,14, "       GI Y F(      ");
-            PRINT(0,15, "      48:C T LS     ");
-            PRINT(0,16, "      !CF V OY      ");
-            PRINT(0,17, "      20 - PELP     ");
+            PRINT(0,11, "       DILMN3       ");
+            PRINT(0,12, "       GOFBSQ       ");
+            PRINT(0,13, "      PRHEEBA,      ");
+            PRINT(0,14, "                    ");
+            PRINT(0,15, "      EA:ZU]HK      ");
+            PRINT(0,16, "       T8SB4JX      ");
+            PRINT(0,17, "      'FHCJCE.      ");
         break;
         case 4u:
-            PRINT(0,11, "       FULB VC1     ");
-            PRINT(0,12, "       Z PPQ V      ");
-            PRINT(0,13, "      LV E,2CM -    ");
-            PRINT(0,14, "        FUL5        ");
-            PRINT(0,15, "       Y UF V       ");
-            PRINT(0,16, "      0T) YJLP      ");
-            PRINT(0,17, "                    ");
+            PRINT(0,11, "     B76A7F:AG      ");
+            PRINT(0,12, "     VIQCSYCJA,     ");
+            PRINT(0,13, "                    ");
+            PRINT(0,14, "     KLMOR3G]       ");
+            PRINT(0,15, "     H5TBABUC       ");
+            PRINT(0,16, "     0DUBQNHW       ");
+            PRINT(0,17, "       PJCE.        ");
         break;
         case 5u:
-            PRINT(0,11, "      LFL ?FG       ");
-            PRINT(0,12, "       DB! Z        ");
-            PRINT(0,13, "     AG(7UFRP       ");
-            PRINT(0,14, "    UNU( UH URP     ");
-            PRINT(0,15, "    M2S Y P4LB      ");
-            PRINT(0,16, "F 8BFB 2 Y 5Q - 5RI ");
-            PRINT(0,17, " , JT - LRSB P F( P ");
+            PRINT(0,11, "      CBC,6BAI      ");
+            PRINT(0,12, "       FCLGWT       ");
+            PRINT(0,13, "      49J:SYCE.     ");
+            PRINT(0,14, "                    ");
+            PRINT(0,15, "     CS1EJCAG9A     ");
+            PRINT(0,16, "      BANAOMHK      ");
+            PRINT(0,17, "      C?RAEDYV.     ");
         break;
         case 6u:
-            PRINT(0,11, "     DC)!SBN - '5   ");
-            PRINT(0,12, "  FD( N , IRB - LP  ");
-            PRINT(0,13, " E,2CM Z !CG - AR7  ");
-            PRINT(0,14, "   8BFB Y F5 LLW    ");
-            PRINT(0,15, "    V PPQ V PQ      ");
-            PRINT(0,16, "     6F C JT -      ");
-            PRINT(0,17, "       IRB LP       ");
+            PRINT(0,11, "     WAVINO)PKAT    ");
+            PRINT(0,12, "     B24:IE9,       ");
+            PRINT(0,13, "     SUXYZ3G5F      ");
+            PRINT(0,14, "       TK1CR,       ");
+            PRINT(0,15, "     9ABADB0L0      ");
+            PRINT(0,16, "      QE(6BFM       ");
+            PRINT(0,17, "      HQCJCE.       ");
         break;
     }
 }
