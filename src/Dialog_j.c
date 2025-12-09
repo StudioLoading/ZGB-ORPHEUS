@@ -195,8 +195,6 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "03)8BJ-RAI.       ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: BOSS_CHARON_INTRO
         case BOSS_CHARON_INTRO:
             memcpy(d0, "F:W P             ", 21);
             memcpy(d1, "G5 Y PS]T Z FG    ", 21);
@@ -210,38 +208,32 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: BOSS_CHARON_BEATED
         case BOSS_CHARON_BEATED:
-            memcpy(d0, "G5 V Z OY QF(     ", 21);
-            memcpy(d1, "F A ,             ", 21);
-            memcpy(d2, "?PL Y 1X Z J?.    ", 21);
-            memcpy(d3, "P JJ S Y ?PL Y    ", 21);
-            memcpy(d4, "9H7 Z E?R P       ", 21);
-            memcpy(d5, "MM 7 L Y HV Y     ", 21);
-            memcpy(d6, "8 Y F B4 AH       ", 21);
-            memcpy(d7, "                  ", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "NJ2QGFD(B4BWI!    ", 21);
+            memcpy(d2, "6ECDHKGM6PE.      ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "MMYD6ECDRO9G      ", 21);
+            memcpy(d5, "N6-E.             ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "VV9.              ", 21);
             memcpy(d8, "                  ", 21);
-            memcpy(d9, "                  ", 21);
-            memcpy(d10, "                  ", 21);
-            break;
-
-// Dialog Case: BOSS_CERBERUS_INTRO
-        case BOSS_CERBERUS_INTRO:
-            memcpy(d0, "G'C 1 F AI : W    ", 21);
-            memcpy(d1, "F? 2 Y G5 Y       ", 21);
-            memcpy(d2, "TCQ9H - RI , 5R   ", 21);
-            memcpy(d3, "H0 Y )'C IW I,2:M ", 21);
-            memcpy(d4, "Z CD S B ,        ", 21);
-            memcpy(d5, "OY 7 Z 3YE S 8D   ", 21);
-            memcpy(d6, "S B , OY I8Y F    ", 21);
-            memcpy(d7, "G'C DW M , P7 V   ", 21);
-            memcpy(d8, "MI, T W Y SLP - F?", 21);
-            memcpy(d9, "V ELJ4 UI. Z U( UB", 21);
+            memcpy(d9, "TUZ01DXSLAJ]4O.   ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: BOSS_CERBERUS_BEATED
+        case BOSS_CERBERUS_INTRO:
+            memcpy(d0, "TLFVBJ CJMJO DT0D ", 21);
+            memcpy(d1, "HF(WOKZ8JI.       ", 21);
+            memcpy(d2, "0ZO]JD5LF8S       ", 21);
+            memcpy(d3, "YN1JN3            ", 21);
+            memcpy(d4, "BJF2QF2RAI.       ", 21);
+            memcpy(d5, "                  ", 21);
+            memcpy(d6, "7D9G]R,X2RAI!     ", 21);
+            memcpy(d7, "8XDDFE8JK]4B:IE9Q,", 21);
+            memcpy(d8, "'J[)?DRCEHJXKB6Q  ", 21);
+            memcpy(d9, "UBJ-U8PGJ!        ", 21);
+            memcpy(d10, "                  ", 21);
+        break;
         case BOSS_CERBERUS_BEATED:
             memcpy(d0, "G5 Z J PB Y MI,   ", 21);
             memcpy(d1, "T W - RFR S       ", 21);

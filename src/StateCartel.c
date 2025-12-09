@@ -19,6 +19,18 @@ IMPORT_MAP(mapcartel);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(fontbw);
 IMPORT_TILES(fontjhadeswelcome);
+IMPORT_TILES(fontjhades02moveblock);
+IMPORT_TILES(fontjhades03usekey);
+IMPORT_TILES(fontjhades04killenemy);
+IMPORT_TILES(fontjhades05guards);
+IMPORT_TILES(fontjhades06rollingstones);
+IMPORT_TILES(fontjhades07owlsaving);
+IMPORT_TILES(fontjhades08awakened);
+IMPORT_TILES(fontjhades09death);
+IMPORT_TILES(fontjhades10charonintro);
+IMPORT_TILES(fontjhades11charonbeated);
+IMPORT_TILES(fontjhades12cerberusintro);
+//IMPORT_TILES(fontjhades12cerberusbeated);
 DECLARE_MUSIC(intro);
 
 extern unsigned char d0[];
@@ -82,6 +94,18 @@ void START(){
                 }break;
                 case HADES_DEATH:{
                     INIT_FONT(fontjhades09death, PRINT_BKG);
+                }break;
+                case BOSS_CHARON_INTRO:{
+                    INIT_FONT(fontjhades10charonintro, PRINT_BKG);
+                }break;
+                case BOSS_CHARON_BEATED:{
+                    INIT_FONT(fontjhades11charonbeated, PRINT_BKG);
+                }break;
+                case BOSS_CERBERUS_INTRO:{
+                    INIT_FONT(fontjhades12cerberusintro, PRINT_BKG);
+                }break;
+                case BOSS_CERBERUS_BEATED:{
+                    //INIT_FONT(fontjhades12cerberusbeated, PRINT_BKG);
                 }break;
             }
         break;

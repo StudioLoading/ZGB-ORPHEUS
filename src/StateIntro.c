@@ -171,66 +171,66 @@ void print_intro_jp() BANKED{
     switch(intro_page_counter){
         case 0u:
             PRINT(0,11, "                    ");
-            PRINT(0,12, "    QDG9QDGVWXYM9   ");
-            PRINT(0,13, "   Z01234LBCPCGTL   ");
-            PRINT(0,14, "    5W67LBCL'CHB    ");
-            PRINT(0,15, "  FODEABGA8KBPGI.   ");
+            PRINT(0,12, "   GBC,GBCJDHKNTD   ");
+            PRINT(0,13, "   O]PQR2IAFSFCVI   ");
+            PRINT(0,14, "     WHXDYBD-BM     ");
+            PRINT(0,15, "     UACUZTALCE.    ");
             PRINT(0,16, "                    ");
             PRINT(0,17, "                    ");
         break;
         case 1u:
             PRINT(0,11, "                    ");
-            PRINT(0,12, "     BP4GFKMTV3     ");
-            PRINT(0,13, "    DZ[-0YBUYIWJA   ");
-            PRINT(0,14, "                    ");
-            PRINT(0,15, "      NSLOHHXQ,     ");
-            PRINT(0,16, "    CW6:QO4CRAJCE.  ");
+            PRINT(0,12, "                    ");
+            PRINT(0,13, "  BNZHJ]KQS2DX['YTF ");
+            PRINT(0,14, " BVTFGULAORBFMIIWP, ");
+            PRINT(0,15, "    CU50PMZCTALCE.  ");
+            PRINT(0,16, "                    ");
             PRINT(0,17, "                    ");
         break;
         case 2u:
-            PRINT(0,11, "     HMFQX,WI]      ");
-            PRINT(0,12, "     PR)TGUVKH      ");
-            PRINT(0,13, "     SYCJAJCE.      ");
-            PRINT(0,14, "                    ");
-            PRINT(0,15, "     Z1GBDLNKB      ");
-            PRINT(0,16, "     0,2OGBDLN      ");
-            PRINT(0,17, "     KOIC9JCE.      ");
+            PRINT(0,11, "   -QFPW,UGNSVXKYH  ");
+            PRINT(0,12, "   Z1KJ-RTKCLALCE.  ");
+            PRINT(0,13, "                    ");
+            PRINT(0,14, "    2NKHBDCKOJB0,   ");
+            PRINT(0,15, "        IKMH        ");
+            PRINT(0,16, "    BDCKOJMGC6LCE.  ");
+            PRINT(0,17, "                    ");
         break;
         case 3u:
-            PRINT(0,11, "       DILMN3       ");
-            PRINT(0,12, "       GOFBSQ       ");
-            PRINT(0,13, "      PRHEEBA,      ");
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "    D]GKM2HNFBRP    ");
+            PRINT(0,13, "    OQTIEEBA,       ");
             PRINT(0,14, "                    ");
-            PRINT(0,15, "      EA:ZU]HK      ");
-            PRINT(0,16, "       T8SB4JX      ");
-            PRINT(0,17, "      'FHCJCE.      ");
+            PRINT(0,15, "    EAU3VXIJS7RBZ   ");
+            PRINT(0,16, "     LW:FICLCE.     ");
+            PRINT(0,17, "                    ");
         break;
         case 4u:
-            PRINT(0,11, "     B76A7F:AG      ");
-            PRINT(0,12, "     VIQCSYCJA,     ");
+            PRINT(0,11, "   B95A9FJAHXMGP    ");
+            PRINT(0,12, "      CRTGCLA       ");
             PRINT(0,13, "                    ");
-            PRINT(0,14, "     KLMOR3G]       ");
-            PRINT(0,15, "     H5TBABUC       ");
-            PRINT(0,16, "     0DUBQNHW       ");
-            PRINT(0,17, "       PJCE.        ");
+            PRINT(0,14, "    K]QSU2HWI4-BA   ");
+            PRINT(0,15, "   BVC0DVBPOI?NLCE. ");
+            PRINT(0,16, "                    ");
+            PRINT(0,17, "                    ");
         break;
         case 5u:
-            PRINT(0,11, "      CBC,6BAI      ");
-            PRINT(0,12, "       FCLGWT       ");
-            PRINT(0,13, "      49J:SYCE.     ");
-            PRINT(0,14, "                    ");
-            PRINT(0,15, "     CS1EJCAG9A     ");
-            PRINT(0,16, "      BANAOMHK      ");
-            PRINT(0,17, "      C?RAEDYV.     ");
+            PRINT(0,11, "     CBCG]KNO2H     ");
+            PRINT(0,12, "    USZ6LPRTFCE     ");
+            PRINT(0,13, "                    ");
+            PRINT(0,14, "   CREFELCAH6ABAV   ");
+            PRINT(0,15, "   AMQIJCWTAEDTFX.  ");
+            PRINT(0,16, "                    ");
+            PRINT(0,17, "                    ");
         break;
         case 6u:
-            PRINT(0,11, "     WAVINO)PKAT    ");
-            PRINT(0,12, "     B24:IE9,       ");
-            PRINT(0,13, "     SUXYZ3G5F      ");
-            PRINT(0,14, "       TK1CR,       ");
-            PRINT(0,15, "     9ABADB0L0      ");
-            PRINT(0,16, "      QE(6BFM       ");
-            PRINT(0,17, "      HQCJCE.       ");
+            PRINT(0,11, "       MNOKRJ       ");
+            PRINT(0,12, "    ASB1ZTGE6,      ");
+            PRINT(0,13, "                    ");
+            PRINT(0,14, "      U]VWX2H       ");
+            PRINT(0,15, "     6ABADB0BK0P    ");
+            PRINT(0,16, "    E8YBFQIPCLCE.   ");
+            PRINT(0,17, "                    ");
         break;
     }
 }
