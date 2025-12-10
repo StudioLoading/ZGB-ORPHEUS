@@ -4,7 +4,7 @@
 #include "ZGBMain.h"
 #include "string.h"
 
-#include "Dialog.h"
+#include "UtilJP.h"
 
 extern unsigned char d0[];
 extern unsigned char d1[];
@@ -35,27 +35,31 @@ extern unsigned char d23[];
 UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED;
 
 UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
+    Anim_JP(arg_whostalking);
     switch(arg_whostalking){
         case FIRSTEVER:
-            memcpy(d1, "      )3DXSG      ", 21);
-            memcpy(d2, "      HNOUA       ", 21);
-            memcpy(d3, "   J7,9[-(K0Z8.   ", 21);
-            memcpy(d4, "    GGDLMDWE5     ", 21);
-            memcpy(d5, "    QDMCRAIG71    ", 21);
-            memcpy(d6, "       W,AO!      ", 21);
+            memcpy(d1, "     KNF2DWRH     ", 21);
+            memcpy(d2, "     IOMVA...     ", 21);
+            memcpy(d3, "  LXF,S['YJ037ZHF.", 21);
+            memcpy(d4, " HHD15689BFQDUE4P ", 21);
+            memcpy(d5, "     DQCTAGHXF    ", 21);
+            memcpy(d6, "    ...?U,AM(F!   ", 21);
             return 6u;
         break;
         case MISSING_LYRE:
-            memcpy(d1, "     J1MHGYTUA.     ", 21);
-            memcpy(d2, "                    ", 21);
-            memcpy(d3, "    J79[-(K0ZUAH!   ", 21);
+            memcpy(d1, "   LEBCDQIHTBSVA.   ", 21);
+            memcpy(d2, "   LXB F['G J03VAI! ", 21);
+            memcpy(d3, "                    ", 21);
             return 3u;
         break;
         case FOUND_LYRE:
-            memcpy(d1, "      9[-(LWP,      ", 21);
-            memcpy(d2, " MHUIA'Y,RTK]TZ8E5, ", 21);
-            memcpy(d3, "   M6L4:E5VIMHXYTI. ", 21);
-            return 3u;
+            memcpy(d1, "   D['F BCUNHC,     ", 21);
+            memcpy(d2, "  QIVGKA:TC,TSJ     ", 21);
+            memcpy(d3, "      LS37E4,       ", 21);
+            memcpy(d4, "                    ", 21);
+            memcpy(d5, " Q5BCZME4XGQIWTCSG. ", 21);
+            memcpy(d6, "                    ", 21);
+            return 6u;
         break;
         case PUSH_BUTTON:
             memcpy(d1, "       DF2QEZH,     ", 21);
@@ -65,30 +69,30 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
         break;
         case PRESS_INTERACT:
             memcpy(d1, "                    ", 21);
-            memcpy(d2, "      9[-(KRQAPI    ", 21);
+            memcpy(d2, "     B['CJTPANG     ", 21);
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
         case HADES_ENTRANCE:
-            memcpy(d1, "       ZAQZAE       ", 21);
-            memcpy(d2, "       )3DXS!       ", 21);
-            memcpy(d3, "         ),         ", 21);
-            memcpy(d4, "     BU47EV8RI!     ", 21);
-            memcpy(d5, "   SUMSUSLW'FHX!    ", 21);
-            memcpy(d6, "                  ", 21);
+            memcpy(d1, "K['LJTPANG3AP3AEMC..", 21);
+            memcpy(d2, "      OHC2DWR!      ", 21);
+            memcpy(d3, "                    ", 21);
+            memcpy(d4, "        SYHC0,      ", 21);
+            memcpy(d5, "     BVZXCEX7T1G!   ", 21);
+            memcpy(d6, "  ICRVQRVRBCU:FIW!  ", 21);
             return 6u;
         break;
         case HADES_WELCOME:
-            memcpy(d0, "7OTE,SVM7.        ", 21);
-            memcpy(d1, "NJ2QUZ034K        ", 21);
-            memcpy(d2, "BTDMRF.           ", 21);
-            memcpy(d3, "                  ", 21);
-            memcpy(d4, "56QG89)BWI.       ", 21);
-            memcpy(d5, "                  ", 21);
-            memcpy(d6, "RPKHOHOHY:(D-?LWO.", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "6MPE,FTN6.        ", 21);
+            memcpy(d3, "HIQKSV8DYCWG      ", 21);
+            memcpy(d4, "-JLOMO            ", 21);
+            memcpy(d5, "RDMD1AZD:CDWM     ", 21);
+            memcpy(d6, "WBTGXALTMUG       ", 21);
             memcpy(d7, "                  ", 21);
-            memcpy(d8, "BCMAXDL,          ", 21);
-            memcpy(d9, "WAVIXDKVO2I1'F    ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
         case HADES_MOVE_BLOCK:

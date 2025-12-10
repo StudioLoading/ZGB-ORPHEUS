@@ -43,6 +43,7 @@ void set_banked_bkg_data(UINT8 first_tile, UINT8 nb_tiles, struct TilesInfo* t, 
 	SWITCH_ROM(save);
 }
 
+
 void Anim_Breath_Aeacus_0() BANKED{
 	set_banked_bkg_data(96u, 15u, &mapbossaeacust, BANK(mapbossaeacust));//aeacus breath
 }

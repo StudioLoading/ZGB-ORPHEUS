@@ -188,9 +188,9 @@ void print_intro_jp() BANKED{
             PRINT(0,17, "                    ");
         break;
         case 2u:
-            PRINT(0,11, "   -QFPW,UGNSVXKYH  ");
-            PRINT(0,12, "   Z1KJ-RTKCLALCE.  ");
-            PRINT(0,13, "                    ");
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "   -QFPW,UGNSVXKYH  ");
+            PRINT(0,13, "   Z1KJ-RTKCLALCE.  ");
             PRINT(0,14, "    2NKHBDCKOJB0,   ");
             PRINT(0,15, "        IKMH        ");
             PRINT(0,16, "    BDCKOJMGC6LCE.  ");
@@ -206,27 +206,27 @@ void print_intro_jp() BANKED{
             PRINT(0,17, "                    ");
         break;
         case 4u:
-            PRINT(0,11, "   B95A9FJAHXMGP    ");
-            PRINT(0,12, "      CRTGCLA       ");
-            PRINT(0,13, "                    ");
-            PRINT(0,14, "    K]QSU2HWI4-BA   ");
-            PRINT(0,15, "   BVC0DVBPOI?NLCE. ");
-            PRINT(0,16, "                    ");
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "   B95A9FJAHXMGP    ");
+            PRINT(0,13, "      CRTGCLA       ");
+            PRINT(0,14, "                    ");
+            PRINT(0,15, "    K]QSU2HWI4-BA   ");
+            PRINT(0,16, "   BVC0DVBPOI?NLCE. ");
             PRINT(0,17, "                    ");
         break;
         case 5u:
-            PRINT(0,11, "     CBCG]KNO2H     ");
-            PRINT(0,12, "    USZ6LPRTFCE     ");
-            PRINT(0,13, "                    ");
-            PRINT(0,14, "   CREFELCAH6ABAV   ");
-            PRINT(0,15, "   AMQIJCWTAEDTFX.  ");
-            PRINT(0,16, "                    ");
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "     CBCG]KNO2H     ");
+            PRINT(0,13, "    USZ6LPRTFCE     ");
+            PRINT(0,14, "                    ");
+            PRINT(0,15, "   CREFELCAH6ABAV   ");
+            PRINT(0,16, "   AMQIJCWTAEDTFX.  ");
             PRINT(0,17, "                    ");
         break;
         case 6u:
-            PRINT(0,11, "       MNOKRJ       ");
-            PRINT(0,12, "    ASB1ZTGE6,      ");
-            PRINT(0,13, "                    ");
+            PRINT(0,11, "                    ");
+            PRINT(0,12, "       MNOKRJ       ");
+            PRINT(0,13, "      ASB1ZTGE6,    ");
             PRINT(0,14, "      U]VWX2H       ");
             PRINT(0,15, "     6ABADB0BK0P    ");
             PRINT(0,16, "    E8YBFQIPCLCE.   ");
