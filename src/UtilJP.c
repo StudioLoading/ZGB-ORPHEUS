@@ -15,6 +15,8 @@ IMPORT_TILES(fontjtutorial3);
 IMPORT_TILES(fontjtutorial4);
 IMPORT_TILES(fontjtutorial5);
 IMPORT_TILES(fontjhades00welcome);
+IMPORT_TILES(fontjhades01moveblock);
+IMPORT_TILES(fontjhades02usekey);
 
 typedef struct {
     UINT8 bank;
@@ -28,7 +30,19 @@ const far_ptr_t state_fonts[] = {
     [PUSH_BUTTON]  = { BANK(fontjtutorial3), &fontjtutorial3 },
     [PRESS_INTERACT]= {BANK(fontjtutorial4), &fontjtutorial4},
     [HADES_ENTRANCE]= {BANK(fontjtutorial5), &fontjtutorial5},
-    [HADES_WELCOME]=   {BANK(fontjhades00welcome), &fontjhades00welcome}
+    [HADES_WELCOME]=   {BANK(fontjhades00welcome), &fontjhades00welcome},
+    [HADES_MOVE_BLOCK]=   {BANK(fontjhades01moveblock), &fontjhades01moveblock},
+    [HADES_USE_KEY]=   {BANK(fontjhades02usekey), &fontjhades02usekey},
+    [HADES_KILL_ENEMY]=   {BANK(fontjhades03kill), &fontjhades03kill},
+    [HADES_GUARDS]=   {BANK(fontjhades04guards), &fontjhades04guards},
+    [HADES_ROLLING_STONES]=   {BANK(fontjhades05rolling), &fontjhades05rolling},
+    [HADES_OWL_SAVING]=   {BANK(fontjhades06owlsaving), &fontjhades06owlsaving},
+    [HADES_GUARDS_AWAKENED]=   {BANK(fontjhades07guardsawaken), &fontjhades07guardsawaken},
+    [HADES_DEATH]=   {BANK(fontjhades08death), &fontjhades08death},
+    [BOSS_CHARON_INTRO]=   {BANK(fontjhades09charonintro), &fontjhades09charonintro},
+    [BOSS_CHARON_BEATED]=   {BANK(fontjhades09charonbeated), &fontjhades09charonbeated},
+    [BOSS_CERBERUS_INTRO]=   {BANK(fontjhades10cerberusintro), &fontjhades10cerberusintro},
+    [BOSS_CERBERUS_BEATED]=   {BANK(fontjhades10cerberusbeated), &fontjhades10cerberusbeated}
 };
 
 void jp_set_banked_win_data(WHOSTALKING arg_whostalking) NONBANKED {
