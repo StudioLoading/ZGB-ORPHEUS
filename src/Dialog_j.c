@@ -38,48 +38,51 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
     Anim_JP(arg_whostalking);
     switch(arg_whostalking){
         case FIRSTEVER:
-            memcpy(d1, "     KNF2DWRH     ", 21);
-            memcpy(d2, "     IOMVA...     ", 21);
-            memcpy(d3, "  LXF,S['YJ037ZHF.", 21);
-            memcpy(d4, " HHD15689BFQDUE4P ", 21);
-            memcpy(d5, "     DQCTAGHXF    ", 21);
-            memcpy(d6, "    ...?U,AM(F!   ", 21);
-            return 6u;
+            memcpy(d1, "     4N)5GJHK     ", 21);
+            memcpy(d2, "     B[6CA...     ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, " Y?),OPQRLZIS7K). ", 21);
+            memcpy(d5, " KKG]9TWX1)DGME0U ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "    GD2VAFK?)     ", 21);
+            memcpy(d8, "   ...3M,A68)!    ", 21);
+            memcpy(d9, "                  ", 21);
+            return 9u;
         break;
         case MISSING_LYRE:
-            memcpy(d1, "   LEBCDQIHTBSVA.   ", 21);
-            memcpy(d2, "   LXB F['G J03VAI! ", 21);
+            memcpy(d1, "   YE)FGDBKV)WCA.   ", 21);
+            memcpy(d2, "  Y?) OPQR LZICAB!  ", 21);
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
         case FOUND_LYRE:
-            memcpy(d1, "   D['F BCUNHC,     ", 21);
-            memcpy(d2, "  QIVGKA:TC,TSJ     ", 21);
-            memcpy(d3, "      LS37E4,       ", 21);
-            memcpy(d4, "                    ", 21);
-            memcpy(d5, " Q5BCZME4XGQIWTCSG. ", 21);
+            memcpy(d1, "   OPQR G)M2K),     ", 21);
+            memcpy(d2, "   DBCF7A:V),VWL    ", 21);
+            memcpy(d3, "                    ", 21);
+            memcpy(d4, "      HWISE0,       ", 21);
+            memcpy(d5, " DNG)3TE0?FDBJV)WF. ", 21);
             memcpy(d6, "                    ", 21);
             return 6u;
         break;
         case PUSH_BUTTON:
-            memcpy(d1, "       DF2QEZH,     ", 21);
-            memcpy(d2, "    XSKW84PI0EA1.   ", 21);
+            memcpy(d1, "    C)DKG-NUEIB,    ", 21);
+            memcpy(d2, "    JHLMS32FZEAE).  ", 21);
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
         case PRESS_INTERACT:
             memcpy(d1, "                    ", 21);
-            memcpy(d2, "     B['CJTPANG     ", 21);
+            memcpy(d2, "     OPQRLVUA2F     ", 21);
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
         case HADES_ENTRANCE:
-            memcpy(d1, "K['LJTPANG3AP3AEMC..", 21);
-            memcpy(d2, "      OHC2DWR!      ", 21);
+            memcpy(d1, "OPQRLVUA2FIAUIAET)..", 21);
+            memcpy(d2, "      4K)5GJH!      ", 21);
             memcpy(d3, "                    ", 21);
-            memcpy(d4, "        SYHC0,      ", 21);
-            memcpy(d5, "     BVZXCEX7T1G!   ", 21);
-            memcpy(d6, "  ICRVQRVRBCU:FIW!  ", 21);
+            memcpy(d4, "        W9K)X,      ", 21);
+            memcpy(d5, "     NC3?)E?SVYF!   ", 21);
+            memcpy(d6, "  B)HCDHCHN)M:-BJ!  ", 21);
             return 6u;
         break;
         case HADES_WELCOME:

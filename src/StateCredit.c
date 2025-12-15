@@ -50,7 +50,6 @@ extern UINT8 stop_music_on_new_state;
 uint8_t sgb_checked = 0;
 extern void manage_sgb_border() BANKED;
 extern void manage_sgb_palette() BANKED;
-extern void restart_cheat() BANKED;
 
 void START(){
     manage_sgb_palette();
@@ -245,11 +244,9 @@ void UPDATE(){
                             chosen_language = ENG;
                         }
                     }
-                    if(KEY_PRESSED(J_SELECT) && KEY_PRESSED(J_START)){
-                        /*restart_cheat();
-                        SetState(StateStart);*/
+                    /*if(KEY_PRESSED(J_SELECT) && KEY_PRESSED(J_START)){
                         SetState(StateEndgame);
-                    }
+                    }*/
                 }break;
                 case 1:{
                     if(initial_delay_counter < INITIAL_DELAY_MAX){
