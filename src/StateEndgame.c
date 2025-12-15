@@ -22,7 +22,7 @@
 IMPORT_MAP(mapendgame);
 IMPORT_MAP(hudmap);
 IMPORT_TILES(font);
-IMPORT_TILES(fontj);
+IMPORT_TILES(fontjendgame00base);
 DECLARE_MUSIC(danger2);
 DECLARE_MUSIC(battle);
 DECLARE_MUSIC(tutorial);
@@ -58,8 +58,8 @@ UINT16 cutscene_timer = 0u;
 UINT16 orpheus_limx_first = 52u << 3;
 UINT8 ghost_counter = 0u;
 UINT8 ghost_timer = 0u;
-UINT8 cutscene_frmskip = 0;
-INT8 cutscene_frmskip_max = 0;
+UINT8 cutscene_frmskip = 0u;
+UINT8 cutscene_frmskip_max = 0u;
 Sprite* s_eg_shadow = 0;
 Sprite* s_eg_orpheus = 0;
 Sprite* s_eg_euridyce = 0;
@@ -133,7 +133,7 @@ void START() {
 	//HUD
 		switch(chosen_language){
 			case ENG: INIT_FONT(font, PRINT_BKG); break;
-			case JAP: INIT_FONT(fontj, PRINT_BKG); break;
+			case JAP: INIT_FONT(fontjendgame00base, PRINT_BKG); break;
 		}
 		INIT_HUD(hudmap);		
 		print_target = PRINT_WIN;
@@ -200,7 +200,7 @@ void UPDATE() {
 					if(s_eg_orpheus->x > (scroll_target->x - 40u)){
 						cutscene_frmskip_max = 0;
 					}else{
-						cutscene_frmskip_max = 1;
+						cutscene_frmskip_max = 1u;
 					}
 				}
 				TranslateSprite(s_eg_orpheus, -1 << delta_time, 0);
@@ -210,7 +210,7 @@ void UPDATE() {
 			}
 			if(move_phase == 2){
 				cutscene_frmskip = 0;
-				cutscene_frmskip_max = 3;
+				cutscene_frmskip_max = 3u;
 				s_eg_euridyce->x += 2u;
 				eg_orpheus_go_up(s_eg_orpheus);
 				cutscene_phase = ORPHEUS_GO_UP;
@@ -345,7 +345,7 @@ void UPDATE() {
 					cutscene_timer = 0;
 					eg_euridyce_walkdown(s_eg_euridyce);
 					cutscene_frmskip = 0;
-					cutscene_frmskip_max = 3;
+					cutscene_frmskip_max = 3u;
 					PlayMusic(tutorial, 1);
 					cutscene_phase = EURIDYCE_GO_DOWN;
 				}

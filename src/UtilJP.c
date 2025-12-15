@@ -17,6 +17,27 @@ IMPORT_TILES(fontjtutorial5);
 IMPORT_TILES(fontjhades00welcome);
 IMPORT_TILES(fontjhades01moveblock);
 IMPORT_TILES(fontjhades02usekey);
+IMPORT_TILES(fontjhades03kill);
+IMPORT_TILES(fontjhades04guards);
+IMPORT_TILES(fontjhades05rolling);
+IMPORT_TILES(fontjhades06owlsaving);
+IMPORT_TILES(fontjhades07guardsawaken);
+IMPORT_TILES(fontjhades08death);
+IMPORT_TILES(fontjhades09charonintro);
+IMPORT_TILES(fontjhades09charonbeated);
+IMPORT_TILES(fontjhades10cerberusintro);
+IMPORT_TILES(fontjhades10cerberusbeated);
+IMPORT_TILES(fontjhades11minosintro);
+IMPORT_TILES(fontjhades11minosbeated);
+IMPORT_TILES(fontjhades12aeacusintro);
+IMPORT_TILES(fontjhades12aeacusbeated);
+IMPORT_TILES(fontjhades13hadesintro);
+IMPORT_TILES(fontjhades13hadesbeated);
+IMPORT_TILES(fontjendgame01);
+IMPORT_TILES(fontjendgame02);
+IMPORT_TILES(fontjendgame03);
+IMPORT_TILES(fontjendgame04);
+IMPORT_TILES(fontjendgame05);
 
 typedef struct {
     UINT8 bank;
@@ -42,7 +63,19 @@ const far_ptr_t state_fonts[] = {
     [BOSS_CHARON_INTRO]=   {BANK(fontjhades09charonintro), &fontjhades09charonintro},
     [BOSS_CHARON_BEATED]=   {BANK(fontjhades09charonbeated), &fontjhades09charonbeated},
     [BOSS_CERBERUS_INTRO]=   {BANK(fontjhades10cerberusintro), &fontjhades10cerberusintro},
-    [BOSS_CERBERUS_BEATED]=   {BANK(fontjhades10cerberusbeated), &fontjhades10cerberusbeated}
+    [BOSS_CERBERUS_BEATED]=   {BANK(fontjhades10cerberusbeated), &fontjhades10cerberusbeated},
+    [BOSS_MINOS_INTRO]=   {BANK(fontjhades11minosintro), &fontjhades11minosintro},
+    [BOSS_MINOS_BEATED]=   {BANK(fontjhades11minosbeated), &fontjhades11minosbeated},
+    [BOSS_AEACUS_INTRO]=   {BANK(fontjhades12aeacusintro), &fontjhades12aeacusintro},
+    [BOSS_AEACUS_BEATED]=   {BANK(fontjhades12aeacusbeated), &fontjhades12aeacusbeated},
+    [BOSS_HADES_INTRO]=   {BANK(fontjhades13hadesintro), &fontjhades13hadesintro},
+    [BOSS_HADES_BEATED]=   {BANK(fontjhades13hadesbeated), &fontjhades13hadesbeated},
+    [END_ORPHEUS_FOLLOW]=   {BANK(fontjendgame01), &fontjendgame01},
+    [END_ORPHEUS_EURIDYCE]=   {BANK(fontjendgame02), &fontjendgame02},
+    [END_EURIDYCE_NOOO]=   {BANK(fontjendgame03), &fontjendgame03},
+    [END_EURIDYCE_BOX]=   {BANK(fontjendgame04), &fontjendgame04},
+    [ENDSCREEN_SEEYOUIN2027]=   {BANK(fontjendgame05), &fontjendgame05},
+
 };
 
 void jp_set_banked_win_data(WHOSTALKING arg_whostalking) NONBANKED {

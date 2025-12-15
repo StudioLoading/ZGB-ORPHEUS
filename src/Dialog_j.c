@@ -303,86 +303,75 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: BOSS_HADES_INTRO
         case BOSS_HADES_INTRO:
-            memcpy(d0, "(P4WS!M F PE. P   ", 21);
-            memcpy(d1, "ZSM Y 4 Z Q7BSG U ", 21);
-            memcpy(d2, "3YE S 5PK . S B , ", 21);
-            memcpy(d3, "'I :              ", 21);
-            memcpy(d4, "G5 Y LW Y CP F    ", 21);
-            memcpy(d5, "F. Y BL - HP H    ", 21);
-            memcpy(d6, "PS]T - RFR S F.   ", 21);
-            memcpy(d7, "V BT 7            ", 21);
-            memcpy(d8, "B4M H DC)!SBN -   ", 21);
-            memcpy(d9, "T) 8TN            ", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "                  ", 21);
+            memcpy(d2, "FGJMN7BEDILD!     ", 21);
+            memcpy(d3, "                  ", 21);
+            memcpy(d4, "                  ", 21);
+            memcpy(d5, "PQE7ARSKTAIOE     ", 21);
+            memcpy(d6, "                  ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "II6LOCH.          ", 21);
+            memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: BOSS_HADES_BEATED
         case BOSS_HADES_BEATED:
-            memcpy(d0, "ZSM Z PEK . P     ", 21);
-            memcpy(d1, "5Q Z 0(F . P F    ", 21);
-            memcpy(d2, "J. - GI           ", 21);
-            memcpy(d3, "PB'C Y 0F) - 5, 4S", 21);
-            memcpy(d4, "1)6BP) ZULP) LS Z ", 21);
-            memcpy(d5, "U( UB JY GOH      ", 21);
-            memcpy(d6, "- 91. Z FYL' Z    ", 21);
-            memcpy(d7, "DBDW V CLU?. ,    ", 21);
-            memcpy(d8, "E,1DCM MM 7       ", 21);
-            memcpy(d9, "DC)!SBN RM I      ", 21);
+            memcpy(d0, "                  ", 21);
+            memcpy(d1, "STG7KDIL          ", 21);
+            memcpy(d2, "4YBGJ0BLH         ", 21);
+            memcpy(d3, "DGBG2MRW          ", 21);
+            memcpy(d4, "DC2FAJB5BG(EPNQOG ", 21);
+            memcpy(d5, "]5NCOK            ", 21);
+            memcpy(d6, "X0XC!             ", 21);
+            memcpy(d7, "                  ", 21);
+            memcpy(d8, "                  ", 21);
+            memcpy(d9, "                  ", 21);
             memcpy(d10, "                  ", 21);
         break;
-
-// Dialog Case: END_ORPHEUS_FOLLOW
         case END_ORPHEUS_FOLLOW:
-            memcpy(d1, "  8B1 Y 8 Y Z TE    ", 21);
-            memcpy(d2, "  H UB ?PL Y BTL B  ", 21);
-            memcpy(d3, "  0T ' ?PL Y CL:    ", 21);
-            memcpy(d4, "  V RBS G S         ", 21);
-            memcpy(d5, "  ?.?. Z L!C 4S     ", 21);
-            memcpy(d6, "  AT MC 3 P         ", 21);
-            memcpy(d7, "  G5 Y AL ET F GJD  ", 21);
-            memcpy(d8, "  , FG) ?PL Z EP9F  ", 21);
-            memcpy(d9, "  S B(. , P: C      ", 21);
+            memcpy(d1, "3WVZDNJPCGXYB...    ", 21);
+            memcpy(d2, "RMADTBSL0C,         ", 21);
+            memcpy(d3, "RMADKA1UBO.         ", 21);
+            memcpy(d4, "RMAM2DAV7K4OV,      ", 21);
+            memcpy(d5, "TCNKSEA.            ", 21);
+            memcpy(d6, "H5IVHEQLIHV6,       ", 21);
+            memcpy(d7, "                    ", 21);
+            memcpy(d8, "RMAPTJAJAOB8FL.     ", 21);
+            memcpy(d9, "                    ", 21);
             return 9u;
         break;
-
-// Dialog Case: END_ORPHEUS_EURIDYCE
         case END_ORPHEUS_EURIDYCE:
             memcpy(d1, "                    ", 21);
-            memcpy(d2, "      DC)!SBN       ", 21);
+            memcpy(d2, "      []ABC!        ", 21);
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
-
-// Dialog Case: END_EURIDYCE_NOOO
         case END_EURIDYCE_NOOO:
             memcpy(d1, "                    ", 21);
-            memcpy(d2, "       WYCCCCC      ", 21);
+            memcpy(d2, "       70AGGG!      ", 21);
             memcpy(d3, "                    ", 21);
             return 3u;
         break;
-
-// Dialog Case: END_EURIDYCE_BOX
         case END_EURIDYCE_BOX:
-            memcpy(d1, "  J. Z U U D?       ", 21);
-            memcpy(d2, "  Z J F? J. Z...    ", 21);
-            memcpy(d3, "  P U Y ( Y Z J F?  ", 21);
-            memcpy(d4, "  ?PKV Z O, -       ", 21);
-            memcpy(d5, "  R K P S 8 T ,,.   ", 21);
-            memcpy(d6, "  K A,' A P L Y     ", 21);
-            memcpy(d7, "  B M ,, 0 P        ", 21);
-            memcpy(d8, "  '. E ) 1 D M...   ", 21);
-            memcpy(d9, "  T J V B), Y?      ", 21);
-            return 9u;
+            memcpy(d1, "EFPYJMG3KI          ", 21);
+            memcpy(d2, "NAIAO...3RTVGXD3KI  ", 21);
+            memcpy(d3, "                    ", 21);
+            memcpy(d4, "EFW0IQPGNCDPGA9U    ", 21);
+            memcpy(d5, "NCGFL.              ", 21);
+            memcpy(d6, "                    ", 21);
+            memcpy(d7, "B4E1BCABH5W         ", 21);
+            memcpy(d8, "C6NCGSCHMG.         ", 21);
+            memcpy(d9, "                    ", 21);
+            memcpy(d10, "'():?Z...          ", 21);
+            memcpy(d11, "H5PCEUBL           ", 21);
+            memcpy(d12, "                    ", 21);
+            return 12u;
         break;
-
-// Dialog Case: ENDSCREEN_SEEYOUIN2027
         case ENDSCREEN_SEEYOUIN2027:
-            memcpy(d1, "     E 7 S ' T!     ", 21);
-            memcpy(d2, "                    ", 21);
-            memcpy(d3, "  P ) B A ( G ' T!  ", 21);
+            memcpy(d1, "      G0OACK!       ", 21);
+            memcpy(d2, "    DBEA4OATHJOAL   ", 21);
+            memcpy(d2, "     FOT6IACK!      ", 21);
             return 3u;
         break;
     }
