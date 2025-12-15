@@ -77,11 +77,11 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
             return 3u;
         break;
         case HADES_ENTRANCE:
-            memcpy(d1, "OPQRLVUA2FIAUIAET)..", 21);
+            memcpy(d1, "     IAUIAET)..     ", 21);
             memcpy(d2, "      4K)5GJH!      ", 21);
             memcpy(d3, "                    ", 21);
-            memcpy(d4, "        W9K)X,      ", 21);
-            memcpy(d5, "     NC3?)E?SVYF!   ", 21);
+            memcpy(d4, "       W9K)X,       ", 21);
+            memcpy(d5, "    NC3?)E?SVYF!    ", 21);
             memcpy(d6, "  B)HCDHCHN)M:-BJ!  ", 21);
             return 6u;
         break;
@@ -100,7 +100,7 @@ UINT8 prepare_dialog_jp(WHOSTALKING arg_whostalking) BANKED{
         break;
         case HADES_MOVE_BLOCK:
             memcpy(d0, "                  ", 21);
-            memcpy(d1, "CEOA4YBA](BALOCQS.", 21);
+            memcpy(d1, "CEOA4YBA[(BALOCQS.", 21);
             memcpy(d2, "                  ", 21);
             memcpy(d3, "CEJFPABEO,7:GMJ   ", 21);
             memcpy(d4, "                  ", 21);
